@@ -76,10 +76,13 @@ class EarthModel(
                 val sinPhi = sin(phi).toFloat()
                 val cosPhi = cos(phi).toFloat()
 
-                // Position on unit sphere
-                val x = sinTheta * cosPhi
+                // Position on unit sphere. 
+                // We use -cosPhi so that phi=0 (u=0) is at -X, matching SunPosition's Greenwich.
+                // We use -sinPhi so that phi=PI/2 (u=0.25) is at -Z (90 E), 
+                // meaning u increases as we move East.
+                val x = -sinTheta * cosPhi
                 val y = cosTheta
-                val z = sinTheta * sinPhi
+                val z = -sinTheta * sinPhi
 
                 // Normal is the same as position for a unit sphere
                 val nx = x
@@ -115,13 +118,15 @@ class EarthModel(
                 val bottomRight = bottomLeft + 1
 
                 // Two triangles per quad (CCW winding)
+                // Swapped bottomLeft and topRight from the original to ensure 
+                // outward-facing normals with the new coordinate mapping.
                 indices.add(topLeft)
-                indices.add(bottomLeft)
                 indices.add(topRight)
+                indices.add(bottomLeft)
 
                 indices.add(topRight)
-                indices.add(bottomLeft)
                 indices.add(bottomRight)
+                indices.add(bottomLeft)
             }
         }
         return indices.toIntArray()

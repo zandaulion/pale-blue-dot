@@ -60,13 +60,12 @@ object SunPosition {
         // Hour angle at the prime meridian
         val hourAngle = gmst - ra
 
-        // Direction toward the sun in Earth-fixed coordinates:
-        //   x = cos(dec) * cos(hourAngle)    (toward prime meridian)
-        //   y = sin(dec)                       (toward north pole)
-        //   z = cos(dec) * sin(hourAngle)     (toward 90 E)
-        // We negate the hour-angle sense so that the terminator moves correctly.
+        // Direction toward the sun in model coordinates.
+        // The model maps u=0 (phi=0) to +X, which is 180 W on a standard texture,
+        // so +X = 180 W, +Z = 90 W, -X = 0 (Greenwich), -Z = 90 E.
+        // We negate x to account for the 180-degree offset from geographic convention.
         val cosDec = cos(dec)
-        val x = (cosDec * cos(hourAngle)).toFloat()
+        val x = -(cosDec * cos(hourAngle)).toFloat()
         val y = sin(dec).toFloat()
         val z = (cosDec * sin(hourAngle)).toFloat()
 

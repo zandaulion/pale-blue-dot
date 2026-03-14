@@ -8,6 +8,7 @@ import com.globe.app.camera.OrbitCamera
 import com.globe.app.earth.EarthRenderer
 import com.globe.app.moon.MoonRenderer
 import com.globe.app.stars.StarsRenderer
+import com.globe.app.indicators.IndicatorRenderer
 import com.globe.app.sun.SunRenderer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -28,6 +29,7 @@ class GlobeRenderer(
     private val starsRenderer = StarsRenderer()
     private val moonRenderer = MoonRenderer()
     private val sunRenderer = SunRenderer()
+    private val indicatorRenderer = IndicatorRenderer()
 
     private val projectionMatrix = FloatArray(16)
 
@@ -42,6 +44,7 @@ class GlobeRenderer(
         starsRenderer.init()
         moonRenderer.init(context, textureResId = R.drawable.moon)
         sunRenderer.init()
+        indicatorRenderer.init()
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
@@ -49,6 +52,7 @@ class GlobeRenderer(
 
         val aspect = width.toFloat() / height.toFloat()
         Matrix.perspectiveM(projectionMatrix, 0, 33f, aspect, 0.1f, 1000f)
+        indicatorRenderer.onSurfaceChanged(width, height)
     }
 
     override fun onDrawFrame(gl: GL10?) {
@@ -70,5 +74,8 @@ class GlobeRenderer(
         // 4. Earth — pass current camera matrices, then draw
         earthRenderer.setMatrices(viewMatrix, projectionMatrix, camPos)
         earthRenderer.onDrawFrame()
+
+        // 5. Indicator arrows — 2D overlay pointing toward sun and moon
+        indicatorRenderer.draw(viewMatrix, projectionMatrix)
     }
 }

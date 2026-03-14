@@ -30,7 +30,7 @@ class OrbitCamera {
     fun rotate(dx: Float, dy: Float) {
         val zoomScale = distance / MAX_DISTANCE
         val dAz = dx * ROTATE_SENSITIVITY * zoomScale
-        val dEl = -dy * ROTATE_SENSITIVITY * zoomScale * 0.4f
+        val dEl = -dy * ROTATE_SENSITIVITY * zoomScale * 0.1f
         azimuth += dAz
         elevation = (elevation + dEl).coerceIn(-MAX_ELEVATION, MAX_ELEVATION)
         velocityAz = dAz

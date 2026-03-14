@@ -10,8 +10,8 @@ import kotlin.math.*
  * Uses a low-precision lunar position model (~1-2 degree accuracy) sufficient
  * for visually placing the Moon in the sky with the correct phase.
  *
- * Coordinate system matches SunPosition:
- *   +Y = north pole, +X = prime meridian at equator, +Z = 90°E at equator.
+ * Coordinate system matches the Earth model (u=0 at phi=0):
+ *   +Y = north pole, +X = 180°W (dateline), +Z = 90°W at equator.
  *
  * The vector points from Earth toward the Moon (unit length).
  */
@@ -59,7 +59,7 @@ object MoonPosition {
         val hourAngle = gmst - ra
 
         val cosDec = cos(dec)
-        val x = (cosDec * cos(hourAngle)).toFloat()
+        val x = -(cosDec * cos(hourAngle)).toFloat()
         val y = sin(dec).toFloat()
         val z = (cosDec * sin(hourAngle)).toFloat()
 
