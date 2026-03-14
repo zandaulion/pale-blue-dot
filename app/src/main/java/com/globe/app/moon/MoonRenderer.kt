@@ -51,8 +51,8 @@ class MoonRenderer {
         val buffers = gpuBuffers ?: return
         if (textureId == 0) return
 
-        val moonDir = MoonPosition.calculate()
-        val sunDir = SunPosition.calculate()
+        val moonDir = MoonPosition.calculate(null)
+        val sunDir = SunPosition.calculate(null)
 
         // Build model matrix: translate to moon position, scale to moon size
         Matrix.setIdentityM(modelMatrix, 0)

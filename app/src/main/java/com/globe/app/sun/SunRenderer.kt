@@ -78,7 +78,7 @@ class SunRenderer {
     }
 
     fun draw(viewMatrix: FloatArray, projectionMatrix: FloatArray) {
-        val sunDir = SunPosition.calculate()
+        val sunDir = SunPosition.calculate(null)
 
         // Position the billboard at the sun direction
         val px = sunDir[0] * SUN_DISTANCE

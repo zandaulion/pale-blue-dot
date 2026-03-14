@@ -10,8 +10,8 @@ import kotlin.math.*
  * Uses a low-precision lunar position model (~1-2 degree accuracy) sufficient
  * for visually placing the Moon in the sky with the correct phase.
  *
- * Coordinate system matches the Earth model (u=0 at phi=0):
- *   +Y = north pole, +X = 180°W (dateline), +Z = 90°W at equator.
+ * Coordinate system matches the Earth model:
+ *   +Y = North Pole, -X = 0° (Greenwich), +Z = 90°W
  *
  * The vector points from Earth toward the Moon (unit length).
  */
@@ -22,8 +22,9 @@ object MoonPosition {
     /**
      * Returns the unit direction vector toward the Moon.
      */
-    fun calculate(calendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))): FloatArray {
-        val jd = julianDate(calendar)
+    fun calculate(calendar: Calendar? = null): FloatArray {
+        val cal = calendar ?: Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val jd = julianDate(cal)
         val n = jd - 2451545.0 // days since J2000.0
 
         // Fundamental lunar elements (degrees)

@@ -91,8 +91,8 @@ class IndicatorRenderer {
     fun draw(viewMatrix: FloatArray, projectionMatrix: FloatArray) {
         Matrix.multiplyMM(vpMatrix, 0, projectionMatrix, 0, viewMatrix, 0)
 
-        val sunDir = SunPosition.calculate()
-        val moonDir = MoonPosition.calculate()
+        val sunDir = SunPosition.calculate(null)
+        val moonDir = MoonPosition.calculate(null)
 
         val sunAngle = directionAngle(sunDir, -ARROW_SPACING, ARROW_Y)
         val moonAngle = directionAngle(moonDir, ARROW_SPACING, ARROW_Y)

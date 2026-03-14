@@ -1,6 +1,7 @@
 package com.globe.app.camera
 
 import android.opengl.Matrix
+import java.util.TimeZone
 
 /**
  * Simple orbit camera defined by azimuth, elevation, and distance from origin.
@@ -9,7 +10,12 @@ import android.opengl.Matrix
  */
 class OrbitCamera {
 
-    @Volatile var azimuth: Float = 0f       // degrees, horizontal
+    @Volatile var azimuth: Float = run {
+        val tz = TimeZone.getDefault()
+        val offsetMillis = tz.getOffset(System.currentTimeMillis())
+        val longitude = (offsetMillis / 3600000f) * 15f
+        -longitude - 90f
+    }
     @Volatile var elevation: Float = 20f    // degrees, vertical
     @Volatile var distance: Float = 4.5f    // Earth-radii from origin
 

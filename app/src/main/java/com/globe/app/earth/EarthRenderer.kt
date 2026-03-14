@@ -138,7 +138,7 @@ class EarthRenderer {
         GLES30.glUniformMatrix4fv(s.uProjectionLoc, 1, false, projectionMatrix, 0)
 
         // Sun direction (points toward the sun in world space)
-        val sunDir = SunPosition.calculate()
+        val sunDir = SunPosition.calculate(null)
         GLES30.glUniform3f(s.uSunDirectionLoc, sunDir[0], sunDir[1], sunDir[2])
 
         // Camera position for fresnel calculation

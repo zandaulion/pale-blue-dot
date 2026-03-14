@@ -25,13 +25,15 @@ object SunPosition {
     private const val AXIAL_TILT_RAD = 23.44 * Math.PI / 180.0
 
     /**
-     * Returns the unit direction vector toward the sun for the given time
-     * (defaults to now).
+     * Returns the unit direction vector toward the sun.
+     * Always uses the current system time if no [Calendar] is provided.
      *
-     * @return FloatArray of [x, y, z] in the Earth's model coordinate system.
+     * @return FloatArray of [x, y, z] in the Earth's model coordinate system:
+     *         +Y = North Pole, -X = 0° (Greenwich), +Z = 90°W
      */
-    fun calculate(calendar: Calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))): FloatArray {
-        val jd = julianDate(calendar)
+    fun calculate(calendar: Calendar? = null): FloatArray {
+        val cal = calendar ?: Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val jd = julianDate(cal)
         val n = jd - 2451545.0  // days since J2000.0
 
         // Mean longitude and mean anomaly of the sun (degrees)
@@ -57,13 +59,12 @@ object SunPosition {
         // celestial frame to the Earth-fixed frame.
         val gmst = greenwichMeanSiderealTime(jd, n)
 
-        // Hour angle at the prime meridian
+        // Hour angle at the prime meridian. 
+        // hourAngle = 0 means sun is directly over Greenwich (-X).
         val hourAngle = gmst - ra
 
         // Direction toward the sun in model coordinates.
-        // The model maps u=0 (phi=0) to +X, which is 180 W on a standard texture,
-        // so +X = 180 W, +Z = 90 W, -X = 0 (Greenwich), -Z = 90 E.
-        // We negate x to account for the 180-degree offset from geographic convention.
+        // HA=0 -> x=-cosDec, z=0. HA=90W -> x=0, z=cosDec.
         val cosDec = cos(dec)
         val x = -(cosDec * cos(hourAngle)).toFloat()
         val y = sin(dec).toFloat()
