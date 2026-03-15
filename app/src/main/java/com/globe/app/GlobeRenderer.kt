@@ -9,6 +9,7 @@ import com.globe.app.earth.EarthRenderer
 import com.globe.app.moon.MoonRenderer
 import com.globe.app.stars.StarsRenderer
 import com.globe.app.indicators.IndicatorRenderer
+import com.globe.app.iss.ISSOrbitRenderer
 import com.globe.app.sun.SunRenderer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -30,6 +31,7 @@ class GlobeRenderer(
     private val moonRenderer = MoonRenderer()
     private val sunRenderer = SunRenderer()
     private val indicatorRenderer = IndicatorRenderer()
+    private val issOrbitRenderer = ISSOrbitRenderer()
 
     private val projectionMatrix = FloatArray(16)
 
@@ -45,6 +47,7 @@ class GlobeRenderer(
         moonRenderer.init(context, textureResId = R.drawable.moon)
         sunRenderer.init()
         indicatorRenderer.init()
+        issOrbitRenderer.init()
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
@@ -75,7 +78,10 @@ class GlobeRenderer(
         earthRenderer.setMatrices(viewMatrix, projectionMatrix, camPos)
         earthRenderer.onDrawFrame()
 
-        // 5. Indicator arrows — 2D overlay pointing toward sun and moon
+        // 5. ISS orbit — thin line, drawn after Earth so depth test occludes the far side
+        issOrbitRenderer.draw(viewMatrix, projectionMatrix)
+
+        // 6. Indicator arrows — 2D overlay pointing toward sun and moon
         indicatorRenderer.draw(viewMatrix, projectionMatrix)
     }
 }

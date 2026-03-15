@@ -31,7 +31,7 @@ object StarsModel {
     private const val SPHERE_RADIUS = 500f
 
     /** Total number of stars to generate */
-    private const val STAR_COUNT = 8000
+    private const val STAR_COUNT = 16000
 
     /** Seed for reproducible starfields across sessions */
     private const val SEED = 42L

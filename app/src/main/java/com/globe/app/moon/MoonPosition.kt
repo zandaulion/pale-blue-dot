@@ -19,10 +19,24 @@ object MoonPosition {
 
     private const val AXIAL_TILT_RAD = 23.44 * Math.PI / 180.0
 
+    /** Refresh interval: 10 minutes in milliseconds. */
+    private const val REFRESH_INTERVAL_MS = 10 * 60 * 1000L
+
+    @Volatile private var cachedDirection: FloatArray? = null
+    @Volatile private var cachedAtMs: Long = 0L
+
     /**
      * Returns the unit direction vector toward the Moon.
+     * The result is cached and recalculated every 10 minutes.
      */
     fun calculate(calendar: Calendar? = null): FloatArray {
+        if (calendar == null) {
+            val now = System.currentTimeMillis()
+            val cached = cachedDirection
+            if (cached != null && now - cachedAtMs < REFRESH_INTERVAL_MS) {
+                return cached
+            }
+        }
         val cal = calendar ?: Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         val jd = julianDate(cal)
         val n = jd - 2451545.0 // days since J2000.0
@@ -62,9 +76,14 @@ object MoonPosition {
         val cosDec = cos(dec)
         val x = -(cosDec * cos(hourAngle)).toFloat()
         val y = sin(dec).toFloat()
-        val z = (cosDec * sin(hourAngle)).toFloat()
+        val z = -(cosDec * sin(hourAngle)).toFloat()
 
-        return floatArrayOf(x, y, z)
+        val result = floatArrayOf(x, y, z)
+        if (calendar == null) {
+            cachedDirection = result
+            cachedAtMs = System.currentTimeMillis()
+        }
+        return result
     }
 
     private fun julianDate(cal: Calendar): Double {

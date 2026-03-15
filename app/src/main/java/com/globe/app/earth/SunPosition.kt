@@ -24,14 +24,28 @@ object SunPosition {
     /** Earth's axial tilt in radians. */
     private const val AXIAL_TILT_RAD = 23.44 * Math.PI / 180.0
 
+    /** Refresh interval: 10 minutes in milliseconds. */
+    private const val REFRESH_INTERVAL_MS = 10 * 60 * 1000L
+
+    /** Cached result and the time it was computed. */
+    @Volatile private var cachedDirection: FloatArray? = null
+    @Volatile private var cachedAtMs: Long = 0L
+
     /**
      * Returns the unit direction vector toward the sun.
-     * Always uses the current system time if no [Calendar] is provided.
+     * The result is cached and recalculated every 10 minutes.
      *
      * @return FloatArray of [x, y, z] in the Earth's model coordinate system:
      *         +Y = North Pole, -X = 0° (Greenwich), +Z = 90°W
      */
     fun calculate(calendar: Calendar? = null): FloatArray {
+        if (calendar == null) {
+            val now = System.currentTimeMillis()
+            val cached = cachedDirection
+            if (cached != null && now - cachedAtMs < REFRESH_INTERVAL_MS) {
+                return cached
+            }
+        }
         val cal = calendar ?: Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         val jd = julianDate(cal)
         val n = jd - 2451545.0  // days since J2000.0
@@ -63,14 +77,20 @@ object SunPosition {
         // hourAngle = 0 means sun is directly over Greenwich (-X).
         val hourAngle = gmst - ra
 
-        // Direction toward the sun in model coordinates.
-        // HA=0 -> x=-cosDec, z=0. HA=90W -> x=0, z=cosDec.
+        // Direction toward the sun in world coordinates.
+        // +Y = North Pole, -X = Greenwich, +Z = 90°E (east-positive).
+        // HA=0 -> x=-cosDec, z=0. HA=-90° (90°E) -> x=0, z=+cosDec.
         val cosDec = cos(dec)
         val x = -(cosDec * cos(hourAngle)).toFloat()
         val y = sin(dec).toFloat()
-        val z = (cosDec * sin(hourAngle)).toFloat()
+        val z = -(cosDec * sin(hourAngle)).toFloat()
 
-        return floatArrayOf(x, y, z)
+        val result = floatArrayOf(x, y, z)
+        if (calendar == null) {
+            cachedDirection = result
+            cachedAtMs = System.currentTimeMillis()
+        }
+        return result
     }
 
     // ------------------------------------------------------------------

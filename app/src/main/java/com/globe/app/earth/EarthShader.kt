@@ -183,8 +183,13 @@ void main() {
     // saturates to 0 or 1, giving a gentle transition.
     float dayFactor = smoothstep(-0.15, 0.15, NdotL);
 
-    vec3 dayColor   = texture(uDayTexture,   vTexCoord).rgb;
-    vec3 nightColor = texture(uNightTexture, vTexCoord).rgb;
+    // The mesh maps u=0 to the -X axis (Greenwich in the sun calculation),
+    // but the standard equirectangular texture has Greenwich at u=0.5.
+    // Shift by 0.5 so the texture geography aligns with the lighting.
+    vec2 geoCoord = vec2(0.5 - vTexCoord.x, vTexCoord.y);
+
+    vec3 dayColor   = texture(uDayTexture,   geoCoord).rgb;
+    vec3 nightColor = texture(uNightTexture, geoCoord).rgb;
 
     // Night side: show city lights at full brightness.
     // Day side:   lit by diffuse sunlight (clamped to avoid harsh shadows).

@@ -126,11 +126,8 @@ class EarthRenderer {
 
         s.use()
 
-        // ---- Model matrix: rotate Earth so correct longitude faces the sun ----
+        // ---- Model matrix (identity — sun vector already encodes Earth rotation) ----
         Matrix.setIdentityM(modelMatrix, 0)
-        // SunPosition.calculate() already returns the sun direction in the
-        // Earth-fixed frame (accounting for GMST), so we do NOT rotate the
-        // model matrix by time-of-day. The sun vector encodes the rotation.
 
         // ---- Uniforms ----
         GLES30.glUniformMatrix4fv(s.uModelLoc, 1, false, modelMatrix, 0)
@@ -334,19 +331,19 @@ class EarthRenderer {
             for (x in 0 until width) {
                 val u = x.toFloat() / width
 
-                // Layered noise (fBm-like) with 5 octaves
+                // Layered noise (fBm-like) with 5 octaves, tileable in X
                 var noise = 0f
                 var amplitude = 0.5f
-                var frequency = 4f
+                var period = 4
                 for (octave in 0 until 5) {
-                    noise += amplitude * valueNoise(u * frequency, v * frequency)
+                    noise += amplitude * tileableNoise(u * period, v * period, period)
                     amplitude *= 0.5f
-                    frequency *= 2.1f
+                    period *= 2
                 }
 
                 // Shape into cloud-like coverage: threshold and soften
-                val cloud = ((noise - 0.38f) / 0.35f).coerceIn(0f, 1f)
-                val alpha = (cloud * cloud * latFade * 0.7f * 255f).toInt().coerceIn(0, 255)
+                val cloud = ((noise - 0.25f) / 0.4f).coerceIn(0f, 1f)
+                val alpha = (cloud * latFade * 0.7f * 255f).toInt().coerceIn(0, 255)
 
                 pixels.put(0xFF.toByte()) // R (white)
                 pixels.put(0xFF.toByte()) // G
@@ -378,26 +375,27 @@ class EarthRenderer {
     }
 
     /**
-     * Simple 2D value noise using a hash function.
-     * Returns a value in [0, 1], smoothly interpolated.
+     * 2D value noise that tiles seamlessly in X with the given [periodX].
+     * The X grid coordinates are wrapped modulo [periodX] so that
+     * noise(0, y) == noise(periodX, y), eliminating the horizontal seam.
      */
-    private fun valueNoise(x: Float, y: Float): Float {
+    private fun tileableNoise(x: Float, y: Float, periodX: Int): Float {
         val ix = kotlin.math.floor(x).toInt()
         val iy = kotlin.math.floor(y).toInt()
         val fx = x - kotlin.math.floor(x)
         val fy = y - kotlin.math.floor(y)
 
-        // Smoothstep interpolation
         val sx = fx * fx * (3f - 2f * fx)
         val sy = fy * fy * (3f - 2f * fy)
 
-        // Hash corners
-        val n00 = hash2d(ix, iy)
-        val n10 = hash2d(ix + 1, iy)
-        val n01 = hash2d(ix, iy + 1)
-        val n11 = hash2d(ix + 1, iy + 1)
+        val ix0 = ((ix % periodX) + periodX) % periodX
+        val ix1 = ((ix + 1) % periodX + periodX) % periodX
 
-        // Bilinear interpolation
+        val n00 = hash2d(ix0, iy)
+        val n10 = hash2d(ix1, iy)
+        val n01 = hash2d(ix0, iy + 1)
+        val n11 = hash2d(ix1, iy + 1)
+
         val nx0 = n00 + sx * (n10 - n00)
         val nx1 = n01 + sx * (n11 - n01)
         return nx0 + sy * (nx1 - nx0)

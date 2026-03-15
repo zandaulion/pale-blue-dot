@@ -94,8 +94,8 @@ object StarsShader {
             if (dist > 1.0) discard;
 
             // Smooth circular falloff — bright core, soft halo
-            float coreBrightness = exp(-dist * dist * 6.0);  // tight core
-            float haloBrightness = exp(-dist * dist * 2.0) * 0.35; // wider halo
+            float coreBrightness = exp(-dist * dist * 4.0);  // tight core
+            float haloBrightness = exp(-dist * dist * 2.0) * 0.6; // wider halo
             float brightness = coreBrightness + haloBrightness;
 
             // Apply star color, twinkle, and overall alpha

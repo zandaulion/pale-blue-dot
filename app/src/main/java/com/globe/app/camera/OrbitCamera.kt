@@ -14,7 +14,7 @@ class OrbitCamera {
         val tz = TimeZone.getDefault()
         val offsetMillis = tz.getOffset(System.currentTimeMillis())
         val longitude = (offsetMillis / 3600000f) * 15f
-        -longitude - 90f
+        longitude - 90f
     }
     @Volatile var elevation: Float = 20f    // degrees, vertical
     @Volatile var distance: Float = 4.5f    // Earth-radii from origin
@@ -28,7 +28,7 @@ class OrbitCamera {
         private const val MIN_DISTANCE = 1.15f
         private const val MAX_DISTANCE = 8.0f
         private const val MAX_ELEVATION = 89f
-        private const val ROTATE_SENSITIVITY = 0.3f
+        private const val ROTATE_SENSITIVITY = 0.15f
         private const val FRICTION = 0.985f
         private const val MIN_VELOCITY = 0.01f
     }
@@ -36,7 +36,7 @@ class OrbitCamera {
     fun rotate(dx: Float, dy: Float) {
         val zoomScale = distance / MAX_DISTANCE
         val dAz = -dx * ROTATE_SENSITIVITY * zoomScale
-        val dEl = dy * ROTATE_SENSITIVITY * zoomScale * 0.1f
+        val dEl = dy * ROTATE_SENSITIVITY * zoomScale * 0.2f
         azimuth += dAz
         elevation = (elevation + dEl).coerceIn(-MAX_ELEVATION, MAX_ELEVATION)
         velocityAz = dAz
