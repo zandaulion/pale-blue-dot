@@ -5,12 +5,15 @@ import android.opengl.GLES30
 import android.opengl.GLSurfaceView
 import android.opengl.Matrix
 import com.globe.app.camera.OrbitCamera
+import com.globe.app.earth.CloudMapProvider
 import com.globe.app.earth.EarthRenderer
 import com.globe.app.moon.MoonRenderer
 import com.globe.app.stars.StarsRenderer
 import com.globe.app.indicators.IndicatorRenderer
 import com.globe.app.iss.ISSOrbitRenderer
+import com.globe.app.location.LocationPinRenderer
 import com.globe.app.sun.SunRenderer
+import com.globe.app.eclipse.EclipseDetector
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -23,15 +26,18 @@ import javax.microedition.khronos.opengles.GL10
  */
 class GlobeRenderer(
     private val context: Context,
-    private val camera: OrbitCamera
+    private val camera: OrbitCamera,
+    private val onCloudStatusChanged: ((String?) -> Unit)? = null,
+    private val onEclipseStateChanged: ((EclipseDetector.EclipseState) -> Unit)? = null
 ) : GLSurfaceView.Renderer {
 
-    private val earthRenderer = EarthRenderer()
+    val earthRenderer = EarthRenderer()
     private val starsRenderer = StarsRenderer()
     private val moonRenderer = MoonRenderer()
     private val sunRenderer = SunRenderer()
     private val indicatorRenderer = IndicatorRenderer()
     private val issOrbitRenderer = ISSOrbitRenderer()
+    val locationPinRenderer = LocationPinRenderer()
 
     private val projectionMatrix = FloatArray(16)
 
@@ -48,6 +54,17 @@ class GlobeRenderer(
         sunRenderer.init()
         indicatorRenderer.init()
         issOrbitRenderer.init()
+        locationPinRenderer.init()
+
+        // Download real cloud cover in background
+        onCloudStatusChanged?.invoke(null)
+        Thread {
+            val result = CloudMapProvider(context).fetch()
+            if (result != null) {
+                earthRenderer.setCloudBitmap(result.bitmap)
+                onCloudStatusChanged?.invoke(result.timestamp)
+            }
+        }.start()
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
@@ -78,10 +95,16 @@ class GlobeRenderer(
         earthRenderer.setMatrices(viewMatrix, projectionMatrix, camPos)
         earthRenderer.onDrawFrame()
 
-        // 5. ISS orbit — thin line, drawn after Earth so depth test occludes the far side
+        // 5. Location pin — user's GPS location, drawn after Earth so depth test occludes the far side
+        locationPinRenderer.draw(viewMatrix, projectionMatrix)
+
+        // 6. ISS orbit — thin line, drawn after Earth so depth test occludes the far side
         issOrbitRenderer.draw(viewMatrix, projectionMatrix)
 
-        // 6. Indicator arrows — 2D overlay pointing toward sun and moon
+        // 7. Indicator arrows — 2D overlay pointing toward sun and moon
         indicatorRenderer.draw(viewMatrix, projectionMatrix)
+
+        // 8. Eclipse detection — notify UI thread of alignment state
+        onEclipseStateChanged?.invoke(EclipseDetector.detect())
     }
 }

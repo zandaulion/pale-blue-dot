@@ -5,13 +5,18 @@ import android.opengl.GLSurfaceView
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import com.globe.app.camera.OrbitCamera
+import com.globe.app.eclipse.EclipseDetector
 
 /**
  * Custom GLSurfaceView that handles touch input for orbiting and zooming the camera.
  */
-class GlobeSurfaceView(context: Context) : GLSurfaceView(context) {
+class GlobeSurfaceView(
+    context: Context,
+    onCloudStatusChanged: ((String?) -> Unit)? = null,
+    onEclipseStateChanged: ((EclipseDetector.EclipseState) -> Unit)? = null
+) : GLSurfaceView(context) {
 
-    private val renderer: GlobeRenderer
+    val renderer: GlobeRenderer
     private val camera: OrbitCamera = OrbitCamera()
     private val scaleDetector: ScaleGestureDetector
 
@@ -22,7 +27,7 @@ class GlobeSurfaceView(context: Context) : GLSurfaceView(context) {
         // Request OpenGL ES 3.0 context
         setEGLContextClientVersion(3)
 
-        renderer = GlobeRenderer(context, camera)
+        renderer = GlobeRenderer(context, camera, onCloudStatusChanged, onEclipseStateChanged)
         setRenderer(renderer)
 
         // Render continuously (the Earth rotates)

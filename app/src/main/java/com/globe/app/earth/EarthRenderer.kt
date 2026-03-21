@@ -7,8 +7,10 @@ import android.opengl.GLES30
 import android.opengl.GLUtils
 import android.opengl.Matrix
 import android.util.Log
+import com.globe.app.TimeProvider
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.util.concurrent.atomic.AtomicReference
 
 /**
  * High-level renderer that ties together the sphere mesh, shader programme,
@@ -41,8 +43,15 @@ class EarthRenderer {
     private var nightTextureId: Int = 0
     private var cloudTextureId: Int = 0
 
-    // Cloud drift
+    // Cloud drift (disabled when real cloud map is loaded)
     private var startTimeMs: Long = 0L
+    private var useRealClouds = false
+
+    // Cloud visibility toggle
+    @Volatile var cloudsVisible = true
+
+    // Pending real cloud bitmap from background download (consumed on GL thread)
+    private val pendingCloudBitmap = AtomicReference<Bitmap?>(null)
 
     // Matrices
     private val modelMatrix = FloatArray(16)
@@ -112,11 +121,27 @@ class EarthRenderer {
     }
 
     /**
+     * Queue a real cloud-cover bitmap to replace the procedural texture.
+     * Thread-safe; the actual GL upload happens on the next frame.
+     */
+    fun setCloudBitmap(bitmap: Bitmap) {
+        pendingCloudBitmap.set(bitmap)
+    }
+
+    /**
      * Render one frame. Call from `onDrawFrame`.
      * The caller must have called [setMatrices] before this.
      * GL clear and viewport are the caller's responsibility.
      */
     fun onDrawFrame() {
+        // Upload pending real cloud texture if available
+        pendingCloudBitmap.getAndSet(null)?.let { bitmap ->
+            uploadCloudBitmap(bitmap)
+            bitmap.recycle()
+            useRealClouds = true
+            Log.d(TAG, "Real cloud map applied")
+        }
+
         val s = shader ?: return
         val buffers = gpuBuffers ?: return
 
@@ -154,9 +179,16 @@ class EarthRenderer {
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, cloudTextureId)
         GLES30.glUniform1i(s.uCloudTextureLoc, 2)
 
-        // Slow cloud drift: full rotation in ~10 minutes
-        val elapsedSec = (System.currentTimeMillis() - startTimeMs) / 1000.0f
-        GLES30.glUniform1f(s.uCloudRotationLoc, elapsedSec * 0.0017f)
+        // Cloud drift: procedural clouds drift slowly; real clouds stay fixed
+        // Real clouds are rendered at 50% opacity to blend with the surface
+        val opacity = if (!cloudsVisible) 0f else if (useRealClouds) 0.5f else 1.0f
+        GLES30.glUniform1f(s.uCloudOpacityLoc, opacity)
+        if (useRealClouds) {
+            GLES30.glUniform1f(s.uCloudRotationLoc, 0f)
+        } else {
+            val elapsedSec = (TimeProvider.nowMs() - startTimeMs) / 1000.0f
+            GLES30.glUniform1f(s.uCloudRotationLoc, elapsedSec * 0.0017f)
+        }
 
         // ---- Draw ----
         GLES30.glBindVertexArray(buffers.vao)
@@ -345,10 +377,10 @@ class EarthRenderer {
                 val cloud = ((noise - 0.25f) / 0.4f).coerceIn(0f, 1f)
                 val alpha = (cloud * latFade * 0.7f * 255f).toInt().coerceIn(0, 255)
 
-                pixels.put(0xFF.toByte()) // R (white)
-                pixels.put(0xFF.toByte()) // G
-                pixels.put(0xFF.toByte()) // B
-                pixels.put(alpha.toByte())
+                pixels.put(alpha.toByte()) // R = cloud coverage
+                pixels.put(alpha.toByte()) // G
+                pixels.put(alpha.toByte()) // B
+                pixels.put(0xFF.toByte()) // A
             }
         }
         pixels.flip()
@@ -372,6 +404,23 @@ class EarthRenderer {
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, 0)
 
         return texId
+    }
+
+    /**
+     * Replaces the current cloud texture with a bitmap (expected grayscale equirectangular).
+     * Must be called on the GL thread.
+     */
+    private fun uploadCloudBitmap(bitmap: Bitmap) {
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, cloudTextureId)
+
+        GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_LINEAR_MIPMAP_LINEAR)
+        GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MAG_FILTER, GLES30.GL_LINEAR)
+        GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_S, GLES30.GL_REPEAT)
+        GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_T, GLES30.GL_CLAMP_TO_EDGE)
+
+        GLUtils.texImage2D(GLES30.GL_TEXTURE_2D, 0, bitmap, 0)
+        GLES30.glGenerateMipmap(GLES30.GL_TEXTURE_2D)
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, 0)
     }
 
     /**

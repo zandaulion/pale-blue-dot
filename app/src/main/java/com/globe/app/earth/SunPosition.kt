@@ -1,5 +1,6 @@
 package com.globe.app.earth
 
+import com.globe.app.TimeProvider
 import java.util.Calendar
 import java.util.TimeZone
 import kotlin.math.asin
@@ -31,6 +32,11 @@ object SunPosition {
     @Volatile private var cachedDirection: FloatArray? = null
     @Volatile private var cachedAtMs: Long = 0L
 
+    /** Force recalculation on the next call. */
+    fun invalidateCache() {
+        cachedDirection = null
+    }
+
     /**
      * Returns the unit direction vector toward the sun.
      * The result is cached and recalculated every 10 minutes.
@@ -39,14 +45,14 @@ object SunPosition {
      *         +Y = North Pole, -X = 0° (Greenwich), +Z = 90°W
      */
     fun calculate(calendar: Calendar? = null): FloatArray {
+        val simNow = TimeProvider.nowMs()
         if (calendar == null) {
-            val now = System.currentTimeMillis()
             val cached = cachedDirection
-            if (cached != null && now - cachedAtMs < REFRESH_INTERVAL_MS) {
+            if (cached != null && kotlin.math.abs(simNow - cachedAtMs) < REFRESH_INTERVAL_MS) {
                 return cached
             }
         }
-        val cal = calendar ?: Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val cal = calendar ?: TimeProvider.calendar()
         val jd = julianDate(cal)
         val n = jd - 2451545.0  // days since J2000.0
 
@@ -88,7 +94,7 @@ object SunPosition {
         val result = floatArrayOf(x, y, z)
         if (calendar == null) {
             cachedDirection = result
-            cachedAtMs = System.currentTimeMillis()
+            cachedAtMs = simNow
         }
         return result
     }

@@ -25,6 +25,7 @@ class EarthShader {
     var uNightTextureLoc: Int = -1; private set
     var uCloudTextureLoc: Int = -1; private set
     var uCloudRotationLoc: Int = -1; private set
+    var uCloudOpacityLoc: Int = -1; private set
 
     // ------------------------------------------------------------------
     // Public API
@@ -68,6 +69,7 @@ class EarthShader {
         uNightTextureLoc = GLES30.glGetUniformLocation(program, "uNightTexture")
         uCloudTextureLoc = GLES30.glGetUniformLocation(program, "uCloudTexture")
         uCloudRotationLoc = GLES30.glGetUniformLocation(program, "uCloudRotation")
+        uCloudOpacityLoc = GLES30.glGetUniformLocation(program, "uCloudOpacity")
     }
 
     // ------------------------------------------------------------------
@@ -168,6 +170,7 @@ uniform sampler2D uDayTexture;
 uniform sampler2D uNightTexture;
 uniform sampler2D uCloudTexture;
 uniform float uCloudRotation; // slow horizontal offset for cloud drift
+uniform float uCloudOpacity;  // overall cloud layer opacity (0.0–1.0)
 
 out vec4 fragColor;
 
@@ -200,7 +203,7 @@ void main() {
 
     // ---- Cloud layer ---------------------------------------------------
     vec2 cloudUV = vec2(vTexCoord.x + uCloudRotation, vTexCoord.y);
-    float cloudAlpha = texture(uCloudTexture, cloudUV).a;
+    float cloudAlpha = texture(uCloudTexture, cloudUV).r * uCloudOpacity;
 
     // Clouds are white, lit by the sun on the day side, faintly visible at night
     float cloudBrightness = mix(0.06, 0.1 + 0.9 * diffuse, dayFactor);
