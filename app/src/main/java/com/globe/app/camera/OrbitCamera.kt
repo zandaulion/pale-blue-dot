@@ -17,7 +17,7 @@ class OrbitCamera {
         longitude - 90f
     }
     @Volatile var elevation: Float = 20f    // degrees, vertical
-    @Volatile var distance: Float = 4.5f    // Earth-radii from origin
+    @Volatile var distance: Float = 8.0f    // Earth-radii from origin
 
     // Momentum / inertia
     @Volatile private var velocityAz: Float = 0f   // degrees per frame
@@ -26,7 +26,7 @@ class OrbitCamera {
 
     companion object {
         private const val MIN_DISTANCE = 1.15f
-        private const val MAX_DISTANCE = 8.0f
+        private const val MAX_DISTANCE = 20.0f
         private const val MAX_ELEVATION = 89f
         private const val ROTATE_SENSITIVITY = 0.15f
         private const val FRICTION = 0.985f

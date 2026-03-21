@@ -6,7 +6,7 @@
 - [x] Time scrubber — slider to move time forward/backward, watching sun, moon, ISS, and shadows animate
 
 ## Medium effort
-- [ ] Constellations — connect existing stars with constellation lines, toggle on/off
+- [x] Constellations — connect existing stars with constellation lines, toggle on/off
 - [x] Aurora zones — procedural glow near the poles
 - [x] Earthquake/volcano markers — fetch from USGS API and NASA EONET, show as pulsing dots
 - [ ] Multiple satellites — parse TLE files to show GPS, Starlink, or Hubble orbits alongside ISS

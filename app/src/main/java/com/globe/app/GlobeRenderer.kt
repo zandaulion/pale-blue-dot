@@ -8,6 +8,7 @@ import com.globe.app.camera.OrbitCamera
 import com.globe.app.earth.CloudMapProvider
 import com.globe.app.earth.EarthRenderer
 import com.globe.app.moon.MoonRenderer
+import com.globe.app.stars.ConstellationRenderer
 import com.globe.app.stars.StarsRenderer
 import com.globe.app.indicators.IndicatorRenderer
 import com.globe.app.iss.ISSOrbitRenderer
@@ -35,6 +36,7 @@ class GlobeRenderer(
 
     val earthRenderer = EarthRenderer()
     private val starsRenderer = StarsRenderer()
+    val constellationRenderer = ConstellationRenderer()
     private val moonRenderer = MoonRenderer()
     private val sunRenderer = SunRenderer()
     private val indicatorRenderer = IndicatorRenderer()
@@ -53,6 +55,7 @@ class GlobeRenderer(
             nightTextureResId = R.drawable.earth_night
         )
         starsRenderer.init()
+        constellationRenderer.init()
         moonRenderer.init(context, textureResId = R.drawable.moon)
         sunRenderer.init()
         indicatorRenderer.init()
@@ -96,6 +99,9 @@ class GlobeRenderer(
 
         // 1. Stars — drawn first as background (handles its own GL state)
         starsRenderer.draw(viewMatrix, projectionMatrix)
+
+        // 1b. Constellation lines — drawn right after stars, same depth/blend state
+        constellationRenderer.draw(viewMatrix, projectionMatrix)
 
         // 2. Sun — billboard with glow, drawn behind everything (no depth)
         sunRenderer.draw(viewMatrix, projectionMatrix)

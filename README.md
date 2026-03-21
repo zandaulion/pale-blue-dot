@@ -7,6 +7,7 @@ A real-time 3D Earth viewer for Android, built with raw OpenGL ES 3.0 and Kotlin
 - **Day/night lighting** synced to the phone's clock and timezone, with a smooth terminator transition and city lights on the night side
 - **Live cloud overlay** downloaded from NASA VIIRS satellite imagery via the Worldview Snapshot API, with procedural fallback when offline
 - **Starfield** with 16,000 procedurally generated stars, spectral-class colors, Milky Way clustering, and per-star twinkle animation
+- **Constellations** — 15 major constellations drawn with stick-figure lines using real J2000 star positions, togglable on/off
 - **Sun and Moon** positioned using simplified astronomical algorithms (~1 degree accuracy) with 10-minute caching
 - **ISS orbit track** rendered as a ribbon with real-time position marker, 51.6 degree inclination, and RAAN precession
 - **Location pin** showing the user's GPS position on the globe
@@ -71,7 +72,8 @@ app/src/main/java/com/globe/app/
 ├── stars/
 │   ├── StarsModel.kt         # Procedural star vertex data
 │   ├── StarsShader.kt        # Point-sprite shader with twinkle
-│   └── StarsRenderer.kt      # Star draw calls + GL state
+│   ├── StarsRenderer.kt      # Star draw calls + GL state
+│   └── ConstellationRenderer.kt # Constellation lines + star markers (real RA/Dec)
 ├── iss/
 │   └── ISSOrbitRenderer.kt   # ISS orbit ribbon + position marker
 ├── location/
@@ -91,6 +93,7 @@ app/src/main/java/com/globe/app/
 Each frame draws in this order:
 
 1. **Stars** — depth off, additive blend (infinite background)
+1b. **Constellations** — lines and star markers, same depth/blend state
 2. **Sun** — billboard with glow, no depth write
 3. **Moon** — depth tested, drawn behind Earth
 4. **Earth** — depth on, backface culled, day/night/cloud shaders
