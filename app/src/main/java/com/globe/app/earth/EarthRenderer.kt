@@ -47,8 +47,10 @@ class EarthRenderer {
     private var startTimeMs: Long = 0L
     private var useRealClouds = false
 
-    // Cloud visibility toggle
+    // Cloud and terminator visibility toggles
     @Volatile var cloudsVisible = true
+    @Volatile var terminatorVisible = true
+    @Volatile var auroraVisible = true
 
     // Pending real cloud bitmap from background download (consumed on GL thread)
     private val pendingCloudBitmap = AtomicReference<Bitmap?>(null)
@@ -189,6 +191,14 @@ class EarthRenderer {
             val elapsedSec = (TimeProvider.nowMs() - startTimeMs) / 1000.0f
             GLES30.glUniform1f(s.uCloudRotationLoc, elapsedSec * 0.0017f)
         }
+
+        // Terminator line
+        GLES30.glUniform1f(s.uShowTerminatorLoc, if (terminatorVisible) 1.0f else 0.0f)
+
+        // Aurora zones
+        GLES30.glUniform1f(s.uShowAuroraLoc, if (auroraVisible) 1.0f else 0.0f)
+        val elapsedSec2 = (System.currentTimeMillis() - startTimeMs) / 1000.0f
+        GLES30.glUniform1f(s.uTimeLoc, elapsedSec2)
 
         // ---- Draw ----
         GLES30.glBindVertexArray(buffers.vao)

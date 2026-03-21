@@ -26,6 +26,9 @@ class EarthShader {
     var uCloudTextureLoc: Int = -1; private set
     var uCloudRotationLoc: Int = -1; private set
     var uCloudOpacityLoc: Int = -1; private set
+    var uShowTerminatorLoc: Int = -1; private set
+    var uShowAuroraLoc: Int = -1; private set
+    var uTimeLoc: Int = -1; private set
 
     // ------------------------------------------------------------------
     // Public API
@@ -70,6 +73,9 @@ class EarthShader {
         uCloudTextureLoc = GLES30.glGetUniformLocation(program, "uCloudTexture")
         uCloudRotationLoc = GLES30.glGetUniformLocation(program, "uCloudRotation")
         uCloudOpacityLoc = GLES30.glGetUniformLocation(program, "uCloudOpacity")
+        uShowTerminatorLoc = GLES30.glGetUniformLocation(program, "uShowTerminator")
+        uShowAuroraLoc = GLES30.glGetUniformLocation(program, "uShowAurora")
+        uTimeLoc = GLES30.glGetUniformLocation(program, "uTime")
     }
 
     // ------------------------------------------------------------------
@@ -171,6 +177,9 @@ uniform sampler2D uNightTexture;
 uniform sampler2D uCloudTexture;
 uniform float uCloudRotation; // slow horizontal offset for cloud drift
 uniform float uCloudOpacity;  // overall cloud layer opacity (0.0–1.0)
+uniform float uShowTerminator; // 1.0 = draw terminator line, 0.0 = off
+uniform float uShowAurora;    // 1.0 = draw aurora zones, 0.0 = off
+uniform float uTime;          // elapsed seconds for aurora animation
 
 out vec4 fragColor;
 
@@ -222,6 +231,57 @@ void main() {
     float atmosphereIntensity = 0.45 * fresnel * (0.4 + 0.6 * dayFactor);
 
     vec3 finalColor = surface + atmosphereColor * atmosphereIntensity;
+
+    // ---- Terminator line ------------------------------------------------
+    if (uShowTerminator > 0.5) {
+        // Thin glowing line at the day/night boundary (NdotL ≈ 0)
+        float terminator = 1.0 - smoothstep(0.0, 0.018, abs(NdotL));
+        vec3 terminatorColor = vec3(1.0, 0.6, 0.15); // warm amber
+        finalColor = mix(finalColor, terminatorColor, terminator * 0.8);
+    }
+
+    // ---- Aurora zones ---------------------------------------------------
+    if (uShowAurora > 0.5) {
+        // Geomagnetic pole directions (tilted ~11° from geographic poles)
+        // North: ~80.7°N, 72.8°W  South: ~80.7°S, 107.2°E
+        vec3 geomagNorth = normalize(vec3(-0.057, 0.986, -0.155));
+        vec3 geomagSouth = -geomagNorth;
+
+        // Geomagnetic latitude: angle from the geomagnetic equatorial plane
+        float geomagLatN = dot(normal, geomagNorth);
+        float geomagLatS = dot(normal, geomagSouth);
+
+        // Aurora oval: band at ~65-75° geomagnetic latitude
+        // dot = cos(colatitude) = sin(latitude)
+        // sin(65°) ≈ 0.906, sin(75°) ≈ 0.966
+        float auroraN = smoothstep(0.86, 0.92, geomagLatN) * (1.0 - smoothstep(0.95, 0.98, geomagLatN));
+        float auroraS = smoothstep(0.86, 0.92, geomagLatS) * (1.0 - smoothstep(0.95, 0.98, geomagLatS));
+        float auroraBase = max(auroraN, auroraS);
+
+        // Only visible on the night side
+        float nightMask = 1.0 - smoothstep(-0.1, 0.1, NdotL);
+        auroraBase *= nightMask;
+
+        if (auroraBase > 0.001) {
+            // Animated shimmer using sine waves at different frequencies
+            float lon = atan(normal.z, -normal.x); // approximate longitude
+            float shimmer = 0.5 + 0.5 * sin(lon * 8.0 + uTime * 1.5);
+            shimmer *= 0.6 + 0.4 * sin(lon * 13.0 - uTime * 2.3);
+            shimmer = 0.3 + 0.7 * shimmer; // keep minimum brightness
+
+            float aurora = auroraBase * shimmer;
+
+            // Color: green dominant, with hints of purple at edges
+            float edgeFactor = max(auroraN, auroraS);
+            vec3 auroraColor = mix(
+                vec3(0.1, 0.8, 0.3),   // green core
+                vec3(0.4, 0.1, 0.6),   // purple edge
+                smoothstep(0.90, 0.97, edgeFactor)
+            );
+
+            finalColor += auroraColor * aurora * 0.6;
+        }
+    }
 
     fragColor = vec4(finalColor, 1.0);
 }

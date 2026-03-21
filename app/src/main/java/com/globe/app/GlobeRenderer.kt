@@ -12,6 +12,8 @@ import com.globe.app.stars.StarsRenderer
 import com.globe.app.indicators.IndicatorRenderer
 import com.globe.app.iss.ISSOrbitRenderer
 import com.globe.app.location.LocationPinRenderer
+import com.globe.app.events.EarthEventsProvider
+import com.globe.app.events.EarthEventsRenderer
 import com.globe.app.sun.SunRenderer
 import com.globe.app.eclipse.EclipseDetector
 import javax.microedition.khronos.egl.EGLConfig
@@ -38,6 +40,7 @@ class GlobeRenderer(
     private val indicatorRenderer = IndicatorRenderer()
     private val issOrbitRenderer = ISSOrbitRenderer()
     val locationPinRenderer = LocationPinRenderer()
+    private val earthEventsRenderer = EarthEventsRenderer()
 
     private val projectionMatrix = FloatArray(16)
 
@@ -55,6 +58,7 @@ class GlobeRenderer(
         indicatorRenderer.init()
         issOrbitRenderer.init()
         locationPinRenderer.init()
+        earthEventsRenderer.init()
 
         // Download real cloud cover in background
         onCloudStatusChanged?.invoke(null)
@@ -63,6 +67,14 @@ class GlobeRenderer(
             if (result != null) {
                 earthRenderer.setCloudBitmap(result.bitmap)
                 onCloudStatusChanged?.invoke(result.timestamp)
+            }
+        }.start()
+
+        // Fetch earthquake and volcano data in background
+        Thread {
+            val events = EarthEventsProvider().fetch()
+            if (events.isNotEmpty()) {
+                earthEventsRenderer.setEvents(events)
             }
         }.start()
     }
@@ -98,13 +110,16 @@ class GlobeRenderer(
         // 5. Location pin — user's GPS location, drawn after Earth so depth test occludes the far side
         locationPinRenderer.draw(viewMatrix, projectionMatrix)
 
-        // 6. ISS orbit — thin line, drawn after Earth so depth test occludes the far side
+        // 6. Earthquake/volcano markers — pulsing dots on the globe
+        earthEventsRenderer.draw(viewMatrix, projectionMatrix)
+
+        // 7. ISS orbit — thin line, drawn after Earth so depth test occludes the far side
         issOrbitRenderer.draw(viewMatrix, projectionMatrix)
 
-        // 7. Indicator arrows — 2D overlay pointing toward sun and moon
+        // 8. Indicator arrows — 2D overlay pointing toward sun and moon
         indicatorRenderer.draw(viewMatrix, projectionMatrix)
 
-        // 8. Eclipse detection — notify UI thread of alignment state
+        // 9. Eclipse detection — notify UI thread of alignment state
         onEclipseStateChanged?.invoke(EclipseDetector.detect())
     }
 }

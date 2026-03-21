@@ -13,8 +13,12 @@ A real-time 3D Earth viewer for Android, built with raw OpenGL ES 3.0 and Kotlin
 - **Time scrubber** to move time forward/backward by up to 24 hours, animating sun, moon, ISS, and day/night in real time
 - **Eclipse detection** highlights solar and lunar eclipses when the sun-earth-moon alignment is close
 - **Orbit camera** with touch-to-rotate, pinch-to-zoom, and momentum/inertia
+- **Earthquake and volcano markers** from USGS and NASA EONET — pulsing dots on the globe with magnitude-based sizing
+- **Aurora zones** animated green/purple glow near the geomagnetic poles, visible on the night side
+- **Day/night terminator line** visible amber boundary on the surface
 - **Fresnel atmosphere rim glow** that's stronger on the dayside
 - **Sun and Moon indicator arrows** as 2D overlay
+- **Legend screen** with illustrated icons explaining every visual element
 
 ## Screenshots
 
@@ -74,6 +78,9 @@ app/src/main/java/com/globe/app/
 │   └── LocationPinRenderer.kt # GPS location pin on the globe
 ├── eclipse/
 │   └── EclipseDetector.kt    # Sun-Earth-Moon alignment detection
+├── events/
+│   ├── EarthEventsProvider.kt # Fetches earthquakes (USGS) and volcanoes (NASA EONET)
+│   └── EarthEventsRenderer.kt # Pulsing point-sprite markers on the globe
 └── indicators/
     ├── IndicatorRenderer.kt   # 2D arrow overlays
     └── IndicatorShader.kt     # Indicator GLSL shaders
@@ -88,9 +95,10 @@ Each frame draws in this order:
 3. **Moon** — depth tested, drawn behind Earth
 4. **Earth** — depth on, backface culled, day/night/cloud shaders
 5. **Location pin** — user's GPS position, depth tested
-6. **ISS orbit** — triangle-strip ribbon + point marker, depth tested
-7. **Indicators** — 2D overlay arrows pointing toward sun and moon
-8. **Eclipse detection** — notifies UI of alignment state
+6. **Earthquake/volcano markers** — pulsing point sprites, depth tested
+7. **ISS orbit** — triangle-strip ribbon + point marker, depth tested
+8. **Indicators** — 2D overlay arrows pointing toward sun and moon
+9. **Eclipse detection** — notifies UI of alignment state
 
 ## Textures
 
@@ -102,9 +110,17 @@ The app ships with three texture assets in `res/drawable-nodpi/`:
 
 Cloud cover is downloaded from NASA VIIRS satellite imagery at startup, with clouds extracted by brightness thresholding. Falls back to procedural clouds when offline. The cloud layer can be toggled on/off by tapping the status label.
 
+## Live Data Sources
+
+- **Cloud cover** — NASA Worldview Snapshot API (VIIRS true-color imagery)
+- **Earthquakes** — USGS GeoJSON feed (M4.5+ in the past 7 days)
+- **Volcanoes** — NASA EONET API (active eruptions in the past 30 days)
+
+All APIs are free and require no API key.
+
 ## Permissions
 
-- `INTERNET` — downloading live cloud cover from NASA
+- `INTERNET` — downloading live cloud cover, earthquake, and volcano data
 - `ACCESS_COARSE_LOCATION` — showing the user's position on the globe (requested at runtime, optional)
 
 ## Dependencies
