@@ -103,4 +103,6 @@ No third-party libraries for rendering, math, or image loading.
 
 ## License
 
-All rights reserved.
+This project is licensed under the [MIT License](LICENSE).
+
+Texture assets are sourced from NASA and are in the public domain. See [CREDITS.md](CREDITS.md) for details.
