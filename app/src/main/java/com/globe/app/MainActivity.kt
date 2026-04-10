@@ -2,7 +2,9 @@ package com.globe.app
 
 import android.Manifest
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -17,7 +19,9 @@ import android.graphics.drawable.BitmapDrawable
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.animation.ValueAnimator
 import android.os.Bundle
+import android.view.animation.DecelerateInterpolator
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.WindowManager
@@ -41,6 +45,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
+        private const val PREFS_NAME = "globe_prefs"
+        private const val PREF_MUSIC_ENABLED = "music_enabled"
     }
 
     private lateinit var globeView: GlobeSurfaceView
@@ -50,6 +56,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var timeScrubber: SeekBar
     private lateinit var legendButton: TextView
     private lateinit var legendOverlay: FrameLayout
+    private lateinit var musicButton: TextView
+    private lateinit var prefs: SharedPreferences
+    private var mediaPlayer: MediaPlayer? = null
+    private var musicEnabled = true
+    private var scrubberAnimator: ValueAnimator? = null
     private var cloudTimestamp: String? = null
     private var lastEclipseState: EclipseDetector.EclipseState = EclipseDetector.EclipseState.NONE
 
@@ -118,15 +129,28 @@ class MainActivity : AppCompatActivity() {
                     updateTimeLabel()
                 }
 
-                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+                override fun onStartTrackingTouch(seekBar: SeekBar) {
+                    scrubberAnimator?.cancel()
+                }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
-                    // Snap back to "now" when released
-                    seekBar.progress = 500
-                    TimeProvider.offsetMs = 0L
-                    com.globe.app.earth.SunPosition.invalidateCache()
-                    com.globe.app.moon.MoonPosition.invalidateCache()
-                    updateTimeLabel()
+                    // Animate back to "now" over 1 second
+                    val startProgress = seekBar.progress
+                    scrubberAnimator?.cancel()
+                    scrubberAnimator = ValueAnimator.ofInt(startProgress, 500).apply {
+                        duration = 1000
+                        interpolator = DecelerateInterpolator(2f)
+                        addUpdateListener { anim ->
+                            val progress = anim.animatedValue as Int
+                            seekBar.progress = progress
+                            val fraction = (progress - 500) / 500.0
+                            TimeProvider.offsetMs = (fraction * scrubberRangeMs).toLong()
+                            com.globe.app.earth.SunPosition.invalidateCache()
+                            com.globe.app.moon.MoonPosition.invalidateCache()
+                            updateTimeLabel()
+                        }
+                        start()
+                    }
                 }
             })
         }
@@ -154,6 +178,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         legendOverlay = createLegendOverlay(dp)
+
+        prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        musicEnabled = prefs.getBoolean(PREF_MUSIC_ENABLED, true)
+
+        musicButton = TextView(this).apply {
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+            typeface = Typeface.MONOSPACE
+            setShadowLayer(2f, 1f, 1f, Color.BLACK)
+            setOnClickListener { toggleMusic() }
+            isClickable = true
+        }
+        updateMusicButton()
 
         globeView = GlobeSurfaceView(
             context = this,
@@ -187,6 +224,13 @@ class MainActivity : AppCompatActivity() {
             FrameLayout.LayoutParams.WRAP_CONTENT,
             Gravity.BOTTOM or Gravity.END
         ).apply { setMargins(margin, margin, margin, margin) })
+
+        // Music toggle — top right
+        root.addView(musicButton, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            Gravity.TOP or Gravity.END
+        ).apply { setMargins(margin, dp(24f), margin, 0) })
 
         // Time label — top center
         root.addView(timeLabel, FrameLayout.LayoutParams(
@@ -607,6 +651,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     // ------------------------------------------------------------------
+    // Music
+    // ------------------------------------------------------------------
+
+    private fun startMusic() {
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.ambient_space).apply {
+                isLooping = true
+                setVolume(0.4f, 0.4f)
+            }
+        }
+        mediaPlayer?.start()
+    }
+
+    private fun stopMusic() {
+        mediaPlayer?.pause()
+    }
+
+    private fun releaseMusic() {
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    private fun toggleMusic() {
+        musicEnabled = !musicEnabled
+        prefs.edit().putBoolean(PREF_MUSIC_ENABLED, musicEnabled).apply()
+        if (musicEnabled) startMusic() else stopMusic()
+        updateMusicButton()
+    }
+
+    private fun updateMusicButton() {
+        musicButton.text = if (musicEnabled) "\u266B Music: on" else "\u266B Music: off"
+    }
+
+    // ------------------------------------------------------------------
     // Location
     // ------------------------------------------------------------------
 
@@ -684,6 +762,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         globeView.onResume()
+        if (musicEnabled) startMusic()
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
         ) {
@@ -694,6 +773,12 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         globeView.onPause()
+        stopMusic()
         stopLocationUpdates()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        releaseMusic()
     }
 }
