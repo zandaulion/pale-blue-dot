@@ -465,22 +465,22 @@ class MainActivity : AppCompatActivity() {
             }, "Location pin", "Your GPS position on the globe (cyan dot)"),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
-                // Earthquakes: orange-red pulsing dot
+                // Earthquakes: amber/golden pulsing dot
                 pt.shader = RadialGradient(s/2f, s/2f, s*0.4f,
-                    intArrayOf(Color.rgb(255,100,50), Color.rgb(255,70,20), Color.argb(0,255,50,10)),
+                    intArrayOf(Color.rgb(255,153,0), Color.rgb(255,179,51), Color.argb(0,255,128,0)),
                     floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP)
                 c.drawCircle(s/2f, s/2f, s*0.4f, pt)
                 pt.shader = null
-            }, "Earthquakes", "Pulsing orange-red dots (M4.5+ from USGS, past 7 days)"),
+            }, "Earthquakes", "Pulsing amber dots (M4.5+ from USGS, past 7 days)"),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
-                // Volcanoes: yellow-orange pulsing dot
+                // Volcanoes: magenta/hot-red pulsing dot
                 pt.shader = RadialGradient(s/2f, s/2f, s*0.4f,
-                    intArrayOf(Color.rgb(255,220,50), Color.rgb(255,160,30), Color.argb(0,255,130,10)),
+                    intArrayOf(Color.rgb(255,26,128), Color.rgb(230,77,166), Color.argb(0,200,20,100)),
                     floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP)
                 c.drawCircle(s/2f, s/2f, s*0.4f, pt)
                 pt.shader = null
-            }, "Volcanoes", "Pulsing yellow dots (active eruptions from NASA EONET)"),
+            }, "Volcanoes", "Pulsing magenta dots (active eruptions from NASA EONET)"),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // ISS orbit: curved red line with dot

@@ -8,8 +8,8 @@ import java.util.concurrent.atomic.AtomicReference
 
 /**
  * Renders earthquake and volcano markers as pulsing point sprites on the globe.
- * Earthquakes are orange-red with size proportional to magnitude.
- * Volcanoes are bright yellow.
+ * Earthquakes are amber/golden with size proportional to magnitude.
+ * Volcanoes are magenta/hot-red to clearly distinguish them from earthquakes.
  *
  * Coordinate system: +Y = North Pole, -X = Greenwich, +Z = 90°E.
  */
@@ -230,12 +230,12 @@ class EarthEventsRenderer {
             // Soft circle with bright center
             float alpha = smoothstep(1.0, 0.2, dist);
 
-            // Earthquake: orange-red, Volcano: bright yellow
+            // Earthquake: amber/golden, Volcano: magenta/hot-red
             vec3 color;
             if (vType < 0.5) {
-                color = mix(vec3(1.0, 0.3, 0.1), vec3(1.0, 0.7, 0.2), dist);
+                color = mix(vec3(1.0, 0.6, 0.0), vec3(1.0, 0.85, 0.2), dist);
             } else {
-                color = mix(vec3(1.0, 0.9, 0.2), vec3(1.0, 0.6, 0.1), dist);
+                color = mix(vec3(1.0, 0.1, 0.5), vec3(0.9, 0.3, 0.65), dist);
             }
 
             fragColor = vec4(color, alpha * 0.85);
