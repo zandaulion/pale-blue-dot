@@ -16,6 +16,7 @@ import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.GradientDrawable
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var legendButton: TextView
     private lateinit var legendOverlay: FrameLayout
     private lateinit var musicButton: TextView
+    private lateinit var shareButton: TextView
     private lateinit var prefs: SharedPreferences
     private var mediaPlayer: MediaPlayer? = null
     private var musicEnabled = true
@@ -192,6 +194,34 @@ class MainActivity : AppCompatActivity() {
         }
         updateMusicButton()
 
+        shareButton = TextView(this).apply {
+            text = "↑  Share"
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+            typeface = Typeface.DEFAULT_BOLD
+            letterSpacing = 0.04f
+            setShadowLayer(4f, 0f, 1f, Color.argb(160, 0, 0, 0))
+            gravity = Gravity.CENTER
+            setPadding(dp(18f), dp(9f), dp(18f), dp(9f))
+
+            // Rounded pill with a cyan->blue gradient matching the app's palette,
+            // a soft rim, and elevation so it lifts off the dark globe.
+            background = GradientDrawable().apply {
+                shape = GradientDrawable.RECTANGLE
+                cornerRadius = dp(22f).toFloat()
+                orientation = GradientDrawable.Orientation.TL_BR
+                colors = intArrayOf(
+                    Color.rgb(0, 224, 208),   // cyan (matches the location pin)
+                    Color.rgb(0, 132, 255)    // bright blue
+                )
+                setStroke(dp(1f), Color.argb(150, 255, 255, 255))
+            }
+            elevation = dp(6f).toFloat()
+            stateListAnimator = null
+
+            setOnClickListener { shareCurrentView() }
+        }
+
         globeView = GlobeSurfaceView(
             context = this,
             onCloudStatusChanged = { timestamp ->
@@ -253,6 +283,13 @@ class MainActivity : AppCompatActivity() {
             Gravity.BOTTOM or Gravity.END
         ).apply { setMargins(margin, margin, margin, dp(32f)) })
 
+        // Share button — top left
+        root.addView(shareButton, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            Gravity.TOP or Gravity.START
+        ).apply { setMargins(margin, dp(24f), margin, 0) })
+
         // Legend overlay — full screen, initially hidden
         root.addView(legendOverlay, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
@@ -269,6 +306,11 @@ class MainActivity : AppCompatActivity() {
         val earth = globeView.renderer.earthRenderer
         earth.cloudsVisible = !earth.cloudsVisible
         updateCloudLabel()
+    }
+
+    /** Capture the current globe view (no UI chrome) and open the share sheet. */
+    private fun shareCurrentView() {
+        com.globe.app.share.ShareManager.share(this, globeView)
     }
 
     private fun updateCloudLabel() {
@@ -656,7 +698,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startMusic() {
         if (mediaPlayer == null) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.ambient_space).apply {
+            mediaPlayer = MediaPlayer.create(this, R.raw.ambient_space)?.apply {
                 isLooping = true
                 setVolume(0.4f, 0.4f)
             }
