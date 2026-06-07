@@ -17,7 +17,7 @@ class GlobeSurfaceView(
 ) : GLSurfaceView(context) {
 
     val renderer: GlobeRenderer
-    private val camera: OrbitCamera = OrbitCamera()
+    val camera: OrbitCamera = OrbitCamera()
     private val scaleDetector: ScaleGestureDetector
 
     private var previousX = 0f

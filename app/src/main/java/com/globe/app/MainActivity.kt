@@ -25,6 +25,7 @@ import android.os.Bundle
 import android.view.animation.DecelerateInterpolator
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.HapticFeedbackConstants
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -32,6 +33,7 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -48,6 +50,10 @@ class MainActivity : AppCompatActivity() {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
         private const val PREFS_NAME = "globe_prefs"
         private const val PREF_MUSIC_ENABLED = "music_enabled"
+        private const val PREF_CLOUDS_VISIBLE = "clouds_visible"
+        private const val PREF_CAM_AZ = "cam_az"
+        private const val PREF_CAM_EL = "cam_el"
+        private const val PREF_CAM_DIST = "cam_dist"
     }
 
     private lateinit var globeView: GlobeSurfaceView
@@ -59,7 +65,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var legendOverlay: FrameLayout
     private lateinit var musicButton: TextView
     private lateinit var shareButton: TextView
+    private lateinit var locateButton: TextView
     private lateinit var prefs: SharedPreferences
+
+    // Latest known user location (for the "My location" fly-to button)
+    private var userLat: Double? = null
+    private var userLon: Double? = null
     private var mediaPlayer: MediaPlayer? = null
     private var musicEnabled = true
     private var scrubberAnimator: ValueAnimator? = null
@@ -69,6 +80,8 @@ class MainActivity : AppCompatActivity() {
     private var locationManager: LocationManager? = null
     private val locationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
+            userLat = location.latitude
+            userLon = location.longitude
             globeView.renderer.locationPinRenderer.setLocation(
                 location.latitude, location.longitude
             )
@@ -104,7 +117,10 @@ class MainActivity : AppCompatActivity() {
             typeface = Typeface.MONOSPACE
             setShadowLayer(2f, 1f, 1f, Color.BLACK)
             text = "\u2601 Clouds: procedural"
-            setOnClickListener { toggleClouds() }
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                toggleClouds()
+            }
             isClickable = true
         }
 
@@ -133,9 +149,13 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onStartTrackingTouch(seekBar: SeekBar) {
                     scrubberAnimator?.cancel()
+                    // Keep the globe from drifting into idle auto-rotation while scrubbing.
+                    globeView.camera.notifyInteraction()
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
+                    seekBar.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
+                    globeView.camera.notifyInteraction()
                     // Animate back to "now" over 1 second
                     val startProgress = seekBar.progress
                     scrubberAnimator?.cancel()
@@ -176,7 +196,10 @@ class MainActivity : AppCompatActivity() {
             minimumWidth = size
             minimumHeight = size
             setPadding(0, 0, 0, 0)
-            setOnClickListener { showLegend() }
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                showLegend()
+            }
         }
 
         legendOverlay = createLegendOverlay(dp)
@@ -189,37 +212,26 @@ class MainActivity : AppCompatActivity() {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
             typeface = Typeface.MONOSPACE
             setShadowLayer(2f, 1f, 1f, Color.BLACK)
-            setOnClickListener { toggleMusic() }
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                toggleMusic()
+            }
             isClickable = true
         }
         updateMusicButton()
 
-        shareButton = TextView(this).apply {
-            text = "↑  Share"
-            setTextColor(Color.WHITE)
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
-            typeface = Typeface.DEFAULT_BOLD
-            letterSpacing = 0.04f
-            setShadowLayer(4f, 0f, 1f, Color.argb(160, 0, 0, 0))
-            gravity = Gravity.CENTER
-            setPadding(dp(18f), dp(9f), dp(18f), dp(9f))
-
-            // Rounded pill with a cyan->blue gradient matching the app's palette,
-            // a soft rim, and elevation so it lifts off the dark globe.
-            background = GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                cornerRadius = dp(22f).toFloat()
-                orientation = GradientDrawable.Orientation.TL_BR
-                colors = intArrayOf(
-                    Color.rgb(0, 224, 208),   // cyan (matches the location pin)
-                    Color.rgb(0, 132, 255)    // bright blue
-                )
-                setStroke(dp(1f), Color.argb(150, 255, 255, 255))
+        shareButton = makePillButton("↑  Share", dp).apply {
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                shareCurrentView()
             }
-            elevation = dp(6f).toFloat()
-            stateListAnimator = null
+        }
 
-            setOnClickListener { shareCurrentView() }
+        locateButton = makePillButton("◎  My location", dp).apply {
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                flyToMyLocation()
+            }
         }
 
         globeView = GlobeSurfaceView(
@@ -235,6 +247,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
+
+        // Restore saved view state (camera pose + cloud visibility)
+        if (prefs.contains(PREF_CAM_AZ)) {
+            globeView.camera.restore(
+                prefs.getFloat(PREF_CAM_AZ, globeView.camera.azimuth),
+                prefs.getFloat(PREF_CAM_EL, globeView.camera.elevation),
+                prefs.getFloat(PREF_CAM_DIST, globeView.camera.distance)
+            )
+        }
+        globeView.renderer.earthRenderer.cloudsVisible =
+            prefs.getBoolean(PREF_CLOUDS_VISIBLE, true)
 
         val margin = dp(12f)
 
@@ -283,8 +306,16 @@ class MainActivity : AppCompatActivity() {
             Gravity.BOTTOM or Gravity.END
         ).apply { setMargins(margin, margin, margin, dp(32f)) })
 
-        // Share button — top left
-        root.addView(shareButton, FrameLayout.LayoutParams(
+        // Share + My location buttons — stacked top left
+        val topLeftButtons = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            addView(shareButton)
+            addView(locateButton, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { topMargin = dp(10f) })
+        }
+        root.addView(topLeftButtons, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT,
             Gravity.TOP or Gravity.START
@@ -312,6 +343,42 @@ class MainActivity : AppCompatActivity() {
     private fun shareCurrentView() {
         com.globe.app.share.ShareManager.share(this, globeView)
     }
+
+    /** Smoothly rotate the globe to center the user's location, if known. */
+    private fun flyToMyLocation() {
+        val lat = userLat
+        val lon = userLon
+        if (lat == null || lon == null) {
+            Toast.makeText(this, "Location not available yet.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        globeView.camera.flyTo(lat, lon)
+    }
+
+    /** Builds a rounded, elevated pill button matching the app's cyan/blue palette. */
+    private fun makePillButton(label: String, dp: (Float) -> Int): TextView =
+        TextView(this).apply {
+            text = label
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+            typeface = Typeface.DEFAULT_BOLD
+            letterSpacing = 0.04f
+            setShadowLayer(4f, 0f, 1f, Color.argb(160, 0, 0, 0))
+            gravity = Gravity.CENTER
+            setPadding(dp(18f), dp(9f), dp(18f), dp(9f))
+            background = GradientDrawable().apply {
+                shape = GradientDrawable.RECTANGLE
+                cornerRadius = dp(22f).toFloat()
+                orientation = GradientDrawable.Orientation.TL_BR
+                colors = intArrayOf(
+                    Color.rgb(0, 224, 208),   // cyan (matches the location pin)
+                    Color.rgb(0, 132, 255)    // bright blue
+                )
+                setStroke(dp(1f), Color.argb(150, 255, 255, 255))
+            }
+            elevation = dp(6f).toFloat()
+            stateListAnimator = null
+        }
 
     private fun updateCloudLabel() {
         val visible = globeView.renderer.earthRenderer.cloudsVisible
@@ -769,6 +836,8 @@ class MainActivity : AppCompatActivity() {
         val lastKnown = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
             ?: lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         if (lastKnown != null) {
+            userLat = lastKnown.latitude
+            userLon = lastKnown.longitude
             globeView.renderer.locationPinRenderer.setLocation(
                 lastKnown.latitude, lastKnown.longitude
             )
@@ -814,9 +883,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        saveViewState()
         globeView.onPause()
         stopMusic()
         stopLocationUpdates()
+    }
+
+    /** Persist the camera pose and cloud visibility so the app reopens as left. */
+    private fun saveViewState() {
+        prefs.edit()
+            .putFloat(PREF_CAM_AZ, globeView.camera.azimuth)
+            .putFloat(PREF_CAM_EL, globeView.camera.elevation)
+            .putFloat(PREF_CAM_DIST, globeView.camera.distance)
+            .putBoolean(PREF_CLOUDS_VISIBLE, globeView.renderer.earthRenderer.cloudsVisible)
+            .apply()
     }
 
     override fun onDestroy() {

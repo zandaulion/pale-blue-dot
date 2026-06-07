@@ -93,6 +93,9 @@ class GlobeRenderer(
     override fun onDrawFrame(gl: GL10?) {
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT or GLES30.GL_DEPTH_BUFFER_BIT)
 
+        // Snapshot the simulated clock once so every consumer this frame agrees.
+        TimeProvider.beginFrame()
+
         camera.update()
         val viewMatrix = camera.getViewMatrix()
         val camPos = camera.getPosition()

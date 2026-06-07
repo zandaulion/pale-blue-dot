@@ -13,8 +13,24 @@ object TimeProvider {
     /** Time offset in milliseconds (positive = future, negative = past). */
     @Volatile var offsetMs: Long = 0L
 
-    /** Returns the simulated current time in milliseconds. */
-    fun nowMs(): Long = System.currentTimeMillis() + offsetMs
+    /**
+     * Snapshot of the simulated time for the frame currently being drawn.
+     *
+     * Every renderer in a single frame (Earth terminator, Sun, Moon, indicator
+     * arrows, eclipse detector) reads the clock through [nowMs]. If the scrubber
+     * changes [offsetMs] *mid-frame*, those consumers would otherwise compute
+     * positions for slightly different times and visibly disagree (flicker).
+     * Snapshotting once per frame keeps them consistent.
+     */
+    @Volatile private var frameNowMs: Long = System.currentTimeMillis()
+
+    /** Call once at the very start of each rendered frame, before any position math. */
+    fun beginFrame() {
+        frameNowMs = System.currentTimeMillis() + offsetMs
+    }
+
+    /** Returns the simulated current time in milliseconds (stable within a frame). */
+    fun nowMs(): Long = frameNowMs
 
     /** Returns a UTC Calendar at the simulated current time. */
     fun calendar(): Calendar {
