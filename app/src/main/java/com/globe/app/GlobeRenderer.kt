@@ -42,7 +42,7 @@ class GlobeRenderer(
     private val indicatorRenderer = IndicatorRenderer()
     private val issOrbitRenderer = ISSOrbitRenderer()
     val locationPinRenderer = LocationPinRenderer()
-    private val earthEventsRenderer = EarthEventsRenderer()
+    val earthEventsRenderer = EarthEventsRenderer()
 
     private val projectionMatrix = FloatArray(16)
 

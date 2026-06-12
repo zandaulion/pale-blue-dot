@@ -39,6 +39,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.view.View
 import com.globe.app.eclipse.EclipseDetector
+import com.globe.app.events.EarthEventsProvider
+import com.globe.app.events.GlobePicker
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -66,7 +68,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var musicButton: TextView
     private lateinit var shareButton: TextView
     private lateinit var locateButton: TextView
+    private lateinit var eventCard: TextView
     private lateinit var prefs: SharedPreferences
+
+    private val hideEventCardRunnable = Runnable { eventCard.visibility = View.GONE }
 
     // Latest known user location (for the "My location" fly-to button)
     private var userLat: Double? = null
@@ -234,6 +239,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Info card shown when the user taps an event marker on the globe
+        eventCard = TextView(this).apply {
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
+            typeface = Typeface.MONOSPACE
+            setShadowLayer(2f, 1f, 1f, Color.BLACK)
+            setPadding(dp(14f), dp(10f), dp(14f), dp(10f))
+            background = GradientDrawable().apply {
+                cornerRadius = dp(12f).toFloat()
+                setColor(Color.argb(170, 10, 18, 30))
+                setStroke(dp(1f), Color.argb(60, 255, 255, 255))
+            }
+            visibility = View.GONE
+            setOnClickListener { hideEventCard() }
+        }
+
         globeView = GlobeSurfaceView(
             context = this,
             onCloudStatusChanged = { timestamp ->
@@ -245,7 +266,8 @@ class MainActivity : AppCompatActivity() {
                     lastEclipseState = state
                     runOnUiThread { updateEclipseLabel(state) }
                 }
-            }
+            },
+            onGlobeTap = { x, y -> onGlobeTapped(x, y) }
         )
 
         // Restore saved view state (camera pose + cloud visibility)
@@ -321,6 +343,13 @@ class MainActivity : AppCompatActivity() {
             Gravity.TOP or Gravity.START
         ).apply { setMargins(margin, dp(24f), margin, 0) })
 
+        // Event info card — bottom center, above the time scrubber
+        root.addView(eventCard, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+        ).apply { setMargins(margin, 0, margin, dp(150f)) })
+
         // Legend overlay — full screen, initially hidden
         root.addView(legendOverlay, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
@@ -344,6 +373,81 @@ class MainActivity : AppCompatActivity() {
         com.globe.app.share.ShareManager.share(this, globeView)
     }
 
+    // ------------------------------------------------------------------
+    // Tap-to-identify event markers
+    // ------------------------------------------------------------------
+
+    private fun onGlobeTapped(x: Float, y: Float) {
+        val picked = GlobePicker.pick(globeView.camera, x, y, globeView.width, globeView.height)
+        if (picked == null) {
+            hideEventCard()
+            return
+        }
+
+        val events = globeView.renderer.earthEventsRenderer.events
+        if (events.isEmpty()) {
+            hideEventCard()
+            return
+        }
+
+        var best: EarthEventsProvider.Event? = null
+        var bestDeg = Double.MAX_VALUE
+        for (event in events) {
+            val d = angularDistanceDeg(picked[0], picked[1], event.lat, event.lon)
+            if (d < bestDeg) {
+                bestDeg = d
+                best = event
+            }
+        }
+
+        // Pick radius grows as the camera pulls back (markers shrink on screen)
+        val thresholdDeg = (2.0 + globeView.camera.distance * 0.7).coerceIn(3.0, 9.0)
+        if (best != null && bestDeg <= thresholdDeg) {
+            globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            showEventCard(best)
+        } else {
+            hideEventCard()
+        }
+    }
+
+    private fun showEventCard(event: EarthEventsProvider.Event) {
+        val emoji = when (event.type) {
+            EarthEventsProvider.Event.Type.EARTHQUAKE -> "🔶"
+            EarthEventsProvider.Event.Type.VOLCANO -> "🌋"
+            EarthEventsProvider.Event.Type.WILDFIRE -> "🔥"
+            EarthEventsProvider.Event.Type.STORM -> "🌀"
+        }
+        eventCard.text = "$emoji ${event.title}\n   ${relativeTime(event.timeMs)}"
+        eventCard.visibility = View.VISIBLE
+        eventCard.removeCallbacks(hideEventCardRunnable)
+        eventCard.postDelayed(hideEventCardRunnable, 8_000L)
+    }
+
+    private fun hideEventCard() {
+        eventCard.removeCallbacks(hideEventCardRunnable)
+        eventCard.visibility = View.GONE
+    }
+
+    private fun relativeTime(timeMs: Long): String {
+        if (timeMs <= 0L) return "ongoing"
+        val diffMin = (System.currentTimeMillis() - timeMs) / 60_000L
+        return when {
+            diffMin < 1 -> "just now"
+            diffMin < 60 -> "$diffMin min ago"
+            diffMin < 48 * 60 -> "${diffMin / 60} h ago"
+            else -> "${diffMin / (24 * 60)} days ago"
+        }
+    }
+
+    /** Great-circle angle between two lat/lon points, in degrees. */
+    private fun angularDistanceDeg(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val p1 = Math.toRadians(lat1)
+        val p2 = Math.toRadians(lat2)
+        val dl = Math.toRadians(lon2 - lon1)
+        val cosD = Math.sin(p1) * Math.sin(p2) + Math.cos(p1) * Math.cos(p2) * Math.cos(dl)
+        return Math.toDegrees(Math.acos(cosD.coerceIn(-1.0, 1.0)))
+    }
+
     /** Smoothly rotate the globe to center the user's location, if known. */
     private fun flyToMyLocation() {
         val lat = userLat
@@ -355,29 +459,25 @@ class MainActivity : AppCompatActivity() {
         globeView.camera.flyTo(lat, lon)
     }
 
-    /** Builds a rounded, elevated pill button matching the app's cyan/blue palette. */
+    /**
+     * Builds a quiet rounded chip matching the app's monospace HUD style —
+     * dark translucent fill with a faint rim, like the labels rather than a
+     * loud material button.
+     */
     private fun makePillButton(label: String, dp: (Float) -> Int): TextView =
         TextView(this).apply {
             text = label
             setTextColor(Color.WHITE)
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
-            typeface = Typeface.DEFAULT_BOLD
-            letterSpacing = 0.04f
-            setShadowLayer(4f, 0f, 1f, Color.argb(160, 0, 0, 0))
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
+            typeface = Typeface.MONOSPACE
+            setShadowLayer(2f, 1f, 1f, Color.BLACK)
             gravity = Gravity.CENTER
-            setPadding(dp(18f), dp(9f), dp(18f), dp(9f))
+            setPadding(dp(12f), dp(7f), dp(12f), dp(7f))
             background = GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                cornerRadius = dp(22f).toFloat()
-                orientation = GradientDrawable.Orientation.TL_BR
-                colors = intArrayOf(
-                    Color.rgb(0, 224, 208),   // cyan (matches the location pin)
-                    Color.rgb(0, 132, 255)    // bright blue
-                )
-                setStroke(dp(1f), Color.argb(150, 255, 255, 255))
+                cornerRadius = dp(18f).toFloat()
+                setColor(Color.argb(110, 12, 22, 34))
+                setStroke(dp(1f), Color.argb(70, 255, 255, 255))
             }
-            elevation = dp(6f).toFloat()
-            stateListAnimator = null
         }
 
     private fun updateCloudLabel() {
@@ -590,6 +690,24 @@ class MainActivity : AppCompatActivity() {
                 c.drawCircle(s/2f, s/2f, s*0.4f, pt)
                 pt.shader = null
             }, "Volcanoes", "Pulsing magenta dots (active eruptions from NASA EONET)"),
+
+            LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
+                // Wildfires: red pulsing dot
+                pt.shader = RadialGradient(s/2f, s/2f, s*0.4f,
+                    intArrayOf(Color.rgb(255,46,13), Color.rgb(255,102,38), Color.argb(0,255,60,20)),
+                    floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP)
+                c.drawCircle(s/2f, s/2f, s*0.4f, pt)
+                pt.shader = null
+            }, "Wildfires", "Pulsing red dots (active fires from NASA EONET)"),
+
+            LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
+                // Storms: electric blue pulsing dot
+                pt.shader = RadialGradient(s/2f, s/2f, s*0.4f,
+                    intArrayOf(Color.rgb(64,166,255), Color.rgb(140,204,255), Color.argb(0,64,166,255)),
+                    floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP)
+                c.drawCircle(s/2f, s/2f, s*0.4f, pt)
+                pt.shader = null
+            }, "Storms", "Pulsing blue dots (severe storms from NASA EONET) — tap any dot for details"),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // ISS orbit: curved red line with dot

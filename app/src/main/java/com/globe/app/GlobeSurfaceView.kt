@@ -13,7 +13,8 @@ import com.globe.app.eclipse.EclipseDetector
 class GlobeSurfaceView(
     context: Context,
     onCloudStatusChanged: ((String?) -> Unit)? = null,
-    onEclipseStateChanged: ((EclipseDetector.EclipseState) -> Unit)? = null
+    onEclipseStateChanged: ((EclipseDetector.EclipseState) -> Unit)? = null,
+    private val onGlobeTap: ((Float, Float) -> Unit)? = null
 ) : GLSurfaceView(context) {
 
     val renderer: GlobeRenderer
@@ -22,6 +23,12 @@ class GlobeSurfaceView(
 
     private var previousX = 0f
     private var previousY = 0f
+
+    // Tap detection: a touch that never strays past the slop and isn't a pinch
+    private val touchSlop = android.view.ViewConfiguration.get(context).scaledTouchSlop
+    private var downX = 0f
+    private var downY = 0f
+    private var isTapCandidate = false
 
     init {
         // Request OpenGL ES 3.0 context
@@ -49,9 +56,24 @@ class GlobeSurfaceView(
                 camera.startDrag()
                 previousX = event.x
                 previousY = event.y
+                downX = event.x
+                downY = event.y
+                isTapCandidate = true
             }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                // A second finger means pinch, not tap
+                isTapCandidate = false
+            }
+            MotionEvent.ACTION_UP -> {
                 camera.endDrag()
+                if (isTapCandidate && !scaleDetector.isInProgress) {
+                    onGlobeTap?.invoke(event.x, event.y)
+                }
+                isTapCandidate = false
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                camera.endDrag()
+                isTapCandidate = false
             }
             MotionEvent.ACTION_POINTER_UP -> {
                 // When a finger lifts during a pinch, reset to the remaining finger
@@ -61,6 +83,11 @@ class GlobeSurfaceView(
                 previousY = event.getY(remainingIndex)
             }
             MotionEvent.ACTION_MOVE -> {
+                if (isTapCandidate &&
+                    (Math.abs(event.x - downX) > touchSlop || Math.abs(event.y - downY) > touchSlop)
+                ) {
+                    isTapCandidate = false
+                }
                 if (!scaleDetector.isInProgress && event.pointerCount == 1) {
                     val dx = event.x - previousX
                     val dy = event.y - previousY

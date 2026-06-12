@@ -1,0 +1,9 @@
+<en-US>
+Your globe just got chattier! 🌍
+
+• Tap any glowing dot to see what it is — earthquake magnitude, volcano, wildfire, or storm, with how long ago it happened
+• New live layers: active wildfires 🔥 and severe storms 🌀 from NASA, joining earthquakes and volcanoes
+• Refined the on-screen buttons to blend in with the night sky
+
+All data comes from free public NASA & USGS feeds — still no account, no ads, no tracking.
+</en-US>

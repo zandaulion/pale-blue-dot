@@ -7,9 +7,9 @@ import java.nio.ByteOrder
 import java.util.concurrent.atomic.AtomicReference
 
 /**
- * Renders earthquake and volcano markers as pulsing point sprites on the globe.
- * Earthquakes are amber/golden with size proportional to magnitude.
- * Volcanoes are magenta/hot-red to clearly distinguish them from earthquakes.
+ * Renders natural-event markers as pulsing point sprites on the globe.
+ * Earthquakes are amber (size scales with magnitude), volcanoes magenta,
+ * wildfires red, and severe storms electric blue.
  *
  * Coordinate system: +Y = North Pole, -X = Greenwich, +Z = 90°E.
  */
@@ -17,7 +17,7 @@ class EarthEventsRenderer {
 
     companion object {
         private const val PIN_RADIUS = 1.006f
-        /** Floats per vertex: x, y, z, pointSize, type (0=quake, 1=volcano) */
+        /** Floats per vertex: x, y, z, pointSize, type (0=quake, 1=volcano, 2=fire, 3=storm) */
         private const val FLOATS_PER_VERTEX = 5
         private const val STRIDE = FLOATS_PER_VERTEX * 4
     }
@@ -35,7 +35,13 @@ class EarthEventsRenderer {
     // Thread-safe event data (set from background thread, consumed on GL thread)
     private val pendingEvents = AtomicReference<List<EarthEventsProvider.Event>?>(null)
 
+    /** Latest event list, readable from any thread (used for tap hit-testing). */
+    @Volatile
+    var events: List<EarthEventsProvider.Event> = emptyList()
+        private set
+
     fun setEvents(events: List<EarthEventsProvider.Event>) {
+        this.events = events
         pendingEvents.set(events)
     }
 
@@ -143,8 +149,12 @@ class EarthEventsRenderer {
             // Point size scales with magnitude: M4.5 -> 12px, M7+ -> 32px
             data[base + 3] = (8f + (event.magnitude - 4f) * 8f).coerceIn(10f, 36f)
 
-            // Type: 0 = earthquake, 1 = volcano
-            data[base + 4] = if (event.type == EarthEventsProvider.Event.Type.VOLCANO) 1f else 0f
+            data[base + 4] = when (event.type) {
+                EarthEventsProvider.Event.Type.EARTHQUAKE -> 0f
+                EarthEventsProvider.Event.Type.VOLCANO -> 1f
+                EarthEventsProvider.Event.Type.WILDFIRE -> 2f
+                EarthEventsProvider.Event.Type.STORM -> 3f
+            }
         }
 
         val buffer = ByteBuffer.allocateDirect(data.size * 4)
@@ -230,12 +240,16 @@ class EarthEventsRenderer {
             // Soft circle with bright center
             float alpha = smoothstep(1.0, 0.2, dist);
 
-            // Earthquake: amber/golden, Volcano: magenta/hot-red
+            // 0 earthquake: amber, 1 volcano: magenta, 2 wildfire: red, 3 storm: electric blue
             vec3 color;
             if (vType < 0.5) {
                 color = mix(vec3(1.0, 0.6, 0.0), vec3(1.0, 0.85, 0.2), dist);
-            } else {
+            } else if (vType < 1.5) {
                 color = mix(vec3(1.0, 0.1, 0.5), vec3(0.9, 0.3, 0.65), dist);
+            } else if (vType < 2.5) {
+                color = mix(vec3(1.0, 0.18, 0.05), vec3(1.0, 0.4, 0.15), dist);
+            } else {
+                color = mix(vec3(0.25, 0.65, 1.0), vec3(0.55, 0.8, 1.0), dist);
             }
 
             fragColor = vec4(color, alpha * 0.85);
