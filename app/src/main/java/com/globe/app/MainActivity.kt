@@ -33,8 +33,10 @@ import android.view.View
 import com.globe.app.eclipse.EclipseDetector
 import com.globe.app.events.EarthEventsProvider
 import com.globe.app.events.GlobePicker
+import com.globe.app.kids.DailyFacts
 import com.globe.app.kids.Discovery
 import com.globe.app.kids.DiscoveryJournal
+import com.globe.app.kids.MoonPhase
 import com.globe.app.kids.ParentalGate
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         private const val PREF_CAM_AZ = "cam_az"
         private const val PREF_CAM_EL = "cam_el"
         private const val PREF_CAM_DIST = "cam_dist"
+        private const val PREF_TODAY_SHOWN_DAY = "today_shown_day"
     }
 
     private lateinit var globeView: GlobeSurfaceView
@@ -64,6 +67,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var journalButton: TextView
     private lateinit var journalOverlay: FrameLayout
     private lateinit var journalColumn: LinearLayout
+    private lateinit var todayButton: TextView
+    private lateinit var todayOverlay: FrameLayout
+    private lateinit var todayColumn: LinearLayout
     private lateinit var eventCard: TextView
     private lateinit var prefs: SharedPreferences
     private lateinit var journal: DiscoveryJournal
@@ -192,6 +198,7 @@ class MainActivity : AppCompatActivity() {
         prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         journal = DiscoveryJournal(this)
         journalOverlay = createJournalOverlay()
+        todayOverlay = createTodayOverlay()
         musicEnabled = prefs.getBoolean(PREF_MUSIC_ENABLED, true)
 
         musicButton = TextView(this).apply {
@@ -221,6 +228,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
         refreshJournalButton()
+
+        todayButton = makePillButton("🗓  Today", dp).apply {
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                showToday()
+            }
+        }
 
         // Info card shown when the user taps a marker or a spot on the globe
         eventCard = TextView(this).apply {
@@ -313,11 +327,15 @@ class MainActivity : AppCompatActivity() {
             Gravity.BOTTOM or Gravity.END
         ).apply { setMargins(margin, margin, margin, dp(32f)) })
 
-        // Share + Journal buttons — stacked top left
+        // Today + Journal + Share buttons — stacked top left
         val topLeftButtons = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            addView(shareButton)
+            addView(todayButton)
             addView(journalButton, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { topMargin = dp(10f) })
+            addView(shareButton, LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply { topMargin = dp(10f) })
@@ -347,7 +365,16 @@ class MainActivity : AppCompatActivity() {
             FrameLayout.LayoutParams.MATCH_PARENT
         ))
 
+        // Today overlay — full screen, initially hidden
+        root.addView(todayOverlay, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        ))
+
         setContentView(root)
+
+        // Greet the child with today's panel once per calendar day.
+        maybeShowTodayOnLaunch()
     }
 
     private fun toggleClouds() {
@@ -583,6 +610,112 @@ class MainActivity : AppCompatActivity() {
         TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics
         ).toInt()
+
+    // ------------------------------------------------------------------
+    // Today panel (daily return hook)
+    // ------------------------------------------------------------------
+
+    /** Shows the Today panel automatically the first time the app opens each day. */
+    private fun maybeShowTodayOnLaunch() {
+        val todayEpochDay = System.currentTimeMillis() / 86_400_000L
+        if (prefs.getLong(PREF_TODAY_SHOWN_DAY, -1L) != todayEpochDay) {
+            prefs.edit().putLong(PREF_TODAY_SHOWN_DAY, todayEpochDay).apply()
+            showToday()
+        }
+    }
+
+    private fun showToday() {
+        populateToday()
+        todayOverlay.visibility = View.VISIBLE
+    }
+
+    private fun hideToday() {
+        todayOverlay.visibility = View.GONE
+    }
+
+    private fun createTodayOverlay(): FrameLayout {
+        val overlay = FrameLayout(this).apply {
+            setBackgroundColor(Color.argb(205, 0, 0, 8))
+            visibility = View.GONE
+            isClickable = true
+            setOnClickListener { hideToday() }
+        }
+        todayColumn = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dpi(24f), dpi(24f), dpi(24f), dpi(18f))
+            background = GradientDrawable().apply {
+                cornerRadius = dpi(20f).toFloat()
+                setColor(Color.rgb(14, 22, 36))
+                setStroke(dpi(1f), Color.argb(60, 255, 255, 255))
+            }
+        }
+        overlay.addView(todayColumn, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            Gravity.CENTER
+        ).apply { setMargins(dpi(28f), dpi(28f), dpi(28f), dpi(28f)) })
+        return overlay
+    }
+
+    /** Rebuilds the Today card — moon phase and fact reflect the real current day. */
+    private fun populateToday() {
+        todayColumn.removeAllViews()
+
+        todayColumn.addView(TextView(this).apply {
+            text = "Today"
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f)
+            typeface = Typeface.DEFAULT_BOLD
+            gravity = Gravity.CENTER
+        })
+        todayColumn.addView(TextView(this).apply {
+            text = SimpleDateFormat("EEEE, MMMM d", Locale.getDefault()).format(Date())
+            setTextColor(Color.rgb(150, 200, 255))
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+            typeface = Typeface.MONOSPACE
+            gravity = Gravity.CENTER
+            setPadding(0, dpi(4f), 0, dpi(18f))
+        })
+
+        val phase = MoonPhase.current()
+        todayColumn.addView(TextView(this).apply {
+            text = "${phase.emoji}  ${phase.name}\n${phase.illuminationPercent}% lit up tonight"
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 17f)
+            typeface = Typeface.MONOSPACE
+            gravity = Gravity.CENTER
+            setLineSpacing(dpi(4f).toFloat(), 1f)
+            setPadding(0, 0, 0, dpi(18f))
+        })
+
+        todayColumn.addView(TextView(this).apply {
+            text = "Did you know?"
+            setTextColor(Color.rgb(150, 200, 255))
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+            typeface = Typeface.DEFAULT_BOLD
+        })
+        todayColumn.addView(TextView(this).apply {
+            text = DailyFacts.today()
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
+            setLineSpacing(dpi(3f).toFloat(), 1f)
+            setPadding(0, dpi(4f), 0, dpi(16f))
+        })
+
+        todayColumn.addView(TextView(this).apply {
+            text = "Tap a glowing dot on Earth to explore — or find a new discovery for your journal!"
+            setTextColor(Color.rgb(190, 190, 195))
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
+            setLineSpacing(dpi(3f).toFloat(), 1f)
+        })
+        todayColumn.addView(TextView(this).apply {
+            text = "Tap anywhere to close"
+            setTextColor(Color.rgb(140, 140, 140))
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f)
+            gravity = Gravity.CENTER
+            setPadding(0, dpi(18f), 0, 0)
+        })
+    }
 
     private fun hideEventCard() {
         eventCard.removeCallbacks(hideEventCardRunnable)
