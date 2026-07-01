@@ -1,9 +1,7 @@
 package com.globe.app
 
-import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -17,9 +15,6 @@ import android.graphics.Shader
 import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.GradientDrawable
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.animation.DecelerateInterpolator
@@ -33,14 +28,12 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import android.view.View
 import com.globe.app.eclipse.EclipseDetector
 import com.globe.app.events.EarthEventsProvider
 import com.globe.app.events.GlobePicker
+import com.globe.app.kids.ParentalGate
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -49,7 +42,6 @@ import java.util.TimeZone
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
         private const val PREFS_NAME = "globe_prefs"
         private const val PREF_MUSIC_ENABLED = "music_enabled"
         private const val PREF_CLOUDS_VISIBLE = "clouds_visible"
@@ -67,35 +59,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var legendOverlay: FrameLayout
     private lateinit var musicButton: TextView
     private lateinit var shareButton: TextView
-    private lateinit var locateButton: TextView
     private lateinit var eventCard: TextView
     private lateinit var prefs: SharedPreferences
 
     private val hideEventCardRunnable = Runnable { eventCard.visibility = View.GONE }
 
-    // Latest known user location (for the "My location" fly-to button)
-    private var userLat: Double? = null
-    private var userLon: Double? = null
     private var mediaPlayer: MediaPlayer? = null
     private var musicEnabled = true
     private var scrubberAnimator: ValueAnimator? = null
     private var cloudTimestamp: String? = null
     private var lastEclipseState: EclipseDetector.EclipseState = EclipseDetector.EclipseState.NONE
-
-    private var locationManager: LocationManager? = null
-    private val locationListener = object : LocationListener {
-        override fun onLocationChanged(location: Location) {
-            userLat = location.latitude
-            userLon = location.longitude
-            globeView.renderer.locationPinRenderer.setLocation(
-                location.latitude, location.longitude
-            )
-        }
-        @Deprecated("Deprecated in API level 29")
-        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
-        override fun onProviderEnabled(provider: String) {}
-        override fun onProviderDisabled(provider: String) {}
-    }
 
     private val timeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm z", Locale.getDefault()).apply {
         timeZone = TimeZone.getDefault()
@@ -232,18 +205,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        locateButton = makePillButton("◎  My location", dp).apply {
-            setOnClickListener {
-                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-                flyToMyLocation()
-            }
-        }
-
-        // Info card shown when the user taps an event marker on the globe
+        // Info card shown when the user taps a marker or a spot on the globe
         eventCard = TextView(this).apply {
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
             typeface = Typeface.MONOSPACE
+            setLineSpacing(dp(3f).toFloat(), 1f)
+            maxWidth = dp(320f)
             setShadowLayer(2f, 1f, 1f, Color.BLACK)
             setPadding(dp(14f), dp(10f), dp(14f), dp(10f))
             background = GradientDrawable().apply {
@@ -328,16 +296,8 @@ class MainActivity : AppCompatActivity() {
             Gravity.BOTTOM or Gravity.END
         ).apply { setMargins(margin, margin, margin, dp(32f)) })
 
-        // Share + My location buttons — stacked top left
-        val topLeftButtons = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            addView(shareButton)
-            addView(locateButton, LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { topMargin = dp(10f) })
-        }
-        root.addView(topLeftButtons, FrameLayout.LayoutParams(
+        // Share button — top left
+        root.addView(shareButton, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT,
             Gravity.TOP or Gravity.START
@@ -357,9 +317,6 @@ class MainActivity : AppCompatActivity() {
         ))
 
         setContentView(root)
-
-        // Request location permission for the location pin
-        requestLocationPermission()
     }
 
     private fun toggleClouds() {
@@ -368,28 +325,30 @@ class MainActivity : AppCompatActivity() {
         updateCloudLabel()
     }
 
-    /** Capture the current globe view (no UI chrome) and open the share sheet. */
+    /**
+     * Capture the current globe view and share it. Sharing leaves the app and
+     * carries a store link, so per Google Play Families policy it is placed
+     * behind a parental gate.
+     */
     private fun shareCurrentView() {
-        com.globe.app.share.ShareManager.share(this, globeView)
+        ParentalGate.show(this) {
+            com.globe.app.share.ShareManager.share(this, globeView)
+        }
     }
 
     // ------------------------------------------------------------------
-    // Tap-to-identify event markers
+    // Tap-to-learn: identify event markers, or explain day/night anywhere
     // ------------------------------------------------------------------
 
     private fun onGlobeTapped(x: Float, y: Float) {
         val picked = GlobePicker.pick(globeView.camera, x, y, globeView.width, globeView.height)
         if (picked == null) {
-            hideEventCard()
+            hideEventCard()   // tapped the sky
             return
         }
 
+        // If a marker is near the tap, explain that event...
         val events = globeView.renderer.earthEventsRenderer.events
-        if (events.isEmpty()) {
-            hideEventCard()
-            return
-        }
-
         var best: EarthEventsProvider.Event? = null
         var bestDeg = Double.MAX_VALUE
         for (event in events) {
@@ -399,28 +358,58 @@ class MainActivity : AppCompatActivity() {
                 best = event
             }
         }
-
         // Pick radius grows as the camera pulls back (markers shrink on screen)
         val thresholdDeg = (2.0 + globeView.camera.distance * 0.7).coerceIn(3.0, 9.0)
+
+        globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
         if (best != null && bestDeg <= thresholdDeg) {
-            globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             showEventCard(best)
         } else {
-            hideEventCard()
+            // ...otherwise turn the tapped spot into a day/night lesson.
+            showDayNightCard(picked[0], picked[1])
         }
     }
 
     private fun showEventCard(event: EarthEventsProvider.Event) {
-        val emoji = when (event.type) {
-            EarthEventsProvider.Event.Type.EARTHQUAKE -> "🔶"
-            EarthEventsProvider.Event.Type.VOLCANO -> "🌋"
-            EarthEventsProvider.Event.Type.WILDFIRE -> "🔥"
-            EarthEventsProvider.Event.Type.STORM -> "🌀"
+        val (emoji, explain) = when (event.type) {
+            EarthEventsProvider.Event.Type.EARTHQUAKE -> "🔶" to
+                "The ground shook here. Earthquakes happen when giant slabs of rock deep underground suddenly slip past each other."
+            EarthEventsProvider.Event.Type.VOLCANO -> "🌋" to
+                "A volcano is erupting here — hot melted rock called lava is pushing up from deep inside the Earth."
+            EarthEventsProvider.Event.Type.WILDFIRE -> "🔥" to
+                "A large wildfire is burning across the land here. Satellites can spot the heat from space."
+            EarthEventsProvider.Event.Type.STORM -> "🌀" to
+                "A powerful swirling storm is here. The biggest ones are called hurricanes, typhoons, or cyclones."
         }
-        eventCard.text = "$emoji ${event.title}\n   ${relativeTime(event.timeMs)}"
+        showCard("$emoji ${event.title}\n$explain\n· ${relativeTime(event.timeMs)}")
+    }
+
+    /** Tap any land or ocean to learn whether it's day or night there right now. */
+    private fun showDayNightCard(lat: Double, lon: Double) {
+        val latR = Math.toRadians(lat)
+        val lonR = Math.toRadians(lon)
+        val cosLat = Math.cos(latR)
+        // Surface normal in the app frame: -X = Greenwich, +Y = North, +Z = 90°E
+        val nx = -cosLat * Math.cos(lonR)
+        val ny = Math.sin(latR)
+        val nz = cosLat * Math.sin(lonR)
+
+        val sun = com.globe.app.earth.SunPosition.calculate()
+        val facingSun = nx * sun[0] + ny * sun[1] + nz * sun[2]
+
+        val text = if (facingSun > 0) {
+            "☀️ It's daytime here!\nThis side of Earth is facing the Sun right now. Drag the time slider to watch night arrive."
+        } else {
+            "🌙 It's night-time here.\nThis side is turned away from the Sun — those tiny lights are cities. Drag the time slider to bring the Sun back."
+        }
+        showCard(text)
+    }
+
+    private fun showCard(text: String) {
+        eventCard.text = text
         eventCard.visibility = View.VISIBLE
         eventCard.removeCallbacks(hideEventCardRunnable)
-        eventCard.postDelayed(hideEventCardRunnable, 8_000L)
+        eventCard.postDelayed(hideEventCardRunnable, 10_000L)
     }
 
     private fun hideEventCard() {
@@ -446,17 +435,6 @@ class MainActivity : AppCompatActivity() {
         val dl = Math.toRadians(lon2 - lon1)
         val cosD = Math.sin(p1) * Math.sin(p2) + Math.cos(p1) * Math.cos(p2) * Math.cos(dl)
         return Math.toDegrees(Math.acos(cosD.coerceIn(-1.0, 1.0)))
-    }
-
-    /** Smoothly rotate the globe to center the user's location, if known. */
-    private fun flyToMyLocation() {
-        val lat = userLat
-        val lon = userLon
-        if (lat == null || lon == null) {
-            Toast.makeText(this, "Location not available yet.", Toast.LENGTH_SHORT).show()
-            return
-        }
-        globeView.camera.flyTo(lat, lon)
     }
 
     /**
@@ -660,18 +638,6 @@ class MainActivity : AppCompatActivity() {
                     c.drawCircle(s*stars[i], s*stars[i+1], stars[i+2], pt)
                 }
             }, "Stars", "Background star field"),
-
-            LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
-                // Location pin: cyan dot with ring
-                pt.color = Color.rgb(0, 230, 180)
-                c.drawCircle(s/2f, s/2f, s*0.15f, pt)
-                pt.style = Paint.Style.STROKE
-                pt.strokeWidth = s*0.04f
-                pt.color = Color.argb(140, 0, 230, 180)
-                c.drawCircle(s/2f, s/2f, s*0.3f, pt)
-                c.drawCircle(s/2f, s/2f, s*0.42f, pt)
-                pt.style = Paint.Style.FILL
-            }, "Location pin", "Your GPS position on the globe (cyan dot)"),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Earthquakes: amber/golden pulsing dot
@@ -911,92 +877,10 @@ class MainActivity : AppCompatActivity() {
         musicButton.text = if (musicEnabled) "\u266B Music: on" else "\u266B Music: off"
     }
 
-    // ------------------------------------------------------------------
-    // Location
-    // ------------------------------------------------------------------
-
-    private fun requestLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            startLocationUpdates()
-        } else {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                LOCATION_PERMISSION_REQUEST_CODE
-            )
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE &&
-            grantResults.isNotEmpty() &&
-            grantResults[0] == PackageManager.PERMISSION_GRANTED
-        ) {
-            startLocationUpdates()
-        }
-        // If denied, just don't show the pin — no crash
-    }
-
-    private fun startLocationUpdates() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED
-        ) return
-
-        val lm = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        locationManager = lm
-
-        // Use the last known location immediately if available
-        val lastKnown = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-            ?: lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        if (lastKnown != null) {
-            userLat = lastKnown.latitude
-            userLon = lastKnown.longitude
-            globeView.renderer.locationPinRenderer.setLocation(
-                lastKnown.latitude, lastKnown.longitude
-            )
-        }
-
-        // Request updates from network provider (coarse); fall back to GPS if unavailable
-        try {
-            lm.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER,
-                60_000L, // min time between updates: 60 s
-                1000f,   // min distance: 1 km
-                locationListener
-            )
-        } catch (_: IllegalArgumentException) {
-            // Network provider not available, try GPS
-            try {
-                lm.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    60_000L,
-                    1000f,
-                    locationListener
-                )
-            } catch (_: IllegalArgumentException) {
-                // No provider available
-            }
-        }
-    }
-
-    private fun stopLocationUpdates() {
-        locationManager?.removeUpdates(locationListener)
-    }
-
     override fun onResume() {
         super.onResume()
         globeView.onResume()
         if (musicEnabled) startMusic()
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            startLocationUpdates()
-        }
     }
 
     override fun onPause() {
@@ -1004,7 +888,6 @@ class MainActivity : AppCompatActivity() {
         saveViewState()
         globeView.onPause()
         stopMusic()
-        stopLocationUpdates()
     }
 
     /** Persist the camera pose and cloud visibility so the app reopens as left. */

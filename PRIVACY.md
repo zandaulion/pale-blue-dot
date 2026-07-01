@@ -11,14 +11,8 @@ developer) do not operate a server and do not collect personal data about you.
 
 ## Information the app accesses
 
-**Approximate location (optional).**
-With your permission, the app uses your device's *approximate* (coarse) location
-to show a pin marking your position on the globe. This is optional — the app
-works fully without it, and you can decline or revoke the permission at any time
-in your device settings. Your location is used **only on your device** to draw
-the pin. It is held in memory while the app is running and is **never
-transmitted off your device, never saved to a file, and never shared** with us
-or any third party.
+The app requests **no location, contacts, camera, microphone, or personal
+information**. Its only permission is internet access.
 
 **Internet access.**
 The app downloads public, openly available data to display on the globe:
@@ -40,10 +34,7 @@ current view of the globe and share it using your device's standard share
 options (for example, to a messaging or social app of your choice).
 
 - Images are created **on your device** and are only shared when **you** choose
-  to share them.
-- If you have enabled location, a shared image may **visually include your
-  approximate location** (the pin on the globe) — please consider this before
-  sharing.
+  to share them. Sharing is placed behind a parental gate.
 - Once you share an image to another app, **that app's privacy policy** governs
   what happens to it.
 
@@ -64,8 +55,7 @@ personal information from anyone, including children.
 
 | Permission | Why it is used |
 |---|---|
-| Internet | Download public cloud/earthquake/volcano data |
-| Approximate location (optional) | Show your position as a pin on the globe (used on-device only) |
+| Internet | Download public cloud, earthquake, volcano, wildfire, and storm data |
 
 ## Changes to this policy
 

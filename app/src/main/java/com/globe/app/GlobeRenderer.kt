@@ -12,7 +12,6 @@ import com.globe.app.stars.ConstellationRenderer
 import com.globe.app.stars.StarsRenderer
 import com.globe.app.indicators.IndicatorRenderer
 import com.globe.app.iss.ISSOrbitRenderer
-import com.globe.app.location.LocationPinRenderer
 import com.globe.app.events.EarthEventsProvider
 import com.globe.app.events.EarthEventsRenderer
 import com.globe.app.sun.SunRenderer
@@ -41,7 +40,6 @@ class GlobeRenderer(
     private val sunRenderer = SunRenderer()
     private val indicatorRenderer = IndicatorRenderer()
     private val issOrbitRenderer = ISSOrbitRenderer()
-    val locationPinRenderer = LocationPinRenderer()
     val earthEventsRenderer = EarthEventsRenderer()
 
     private val projectionMatrix = FloatArray(16)
@@ -60,7 +58,6 @@ class GlobeRenderer(
         sunRenderer.init()
         indicatorRenderer.init()
         issOrbitRenderer.init()
-        locationPinRenderer.init()
         earthEventsRenderer.init()
 
         // Download real cloud cover in background
@@ -116,10 +113,7 @@ class GlobeRenderer(
         earthRenderer.setMatrices(viewMatrix, projectionMatrix, camPos)
         earthRenderer.onDrawFrame()
 
-        // 5. Location pin — user's GPS location, drawn after Earth so depth test occludes the far side
-        locationPinRenderer.draw(viewMatrix, projectionMatrix)
-
-        // 6. Earthquake/volcano markers — pulsing dots on the globe
+        // 5. Earthquake/volcano markers — pulsing dots on the globe
         earthEventsRenderer.draw(viewMatrix, projectionMatrix)
 
         // 7. ISS orbit — thin line, drawn after Earth so depth test occludes the far side
