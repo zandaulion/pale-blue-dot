@@ -33,6 +33,8 @@ import android.view.View
 import com.globe.app.eclipse.EclipseDetector
 import com.globe.app.events.EarthEventsProvider
 import com.globe.app.events.GlobePicker
+import com.globe.app.kids.Discovery
+import com.globe.app.kids.DiscoveryJournal
 import com.globe.app.kids.ParentalGate
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -59,8 +61,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var legendOverlay: FrameLayout
     private lateinit var musicButton: TextView
     private lateinit var shareButton: TextView
+    private lateinit var journalButton: TextView
+    private lateinit var journalOverlay: FrameLayout
+    private lateinit var journalColumn: LinearLayout
     private lateinit var eventCard: TextView
     private lateinit var prefs: SharedPreferences
+    private lateinit var journal: DiscoveryJournal
 
     private val hideEventCardRunnable = Runnable { eventCard.visibility = View.GONE }
 
@@ -134,6 +140,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
                     seekBar.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
                     globeView.camera.notifyInteraction()
+                    awardTimeTraveler()
                     // Animate back to "now" over 1 second
                     val startProgress = seekBar.progress
                     scrubberAnimator?.cancel()
@@ -183,6 +190,8 @@ class MainActivity : AppCompatActivity() {
         legendOverlay = createLegendOverlay(dp)
 
         prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        journal = DiscoveryJournal(this)
+        journalOverlay = createJournalOverlay()
         musicEnabled = prefs.getBoolean(PREF_MUSIC_ENABLED, true)
 
         musicButton = TextView(this).apply {
@@ -204,6 +213,14 @@ class MainActivity : AppCompatActivity() {
                 shareCurrentView()
             }
         }
+
+        journalButton = makePillButton("📖", dp).apply {
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                showJournal()
+            }
+        }
+        refreshJournalButton()
 
         // Info card shown when the user taps a marker or a spot on the globe
         eventCard = TextView(this).apply {
@@ -296,8 +313,16 @@ class MainActivity : AppCompatActivity() {
             Gravity.BOTTOM or Gravity.END
         ).apply { setMargins(margin, margin, margin, dp(32f)) })
 
-        // Share button — top left
-        root.addView(shareButton, FrameLayout.LayoutParams(
+        // Share + Journal buttons — stacked top left
+        val topLeftButtons = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            addView(shareButton)
+            addView(journalButton, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { topMargin = dp(10f) })
+        }
+        root.addView(topLeftButtons, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT,
             Gravity.TOP or Gravity.START
@@ -312,6 +337,12 @@ class MainActivity : AppCompatActivity() {
 
         // Legend overlay — full screen, initially hidden
         root.addView(legendOverlay, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        ))
+
+        // Discovery journal overlay — full screen, initially hidden
+        root.addView(journalOverlay, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.MATCH_PARENT
         ))
@@ -343,7 +374,12 @@ class MainActivity : AppCompatActivity() {
     private fun onGlobeTapped(x: Float, y: Float) {
         val picked = GlobePicker.pick(globeView.camera, x, y, globeView.width, globeView.height)
         if (picked == null) {
-            hideEventCard()   // tapped the sky
+            // Tapped the sky beyond Earth — a stargazing moment.
+            globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            showCard(
+                "🌟 The night sky!\nBeyond Earth are thousands of stars, planets, and whole galaxies.",
+                Discovery.STARGAZER
+            )
             return
         }
 
@@ -381,7 +417,13 @@ class MainActivity : AppCompatActivity() {
             EarthEventsProvider.Event.Type.STORM -> "🌀" to
                 "A powerful swirling storm is here. The biggest ones are called hurricanes, typhoons, or cyclones."
         }
-        showCard("$emoji ${event.title}\n$explain\n· ${relativeTime(event.timeMs)}")
+        val discovery = when (event.type) {
+            EarthEventsProvider.Event.Type.EARTHQUAKE -> Discovery.EARTHQUAKE
+            EarthEventsProvider.Event.Type.VOLCANO -> Discovery.VOLCANO
+            EarthEventsProvider.Event.Type.WILDFIRE -> Discovery.WILDFIRE
+            EarthEventsProvider.Event.Type.STORM -> Discovery.STORM
+        }
+        showCard("$emoji ${event.title}\n$explain\n· ${relativeTime(event.timeMs)}", discovery)
     }
 
     /** Tap any land or ocean to learn whether it's day or night there right now. */
@@ -397,20 +439,150 @@ class MainActivity : AppCompatActivity() {
         val sun = com.globe.app.earth.SunPosition.calculate()
         val facingSun = nx * sun[0] + ny * sun[1] + nz * sun[2]
 
-        val text = if (facingSun > 0) {
-            "☀️ It's daytime here!\nThis side of Earth is facing the Sun right now. Drag the time slider to watch night arrive."
+        if (facingSun > 0) {
+            showCard(
+                "☀️ It's daytime here!\nThis side of Earth is facing the Sun right now. Drag the time slider to watch night arrive.",
+                Discovery.DAYTIME
+            )
         } else {
-            "🌙 It's night-time here.\nThis side is turned away from the Sun — those tiny lights are cities. Drag the time slider to bring the Sun back."
+            showCard(
+                "🌙 It's night-time here.\nThis side is turned away from the Sun — those tiny lights are cities. Drag the time slider to bring the Sun back.",
+                Discovery.NIGHT
+            )
         }
-        showCard(text)
     }
 
-    private fun showCard(text: String) {
-        eventCard.text = text
+    /**
+     * Shows the info card. If [discovery] is provided and unlocked for the first
+     * time, the card is prefixed with a celebration and the journal updates.
+     */
+    private fun showCard(text: String, discovery: Discovery? = null) {
+        var body = text
+        if (discovery != null && journal.unlock(discovery)) {
+            body = "✨ New discovery!  (${journal.unlockedCount()}/${journal.total})\n\n$text"
+            globeView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+            refreshJournalButton()
+        }
+        eventCard.text = body
         eventCard.visibility = View.VISIBLE
         eventCard.removeCallbacks(hideEventCardRunnable)
         eventCard.postDelayed(hideEventCardRunnable, 10_000L)
     }
+
+    /** Unlocks the Time Traveler discovery the first time the scrubber is used. */
+    private fun awardTimeTraveler() {
+        if (!journal.isUnlocked(Discovery.TIME_TRAVELER)) {
+            showCard(
+                "${Discovery.TIME_TRAVELER.emoji} ${Discovery.TIME_TRAVELER.title}\n${Discovery.TIME_TRAVELER.fact}",
+                Discovery.TIME_TRAVELER
+            )
+        }
+    }
+
+    private fun refreshJournalButton() {
+        journalButton.text = "📖  ${journal.unlockedCount()}/${journal.total}"
+    }
+
+    // ------------------------------------------------------------------
+    // Discovery journal screen
+    // ------------------------------------------------------------------
+
+    private fun showJournal() {
+        populateJournal()
+        journalOverlay.visibility = View.VISIBLE
+    }
+
+    private fun hideJournal() {
+        journalOverlay.visibility = View.GONE
+    }
+
+    private fun createJournalOverlay(): FrameLayout {
+        val overlay = FrameLayout(this).apply {
+            setBackgroundColor(Color.argb(235, 0, 2, 10))
+            visibility = View.GONE
+            isClickable = true
+            setOnClickListener { hideJournal() }
+        }
+        val scroll = ScrollView(this).apply {
+            setPadding(dpi(20f), dpi(20f), dpi(20f), dpi(20f))
+        }
+        journalColumn = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+        }
+        scroll.addView(journalColumn)
+        overlay.addView(scroll, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            Gravity.CENTER
+        ).apply { setMargins(dpi(24f), dpi(48f), dpi(24f), dpi(48f)) })
+        return overlay
+    }
+
+    /** Rebuilds the journal contents to reflect the current unlock state. */
+    private fun populateJournal() {
+        journalColumn.removeAllViews()
+
+        journalColumn.addView(TextView(this).apply {
+            text = "My Discoveries"
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
+            typeface = Typeface.DEFAULT_BOLD
+            gravity = Gravity.CENTER
+        })
+        journalColumn.addView(TextView(this).apply {
+            text = "${journal.unlockedCount()} of ${journal.total} found — keep exploring!"
+            setTextColor(Color.rgb(150, 200, 255))
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+            typeface = Typeface.MONOSPACE
+            gravity = Gravity.CENTER
+            setPadding(0, dpi(6f), 0, dpi(18f))
+        })
+
+        for (d in Discovery.values()) {
+            val unlocked = journal.isUnlocked(d)
+            val row = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+                setPadding(0, dpi(8f), 0, dpi(8f))
+                alpha = if (unlocked) 1f else 0.45f
+            }
+            row.addView(TextView(this).apply {
+                text = if (unlocked) d.emoji else "❓"
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 28f)
+                gravity = Gravity.CENTER
+                width = dpi(48f)
+            })
+            val textCol = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+            textCol.addView(TextView(this).apply {
+                text = if (unlocked) d.title else "? ? ?"
+                setTextColor(Color.WHITE)
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
+                typeface = Typeface.DEFAULT_BOLD
+            })
+            textCol.addView(TextView(this).apply {
+                text = if (unlocked) d.fact else "Not found yet"
+                setTextColor(Color.rgb(180, 180, 185))
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+            })
+            row.addView(textCol, LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f
+            ).apply { marginStart = dpi(12f) })
+            journalColumn.addView(row)
+        }
+
+        journalColumn.addView(TextView(this).apply {
+            text = "Tap anywhere to close"
+            setTextColor(Color.rgb(140, 140, 140))
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f)
+            gravity = Gravity.CENTER
+            setPadding(0, dpi(20f), 0, 0)
+        })
+    }
+
+    private fun dpi(value: Float): Int =
+        TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics
+        ).toInt()
 
     private fun hideEventCard() {
         eventCard.removeCallbacks(hideEventCardRunnable)
