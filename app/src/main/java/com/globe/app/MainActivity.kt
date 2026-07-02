@@ -33,6 +33,7 @@ import android.view.View
 import com.globe.app.eclipse.EclipseDetector
 import com.globe.app.events.EarthEventsProvider
 import com.globe.app.events.GlobePicker
+import com.globe.app.kids.ChallengeKind
 import com.globe.app.kids.DailyFacts
 import com.globe.app.kids.Discovery
 import com.globe.app.kids.DiscoveryJournal
@@ -71,8 +72,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var todayOverlay: FrameLayout
     private lateinit var todayColumn: LinearLayout
     private lateinit var eventCard: TextView
+    private lateinit var challengeBanner: TextView
     private lateinit var prefs: SharedPreferences
     private lateinit var journal: DiscoveryJournal
+
+    // Challenge (quiz) mode state
+    private var challengeKind: ChallengeKind? = null
+    private var challengeScore = 0
 
     private val hideEventCardRunnable = Runnable { eventCard.visibility = View.GONE }
 
@@ -254,6 +260,15 @@ class MainActivity : AppCompatActivity() {
             setOnClickListener { hideEventCard() }
         }
 
+        // Challenge prompt banner — top center, shown only during a challenge
+        challengeBanner = makePillButton("", dp).apply {
+            maxWidth = dp(340f)
+            gravity = Gravity.CENTER
+            setLineSpacing(dp(2f).toFloat(), 1f)
+            visibility = View.GONE
+            setOnClickListener { stopChallenge() }
+        }
+
         globeView = GlobeSurfaceView(
             context = this,
             onCloudStatusChanged = { timestamp ->
@@ -353,6 +368,13 @@ class MainActivity : AppCompatActivity() {
             Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
         ).apply { setMargins(margin, 0, margin, dp(150f)) })
 
+        // Challenge banner — top center, below the time label
+        root.addView(challengeBanner, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            Gravity.TOP or Gravity.CENTER_HORIZONTAL
+        ).apply { setMargins(margin, dp(72f), margin, 0) })
+
         // Legend overlay — full screen, initially hidden
         root.addView(legendOverlay, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
@@ -399,6 +421,11 @@ class MainActivity : AppCompatActivity() {
     // ------------------------------------------------------------------
 
     private fun onGlobeTapped(x: Float, y: Float) {
+        if (challengeKind != null) {
+            evaluateChallenge(x, y)
+            return
+        }
+
         val picked = GlobePicker.pick(globeView.camera, x, y, globeView.width, globeView.height)
         if (picked == null) {
             // Tapped the sky beyond Earth — a stargazing moment.
@@ -453,8 +480,11 @@ class MainActivity : AppCompatActivity() {
         showCard("$emoji ${event.title}\n$explain\n· ${relativeTime(event.timeMs)}", discovery)
     }
 
-    /** Tap any land or ocean to learn whether it's day or night there right now. */
-    private fun showDayNightCard(lat: Double, lon: Double) {
+    /**
+     * Dot product of the surface normal at [lat],[lon] with the Sun direction.
+     * Positive means that spot is in daylight right now.
+     */
+    private fun facingSun(lat: Double, lon: Double): Double {
         val latR = Math.toRadians(lat)
         val lonR = Math.toRadians(lon)
         val cosLat = Math.cos(latR)
@@ -462,11 +492,13 @@ class MainActivity : AppCompatActivity() {
         val nx = -cosLat * Math.cos(lonR)
         val ny = Math.sin(latR)
         val nz = cosLat * Math.sin(lonR)
-
         val sun = com.globe.app.earth.SunPosition.calculate()
-        val facingSun = nx * sun[0] + ny * sun[1] + nz * sun[2]
+        return nx * sun[0] + ny * sun[1] + nz * sun[2]
+    }
 
-        if (facingSun > 0) {
+    /** Tap any land or ocean to learn whether it's day or night there right now. */
+    private fun showDayNightCard(lat: Double, lon: Double) {
+        if (facingSun(lat, lon) > 0) {
             showCard(
                 "☀️ It's daytime here!\nThis side of Earth is facing the Sun right now. Drag the time slider to watch night arrive.",
                 Discovery.DAYTIME
@@ -508,6 +540,75 @@ class MainActivity : AppCompatActivity() {
 
     private fun refreshJournalButton() {
         journalButton.text = "📖  ${journal.unlockedCount()}/${journal.total}"
+    }
+
+    // ------------------------------------------------------------------
+    // Challenge mode (find-it prediction game)
+    // ------------------------------------------------------------------
+
+    private fun startChallenge() {
+        challengeScore = 0
+        hideToday()
+        hideJournal()
+        nextChallenge()
+    }
+
+    private fun nextChallenge() {
+        val events = globeView.renderer.earthEventsRenderer.events
+        val options = mutableListOf(ChallengeKind.DAYTIME, ChallengeKind.NIGHT)
+        if (events.any { it.type == EarthEventsProvider.Event.Type.EARTHQUAKE }) options.add(ChallengeKind.FIND_EARTHQUAKE)
+        if (events.any { it.type == EarthEventsProvider.Event.Type.VOLCANO }) options.add(ChallengeKind.FIND_VOLCANO)
+        if (events.any { it.type == EarthEventsProvider.Event.Type.WILDFIRE }) options.add(ChallengeKind.FIND_WILDFIRE)
+        if (events.any { it.type == EarthEventsProvider.Event.Type.STORM }) options.add(ChallengeKind.FIND_STORM)
+
+        // Avoid repeating the same challenge back-to-back when there's a choice.
+        challengeKind = options.filter { it != challengeKind }.ifEmpty { options }.random()
+        challengeBanner.text = "🎯 ${challengeKind!!.prompt}\n⭐ $challengeScore   ·   tap to stop"
+        challengeBanner.visibility = View.VISIBLE
+    }
+
+    private fun stopChallenge() {
+        val score = challengeScore
+        challengeKind = null
+        challengeBanner.visibility = View.GONE
+        showCard(
+            if (score > 0) "🎉 Great job! You solved $score challenge${if (score == 1) "" else "s"}!"
+            else "Challenge stopped — play again anytime!"
+        )
+    }
+
+    private fun evaluateChallenge(x: Float, y: Float) {
+        val kind = challengeKind ?: return
+        val picked = GlobePicker.pick(globeView.camera, x, y, globeView.width, globeView.height)
+        if (picked == null) {
+            showCard("Tap on the Earth to answer! 🌍")
+            return
+        }
+
+        val threshold = (2.0 + globeView.camera.distance * 0.7).coerceIn(3.0, 9.0)
+        fun nearEvent(type: EarthEventsProvider.Event.Type) =
+            globeView.renderer.earthEventsRenderer.events.any {
+                it.type == type && angularDistanceDeg(picked[0], picked[1], it.lat, it.lon) <= threshold
+            }
+
+        val correct = when (kind) {
+            ChallengeKind.DAYTIME -> facingSun(picked[0], picked[1]) > 0
+            ChallengeKind.NIGHT -> facingSun(picked[0], picked[1]) < 0
+            ChallengeKind.FIND_EARTHQUAKE -> nearEvent(EarthEventsProvider.Event.Type.EARTHQUAKE)
+            ChallengeKind.FIND_VOLCANO -> nearEvent(EarthEventsProvider.Event.Type.VOLCANO)
+            ChallengeKind.FIND_WILDFIRE -> nearEvent(EarthEventsProvider.Event.Type.WILDFIRE)
+            ChallengeKind.FIND_STORM -> nearEvent(EarthEventsProvider.Event.Type.STORM)
+        }
+
+        if (correct) {
+            globeView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+            challengeScore++
+            showCard("🎉 Yes! That's right.")
+            nextChallenge()
+        } else {
+            globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            showCard("Not quite — take another look and try again! 🔍")
+        }
     }
 
     // ------------------------------------------------------------------
@@ -648,6 +749,8 @@ class MainActivity : AppCompatActivity() {
                 setColor(Color.rgb(14, 22, 36))
                 setStroke(dpi(1f), Color.argb(60, 255, 255, 255))
             }
+            // Absorb taps so only the surrounding scrim dismisses the panel.
+            isClickable = true
         }
         overlay.addView(todayColumn, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
@@ -708,12 +811,26 @@ class MainActivity : AppCompatActivity() {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
             setLineSpacing(dpi(3f).toFloat(), 1f)
         })
+
+        todayColumn.addView(makePillButton("🎯  Play a challenge!", ::dpi).apply {
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                startChallenge()
+            }
+        }, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER_HORIZONTAL
+            topMargin = dpi(18f)
+        })
+
         todayColumn.addView(TextView(this).apply {
-            text = "Tap anywhere to close"
+            text = "Tap outside the box to close"
             setTextColor(Color.rgb(140, 140, 140))
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f)
             gravity = Gravity.CENTER
-            setPadding(0, dpi(18f), 0, 0)
+            setPadding(0, dpi(16f), 0, 0)
         })
     }
 
