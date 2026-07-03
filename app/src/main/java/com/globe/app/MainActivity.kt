@@ -1450,6 +1450,24 @@ class MainActivity : AppCompatActivity() {
         onboardingOverlay.visibility = View.GONE
     }
 
+    /**
+     * Back steps out of whatever is open — an overlay, a running challenge, or
+     * the info card — returning to the main globe. Only when nothing is open
+     * does Back leave the app.
+     */
+    @Suppress("DEPRECATION")
+    override fun onBackPressed() {
+        when {
+            onboardingOverlay.visibility == View.VISIBLE -> dismissOnboarding()
+            todayOverlay.visibility == View.VISIBLE -> hideToday()
+            journalOverlay.visibility == View.VISIBLE -> hideJournal()
+            legendOverlay.visibility == View.VISIBLE -> hideLegend()
+            challengeKind != null -> stopChallenge()
+            eventCard.visibility == View.VISIBLE -> hideEventCard()
+            else -> super.onBackPressed()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         globeView.onResume()
