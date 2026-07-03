@@ -3,6 +3,7 @@ package com.globe.app
 import android.content.Context
 import android.content.SharedPreferences
 import android.media.MediaPlayer
+import android.speech.tts.TextToSpeech
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -54,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         private const val PREF_CAM_EL = "cam_el"
         private const val PREF_CAM_DIST = "cam_dist"
         private const val PREF_TODAY_SHOWN_DAY = "today_shown_day"
+        private const val PREF_NARRATE = "narrate_enabled"
+        private const val PREF_ONBOARDED = "onboarded"
     }
 
     private lateinit var globeView: GlobeSurfaceView
@@ -64,6 +67,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var legendButton: TextView
     private lateinit var legendOverlay: FrameLayout
     private lateinit var musicButton: TextView
+    private lateinit var narrateButton: TextView
+    private lateinit var onboardingOverlay: FrameLayout
     private lateinit var shareButton: TextView
     private lateinit var journalButton: TextView
     private lateinit var journalOverlay: FrameLayout
@@ -84,6 +89,9 @@ class MainActivity : AppCompatActivity() {
 
     private var mediaPlayer: MediaPlayer? = null
     private var musicEnabled = true
+    private var tts: TextToSpeech? = null
+    private var ttsReady = false
+    private var narrateEnabled = false
     private var scrubberAnimator: ValueAnimator? = null
     private var cloudTimestamp: String? = null
     private var lastEclipseState: EclipseDetector.EclipseState = EclipseDetector.EclipseState.NONE
@@ -206,6 +214,14 @@ class MainActivity : AppCompatActivity() {
         journalOverlay = createJournalOverlay()
         todayOverlay = createTodayOverlay()
         musicEnabled = prefs.getBoolean(PREF_MUSIC_ENABLED, true)
+        narrateEnabled = prefs.getBoolean(PREF_NARRATE, false)
+
+        tts = TextToSpeech(this) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                tts?.language = Locale.US
+                ttsReady = true
+            }
+        }
 
         musicButton = TextView(this).apply {
             setTextColor(Color.WHITE)
@@ -219,6 +235,19 @@ class MainActivity : AppCompatActivity() {
             isClickable = true
         }
         updateMusicButton()
+
+        narrateButton = TextView(this).apply {
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+            typeface = Typeface.MONOSPACE
+            setShadowLayer(2f, 1f, 1f, Color.BLACK)
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                toggleNarration()
+            }
+            isClickable = true
+        }
+        updateNarrateButton()
 
         shareButton = makePillButton("↑  Share", dp).apply {
             setOnClickListener {
@@ -314,8 +343,17 @@ class MainActivity : AppCompatActivity() {
             Gravity.BOTTOM or Gravity.END
         ).apply { setMargins(margin, margin, margin, margin) })
 
-        // Music toggle — top right
-        root.addView(musicButton, FrameLayout.LayoutParams(
+        // Music + Narration toggles — stacked top right
+        val topRightButtons = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.END
+            addView(musicButton)
+            addView(narrateButton, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { topMargin = dp(12f) })
+        }
+        root.addView(topRightButtons, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT,
             Gravity.TOP or Gravity.END
@@ -393,10 +431,25 @@ class MainActivity : AppCompatActivity() {
             FrameLayout.LayoutParams.MATCH_PARENT
         ))
 
+        // Onboarding overlay — full screen, shown once on the very first launch
+        onboardingOverlay = createOnboardingOverlay()
+        root.addView(onboardingOverlay, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        ))
+
         setContentView(root)
 
-        // Greet the child with today's panel once per calendar day.
-        maybeShowTodayOnLaunch()
+        if (!prefs.getBoolean(PREF_ONBOARDED, false)) {
+            // First ever launch: welcome tutorial only (don't stack the Today panel).
+            prefs.edit()
+                .putLong(PREF_TODAY_SHOWN_DAY, System.currentTimeMillis() / 86_400_000L)
+                .apply()
+            onboardingOverlay.visibility = View.VISIBLE
+        } else {
+            // Greet returning kids with today's panel once per calendar day.
+            maybeShowTodayOnLaunch()
+        }
     }
 
     private fun toggleClouds() {
@@ -526,6 +579,7 @@ class MainActivity : AppCompatActivity() {
         eventCard.visibility = View.VISIBLE
         eventCard.removeCallbacks(hideEventCardRunnable)
         eventCard.postDelayed(hideEventCardRunnable, 10_000L)
+        speak(body)
     }
 
     /** Unlocks the Time Traveler discovery the first time the scrubber is used. */
@@ -1299,6 +1353,103 @@ class MainActivity : AppCompatActivity() {
         musicButton.text = if (musicEnabled) "\u266B Music: on" else "\u266B Music: off"
     }
 
+    // ------------------------------------------------------------------
+    // Read-aloud narration (for early readers)
+    // ------------------------------------------------------------------
+
+    private fun toggleNarration() {
+        narrateEnabled = !narrateEnabled
+        prefs.edit().putBoolean(PREF_NARRATE, narrateEnabled).apply()
+        updateNarrateButton()
+        if (narrateEnabled) speak("Read to me is on. I'll read the cards out loud.") else tts?.stop()
+    }
+
+    private fun updateNarrateButton() {
+        narrateButton.text = if (narrateEnabled) "\uD83D\uDD0A Read: on" else "\uD83D\uDD0A Read: off"
+    }
+
+    /** Speaks [text] aloud when narration is on, stripping emoji for clean speech. */
+    private fun speak(text: String) {
+        if (!narrateEnabled || !ttsReady) return
+        val clean = text.replace(Regex("[^\\p{L}\\p{N} .,!?'\\-]"), " ")
+            .replace(Regex("\\s+"), " ")
+            .trim()
+        if (clean.isNotEmpty()) tts?.speak(clean, TextToSpeech.QUEUE_FLUSH, null, "card")
+    }
+
+    // ------------------------------------------------------------------
+    // First-run onboarding
+    // ------------------------------------------------------------------
+
+    private fun createOnboardingOverlay(): FrameLayout {
+        val overlay = FrameLayout(this).apply {
+            setBackgroundColor(Color.argb(240, 0, 2, 12))
+            visibility = View.GONE
+            isClickable = true   // block taps to the globe behind it
+        }
+        val card = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dpi(26f), dpi(28f), dpi(26f), dpi(22f))
+            background = GradientDrawable().apply {
+                cornerRadius = dpi(20f).toFloat()
+                setColor(Color.rgb(14, 22, 36))
+                setStroke(dpi(1f), Color.argb(60, 255, 255, 255))
+            }
+            isClickable = true
+        }
+
+        card.addView(TextView(this).apply {
+            text = "Welcome to\nPale Blue Dot!"
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 23f)
+            typeface = Typeface.DEFAULT_BOLD
+            gravity = Gravity.CENTER
+            setLineSpacing(dpi(2f).toFloat(), 1f)
+            setPadding(0, 0, 0, dpi(18f))
+        })
+
+        val tips = listOf(
+            "\uD83D\uDD90  Spin the globe with your finger",
+            "\uD83D\uDC46  Tap the glowing dots to see what's happening on Earth right now",
+            "\uD83D\uDD50  Slide the time bar to turn day into night",
+            "\uD83D\uDCD6  Collect discoveries and come back each day"
+        )
+        for (tip in tips) {
+            card.addView(TextView(this).apply {
+                text = tip
+                setTextColor(Color.WHITE)
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
+                setLineSpacing(dpi(2f).toFloat(), 1f)
+                setPadding(0, dpi(7f), 0, dpi(7f))
+            })
+        }
+
+        card.addView(makePillButton("Let's explore!  \uD83D\uDE80", ::dpi).apply {
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                dismissOnboarding()
+            }
+        }, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.CENTER_HORIZONTAL
+            topMargin = dpi(20f)
+        })
+
+        overlay.addView(card, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            Gravity.CENTER
+        ).apply { setMargins(dpi(28f), dpi(28f), dpi(28f), dpi(28f)) })
+        return overlay
+    }
+
+    private fun dismissOnboarding() {
+        prefs.edit().putBoolean(PREF_ONBOARDED, true).apply()
+        onboardingOverlay.visibility = View.GONE
+    }
+
     override fun onResume() {
         super.onResume()
         globeView.onResume()
@@ -1310,6 +1461,7 @@ class MainActivity : AppCompatActivity() {
         saveViewState()
         globeView.onPause()
         stopMusic()
+        tts?.stop()
     }
 
     /** Persist the camera pose and cloud visibility so the app reopens as left. */
@@ -1325,5 +1477,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         releaseMusic()
+        tts?.shutdown()
+        tts = null
     }
 }
