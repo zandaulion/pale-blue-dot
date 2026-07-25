@@ -1,0 +1,12 @@
+<en-US>
+A big update full of things to tap and tweak! 🌍
+
+• Tap the Space Station, Sun, or Moon to learn about them and bring them into view
+• Music now plays — with a new volume slider 🎵
+• Choose your clouds: off, hand-drawn, or live NASA satellite view ☁️
+• Active volcanoes are back on the map 🌋
+• Now rotates and looks great on tablets and foldables
+• Added a clear ✕ to close the legend
+
+Still no ads, no tracking, no accounts, no location.
+</en-US>

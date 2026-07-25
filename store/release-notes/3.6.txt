@@ -1,9 +1,0 @@
-<en-US>
-This update helps Pale Blue Dot feel at home on more screens:
-
-• Now rotates and looks great on tablets and foldables
-• Added a clear ✕ button to close the legend
-• Smaller download and smoother performance under the hood
-
-As always: no ads, no tracking, no accounts, no location.
-</en-US>

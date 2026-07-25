@@ -11,8 +11,8 @@ android {
         applicationId = "com.zandaulion.palebluedot"
         minSdk = 24
         targetSdk = 35
-        versionCode = 8
-        versionName = "3.6"
+        versionCode = 9
+        versionName = "3.7"
     }
 
     buildTypes {
