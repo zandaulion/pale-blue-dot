@@ -29,8 +29,8 @@ class EarthEventsProvider {
         private const val TAG = "EarthEventsProvider"
         private const val QUAKE_URL =
             "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson"
-        private const val EONET_URL =
-            "https://eonet.gsfc.nasa.gov/api/v3/events?category=%s&days=%d&status=open"
+        private const val EONET_BASE_URL =
+            "https://eonet.gsfc.nasa.gov/api/v3/events?status=open&category="
     }
 
     /**
@@ -39,7 +39,9 @@ class EarthEventsProvider {
     fun fetch(): List<Event> {
         val events = mutableListOf<Event>()
         events.addAll(fetchEarthquakes())
-        events.addAll(fetchEonet("volcanoes", 30, Event.Type.VOLCANO))
+        // Volcanoes: no day filter — EONET updates them slowly, so rely on
+        // NASA's "open" (ongoing) status. Wildfires/storms update daily.
+        events.addAll(fetchEonet("volcanoes", 0, Event.Type.VOLCANO))
         events.addAll(fetchEonet("wildfires", 10, Event.Type.WILDFIRE))
         events.addAll(fetchEonet("severeStorms", 7, Event.Type.STORM))
         Log.d(TAG, "Fetched ${events.size} events: " +
@@ -90,7 +92,7 @@ class EarthEventsProvider {
      */
     private fun fetchEonet(category: String, days: Int, type: Event.Type): List<Event> {
         return try {
-            val url = EONET_URL.format(Locale.US, category, days)
+            val url = EONET_BASE_URL + category + if (days > 0) "&days=$days" else ""
             val json = URL(url).openConnection().apply {
                 connectTimeout = 10_000
                 readTimeout = 15_000
