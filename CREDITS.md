@@ -13,3 +13,10 @@ See: https://www.nasa.gov/multimedia/guidelines/index.html
 ## Live Data
 
 - Cloud cover overlay — extracted from NASA VIIRS SNPP Corrected Reflectance imagery via the [Worldview Snapshot API](https://wvs.earthdata.nasa.gov/)
+
+## Music
+
+- `app/src/main/res/raw/ambient_space.mp3` — "Wonders of the Earth"
+  from [Pixabay](https://pixabay.com/music/adventure-wonders-of-the-earth-550792/).
+  Used under the Pixabay Content License (free for commercial use, no
+  attribution required).
