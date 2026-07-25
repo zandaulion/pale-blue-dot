@@ -39,7 +39,7 @@ class GlobeRenderer(
     private val moonRenderer = MoonRenderer()
     private val sunRenderer = SunRenderer()
     private val indicatorRenderer = IndicatorRenderer()
-    private val issOrbitRenderer = ISSOrbitRenderer()
+    val issOrbitRenderer = ISSOrbitRenderer()
     val earthEventsRenderer = EarthEventsRenderer()
 
     private val projectionMatrix = FloatArray(16)

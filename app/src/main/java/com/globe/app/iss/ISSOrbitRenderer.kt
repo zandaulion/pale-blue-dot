@@ -260,6 +260,27 @@ class ISSOrbitRenderer {
     }
 
     /**
+     * The ISS marker's current position in world space (radius ~1.064),
+     * matching what [draw] renders. Safe to call from any thread.
+     */
+    fun currentWorldPosition(): FloatArray {
+        val now = TimeProvider.nowMs()
+        val days = (now - EPOCH_MS) / 86_400_000.0
+        val raanDeg = (RAAN_EPOCH_DEG + RAAN_RATE_DEG_PER_DAY * days) % 360.0
+        val maDeg = (MA_EPOCH_DEG + MEAN_MOTION * 360.0 * days) % 360.0
+        val local = computeISSPosition(maDeg)
+        // Apply the RAAN rotation about world +Y (matches the model matrix).
+        val r = Math.toRadians(raanDeg)
+        val cos = Math.cos(r).toFloat()
+        val sin = Math.sin(r).toFloat()
+        return floatArrayOf(
+            local[0] * cos + local[2] * sin,
+            local[1],
+            -local[0] * sin + local[2] * cos
+        )
+    }
+
+    /**
      * Computes the ISS position on the canonical (RAAN=0) orbit
      * for the given mean anomaly in degrees.
      */

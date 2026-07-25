@@ -141,6 +141,47 @@ class OrbitCamera {
         flying = true
     }
 
+    /**
+     * Rotate so a sky body (given as a world-space direction, e.g. the Sun or
+     * Moon) becomes visible. The camera always looks at Earth's centre, so we
+     * position the eye nearly opposite the body and offset by ~12° horizontally
+     * — enough to clear Earth's disk yet keep the body inside the view frustum.
+     */
+    fun faceSky(dirX: Float, dirY: Float, dirZ: Float) {
+        val len = Math.sqrt((dirX * dirX + dirY * dirY + dirZ * dirZ).toDouble())
+        if (len < 1e-6) return
+        val sx = dirX / len
+        val sy = dirY / len
+        val sz = dirZ / len
+
+        // Pull back so Earth's disk is small, then offset the eye by only just
+        // enough to clear that disk (plus a small margin). A large offset would
+        // fling the body toward the frame edge; this keeps it near centre.
+        val viewDist = 12.0
+        val phi = Math.asin(1.0 / viewDist) + Math.toRadians(2.5)
+        val cp = Math.cos(phi)
+        val sp = Math.sin(phi)
+        val ax = -sx
+        val ay = -sy
+        val az0 = -sz
+        val ex = ax * cp + az0 * sp
+        val ey = ay
+        val ez = -ax * sp + az0 * cp
+
+        targetEl = Math.toDegrees(Math.asin(ey.coerceIn(-1.0, 1.0))).toFloat()
+            .coerceIn(-MAX_ELEVATION, MAX_ELEVATION)
+        var ta = Math.toDegrees(Math.atan2(ex, ez)).toFloat()
+        while (ta - azimuth > 180f) ta -= 360f
+        while (ta - azimuth < -180f) ta += 360f
+        targetAz = ta
+        targetDist = viewDist.toFloat()
+
+        velocityAz = 0f
+        velocityEl = 0f
+        notifyInteraction()
+        flying = true
+    }
+
     /** Restore a previously saved camera pose (used on app restart). */
     fun restore(az: Float, el: Float, dist: Float) {
         azimuth = az

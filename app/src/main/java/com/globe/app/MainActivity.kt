@@ -3,6 +3,7 @@ package com.globe.app
 import android.content.Context
 import android.content.SharedPreferences
 import android.media.MediaPlayer
+import android.opengl.Matrix
 import android.speech.tts.TextToSpeech
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -31,6 +32,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import com.globe.app.earth.EarthRenderer
 import com.globe.app.eclipse.EclipseDetector
 import com.globe.app.events.EarthEventsProvider
 import com.globe.app.events.GlobePicker
@@ -50,7 +52,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val PREFS_NAME = "globe_prefs"
         private const val PREF_MUSIC_ENABLED = "music_enabled"
-        private const val PREF_CLOUDS_VISIBLE = "clouds_visible"
+        private const val PREF_MUSIC_VOLUME = "music_volume"
+        private const val PREF_CLOUD_MODE = "cloud_mode"
         private const val PREF_CAM_AZ = "cam_az"
         private const val PREF_CAM_EL = "cam_el"
         private const val PREF_CAM_DIST = "cam_dist"
@@ -68,6 +71,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var legendOverlay: FrameLayout
     private lateinit var musicButton: TextView
     private lateinit var narrateButton: TextView
+    private lateinit var volumeSlider: SeekBar
     private lateinit var onboardingOverlay: FrameLayout
     private lateinit var shareButton: TextView
     private lateinit var journalButton: TextView
@@ -89,6 +93,7 @@ class MainActivity : AppCompatActivity() {
 
     private var mediaPlayer: MediaPlayer? = null
     private var musicEnabled = true
+    private var musicVolume = 0.4f
     private var tts: TextToSpeech? = null
     private var ttsReady = false
     private var narrateEnabled = false
@@ -120,10 +125,10 @@ class MainActivity : AppCompatActivity() {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
             typeface = Typeface.MONOSPACE
             setShadowLayer(2f, 1f, 1f, Color.BLACK)
-            text = "\u2601 Clouds: procedural"
+            text = "\u2601 Clouds: live (loading\u2026)"
             setOnClickListener {
                 it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-                toggleClouds()
+                cycleClouds()
             }
             isClickable = true
         }
@@ -214,6 +219,7 @@ class MainActivity : AppCompatActivity() {
         journalOverlay = createJournalOverlay()
         todayOverlay = createTodayOverlay()
         musicEnabled = prefs.getBoolean(PREF_MUSIC_ENABLED, true)
+        musicVolume = prefs.getFloat(PREF_MUSIC_VOLUME, 0.4f)
         narrateEnabled = prefs.getBoolean(PREF_NARRATE, false)
 
         tts = TextToSpeech(this) { status ->
@@ -235,6 +241,23 @@ class MainActivity : AppCompatActivity() {
             isClickable = true
         }
         updateMusicButton()
+
+        // Music volume slider — shown under the Music toggle only when music is on
+        volumeSlider = SeekBar(this).apply {
+            max = 100
+            progress = (musicVolume * 100).toInt()
+            visibility = if (musicEnabled) View.VISIBLE else View.GONE
+            setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    if (!fromUser) return
+                    musicVolume = progress / 100f
+                    mediaPlayer?.setVolume(musicVolume, musicVolume)
+                    prefs.edit().putFloat(PREF_MUSIC_VOLUME, musicVolume).apply()
+                }
+                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar) {}
+            })
+        }
 
         narrateButton = TextView(this).apply {
             setTextColor(Color.WHITE)
@@ -321,8 +344,12 @@ class MainActivity : AppCompatActivity() {
                 prefs.getFloat(PREF_CAM_DIST, globeView.camera.distance)
             )
         }
-        globeView.renderer.earthRenderer.cloudsVisible =
-            prefs.getBoolean(PREF_CLOUDS_VISIBLE, true)
+        globeView.renderer.earthRenderer.cloudMode =
+            EarthRenderer.CloudMode.values()[
+                prefs.getInt(PREF_CLOUD_MODE, EarthRenderer.CloudMode.OFF.ordinal)
+                    .coerceIn(0, EarthRenderer.CloudMode.values().size - 1)
+            ]
+        updateCloudLabel()
 
         val margin = dp(12f)
 
@@ -347,11 +374,18 @@ class MainActivity : AppCompatActivity() {
         val topRightButtons = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.END
-            addView(musicButton)
             addView(narrateButton, LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { topMargin = dp(12f) })
+            ).apply { gravity = Gravity.END })
+            addView(musicButton, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { gravity = Gravity.END; topMargin = dp(12f) })
+            addView(volumeSlider, LinearLayout.LayoutParams(
+                dp(150f),
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { gravity = Gravity.END; topMargin = dp(2f) })
         }
         root.addView(topRightButtons, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -452,9 +486,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun toggleClouds() {
+    /** Cycle clouds: off -> generated -> live -> off. */
+    private fun cycleClouds() {
         val earth = globeView.renderer.earthRenderer
-        earth.cloudsVisible = !earth.cloudsVisible
+        earth.cloudMode = when (earth.cloudMode) {
+            EarthRenderer.CloudMode.OFF -> EarthRenderer.CloudMode.GENERATED
+            EarthRenderer.CloudMode.GENERATED -> EarthRenderer.CloudMode.LIVE
+            EarthRenderer.CloudMode.LIVE -> EarthRenderer.CloudMode.OFF
+        }
         updateCloudLabel()
     }
 
@@ -474,6 +513,9 @@ class MainActivity : AppCompatActivity() {
     // ------------------------------------------------------------------
 
     private fun onGlobeTapped(x: Float, y: Float) {
+        if (handleIndicatorTap(x, y)) return
+        if (handleISSTap(x, y)) return
+
         if (challengeKind != null) {
             evaluateChallenge(x, y)
             return
@@ -531,6 +573,100 @@ class MainActivity : AppCompatActivity() {
             EarthEventsProvider.Event.Type.STORM -> Discovery.STORM
         }
         showCard("$emoji ${event.title}\n$explain\n· ${relativeTime(event.timeMs)}", discovery)
+    }
+
+    /**
+     * If the tap hit the sun or moon indicator arrow (fixed at the bottom
+     * center — see IndicatorRenderer), rotate the camera to bring that body
+     * into view. Returns true when handled.
+     */
+    private fun handleIndicatorTap(x: Float, y: Float): Boolean {
+        val w = globeView.width.toFloat()
+        val h = globeView.height.toFloat()
+        if (w <= 0f || h <= 0f) return false
+
+        // Arrow anchors in NDC: y = -0.88, x = -0.10 (sun) / +0.10 (moon).
+        val arrowY = (1f - (-0.88f)) * 0.5f * h
+        val sunX = (-0.10f + 1f) * 0.5f * w
+        val moonX = (0.10f + 1f) * 0.5f * w
+        val radius = dpi(46f).toDouble()
+
+        val dSun = Math.hypot((x - sunX).toDouble(), (y - arrowY).toDouble())
+        val dMoon = Math.hypot((x - moonX).toDouble(), (y - arrowY).toDouble())
+
+        return when {
+            dSun <= radius && dSun <= dMoon -> {
+                faceSkyBody(com.globe.app.earth.SunPosition.calculate()); true
+            }
+            dMoon <= radius -> {
+                faceSkyBody(com.globe.app.moon.MoonPosition.calculate()); true
+            }
+            else -> false
+        }
+    }
+
+    private fun faceSkyBody(dir: FloatArray) {
+        globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+        globeView.camera.faceSky(dir[0], dir[1], dir[2])
+    }
+
+    /**
+     * If the tap hit the ISS marker (and it isn't hidden behind Earth), show an
+     * info card about it. Returns true when handled.
+     */
+    private fun handleISSTap(x: Float, y: Float): Boolean {
+        val p = globeView.renderer.issOrbitRenderer.currentWorldPosition()
+        if (issOccluded(p)) return false
+        val screen = projectToScreen(p) ?: return false
+        val d = Math.hypot((x - screen[0]).toDouble(), (y - screen[1]).toDouble())
+        if (d > dpi(42f)) return false
+
+        val sun = com.globe.app.earth.SunPosition.calculate()
+        val sunlit = p[0] * sun[0] + p[1] * sun[1] + p[2] * sun[2] > 0
+        globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+        showCard(
+            "🛰 International Space Station\n" +
+            "Astronauts live and work here, about 400 km above Earth — circling the whole planet about every 90 minutes at 28,000 km/h!\n" +
+            "Right now it's over the ${if (sunlit) "daytime" else "night"} side."
+        )
+        return true
+    }
+
+    /** Projects a world-space point to screen pixels, or null if behind the camera. */
+    private fun projectToScreen(p: FloatArray): FloatArray? {
+        val w = globeView.width
+        val h = globeView.height
+        if (w <= 0 || h <= 0) return null
+        val proj = FloatArray(16)
+        Matrix.perspectiveM(proj, 0, 33f, w.toFloat() / h, 0.1f, 1000f)
+        val vp = FloatArray(16)
+        Matrix.multiplyMM(vp, 0, proj, 0, globeView.camera.getViewMatrix(), 0)
+        val clip = FloatArray(4)
+        Matrix.multiplyMV(clip, 0, vp, 0, floatArrayOf(p[0], p[1], p[2], 1f), 0)
+        if (clip[3] <= 0f) return null
+        val ndcX = clip[0] / clip[3]
+        val ndcY = clip[1] / clip[3]
+        return floatArrayOf((ndcX + 1f) * 0.5f * w, (1f - ndcY) * 0.5f * h)
+    }
+
+    /** True if the Earth sphere blocks the line of sight from the camera to [p]. */
+    private fun issOccluded(p: FloatArray): Boolean {
+        val eye = globeView.camera.getPosition()
+        val dx = (p[0] - eye[0]).toDouble()
+        val dy = (p[1] - eye[1]).toDouble()
+        val dz = (p[2] - eye[2]).toDouble()
+        val dist = Math.sqrt(dx * dx + dy * dy + dz * dz)
+        if (dist < 1e-6) return false
+        val ux = dx / dist
+        val uy = dy / dist
+        val uz = dz / dist
+        // Ray (eye + t*u) vs unit sphere at origin.
+        val hh = eye[0] * ux + eye[1] * uy + eye[2] * uz
+        val c0 = eye[0] * eye[0] + eye[1] * eye[1] + eye[2] * eye[2] - 1.0
+        val disc = hh * hh - c0
+        if (disc < 0) return false
+        val t = -hh - Math.sqrt(disc)
+        return t > 0 && t < dist
     }
 
     /**
@@ -935,13 +1071,12 @@ class MainActivity : AppCompatActivity() {
         }
 
     private fun updateCloudLabel() {
-        val visible = globeView.renderer.earthRenderer.cloudsVisible
-        cloudLabel.text = if (!visible) {
-            "\u2601 Clouds: off"
-        } else if (cloudTimestamp != null) {
-            "\u2601 Clouds: live (NASA VIIRS)\n    Updated: $cloudTimestamp"
-        } else {
-            "\u2601 Clouds: procedural"
+        cloudLabel.text = when (globeView.renderer.earthRenderer.cloudMode) {
+            EarthRenderer.CloudMode.OFF -> "\u2601 Clouds: off"
+            EarthRenderer.CloudMode.GENERATED -> "\u2601 Clouds: generated"
+            EarthRenderer.CloudMode.LIVE ->
+                if (cloudTimestamp != null) "\u2601 Clouds: live (NASA VIIRS)\n    Updated: $cloudTimestamp"
+                else "\u2601 Clouds: live (loading\u2026)"
         }
     }
 
@@ -1352,9 +1487,10 @@ class MainActivity : AppCompatActivity() {
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(this, R.raw.ambient_space)?.apply {
                 isLooping = true
-                setVolume(0.4f, 0.4f)
+                setVolume(musicVolume, musicVolume)
             }
         }
+        mediaPlayer?.setVolume(musicVolume, musicVolume)
         mediaPlayer?.start()
     }
 
@@ -1371,6 +1507,7 @@ class MainActivity : AppCompatActivity() {
         musicEnabled = !musicEnabled
         prefs.edit().putBoolean(PREF_MUSIC_ENABLED, musicEnabled).apply()
         if (musicEnabled) startMusic() else stopMusic()
+        volumeSlider.visibility = if (musicEnabled) View.VISIBLE else View.GONE
         updateMusicButton()
     }
 
@@ -1513,7 +1650,7 @@ class MainActivity : AppCompatActivity() {
             .putFloat(PREF_CAM_AZ, globeView.camera.azimuth)
             .putFloat(PREF_CAM_EL, globeView.camera.elevation)
             .putFloat(PREF_CAM_DIST, globeView.camera.distance)
-            .putBoolean(PREF_CLOUDS_VISIBLE, globeView.renderer.earthRenderer.cloudsVisible)
+            .putInt(PREF_CLOUD_MODE, globeView.renderer.earthRenderer.cloudMode.ordinal)
             .apply()
     }
 

@@ -36,19 +36,22 @@ class EarthRenderer {
         private const val TAG = "EarthRenderer"
     }
 
+    /** How clouds are drawn — cycled by the user. */
+    enum class CloudMode { OFF, GENERATED, LIVE }
+
     // GL resources
     private var gpuBuffers: EarthModel.GpuBuffers? = null
     private var shader: EarthShader? = null
     private var dayTextureId: Int = 0
     private var nightTextureId: Int = 0
-    private var cloudTextureId: Int = 0
+    private var cloudTextureId: Int = 0        // procedural (generated) clouds
+    private var liveCloudTextureId: Int = 0    // NASA clouds (0 until downloaded)
 
-    // Cloud drift (disabled when real cloud map is loaded)
     private var startTimeMs: Long = 0L
-    private var useRealClouds = false
+    @Volatile private var liveCloudsAvailable = false
 
-    // Cloud and terminator visibility toggles
-    @Volatile var cloudsVisible = true
+    // Cloud mode + other visibility toggles
+    @Volatile var cloudMode: CloudMode = CloudMode.LIVE
     @Volatile var terminatorVisible = true
     @Volatile var auroraVisible = true
 
@@ -136,11 +139,11 @@ class EarthRenderer {
      * GL clear and viewport are the caller's responsibility.
      */
     fun onDrawFrame() {
-        // Upload pending real cloud texture if available
+        // Upload pending NASA cloud texture into its own slot if available
         pendingCloudBitmap.getAndSet(null)?.let { bitmap ->
-            uploadCloudBitmap(bitmap)
+            uploadLiveCloudBitmap(bitmap)
             bitmap.recycle()
-            useRealClouds = true
+            liveCloudsAvailable = true
             Log.d(TAG, "Real cloud map applied")
         }
 
@@ -177,20 +180,27 @@ class EarthRenderer {
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, nightTextureId)
         GLES30.glUniform1i(s.uNightTextureLoc, 1)
 
-        GLES30.glActiveTexture(GLES30.GL_TEXTURE2)
-        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, cloudTextureId)
-        GLES30.glUniform1i(s.uCloudTextureLoc, 2)
-
-        // Cloud drift: procedural clouds drift slowly; real clouds stay fixed
-        // Real clouds are rendered at 50% opacity to blend with the surface
-        val opacity = if (!cloudsVisible) 0f else if (useRealClouds) 0.5f else 1.0f
-        GLES30.glUniform1f(s.uCloudOpacityLoc, opacity)
-        if (useRealClouds) {
-            GLES30.glUniform1f(s.uCloudRotationLoc, 0f)
-        } else {
-            val elapsedSec = (TimeProvider.nowMs() - startTimeMs) / 1000.0f
-            GLES30.glUniform1f(s.uCloudRotationLoc, elapsedSec * 0.0017f)
+        // Choose cloud texture, opacity, and drift from the current mode.
+        // Procedural clouds drift slowly; the fixed NASA map renders at 50%.
+        val drift = (TimeProvider.nowMs() - startTimeMs) / 1000.0f * 0.0017f
+        var cloudTex = cloudTextureId
+        var opacity = 0f
+        var rotation = 0f
+        when (cloudMode) {
+            CloudMode.OFF -> opacity = 0f
+            CloudMode.GENERATED -> { opacity = 1.0f; rotation = drift }
+            CloudMode.LIVE -> if (liveCloudsAvailable) {
+                cloudTex = liveCloudTextureId; opacity = 0.5f; rotation = 0f
+            } else {
+                // Live selected but not downloaded yet: show procedural meanwhile.
+                opacity = 1.0f; rotation = drift
+            }
         }
+        GLES30.glActiveTexture(GLES30.GL_TEXTURE2)
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, cloudTex)
+        GLES30.glUniform1i(s.uCloudTextureLoc, 2)
+        GLES30.glUniform1f(s.uCloudOpacityLoc, opacity)
+        GLES30.glUniform1f(s.uCloudRotationLoc, rotation)
 
         // Terminator line
         GLES30.glUniform1f(s.uShowTerminatorLoc, if (terminatorVisible) 1.0f else 0.0f)
@@ -219,11 +229,12 @@ class EarthRenderer {
         shader?.release()
         shader = null
 
-        val textures = intArrayOf(dayTextureId, nightTextureId, cloudTextureId)
-        GLES30.glDeleteTextures(3, textures, 0)
+        val textures = intArrayOf(dayTextureId, nightTextureId, cloudTextureId, liveCloudTextureId)
+        GLES30.glDeleteTextures(4, textures, 0)
         dayTextureId = 0
         nightTextureId = 0
         cloudTextureId = 0
+        liveCloudTextureId = 0
     }
 
     // ------------------------------------------------------------------
@@ -417,11 +428,16 @@ class EarthRenderer {
     }
 
     /**
-     * Replaces the current cloud texture with a bitmap (expected grayscale equirectangular).
-     * Must be called on the GL thread.
+     * Uploads the NASA cloud bitmap into its own texture (kept separate from the
+     * procedural one so the user can switch back to "generated"). GL thread only.
      */
-    private fun uploadCloudBitmap(bitmap: Bitmap) {
-        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, cloudTextureId)
+    private fun uploadLiveCloudBitmap(bitmap: Bitmap) {
+        if (liveCloudTextureId == 0) {
+            val ids = IntArray(1)
+            GLES30.glGenTextures(1, ids, 0)
+            liveCloudTextureId = ids[0]
+        }
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, liveCloudTextureId)
 
         GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_LINEAR_MIPMAP_LINEAR)
         GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MAG_FILTER, GLES30.GL_LINEAR)
