@@ -1293,6 +1293,31 @@ class MainActivity : AppCompatActivity() {
         }
         overlay.addView(scrollView, cardParams)
 
+        // Close (X) button — top right, an obvious way to dismiss the legend
+        val closeButton = TextView(this).apply {
+            text = "✕"
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+            typeface = Typeface.DEFAULT_BOLD
+            gravity = Gravity.CENTER
+            val size = dp(40f)
+            minimumWidth = size
+            minimumHeight = size
+            background = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                setColor(Color.argb(120, 40, 60, 90))
+                setStroke(dp(1f), Color.argb(70, 255, 255, 255))
+            }
+            isClickable = true
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                hideLegend()
+            }
+        }
+        overlay.addView(closeButton, FrameLayout.LayoutParams(
+            dp(40f), dp(40f), Gravity.TOP or Gravity.END
+        ).apply { setMargins(0, dp(20f), dp(20f), 0) })
+
         return overlay
     }
 

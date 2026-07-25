@@ -29,3 +29,4 @@ positioning changes.
 | 3.3 | 5 | Fly-to-location, idle auto-rotation, haptics, persistence, scrubber flicker fix |
 | 3.4 | 6 | Tap-to-identify markers, wildfire + storm layers, seamless UI buttons |
 | 3.5 | 7 | Teacher Approved kids update: tap-to-learn, discovery journal, Today panel, challenges, onboarding, read-aloud; location removed, parental-gated sharing |
+| 3.6 | 8 | Large-screen support (unlocked orientation), legend close (X) button, resource shrinking enabled |
