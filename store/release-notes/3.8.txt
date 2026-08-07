@@ -1,0 +1,5 @@
+<en-US>
+Behind-the-scenes update: Pale Blue Dot now targets the latest Android version for better compatibility and security.
+
+Still no ads, no tracking, no accounts, no location.
+</en-US>

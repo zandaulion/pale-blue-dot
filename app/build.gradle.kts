@@ -5,14 +5,14 @@ plugins {
 
 android {
     namespace = "com.globe.app"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.zandaulion.palebluedot"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 9
-        versionName = "3.7"
+        targetSdk = 36
+        versionCode = 10
+        versionName = "3.8"
     }
 
     buildTypes {
