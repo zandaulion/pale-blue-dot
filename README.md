@@ -62,8 +62,8 @@ The current workspace configuration uses:
 
 | Setting | Value |
 |---------|-------|
-| Android Gradle Plugin | 9.3.1 |
-| Gradle wrapper | 9.5.0 |
+| Android Gradle Plugin | 9.4.1 |
+| Gradle wrapper | 9.6.0 |
 | Kotlin plugin | 2.2.10 |
 | Gradle daemon JVM | JetBrains JDK 21, selected by `gradle/gradle-daemon-jvm.properties` |
 | Java/Kotlin bytecode target | 17 |
