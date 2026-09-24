@@ -5,8 +5,10 @@ import android.opengl.GLES30
 /**
  * Shader for rendering the Moon as a lit sphere.
  * The phase is produced naturally by diffuse sun lighting.
+ *
+ * One instance per GL context: program ids are only valid in the context that created them.
  */
-object MoonShader {
+class MoonShader {
 
     var programId: Int = 0; private set
     var uMVPLoc: Int = -1; private set
@@ -14,7 +16,7 @@ object MoonShader {
     var uSunDirectionLoc: Int = -1; private set
     var uMoonTextureLoc: Int = -1; private set
 
-    const val VERTEX_SOURCE = """#version 300 es
+    val VERTEX_SOURCE = """#version 300 es
 precision highp float;
 
 layout(location = 0) in vec3 aPosition;
@@ -34,7 +36,7 @@ void main() {
 }
 """
 
-    const val FRAGMENT_SOURCE = """#version 300 es
+    val FRAGMENT_SOURCE = """#version 300 es
 precision highp float;
 
 in vec3 vWorldNormal;

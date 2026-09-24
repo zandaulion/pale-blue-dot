@@ -14,6 +14,7 @@ import kotlin.math.atan2
  * glow layer behind it.
  */
 class IndicatorRenderer {
+    private val shader = IndicatorShader()
 
     companion object {
         /** Arrow size in NDC units (height). */
@@ -53,7 +54,7 @@ class IndicatorRenderer {
     private val vpMatrix = FloatArray(16)
 
     fun init() {
-        IndicatorShader.init()
+        shader.init()
 
         // Arrow shape: slim pointer with notch at base, pointing up (+Y).
         // Coordinates in local space, centered at origin.
@@ -113,7 +114,7 @@ class IndicatorRenderer {
         GLES30.glEnable(GLES30.GL_BLEND)
         GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA, GLES30.GL_ONE_MINUS_SRC_ALPHA)
 
-        GLES30.glUseProgram(IndicatorShader.programId)
+        GLES30.glUseProgram(shader.programId)
         GLES30.glBindVertexArray(vaoId)
 
         // Draw sun arrow (left position)
@@ -138,7 +139,7 @@ class IndicatorRenderer {
             GLES30.glDeleteBuffers(1, intArrayOf(vboId), 0)
             vboId = 0
         }
-        IndicatorShader.destroy()
+        shader.destroy()
     }
 
     // ------------------------------------------------------------------
@@ -150,18 +151,18 @@ class IndicatorRenderer {
     private fun drawArrow(posX: Float, posY: Float, angleDeg: Float, color: FloatArray) {
         // Glow layer
         buildTransform(posX, posY, angleDeg, ARROW_SIZE * GLOW_SCALE)
-        GLES30.glUniformMatrix4fv(IndicatorShader.uTransformLoc, 1, false, transform, 0)
+        GLES30.glUniformMatrix4fv(shader.uTransformLoc, 1, false, transform, 0)
         GLES30.glUniform4f(
-            IndicatorShader.uColorLoc,
+            shader.uColorLoc,
             color[0], color[1], color[2], color[3] * GLOW_ALPHA
         )
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, vertexCount)
 
         // Foreground layer
         buildTransform(posX, posY, angleDeg, ARROW_SIZE)
-        GLES30.glUniformMatrix4fv(IndicatorShader.uTransformLoc, 1, false, transform, 0)
+        GLES30.glUniformMatrix4fv(shader.uTransformLoc, 1, false, transform, 0)
         GLES30.glUniform4f(
-            IndicatorShader.uColorLoc,
+            shader.uColorLoc,
             color[0], color[1], color[2], color[3]
         )
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, vertexCount)

@@ -17,6 +17,7 @@ import com.globe.app.render.TextureQuality
  * computed direction, and rendered as a sphere of radius [MOON_RADIUS].
  */
 class MoonRenderer {
+    private val shader = MoonShader()
 
     companion object {
         private const val TAG = "MoonRenderer"
@@ -34,7 +35,7 @@ class MoonRenderer {
     private val tempMatrix = FloatArray(16)
 
     fun init(context: Context, textureResId: Int = 0, maxTextureWidth: Int = TextureQuality.FULL.moonMaxWidth) {
-        MoonShader.init()
+        shader.init()
 
         // Reuse EarthModel for a sphere mesh (lower resolution is fine)
         val model = EarthModel(latSegments = 24, lonSegments = 48)
@@ -72,14 +73,14 @@ class MoonRenderer {
         GLES30.glEnable(GLES30.GL_CULL_FACE)
         GLES30.glCullFace(GLES30.GL_BACK)
 
-        GLES30.glUseProgram(MoonShader.programId)
-        GLES30.glUniformMatrix4fv(MoonShader.uMVPLoc, 1, false, mvpMatrix, 0)
-        GLES30.glUniformMatrix4fv(MoonShader.uModelLoc, 1, false, modelMatrix, 0)
-        GLES30.glUniform3f(MoonShader.uSunDirectionLoc, sunDir[0], sunDir[1], sunDir[2])
+        GLES30.glUseProgram(shader.programId)
+        GLES30.glUniformMatrix4fv(shader.uMVPLoc, 1, false, mvpMatrix, 0)
+        GLES30.glUniformMatrix4fv(shader.uModelLoc, 1, false, modelMatrix, 0)
+        GLES30.glUniform3f(shader.uSunDirectionLoc, sunDir[0], sunDir[1], sunDir[2])
 
         GLES30.glActiveTexture(GLES30.GL_TEXTURE0)
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textureId)
-        GLES30.glUniform1i(MoonShader.uMoonTextureLoc, 0)
+        GLES30.glUniform1i(shader.uMoonTextureLoc, 0)
 
         GLES30.glBindVertexArray(buffers.vao)
         GLES30.glDrawElements(
@@ -98,6 +99,6 @@ class MoonRenderer {
             GLES30.glDeleteTextures(1, intArrayOf(textureId), 0)
             textureId = 0
         }
-        MoonShader.destroy()
+        shader.destroy()
     }
 }

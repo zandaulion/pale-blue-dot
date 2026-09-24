@@ -71,7 +71,7 @@ The current workspace configuration uses:
 | minSdk | 24 (Android 7.0) |
 | Required graphics support | OpenGL ES 3.0, explicitly required by the manifest |
 | Application ID | `com.zandaulion.palebluedot` |
-| App version | 3.8 (version code 10) |
+| App version | 3.9 (version code 11) |
 
 Build a debug APK on Windows:
 

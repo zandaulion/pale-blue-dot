@@ -4,14 +4,16 @@ import android.opengl.GLES30
 
 /**
  * Simple 2D shader for rendering directional indicator arrows as an overlay.
+ *
+ * One instance per GL context: program ids are only valid in the context that created them.
  */
-object IndicatorShader {
+class IndicatorShader {
 
     var programId: Int = 0; private set
     var uTransformLoc: Int = -1; private set
     var uColorLoc: Int = -1; private set
 
-    private const val VERTEX_SOURCE = """#version 300 es
+    private val VERTEX_SOURCE = """#version 300 es
 precision highp float;
 
 layout(location = 0) in vec2 aPosition;
@@ -23,7 +25,7 @@ void main() {
 }
 """
 
-    private const val FRAGMENT_SOURCE = """#version 300 es
+    private val FRAGMENT_SOURCE = """#version 300 es
 precision mediump float;
 
 uniform vec4 uColor;

@@ -5,13 +5,15 @@ import android.opengl.GLES30
 /**
  * Shader for rendering the Sun as a camera-facing billboard with a bright
  * core and soft corona glow.
+ *
+ * One instance per GL context: program ids are only valid in the context that created them.
  */
-object SunShader {
+class SunShader {
 
     var programId: Int = 0; private set
     var uMVPLoc: Int = -1; private set
 
-    const val VERTEX_SOURCE = """#version 300 es
+    val VERTEX_SOURCE = """#version 300 es
 precision highp float;
 
 layout(location = 0) in vec3 aPosition;
@@ -27,7 +29,7 @@ void main() {
 }
 """
 
-    const val FRAGMENT_SOURCE = """#version 300 es
+    val FRAGMENT_SOURCE = """#version 300 es
 precision highp float;
 
 in vec2 vUV;

@@ -12,6 +12,7 @@ import java.nio.ByteOrder
  * Uses additive blending so the glow naturally blooms over the background.
  */
 class SunRenderer {
+    private val shader = SunShader()
 
     companion object {
         /** Distance from origin — behind the star sphere isn't needed,
@@ -29,7 +30,7 @@ class SunRenderer {
     private val tempMatrix = FloatArray(16)
 
     fun init() {
-        SunShader.init()
+        shader.init()
 
         // Billboard quad: 4 vertices with position (x,y,z) and UV (u,v)
         // Positions are in local space, centered at origin
@@ -111,8 +112,8 @@ class SunRenderer {
         GLES30.glDisable(GLES30.GL_DEPTH_TEST)
         GLES30.glDepthMask(false)
 
-        GLES30.glUseProgram(SunShader.programId)
-        GLES30.glUniformMatrix4fv(SunShader.uMVPLoc, 1, false, mvpMatrix, 0)
+        GLES30.glUseProgram(shader.programId)
+        GLES30.glUniformMatrix4fv(shader.uMVPLoc, 1, false, mvpMatrix, 0)
 
         GLES30.glBindVertexArray(vaoId)
         GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, 6)
@@ -133,6 +134,6 @@ class SunRenderer {
             GLES30.glDeleteBuffers(1, intArrayOf(vboId), 0)
             vboId = 0
         }
-        SunShader.destroy()
+        shader.destroy()
     }
 }
