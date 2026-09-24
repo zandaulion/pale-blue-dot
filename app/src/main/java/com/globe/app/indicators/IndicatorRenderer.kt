@@ -22,10 +22,14 @@ class IndicatorRenderer {
         private const val GLOW_SCALE = 1.6f
         /** Glow layer alpha multiplier. */
         private const val GLOW_ALPHA = 0.18f
-        /** Vertical position of arrows in NDC (-1 = bottom, 1 = top). */
-        private const val ARROW_Y = -0.88f
+        /** Default vertical position of arrows in NDC (-1 = bottom, 1 = top). */
+        private const val DEFAULT_ARROW_Y = -0.88f
         /** Horizontal offset from center for each arrow. */
-        private const val ARROW_SPACING = 0.10f
+        const val ARROW_SPACING = 0.10f
+
+        /** Arrow centre in view pixels from the top; the tap hit-test must use the same anchor. */
+        fun arrowCenterY(heightPx: Float, bottomOffsetPx: Float): Float =
+            if (bottomOffsetPx > 0f) heightPx - bottomOffsetPx else (1f - DEFAULT_ARROW_Y) * 0.5f * heightPx
 
         // Sun: warm amber gold
         private val SUN_COLOR = floatArrayOf(1.0f, 0.76f, 0.16f, 0.85f)
@@ -38,6 +42,10 @@ class IndicatorRenderer {
     private var vertexCount: Int = 0
 
     private var aspectRatio: Float = 1f
+    private var surfaceHeight: Int = 0
+    private var arrowY = DEFAULT_ARROW_Y
+    /** Distance from the surface bottom to the arrow centre, in pixels; 0 keeps the default. */
+    @Volatile var bottomOffsetPx: Float = 0f
 
     private val transform = FloatArray(16)
     private val tempVec = FloatArray(4)
@@ -86,16 +94,18 @@ class IndicatorRenderer {
 
     fun onSurfaceChanged(width: Int, height: Int) {
         aspectRatio = width.toFloat() / height.toFloat()
+        surfaceHeight = height
     }
 
-    fun draw(viewMatrix: FloatArray, projectionMatrix: FloatArray) {
+    fun draw(viewMatrix: FloatArray, projectionMatrix: FloatArray, timeMs: Long) {
         Matrix.multiplyMM(vpMatrix, 0, projectionMatrix, 0, viewMatrix, 0)
 
-        val sunDir = SunPosition.calculate(null)
-        val moonDir = MoonPosition.calculate(null)
+        val sunDir = SunPosition.calculate(timeMs)
+        val moonDir = MoonPosition.calculate(timeMs)
 
-        val sunAngle = directionAngle(sunDir, -ARROW_SPACING, ARROW_Y)
-        val moonAngle = directionAngle(moonDir, ARROW_SPACING, ARROW_Y)
+        if (surfaceHeight > 0) arrowY = 1f - 2f * arrowCenterY(surfaceHeight.toFloat(), bottomOffsetPx) / surfaceHeight
+        val sunAngle = directionAngle(sunDir, -ARROW_SPACING, arrowY)
+        val moonAngle = directionAngle(moonDir, ARROW_SPACING, arrowY)
 
         // Setup GL state for 2D overlay
         GLES30.glDisable(GLES30.GL_DEPTH_TEST)
@@ -107,9 +117,9 @@ class IndicatorRenderer {
         GLES30.glBindVertexArray(vaoId)
 
         // Draw sun arrow (left position)
-        drawArrow(-ARROW_SPACING, ARROW_Y, sunAngle, SUN_COLOR)
+        drawArrow(-ARROW_SPACING, arrowY, sunAngle, SUN_COLOR)
         // Draw moon arrow (right position)
-        drawArrow(ARROW_SPACING, ARROW_Y, moonAngle, MOON_COLOR)
+        drawArrow(ARROW_SPACING, arrowY, moonAngle, MOON_COLOR)
 
         GLES30.glBindVertexArray(0)
 

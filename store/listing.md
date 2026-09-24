@@ -15,17 +15,17 @@ Explore a live 3D Earth: tap to learn about our planet, space & beyond!
 
 Pale Blue Dot turns your phone into a living, real-time model of Earth and the sky around it — a calm, beautiful place for curious kids (and grown-ups) to explore our planet and see how it works.
 
-Spin the globe with your finger and watch day turn to night in real time, with city lights glowing on the dark side and clouds pulled straight from NASA satellites. Then tap anywhere to discover what's happening on Earth right now.
+Spin the globe with your finger and watch day turn to night, with city lights glowing on the dark side. Choose generated clouds or a NASA satellite-derived view, and explore recent reports with their dates and sources.
 
 🌍 EXPLORE A LIVE EARTH
 • Real day and night, lit by the real Sun and synced to your clock
-• Live clouds from NASA satellites
-• Tap the glowing dots to learn about real earthquakes, volcanoes, wildfires, and storms happening today
+• Optional NASA satellite-derived clouds, with a generated offline mode
+• Tap the glowing dots to learn about recently reported earthquakes, volcanoes, wildfires, and storms
 • Tap any land or ocean to find out if it's daytime or night there — and why
 
 🔭 A POCKET NIGHT SKY
 • Thousands of stars, the Milky Way, and 15 constellations in their real positions
-• The Sun and Moon placed by real astronomy, plus the International Space Station's orbit
+• The Sun and Moon placed by simplified astronomy, plus an illustrated International Space Station orbit
 
 📖 LEARN BY EXPLORING (made for ages 9–12)
 • Every tap explains the science in kid-friendly words
@@ -33,6 +33,9 @@ Spin the globe with your finger and watch day turn to night in real time, with c
 • A new "Today" each day: the Moon's phase and a fresh space fact
 • Fun find-it challenges that build real thinking
 • Read-aloud narration for early readers
+• Save places, compare local daylight, and keep a private Field notebook
+• Follow three guided journeys about sunrise, plate boundaries, and seasons
+• Add an Earth Today home-screen widget or preview a live Earth wallpaper
 
 🛡️ SAFE AND PRIVATE
 • No ads, ever

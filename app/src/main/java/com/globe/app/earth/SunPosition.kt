@@ -1,6 +1,5 @@
 package com.globe.app.earth
 
-import com.globe.app.TimeProvider
 import java.util.Calendar
 import java.util.TimeZone
 import kotlin.math.asin
@@ -25,34 +24,15 @@ object SunPosition {
     /** Earth's axial tilt in radians. */
     private const val AXIAL_TILT_RAD = 23.44 * Math.PI / 180.0
 
-    /** Refresh interval: 10 minutes in milliseconds. */
-    private const val REFRESH_INTERVAL_MS = 10 * 60 * 1000L
-
-    /** Cached result and the time it was computed. */
-    @Volatile private var cachedDirection: FloatArray? = null
-    @Volatile private var cachedAtMs: Long = 0L
-
-    /** Force recalculation on the next call. */
-    fun invalidateCache() {
-        cachedDirection = null
-    }
-
     /**
      * Returns the unit direction vector toward the sun.
-     * The result is cached and recalculated every 10 minutes.
+     * Pure calculation for one explicitly supplied UTC instant.
      *
      * @return FloatArray of [x, y, z] in the Earth's model coordinate system:
      *         +Y = North Pole, -X = 0° (Greenwich), +Z = 90°W
      */
-    fun calculate(calendar: Calendar? = null): FloatArray {
-        val simNow = TimeProvider.nowMs()
-        if (calendar == null) {
-            val cached = cachedDirection
-            if (cached != null && kotlin.math.abs(simNow - cachedAtMs) < REFRESH_INTERVAL_MS) {
-                return cached
-            }
-        }
-        val cal = calendar ?: TimeProvider.calendar()
+    fun calculate(timeMs: Long): FloatArray {
+        val cal = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply { timeInMillis = timeMs }
         val jd = julianDate(cal)
         val n = jd - 2451545.0  // days since J2000.0
 
@@ -91,12 +71,7 @@ object SunPosition {
         val y = sin(dec).toFloat()
         val z = -(cosDec * sin(hourAngle)).toFloat()
 
-        val result = floatArrayOf(x, y, z)
-        if (calendar == null) {
-            cachedDirection = result
-            cachedAtMs = simNow
-        }
-        return result
+        return floatArrayOf(x, y, z)
     }
 
     // ------------------------------------------------------------------

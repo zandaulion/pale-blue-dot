@@ -8,7 +8,6 @@ import android.net.Uri
 import android.view.SurfaceView
 import android.widget.Toast
 import androidx.core.content.FileProvider
-import com.globe.app.TimeProvider
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -36,7 +35,7 @@ object ShareManager {
     private const val SHARE_FILE = "pale_blue_dot.jpg"
     private const val JPEG_QUALITY = 92
 
-    fun share(activity: Activity, surface: SurfaceView) {
+    fun share(activity: Activity, surface: SurfaceView, sceneTimeMs: Long) {
         FrameCapturer.captureStill(surface) { captured ->
             // Runs on the FrameCapturer background thread.
             if (captured == null) {
@@ -51,7 +50,7 @@ object ShareManager {
             if (uri == null) {
                 toast(activity, "Couldn't prepare the image.")
             } else {
-                activity.runOnUiThread { launchShareSheet(activity, uri) }
+                activity.runOnUiThread { launchShareSheet(activity, uri, sceneTimeMs) }
             }
         }
     }
@@ -67,11 +66,11 @@ object ShareManager {
         null
     }
 
-    private fun launchShareSheet(activity: Activity, uri: Uri) {
+    private fun launchShareSheet(activity: Activity, uri: Uri, sceneTimeMs: Long) {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "image/jpeg"
             putExtra(Intent.EXTRA_STREAM, uri)
-            putExtra(Intent.EXTRA_TEXT, buildCaption())
+            putExtra(Intent.EXTRA_TEXT, buildCaption(sceneTimeMs))
             clipData = ClipData.newRawUri("", uri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
@@ -79,11 +78,11 @@ object ShareManager {
     }
 
     /** Uses the simulated time so a scrubbed view reports the time it actually shows. */
-    private fun buildCaption(): String {
+    private fun buildCaption(sceneTimeMs: Long): String {
         val fmt = SimpleDateFormat("MMM d, yyyy HH:mm 'UTC'", Locale.US).apply {
             timeZone = TimeZone.getTimeZone("UTC")
         }
-        val time = fmt.format(Date(TimeProvider.nowMs()))
+        val time = fmt.format(Date(sceneTimeMs))
         return "🌍 Earth — $time\nMade with Pale Blue Dot → $PLAY_URL"
     }
 

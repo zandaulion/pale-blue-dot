@@ -25,20 +25,20 @@ import java.util.TimeZone
  */
 class CloudMapProvider(private val context: Context) {
 
-    data class Result(val bitmap: Bitmap, val timestamp: String)
+    data class Result(val bitmap: Bitmap, val timestamp: String, val stale: Boolean = false)
 
     companion object {
         private const val TAG = "CloudMapProvider"
         private const val CACHE_FILENAME = "cloud_map.png"
         private const val CACHE_MAX_AGE_MS = 6 * 60 * 60 * 1000L // 6 hours
-        private val timestampFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        private const val META_FILENAME = "cloud_map_date.txt"
 
         // Brightness threshold: pixels above this are considered cloud.
         // Range 0.0-1.0. Lower = more clouds detected, higher = fewer.
         private const val CLOUD_THRESHOLD_LOW = 0.45f
         private const val CLOUD_THRESHOLD_HIGH = 0.75f
 
-        private fun buildUrl(): String {
+        private fun buildUrl(): Pair<String, String> {
             // Use yesterday's date (today's data may not be available yet)
             val cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
             cal.add(Calendar.DAY_OF_YEAR, -1)
@@ -46,14 +46,14 @@ class CloudMapProvider(private val context: Context) {
             dateFormat.timeZone = TimeZone.getTimeZone("UTC")
             val date = dateFormat.format(cal.time)
 
-            return "https://wvs.earthdata.nasa.gov/api/v1/snapshot" +
+            return ("https://wvs.earthdata.nasa.gov/api/v1/snapshot" +
                 "?REQUEST=GetSnapshot" +
                 "&LAYERS=VIIRS_SNPP_CorrectedReflectance_TrueColor" +
                 "&CRS=EPSG:4326" +
                 "&BBOX=-90,-180,90,180" +
                 "&WIDTH=2048&HEIGHT=1024" +
                 "&FORMAT=image/jpeg" +
-                "&TIME=$date"
+                "&TIME=$date") to date
         }
     }
 
@@ -63,6 +63,9 @@ class CloudMapProvider(private val context: Context) {
      */
     fun fetch(): Result? {
         val cacheFile = File(context.cacheDir, CACHE_FILENAME)
+        val metaFile = File(context.cacheDir, META_FILENAME)
+        fun imageDate(): String = metaFile.takeIf { it.exists() }?.readText()?.trim()
+            ?.takeIf { it.matches(Regex("\\d{4}-\\d{2}-\\d{2}")) } ?: "date unavailable"
 
         // Use cache if fresh
         if (cacheFile.exists() &&
@@ -71,19 +74,29 @@ class CloudMapProvider(private val context: Context) {
             val bmp = BitmapFactory.decodeFile(cacheFile.absolutePath)
             if (bmp != null) {
                 Log.d(TAG, "Loaded cloud map from cache")
-                return Result(bmp, formatTimestamp(cacheFile.lastModified()))
+                return Result(bmp, imageDate())
             }
         }
 
         // Download
         return try {
-            val url = buildUrl()
+            val (url, requestedDate) = buildUrl()
             Log.d(TAG, "Downloading satellite imagery: $url")
             val connection = URL(url).openConnection().apply {
                 connectTimeout = 15_000
                 readTimeout = 30_000
             }
-            val bytes = connection.getInputStream().use { it.readBytes() }
+            val bytes = connection.getInputStream().use { input ->
+                val output = java.io.ByteArrayOutputStream()
+                val chunk = ByteArray(8192)
+                while (true) {
+                    val count = input.read(chunk)
+                    if (count < 0) break
+                    if (output.size() + count > 12 * 1024 * 1024) error("Cloud response too large")
+                    output.write(chunk, 0, count)
+                }
+                output.toByteArray()
+            }
             val sourceBmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                 ?: return null
 
@@ -92,18 +105,24 @@ class CloudMapProvider(private val context: Context) {
             sourceBmp.recycle()
 
             // Cache the processed cloud map
-            cacheFile.outputStream().use { out ->
+            val temporary = File(context.cacheDir, "$CACHE_FILENAME.tmp")
+            temporary.outputStream().use { out ->
                 cloudBmp.compress(Bitmap.CompressFormat.PNG, 90, out)
             }
+            if (!temporary.renameTo(cacheFile)) {
+                temporary.copyTo(cacheFile, overwrite = true)
+                temporary.delete()
+            }
+            metaFile.writeText(requestedDate)
 
             Log.d(TAG, "Cloud map ready: ${cloudBmp.width}x${cloudBmp.height}")
-            Result(cloudBmp, formatTimestamp(System.currentTimeMillis()))
+            Result(cloudBmp, requestedDate)
         } catch (e: Exception) {
             Log.w(TAG, "Failed to download cloud map, using procedural fallback", e)
             // Try stale cache as last resort
             if (cacheFile.exists()) {
                 val bmp = BitmapFactory.decodeFile(cacheFile.absolutePath)
-                if (bmp != null) Result(bmp, formatTimestamp(cacheFile.lastModified())) else null
+                if (bmp != null) Result(bmp, imageDate(), stale = true) else null
             } else {
                 null
             }
@@ -149,5 +168,4 @@ class CloudMapProvider(private val context: Context) {
         return result
     }
 
-    private fun formatTimestamp(millis: Long): String = timestampFormat.format(Date(millis))
 }

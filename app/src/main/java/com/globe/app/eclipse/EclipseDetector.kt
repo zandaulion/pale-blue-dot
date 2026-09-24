@@ -32,9 +32,9 @@ object EclipseDetector {
      *
      * Call this every frame from the GL thread.
      */
-    fun detect(): EclipseState {
-        val sunDir = SunPosition.calculate()
-        val moonDir = MoonPosition.calculate()
+    fun detect(timeMs: Long): EclipseState {
+        val sunDir = SunPosition.calculate(timeMs)
+        val moonDir = MoonPosition.calculate(timeMs)
 
         val dot = sunDir[0] * moonDir[0] +
                   sunDir[1] * moonDir[1] +

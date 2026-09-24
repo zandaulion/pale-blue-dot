@@ -1,137 +1,142 @@
 package com.globe.app.events
 
-import android.util.Log
 import org.json.JSONObject
+import java.net.HttpURLConnection
 import java.net.URL
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-/**
- * Fetches recent earthquakes from the USGS API and active volcanoes, wildfires,
- * and severe storms from NASA EONET. All APIs are free and require no API key.
- */
+/** Network and parsing only. EarthRepository owns scheduling, status, and disk cache. */
 class EarthEventsProvider {
+    data class Geometry(val lat: Double, val lon: Double, val timeMs: Long?)
 
     data class Event(
+        val id: String,
         val lat: Double,
         val lon: Double,
-        val magnitude: Float,
         val title: String,
         val type: Type,
-        val timeMs: Long
+        val observedAtMs: Long?,
+        val updatedAtMs: Long?,
+        val source: String,
+        val sourceUrl: String?,
+        val magnitude: Float?,
+        val depthKm: Float?,
+        val geometry: List<Geometry>,
+        val markerSize: Float
     ) {
         enum class Type { EARTHQUAKE, VOLCANO, WILDFIRE, STORM }
     }
 
-    companion object {
-        private const val TAG = "EarthEventsProvider"
-        private const val QUAKE_URL =
-            "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson"
-        private const val EONET_BASE_URL =
-            "https://eonet.gsfc.nasa.gov/api/v3/events?status=open&category="
-    }
-
-    /**
-     * Fetches earthquakes, volcanoes, wildfires, and storms. Call from a background thread.
-     */
-    fun fetch(): List<Event> {
-        val events = mutableListOf<Event>()
-        events.addAll(fetchEarthquakes())
-        // Volcanoes: no day filter — EONET updates them slowly, so rely on
-        // NASA's "open" (ongoing) status. Wildfires/storms update daily.
-        events.addAll(fetchEonet("volcanoes", 0, Event.Type.VOLCANO))
-        events.addAll(fetchEonet("wildfires", 10, Event.Type.WILDFIRE))
-        events.addAll(fetchEonet("severeStorms", 7, Event.Type.STORM))
-        Log.d(TAG, "Fetched ${events.size} events: " +
-            Event.Type.values().joinToString { t -> "${events.count { it.type == t }} $t" })
-        return events
-    }
-
-    private fun fetchEarthquakes(): List<Event> {
-        return try {
-            val json = URL(QUAKE_URL).openConnection().apply {
-                connectTimeout = 10_000
-                readTimeout = 15_000
-            }.getInputStream().bufferedReader().readText()
-
-            val root = JSONObject(json)
-            val features = root.getJSONArray("features")
-            val events = mutableListOf<Event>()
-
-            for (i in 0 until features.length()) {
-                val feature = features.getJSONObject(i)
-                val props = feature.getJSONObject("properties")
-                val geom = feature.getJSONObject("geometry")
-                val coords = geom.getJSONArray("coordinates")
-
-                val mag = props.optDouble("mag", 0.0).toFloat()
-                if (mag < 4.5f) continue
-
-                events.add(Event(
-                    lat = coords.getDouble(1),
-                    lon = coords.getDouble(0),
-                    magnitude = mag,
-                    title = props.optString("title", "Unknown earthquake"),
-                    type = Event.Type.EARTHQUAKE,
-                    timeMs = props.optLong("time", 0L)
-                ))
+    fun fetchRaw(type: Event.Type): String {
+        val url = when (type) {
+            Event.Type.EARTHQUAKE -> "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson"
+            Event.Type.VOLCANO -> eonetUrl("volcanoes", 0)
+            Event.Type.WILDFIRE -> eonetUrl("wildfires", 10)
+            Event.Type.STORM -> eonetUrl("severeStorms", 7)
+        }
+        val connection = URL(url).openConnection() as HttpURLConnection
+        connection.connectTimeout = 10_000
+        connection.readTimeout = 15_000
+        connection.setRequestProperty("Accept", "application/json")
+        try {
+            if (connection.responseCode !in 200..299) error("HTTP ${connection.responseCode}")
+            val limit = 8 * 1024 * 1024
+            connection.inputStream.use { input ->
+                val output = java.io.ByteArrayOutputStream()
+                val chunk = ByteArray(8192)
+                while (true) {
+                    val count = input.read(chunk)
+                    if (count < 0) break
+                    if (output.size() + count > limit) error("Event response too large")
+                    output.write(chunk, 0, count)
+                }
+                return output.toString(Charsets.UTF_8.name())
             }
-            events
-        } catch (e: Exception) {
-            Log.w(TAG, "Failed to fetch earthquakes", e)
-            emptyList()
+        } finally {
+            connection.disconnect()
         }
     }
 
-    /**
-     * Fetches one EONET category. Storms report a track of positions over time;
-     * using the most recent geometry entry gives the current position for those
-     * and the (single) location for volcanoes and wildfires.
-     */
-    private fun fetchEonet(category: String, days: Int, type: Event.Type): List<Event> {
-        return try {
-            val url = EONET_BASE_URL + category + if (days > 0) "&days=$days" else ""
-            val json = URL(url).openConnection().apply {
-                connectTimeout = 10_000
-                readTimeout = 15_000
-            }.getInputStream().bufferedReader().readText()
+    fun parse(type: Event.Type, json: String): List<Event> {
+        val root = JSONObject(json)
+        val items = root.getJSONArray(if (type == Event.Type.EARTHQUAKE) "features" else "events")
+        val result = ArrayList<Event>(items.length())
+        for (index in 0 until items.length()) {
+            try {
+                val item = items.getJSONObject(index)
+                val event = if (type == Event.Type.EARTHQUAKE) parseQuake(item) else parseEonet(type, item)
+                if (event != null) result.add(event)
+            } catch (_: Exception) {
+                // One malformed record must not discard a usable feed.
+            }
+        }
+        return result.toList()
+    }
 
-            val root = JSONObject(json)
-            val eventsArray = root.getJSONArray("events")
-            val events = mutableListOf<Event>()
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).apply {
+    private fun parseQuake(item: JSONObject): Event? {
+        val props = item.getJSONObject("properties")
+        val geometry = item.getJSONObject("geometry")
+        if (geometry.optString("type") != "Point") return null
+        val coords = geometry.getJSONArray("coordinates")
+        val lon = coords.getDouble(0)
+        val lat = coords.getDouble(1)
+        if (!valid(lat, lon)) return null
+        val magnitude = number(props, "mag")?.toFloat()
+        if (magnitude != null && magnitude < 4.5f) return null
+        val time = positiveTime(props, "time")
+        val depth = if (coords.length() > 2 && !coords.isNull(2)) coords.optDouble(2).takeIf { it.isFinite() }?.toFloat() else null
+        val id = item.optString("id").takeIf { it.isNotBlank() } ?: return null
+        return Event(
+            "usgs:$id", lat, lon, props.optString("title", "Earthquake"), Event.Type.EARTHQUAKE,
+            time, positiveTime(props, "updated"), "USGS", props.optString("url").takeIf { it.startsWith("https://") },
+            magnitude, depth, listOf(Geometry(lat, lon, time)),
+            if (magnitude == null) 14f else (8f + (magnitude - 4f) * 8f).coerceIn(10f, 36f)
+        )
+    }
+
+    private fun parseEonet(type: Event.Type, item: JSONObject): Event? {
+        val id = item.optString("id").takeIf { it.isNotBlank() } ?: return null
+        val geometries = item.optJSONArray("geometry") ?: return null
+        val points = ArrayList<Geometry>()
+        for (index in 0 until geometries.length()) {
+            try {
+                val shape = geometries.getJSONObject(index)
+                if (shape.optString("type") != "Point") continue // Polygon/other shapes need a different renderer.
+                val coords = shape.getJSONArray("coordinates")
+                val lon = coords.getDouble(0)
+                val lat = coords.getDouble(1)
+                if (valid(lat, lon)) points.add(Geometry(lat, lon, parseDate(shape.optString("date"))))
+            } catch (_: Exception) { }
+        }
+        val latest = points.maxByOrNull { it.timeMs ?: Long.MIN_VALUE } ?: return null
+        return Event(
+            "eonet:$id", latest.lat, latest.lon, item.optString("title", "Reported event"), type,
+            latest.timeMs, null, "NASA EONET", item.optString("link").takeIf { it.startsWith("https://") },
+            null, null, points.toList(), 16f
+        )
+    }
+
+    private fun valid(lat: Double, lon: Double) = lat.isFinite() && lon.isFinite() && lat in -90.0..90.0 && lon in -180.0..180.0
+
+    private fun number(json: JSONObject, key: String): Double? =
+        if (json.has(key) && !json.isNull(key)) json.optDouble(key).takeIf { it.isFinite() } else null
+
+    private fun positiveTime(json: JSONObject, key: String): Long? =
+        if (json.has(key) && !json.isNull(key)) json.optLong(key).takeIf { it > 0L } else null
+
+    private fun parseDate(raw: String): Long? {
+        val date = raw.take(19)
+        return try {
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).apply {
                 timeZone = TimeZone.getTimeZone("UTC")
-            }
-
-            for (i in 0 until eventsArray.length()) {
-                val event = eventsArray.getJSONObject(i)
-                val title = event.optString("title", "Unknown event")
-                val geometries = event.optJSONArray("geometry") ?: continue
-
-                if (geometries.length() == 0) continue
-                val latest = geometries.getJSONObject(geometries.length() - 1)
-                val coords = latest.optJSONArray("coordinates") ?: continue
-
-                val timeStr = latest.optString("date", "")
-                val timeMs = try {
-                    dateFormat.parse(timeStr.take(19))?.time ?: 0L
-                } catch (_: Exception) { 0L }
-
-                events.add(Event(
-                    lat = coords.getDouble(1),
-                    lon = coords.getDouble(0),
-                    magnitude = 5.0f, // EONET events have no magnitude; fixed visual size
-                    title = title,
-                    type = type,
-                    timeMs = timeMs
-                ))
-            }
-            events
-        } catch (e: Exception) {
-            Log.w(TAG, "Failed to fetch EONET $category", e)
-            emptyList()
-        }
+                isLenient = false
+            }.parse(date)?.time
+        } catch (_: Exception) { null }
     }
+
+    private fun eonetUrl(category: String, days: Int): String =
+        "https://eonet.gsfc.nasa.gov/api/v3/events?status=open&category=$category" +
+            if (days > 0) "&days=$days" else ""
 }

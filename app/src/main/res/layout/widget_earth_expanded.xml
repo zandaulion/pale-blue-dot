@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="14dp" android:background="@drawable/widget_background">
+    <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:id="@+id/widget_heading" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:paddingEnd="32dp" android:text="@string/widget_title" android:textColor="#FFFFFFFF" android:textSize="16sp" android:textStyle="bold" />
+        <TextView android:id="@+id/widget_configure" android:layout_width="32dp" android:layout_height="wrap_content"
+            android:layout_gravity="end" android:gravity="center" android:text="@string/widget_settings_icon"
+            android:contentDescription="@string/widget_change_place" android:textColor="#FFFFFFFF" android:textSize="17sp" />
+    </FrameLayout>
+    <ImageView android:id="@+id/widget_globe" android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:minHeight="72dp" android:layout_marginTop="6dp"
+        android:contentDescription="@string/widget_globe_description" android:scaleType="centerCrop" />
+    <TextView android:id="@+id/widget_moon" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="5dp" android:textColor="#FFD3EAFB" android:textSize="14sp" />
+    <TextView android:id="@+id/widget_place" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:maxLines="2" android:ellipsize="end"
+        android:layout_marginTop="4dp" android:textColor="#FFFFFFFF" android:textSize="13sp" />
+    <TextView android:id="@+id/widget_event" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="4dp" android:maxLines="2" android:textColor="#FFD3EAFB" android:textSize="12sp" />
+    <TextView android:id="@+id/widget_updated" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="4dp" android:textColor="#FFB2C5D7" android:textSize="11sp" />
+</LinearLayout>

@@ -77,8 +77,8 @@ class SunRenderer {
         GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, 0)
     }
 
-    fun draw(viewMatrix: FloatArray, projectionMatrix: FloatArray) {
-        val sunDir = SunPosition.calculate(null)
+    fun draw(viewMatrix: FloatArray, projectionMatrix: FloatArray, timeMs: Long) {
+        val sunDir = SunPosition.calculate(timeMs)
 
         // Position the billboard at the sun direction
         val px = sunDir[0] * SUN_DISTANCE

@@ -2,8 +2,8 @@ package com.globe.app
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.Intent
 import android.media.MediaPlayer
-import android.opengl.Matrix
 import android.speech.tts.TextToSpeech
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -30,12 +30,40 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.RadioGroup
+import android.widget.RadioButton
+import android.widget.Switch
+import android.widget.EditText
+import android.text.InputType
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.os.Handler
+import android.os.Looper
+import java.util.Calendar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.OnBackPressedCallback
 import android.view.View
 import com.globe.app.earth.EarthRenderer
+import com.globe.app.indicators.IndicatorRenderer
 import com.globe.app.eclipse.EclipseDetector
 import com.globe.app.events.EarthEventsProvider
-import com.globe.app.events.GlobePicker
+import com.globe.app.data.EarthRepository
+import com.globe.app.data.TodayBriefing
+import com.globe.app.places.PlaceStore
+import com.globe.app.places.SavedPlace
+import com.globe.app.places.CityCatalog
+import com.globe.app.places.TimeZoneSuggester
+import com.globe.app.places.Daylight
+import com.globe.app.explore.JourneyContent
+import com.globe.app.explore.JourneyStore
+import com.globe.app.explore.JourneySceneSnapshot
+import com.globe.app.explore.Journey
+import com.globe.app.explore.JourneyStep
+import com.globe.app.explore.FieldNotebook
+import com.globe.app.explore.SavedObservation
+import com.globe.app.render.LayerSettings
+import com.globe.app.wallpaper.WallpaperConfigActivity
 import com.globe.app.kids.ChallengeKind
 import com.globe.app.kids.DailyFacts
 import com.globe.app.kids.Discovery
@@ -81,18 +109,52 @@ class MainActivity : AppCompatActivity() {
     private lateinit var todayOverlay: FrameLayout
     private lateinit var todayColumn: LinearLayout
     private lateinit var eventCard: TextView
+    private lateinit var savePlaceButton: TextView
+    /** Globe point behind the current day/night card, offered for saving. */
+    private var pendingSavePoint: DoubleArray? = null
     private lateinit var challengeBanner: TextView
     private lateinit var prefs: SharedPreferences
     private lateinit var journal: DiscoveryJournal
+    private lateinit var layers: LayerSettings
+    private lateinit var repository: EarthRepository
+    private lateinit var placeStore: PlaceStore
+    private lateinit var journeyStore: JourneyStore
+    private lateinit var fieldNotebook: FieldNotebook
+    private lateinit var companionPanel: FrameLayout
+    private lateinit var companionScroll: ScrollView
+    private lateinit var companionColumn: LinearLayout
+    private var openPanel: String? = null
+    private var pendingWidgetEventId: String? = null
+    private var observationsInSimulation = false
+    private val uiHandler = Handler(Looper.getMainLooper())
+    private val timeTick = object : Runnable {
+        override fun run() {
+            if (::globeView.isInitialized && globeView.sceneClock.isExploring) {
+                updateTimeLabel()
+                uiHandler.postDelayed(this, 1_000L)
+            }
+        }
+    }
+    private val repositoryObserver: (EarthRepository.Snapshot) -> Unit = { snapshot ->
+        if (::globeView.isInitialized) {
+            globeView.renderer.setAllEvents(snapshot.events)
+            if (openPanel == "Today" || openPanel == "Explore") showCompanionPanel(openPanel!!)
+            resolveWidgetEvent(snapshot)
+        }
+    }
+    private val cloudObserver: (com.globe.app.earth.CloudMapProvider.Result?, EarthRepository.State) -> Unit =
+        { result, _ ->
+            if (::globeView.isInitialized && result != null) globeView.renderer.setCloudResult(result)
+            cloudTimestamp = result?.timestamp
+            if (::globeView.isInitialized) updateCloudLabel()
+        }
 
     // Challenge (quiz) mode state
     private var challengeKind: ChallengeKind? = null
     private var challengeScore = 0
 
-    private val hideEventCardRunnable = Runnable { eventCard.visibility = View.GONE }
-
     private var mediaPlayer: MediaPlayer? = null
-    private var musicEnabled = true
+    private var musicEnabled = false
     private var musicVolume = 0.4f
     private var tts: TextToSpeech? = null
     private var ttsReady = false
@@ -139,20 +201,27 @@ class MainActivity : AppCompatActivity() {
             typeface = Typeface.MONOSPACE
             setShadowLayer(2f, 1f, 1f, Color.BLACK)
             gravity = Gravity.CENTER
-            text = "\u23f0 Now"
+            text = "Time · Now"
+            minHeight = dp(48f)
+            contentDescription = "Time controls"
+            setOnClickListener {
+                if (::globeView.isInitialized && globeView.sceneClock.isExploring)
+                    showCompanionPanel("Explore time")
+                else timeScrubber.visibility =
+                    if (timeScrubber.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            }
         }
 
         timeScrubber = SeekBar(this).apply {
             max = 1000
             progress = 500 // center = now
+            visibility = View.GONE
+            contentDescription = "Move time up to 24 hours before or after now"
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     if (!fromUser) return
                     val fraction = (progress - 500) / 500.0
-                    TimeProvider.offsetMs = (fraction * scrubberRangeMs).toLong()
-                    // Invalidate position caches so they recompute immediately
-                    com.globe.app.earth.SunPosition.invalidateCache()
-                    com.globe.app.moon.MoonPosition.invalidateCache()
+                    globeView.sceneClock.offsetMs = (fraction * scrubberRangeMs).toLong()
                     updateTimeLabel()
                 }
 
@@ -176,13 +245,12 @@ class MainActivity : AppCompatActivity() {
                             val progress = anim.animatedValue as Int
                             seekBar.progress = progress
                             val fraction = (progress - 500) / 500.0
-                            TimeProvider.offsetMs = (fraction * scrubberRangeMs).toLong()
-                            com.globe.app.earth.SunPosition.invalidateCache()
-                            com.globe.app.moon.MoonPosition.invalidateCache()
+                            globeView.sceneClock.offsetMs = (fraction * scrubberRangeMs).toLong()
                             updateTimeLabel()
                         }
                         start()
                     }
+                    seekBar.postDelayed({ timeScrubber.visibility = View.GONE }, 4_000L)
                 }
             })
         }
@@ -215,10 +283,16 @@ class MainActivity : AppCompatActivity() {
         legendOverlay = createLegendOverlay(dp)
 
         prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        layers = LayerSettings(prefs)
+        repository = EarthRepository.get(applicationContext)
+        placeStore = PlaceStore(applicationContext)
+        journeyStore = JourneyStore(applicationContext)
         journal = DiscoveryJournal(this)
+        fieldNotebook = FieldNotebook(this)
+        fieldNotebook.migrateLegacy(journal)
         journalOverlay = createJournalOverlay()
         todayOverlay = createTodayOverlay()
-        musicEnabled = prefs.getBoolean(PREF_MUSIC_ENABLED, true)
+        musicEnabled = prefs.getBoolean(PREF_MUSIC_ENABLED, false)
         musicVolume = prefs.getFloat(PREF_MUSIC_VOLUME, 0.4f)
         narrateEnabled = prefs.getBoolean(PREF_NARRATE, false)
 
@@ -311,6 +385,12 @@ class MainActivity : AppCompatActivity() {
             visibility = View.GONE
             setOnClickListener { hideEventCard() }
         }
+        savePlaceButton = makePillButton("+  Save this place", dp).apply {
+            minHeight = dp(48f)
+            gravity = Gravity.CENTER
+            visibility = View.GONE
+            setOnClickListener { pendingSavePoint?.let { savePlaceAt(it[0], it[1]) } }
+        }
 
         // Challenge prompt banner — top center, shown only during a challenge
         challengeBanner = makePillButton("", dp).apply {
@@ -344,11 +424,18 @@ class MainActivity : AppCompatActivity() {
                 prefs.getFloat(PREF_CAM_DIST, globeView.camera.distance)
             )
         }
-        globeView.renderer.earthRenderer.cloudMode =
-            EarthRenderer.CloudMode.values()[
-                prefs.getInt(PREF_CLOUD_MODE, EarthRenderer.CloudMode.OFF.ordinal)
-                    .coerceIn(0, EarthRenderer.CloudMode.values().size - 1)
-            ]
+        applyAppLayers()
+        globeView.renderer.showPlacePins = true
+        globeView.renderer.setPlaces(placeStore.all())
+        if (prefs.getBoolean("explore_time_active", false)) {
+            globeView.sceneClock.enter(prefs.getLong("explore_time_ms", System.currentTimeMillis()))
+            applySimulationObservations()
+            globeView.renderer.showLatitudeGuides = true
+            uiHandler.post(timeTick)
+        }
+        repository.observeClouds(cloudObserver)
+        repository.observe(repositoryObserver)
+        repository.refresh()
         updateCloudLabel()
 
         val margin = dp(12f)
@@ -356,89 +443,38 @@ class MainActivity : AppCompatActivity() {
         val root = FrameLayout(this)
         root.addView(globeView)
 
-        // Cloud label — bottom left
-        root.addView(cloudLabel, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            Gravity.BOTTOM or Gravity.START
-        ).apply { setMargins(margin, margin, margin, margin) })
-
-        // Eclipse label — bottom right
-        root.addView(eclipseLabel, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            Gravity.BOTTOM or Gravity.END
-        ).apply { setMargins(margin, margin, margin, margin) })
-
-        // Music + Narration toggles — stacked top right
-        val topRightButtons = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.END
-            addView(narrateButton, LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { gravity = Gravity.END })
-            addView(musicButton, LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { gravity = Gravity.END; topMargin = dp(12f) })
-            addView(volumeSlider, LinearLayout.LayoutParams(
-                dp(150f),
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { gravity = Gravity.END; topMargin = dp(2f) })
-        }
-        root.addView(topRightButtons, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            Gravity.TOP or Gravity.END
-        ).apply { setMargins(margin, dp(24f), margin, 0) })
-
         // Time label — top center
         root.addView(timeLabel, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT,
             Gravity.TOP or Gravity.CENTER_HORIZONTAL
-        ).apply { setMargins(margin, dp(24f), margin, 0) })
+        ).apply { setMargins(margin, dp(14f), margin, 0) })
 
-        // Time scrubber — above the indicator arrows (~20% from bottom)
+        // Sun/Moon arrows sit just above the 56dp bottom bar; the scrubber and card stack above them.
+        globeView.renderer.indicatorRenderer.bottomOffsetPx = dp(56f + 32f).toFloat()
+
+        // Time scrubber — above the indicator arrows
         root.addView(timeScrubber, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.WRAP_CONTENT,
             Gravity.BOTTOM
-        ).apply { setMargins(margin, 0, margin, dp(100f)) })
+        ).apply { setMargins(margin, 0, margin, dp(112f)) })
 
-        // Legend button — bottom right, above eclipse label
-        root.addView(legendButton, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            Gravity.BOTTOM or Gravity.END
-        ).apply { setMargins(margin, margin, margin, dp(32f)) })
-
-        // Today + Journal + Share buttons — stacked top left
-        val topLeftButtons = LinearLayout(this).apply {
+        // Event info card — bottom center, above the time scrubber; Save place sits under day/night cards
+        val eventCardBox = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            addView(todayButton)
-            addView(journalButton, LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { topMargin = dp(10f) })
-            addView(shareButton, LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { topMargin = dp(10f) })
+            gravity = Gravity.CENTER_HORIZONTAL
+            addView(eventCard, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT))
+            addView(savePlaceButton, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { topMargin = dp(8f) })
         }
-        root.addView(topLeftButtons, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            Gravity.TOP or Gravity.START
-        ).apply { setMargins(margin, dp(24f), margin, 0) })
-
-        // Event info card — bottom center, above the time scrubber
-        root.addView(eventCard, FrameLayout.LayoutParams(
+        root.addView(eventCardBox, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT,
             Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-        ).apply { setMargins(margin, 0, margin, dp(150f)) })
+        ).apply { setMargins(margin, 0, margin, dp(184f)) })
 
         // Challenge banner — top center, below the time label
         root.addView(challengeBanner, FrameLayout.LayoutParams(
@@ -472,17 +508,64 @@ class MainActivity : AppCompatActivity() {
             FrameLayout.LayoutParams.MATCH_PARENT
         ))
 
+        companionPanel = createCompanionPanel()
+
+        val settingsButton = makePillButton(getString(R.string.companion_settings), dp).apply {
+            minHeight = dp(48f)
+            contentDescription = getString(R.string.companion_settings)
+            setOnClickListener { showCompanionPanel("Settings") }
+        }
+        root.addView(settingsButton, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT, dp(48f), Gravity.TOP or Gravity.END
+        ).apply { setMargins(margin, dp(8f), margin, 0) })
+
+        val nav = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER
+            setBackgroundColor(Color.argb(225, 9, 17, 29))
+            for ((label, panel) in listOf(
+                getString(R.string.companion_today) to "Today",
+                getString(R.string.companion_layers) to "Layers",
+                getString(R.string.companion_explore) to "Explore"
+            )) {
+                addView(TextView(this@MainActivity).apply {
+                    text = label
+                    setTextColor(Color.WHITE)
+                    setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+                    gravity = Gravity.CENTER
+                    minHeight = dp(56f)
+                    contentDescription = label
+                    setOnClickListener { showCompanionPanel(panel) }
+                }, LinearLayout.LayoutParams(0, dp(56f), 1f))
+            }
+        }
+        root.addView(nav, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, dp(56f), Gravity.BOTTOM
+        ))
+
+        root.addView(companionPanel, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
+        ))
+        root.setOnApplyWindowInsetsListener { view, insets ->
+            view.setPadding(0, insets.systemWindowInsetTop, 0, insets.systemWindowInsetBottom)
+            insets
+        }
+
         setContentView(root)
+        updateTimeLabel()
+        root.post { handleWidgetIntent(intent) }
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (!closeTopLayer()) {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        })
 
         if (!prefs.getBoolean(PREF_ONBOARDED, false)) {
-            // First ever launch: welcome tutorial only (don't stack the Today panel).
-            prefs.edit()
-                .putLong(PREF_TODAY_SHOWN_DAY, System.currentTimeMillis() / 86_400_000L)
-                .apply()
+            // A short, dismissible instruction leaves the globe in view.
             onboardingOverlay.visibility = View.VISIBLE
-        } else {
-            // Greet returning kids with today's panel once per calendar day.
-            maybeShowTodayOnLaunch()
         }
     }
 
@@ -494,7 +577,791 @@ class MainActivity : AppCompatActivity() {
             EarthRenderer.CloudMode.GENERATED -> EarthRenderer.CloudMode.LIVE
             EarthRenderer.CloudMode.LIVE -> EarthRenderer.CloudMode.OFF
         }
+        layers.cloudMode = earth.cloudMode
         updateCloudLabel()
+    }
+
+    private fun createCompanionPanel(): FrameLayout {
+        val overlay = FrameLayout(this).apply {
+            visibility = View.GONE
+            setBackgroundColor(Color.argb(150, 0, 5, 12))
+            isClickable = true
+            setOnClickListener { closeCompanionPanel() }
+        }
+        val scroll = ScrollView(this).apply {
+            isFillViewport = false
+            background = GradientDrawable().apply {
+                cornerRadius = dpi(18f).toFloat()
+                setColor(Color.rgb(17, 27, 41))
+                setStroke(dpi(1f), Color.rgb(64, 86, 107))
+            }
+            isClickable = true
+            setOnClickListener { }
+        }
+        companionScroll = scroll
+        companionColumn = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dpi(20f), dpi(16f), dpi(20f), dpi(24f))
+        }
+        scroll.addView(companionColumn)
+        overlay.addView(scroll)
+        overlay.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            val available = overlay.width
+            if (available > 0) {
+                val wide = available >= dpi(600f)
+                val desiredWidth = if (wide) dpi(420f) else (available - dpi(24f)).coerceAtLeast(dpi(280f))
+                val desiredHeight = if (wide) overlay.height - dpi(24f) else overlay.height - dpi(32f)
+                if (scroll.layoutParams.width == desiredWidth && scroll.layoutParams.height == desiredHeight) return@addOnLayoutChangeListener
+                scroll.layoutParams = FrameLayout.LayoutParams(
+                    desiredWidth, desiredHeight,
+                    if (wide) Gravity.END or Gravity.CENTER_VERTICAL else Gravity.CENTER
+                ).apply { setMargins(dpi(12f), dpi(12f), dpi(12f), dpi(12f)) }
+            }
+        }
+        return overlay
+    }
+
+    private fun closeCompanionPanel() {
+        companionPanel.visibility = View.GONE
+        openPanel = null
+    }
+
+    private fun panelText(text: String, size: Float = 15f, color: Int = Color.WHITE): TextView =
+        TextView(this).apply {
+            this.text = text
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
+            setTextColor(color)
+            setPadding(0, dpi(8f), 0, dpi(8f))
+        }
+
+    private fun panelAction(label: String, action: () -> Unit) {
+        companionColumn.addView(panelText(label, 16f, Color.rgb(173, 215, 255)).apply {
+            minHeight = dpi(48f)
+            gravity = Gravity.CENTER_VERTICAL
+            isClickable = true
+            setOnClickListener { action() }
+        })
+    }
+
+    private fun panelSwitch(label: String, description: String, checked: Boolean, action: (Boolean) -> Unit) {
+        companionColumn.addView(Switch(this).apply {
+            text = "$label\n$description"
+            isChecked = checked
+            setTextColor(Color.WHITE)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+            minHeight = dpi(60f)
+            setPadding(0, dpi(4f), 0, dpi(4f))
+            setOnCheckedChangeListener { _, value -> action(value) }
+        })
+    }
+
+    private fun showCompanionPanel(name: String) {
+        openPanel = name
+        companionColumn.removeAllViews()
+        val heading = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
+        heading.addView(panelText(name, 23f).apply { typeface = Typeface.DEFAULT_BOLD },
+            LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        heading.addView(panelText("×", 30f).apply {
+            contentDescription = getString(R.string.companion_close)
+            gravity = Gravity.CENTER
+            minWidth = dpi(48f)
+            minHeight = dpi(48f)
+            setOnClickListener { closeCompanionPanel() }
+        })
+        companionColumn.addView(heading)
+        when (name) {
+            "Today" -> populateCompanionToday()
+            "Layers" -> populateCompanionLayers()
+            "Explore" -> populateCompanionExplore()
+            "Settings" -> populateCompanionSettings()
+            "Notebook" -> populateCompanionNotebook()
+            "Guide" -> populateCompanionGuide()
+            "Places" -> populatePlaces()
+            "Explore time" -> populateExploreTime()
+            "Journeys" -> populateJourneys()
+            "Journey" -> populateJourney()
+        }
+        companionPanel.visibility = View.VISIBLE
+        companionScroll.post { companionScroll.scrollTo(0, 0) }
+    }
+
+    private fun populateCompanionToday() {
+        val briefing = TodayBriefing.build(System.currentTimeMillis(), placeStore.primary(), repository.snapshot())
+        companionColumn.addView(panelText("Planetary briefing · real time", 14f, Color.rgb(173, 215, 255)))
+        companionColumn.addView(panelText("${briefing.moon.emoji} ${briefing.moon.name} · ${briefing.moon.illuminationPercent}% estimated illumination", 17f))
+        val place = briefing.place
+        if (place == null) panelAction("Choose a primary place") { showCompanionPanel("Places") }
+        else {
+            companionColumn.addView(panelText("${place.name}\n${formatPlaceDaylight(place, briefing.daylight!!)}", 15f))
+            panelAction("Fly to ${place.name}") { closeCompanionPanel(); globeView.camera.flyTo(place.lat, place.lon) }
+        }
+        companionColumn.addView(panelText(
+            cloudTimestamp?.let {
+                "Satellite imagery — $it" +
+                    if (repository.cloudState == EarthRepository.State.STALE) " · saved copy" else ""
+            } ?: "Satellite imagery unavailable or still loading",
+            13f, Color.rgb(190, 205, 219)
+        ))
+        companionColumn.addView(panelText(briefing.prompt, 15f))
+        companionColumn.addView(panelText("One observation · ${briefing.eventMessage}", 17f))
+        briefing.event?.let { event ->
+            panelAction("${event.type.name.lowercase().replaceFirstChar { it.uppercase() }} · ${event.title}\n${event.observedAtMs?.let(::formatDate) ?: "Time unavailable"} · ${event.source}") {
+                if (repository.snapshot().events.any { it.id == event.id }) {
+                    closeCompanionPanel(); globeView.camera.flyTo(event.lat, event.lon); showEventCard(event)
+                } else AlertDialog.Builder(this).setMessage("This observation is no longer in the saved feed.")
+                    .setPositiveButton("Current events") { _, _ -> showCompanionPanel("Explore") }.show()
+            }
+        }
+        panelAction(getString(R.string.companion_refresh)) { repository.refresh(manual = true) }
+    }
+
+    private fun populateCompanionLayers() {
+        companionColumn.addView(panelText("Choose what appears on the globe. Hidden events also leave the event list and challenges.",
+            14f, Color.rgb(190, 205, 219)))
+        companionColumn.addView(panelText(getString(R.string.companion_clouds), 18f))
+        val cloudChoices = listOf(EarthRenderer.CloudMode.OFF, EarthRenderer.CloudMode.GENERATED, EarthRenderer.CloudMode.LIVE)
+        val cloudLabels = listOf(R.string.companion_off, R.string.companion_generated, R.string.companion_satellite)
+        val radio = RadioGroup(this)
+        cloudChoices.forEachIndexed { index, mode ->
+            radio.addView(RadioButton(this).apply {
+                id = View.generateViewId()
+                text = getString(cloudLabels[index])
+                setTextColor(Color.WHITE)
+                minHeight = dpi(48f)
+                isChecked = layers.cloudMode == mode
+                setOnClickListener {
+                    layers.cloudMode = mode
+                    applyAppLayers()
+                    updateCloudLabel()
+                }
+            })
+        }
+        companionColumn.addView(radio)
+        companionColumn.addView(panelText(cloudTimestamp?.let { "Satellite imagery — $it" +
+            if (repository.cloudState == EarthRepository.State.STALE) " · saved copy" else "" }
+            ?: "Satellite imagery may be unavailable offline; generated clouds still work.", 13f,
+            Color.rgb(190, 205, 219)))
+        val descriptions = mapOf(
+            EarthEventsProvider.Event.Type.EARTHQUAKE to "Reported by USGS",
+            EarthEventsProvider.Event.Type.VOLCANO to "Reported by NASA EONET",
+            EarthEventsProvider.Event.Type.WILDFIRE to "Reported by NASA EONET",
+            EarthEventsProvider.Event.Type.STORM to "Reported by NASA EONET"
+        )
+        for (type in EarthEventsProvider.Event.Type.values()) {
+            panelSwitch(type.name.lowercase().replaceFirstChar { it.uppercase() }, descriptions.getValue(type),
+                layers.enabled(type)) {
+                layers.setEnabled(type, it)
+                applyAppLayers()
+            }
+        }
+        panelSwitch("Constellations", "Catalog lines in the star background", layers.constellations) {
+            layers.constellations = it; applyAppLayers()
+        }
+        panelSwitch("ISS illustration", "Approximate orbit, not live tracking", layers.iss) {
+            layers.iss = it; applyAppLayers()
+        }
+        panelSwitch("Aurora illustration", "Decorative glow, not a forecast", layers.aurora) {
+            layers.aurora = it; applyAppLayers()
+        }
+        panelSwitch("Day/night boundary", "Calculated terminator line", layers.terminator) {
+            layers.terminator = it; applyAppLayers()
+        }
+        panelSwitch("Plate boundaries", "Offline PB2002 model · gold lines", layers.plateBoundaries) {
+            layers.plateBoundaries = it; applyAppLayers()
+        }
+        companionColumn.addView(panelText("Plate boundaries: gold lines mark modelled plate edges. Earthquakes can also happen away from them. Source: Bird (2003), PB2002; ODbL 1.0.", 13f))
+    }
+
+    private fun populateCompanionExplore() {
+        panelAction("Places · ${placeStore.all().size} saved") { showCompanionPanel("Places") }
+        panelAction("Explore time and seasons") { showCompanionPanel("Explore time") }
+        panelAction("Guided journeys") { showCompanionPanel("Journeys") }
+        panelAction("Field notebook · ${journal.unlockedCount()}/${journal.total} discoveries") {
+            showCompanionPanel("Notebook")
+        }
+        panelAction("Try a quick challenge") { closeCompanionPanel(); startChallenge() }
+        panelAction("Scene guide and legend") { showCompanionPanel("Guide") }
+        companionColumn.addView(panelText(getString(R.string.companion_events), 19f))
+        addEventList(limitPerType = 12)
+    }
+
+    private fun populateCompanionSettings() {
+        panelSwitch("Ambient music", "Only while the app is open", musicEnabled) { enabled ->
+            if (musicEnabled != enabled) toggleMusic()
+        }
+        companionColumn.addView(panelText("Music volume", 14f))
+        companionColumn.addView(SeekBar(this).apply {
+            max = 100; progress = (musicVolume * 100).toInt()
+            contentDescription = "Music volume"
+            setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(bar: SeekBar, value: Int, fromUser: Boolean) {
+                    if (fromUser) {
+                        musicVolume = value / 100f
+                        mediaPlayer?.setVolume(musicVolume, musicVolume)
+                        prefs.edit().putFloat(PREF_MUSIC_VOLUME, musicVolume).apply()
+                    }
+                }
+                override fun onStartTrackingTouch(bar: SeekBar) {}
+                override fun onStopTrackingTouch(bar: SeekBar) {}
+            })
+        })
+        panelSwitch("Read aloud", "Speak cards when narration is enabled", narrateEnabled) { enabled ->
+            if (narrateEnabled != enabled) toggleNarration()
+        }
+        panelSwitch(getString(R.string.companion_reduce_motion),
+            "Stops idle spin and decorative marker movement", layers.reduceMotion) {
+            layers.reduceMotion = it; applyAppLayers()
+        }
+        panelAction("Share globe image") { closeCompanionPanel(); shareCurrentView() }
+        panelAction("Earth live wallpaper") {
+            closeCompanionPanel()
+            startActivity(Intent(this, WallpaperConfigActivity::class.java))
+        }
+        panelAction("Scene guide and legend") { showCompanionPanel("Guide") }
+    }
+
+    private fun populateCompanionNotebook() {
+        panelAction("‹ Explore") { showCompanionPanel("Explore") }
+        fieldNotebook.migrateLegacy(journal)
+        companionColumn.addView(panelText("Completed journeys", 19f))
+        val completed = JourneyContent.all(this).filter { journeyStore.completed(it.id) }
+        if (completed.isEmpty()) companionColumn.addView(panelText("No journeys completed yet.", 14f))
+        completed.forEach { companionColumn.addView(panelText("✓ ${it.title}", 15f)) }
+        companionColumn.addView(panelText("Saved observations", 19f))
+        val saved = fieldNotebook.savedEvents()
+        if (saved.isEmpty()) companionColumn.addView(panelText("Save an observation from its card to keep its source and date.", 14f))
+        saved.asReversed().forEach { item ->
+            panelAction("${item.category.lowercase().replaceFirstChar { it.uppercase() }} · ${item.title}") {
+                showSavedObservation(item)
+            }
+        }
+        companionColumn.addView(panelText("Earlier discoveries · ${fieldNotebook.legacyDiscoveries().size}/${journal.total}", 19f))
+        val descriptions = mapOf(
+            Discovery.EARTHQUAKE to "You explored a reported earthquake.",
+            Discovery.VOLCANO to "You explored a reported volcanic event.",
+            Discovery.WILDFIRE to "You explored a reported wildfire.",
+            Discovery.STORM to "You explored a reported storm.",
+            Discovery.DAYTIME to "You found a place facing the Sun.",
+            Discovery.NIGHT to "You found Earth's night side.",
+            Discovery.STARGAZER to "You looked beyond Earth.",
+            Discovery.TIME_TRAVELER to "You changed the scene time."
+        )
+        fieldNotebook.legacyDiscoveries().forEach {
+            companionColumn.addView(panelText("${it.emoji} ${it.title}\n${descriptions[it]}", 15f))
+        }
+    }
+
+    private fun showSavedObservation(item: SavedObservation) {
+        val facts = buildString {
+            append(item.title).append("\n")
+            append("Observed: ").append(item.observedAtMs?.let(::formatDate) ?: "Time not reported").append("\n")
+            append("Source: ").append(item.source).append("\n")
+            item.magnitude?.let { append("Magnitude: ${"%.1f".format(Locale.getDefault(), it)}\n") }
+            item.depthKm?.let { append("Depth: ${"%.1f".format(Locale.getDefault(), it)} km\n") }
+            item.sourceUrl?.let { append("Source link: $it") }
+        }
+        AlertDialog.Builder(this).setTitle("Saved observation").setMessage(facts)
+            .setPositiveButton("Fly to") { _, _ -> closeCompanionPanel(); globeView.camera.flyTo(item.lat, item.lon) }
+            .setNegativeButton("Close", null).show()
+    }
+
+    private fun populateCompanionGuide() {
+        panelAction("‹ Explore") { showCompanionPanel("Explore") }
+        listOf(
+            "Sunlight and city lights" to "Calculated sunlight shows the current day and night sides.",
+            "Clouds" to "Generated clouds are illustrative. Satellite mode derives opacity from a dated NASA VIIRS image.",
+            "Earthquakes" to "USGS reports magnitude 4.5+ earthquakes from the last seven days.",
+            "Volcanoes, wildfires and storms" to "NASA EONET open reports may have older observation dates.",
+            "ISS" to "Illustrated orbit, not live tracking.",
+            "Aurora" to "Decorative illustration, not a forecast.",
+            "Day/night boundary" to "Calculated terminator line.",
+            "Constellations" to "Catalog stars joined into familiar patterns.",
+            "Plate boundaries" to "A simplified offline PB2002 model. Many earthquakes occur near boundaries, though some occur elsewhere. Gold lines are not a diagnosis for any event."
+        ).forEach { (title, body) -> companionColumn.addView(panelText("$title\n$body", 15f)) }
+    }
+
+    private fun populatePlaces() {
+        panelAction("‹ Explore") { showCompanionPanel("Explore") }
+        companionColumn.addView(panelText("Saved places stay on this device. Cyan rings mark them on the globe.", 14f))
+        panelAction("Search bundled cities") {
+            val query = EditText(this).apply {
+                hint = "City or country (blank lists all ${CityCatalog.cities.size})"; inputType = InputType.TYPE_CLASS_TEXT
+            }
+            AlertDialog.Builder(this).setTitle("Find a city").setView(query)
+                .setPositiveButton("Search") { _, _ ->
+                    val matches = CityCatalog.search(query.text.toString())
+                    if (matches.isEmpty()) AlertDialog.Builder(this).setMessage("No bundled city matches that name.")
+                        .setPositiveButton("OK", null).show()
+                    else AlertDialog.Builder(this).setTitle("Bundled cities")
+                        .setItems(matches.map { it.name }.toTypedArray()) { _, which ->
+                            placeStore.save(matches[which]); placesChanged(); showPlaceDetails(matches[which])
+                        }.show()
+                }.setNegativeButton("Cancel", null).show()
+        }
+        panelAction("Add a place from the globe") {
+            closeCompanionPanel()
+            AlertDialog.Builder(this).setMessage("Tap a point on the globe, then tap + Save this place under its card.")
+                .setPositiveButton("OK", null).show()
+        }
+        val primary = placeStore.primaryId()
+        placeStore.all().forEach { place ->
+            panelAction("${if (place.id == primary) "★ " else ""}${place.name}\n${place.zoneId ?: "Time zone unset"}") {
+                showPlaceDetails(place)
+            }
+        }
+    }
+
+    private fun placesChanged() {
+        globeView.renderer.setPlaces(placeStore.all())
+        if (openPanel == "Places" || openPanel == "Today") showCompanionPanel(openPanel!!)
+    }
+
+    private fun showPlaceDetails(place: SavedPlace) {
+        val current = placeStore.all().firstOrNull { it.id == place.id } ?: return
+        val summary = Daylight.at(current, System.currentTimeMillis())
+        val options = arrayOf("Fly to", "Set as primary", "Rename", "Set time zone", "Delete")
+        AlertDialog.Builder(this).setTitle(current.name + "\n" + formatPlaceDaylight(current, summary) +
+            "\n${"%.3f".format(Locale.getDefault(), current.lat)}°, " +
+            "${"%.3f".format(Locale.getDefault(), current.lon)}°")
+            .setItems(options) { _, which -> when (which) {
+                0 -> { closeCompanionPanel(); globeView.camera.flyTo(current.lat, current.lon) }
+                1 -> { placeStore.setPrimary(current.id); placesChanged() }
+                2 -> editPlaceName(current)
+                3 -> editPlaceZone(current)
+                4 -> {
+                    val wasPrimary = placeStore.primaryId() == current.id
+                    placeStore.delete(current.id); placesChanged()
+                    AlertDialog.Builder(this).setMessage("${current.name} removed")
+                        .setPositiveButton("Undo") { _, _ ->
+                            placeStore.save(current)
+                            if (wasPrimary) placeStore.setPrimary(current.id)
+                            placesChanged()
+                        }.setNegativeButton("Done", null).show()
+                }
+            } }.setNegativeButton("Close", null).show()
+    }
+
+    private fun editPlaceName(place: SavedPlace) {
+        val input = EditText(this).apply { setText(place.name); selectAll() }
+        AlertDialog.Builder(this).setTitle("Name this place").setView(input)
+            .setPositiveButton("Save") { _, _ ->
+                val name = input.text.toString().trim()
+                if (name.isNotEmpty()) { placeStore.save(place.copy(name = name)); placesChanged() }
+            }.setNegativeButton("Cancel", null).show()
+    }
+
+    private fun editPlaceZone(place: SavedPlace, suggestedZone: String? = null) {
+        val input = EditText(this).apply {
+            hint = "IANA zone, e.g. Europe/Bucharest"
+            setText(place.zoneId ?: suggestedZone ?: "")
+            inputType = InputType.TYPE_CLASS_TEXT
+        }
+        val suggestion = if (place.zoneId == null && suggestedZone != null)
+            "Suggested from the nearest town; change it if this place is across a border. " else ""
+        AlertDialog.Builder(this).setTitle("Time zone for ${place.name}")
+            .setMessage(suggestion + "Enter an IANA time-zone ID, or leave blank to keep local clock and sunrise unset.")
+            .setView(input).setPositiveButton("Save") { _, _ ->
+                val zone = input.text.toString().trim().ifBlank { null }
+                if (zone == null || PlaceStore.validZone(zone)) {
+                    placeStore.save(place.copy(zoneId = zone)); placesChanged()
+                } else AlertDialog.Builder(this).setMessage("Unknown IANA time-zone ID: $zone")
+                    .setPositiveButton("Try again") { _, _ -> editPlaceZone(place) }.show()
+            }.setNegativeButton("Cancel", null).show()
+    }
+
+    private fun formatPlaceDaylight(place: SavedPlace, info: Daylight.Summary): String {
+        val zone = place.zoneId ?: return "Time zone unset · choose a zone for local clock and sunrise"
+        val formatter = SimpleDateFormat("EEE, MMM d · HH:mm z", Locale.getDefault()).apply {
+            timeZone = TimeZone.getTimeZone(zone)
+        }
+        val clock = formatter.format(Date(info.localTimeMs))
+        val sun = when (info.state) {
+            Daylight.State.POLAR_DAY -> "Polar day · Sun stays above the horizon"
+            Daylight.State.POLAR_NIGHT -> "Polar night · Sun stays below the horizon"
+            Daylight.State.ZONE_UNSET -> "Time zone unset"
+            Daylight.State.ORDINARY -> {
+                val hour = SimpleDateFormat("HH:mm", Locale.getDefault()).apply { timeZone = TimeZone.getTimeZone(zone) }
+                val rise = info.sunriseMs?.let { hour.format(Date(it)) } ?: "not available"
+                val set = info.sunsetMs?.let { hour.format(Date(it)) } ?: "not available"
+                val duration = info.daylightMinutes?.let { " · about ${it / 60}h ${it % 60}m daylight" } ?: ""
+                "Approx. sunrise $rise · sunset $set$duration"
+            }
+        }
+        return "$clock · ${if (info.isDay) "day" else "night"}\n$sun"
+    }
+
+    private fun populateExploreTime() {
+        panelAction("‹ Explore") { showCompanionPanel("Explore") }
+        val clock = globeView.sceneClock
+        if (!clock.isExploring) {
+            companionColumn.addView(panelText("Choose a date to hold the globe in an explicit lesson time. Today and wallpaper remain on real time.", 15f))
+            panelAction("Begin at current time") { enterExploreTime(System.currentTimeMillis()) }
+        } else {
+            companionColumn.addView(panelText("SIMULATED · ${timeFormat.format(Date(clock.nowMs()))}", 17f, Color.rgb(255, 225, 160)))
+            panelAction("Choose date and time") { chooseExploreDate() }
+            panelAction(if (clock.isPlaying) "Pause" else "Play at real-time speed") {
+                clock.setPlaying(!clock.isPlaying); persistExploreTime(); showCompanionPanel("Explore time")
+            }
+            panelAction("Advance one hour") { clock.seek(clock.nowMs() + 3_600_000L); persistExploreTime(); updateTimeLabel(); showCompanionPanel("Explore time") }
+            panelAction("Advance one day") { clock.seek(clock.nowMs() + 86_400_000L); persistExploreTime(); updateTimeLabel(); showCompanionPanel("Explore time") }
+            panelAction("Now · leave time exploration") { exitExploreTime() }
+            panelSwitch("Compare latest observations", "These reports are from real dates, not the simulated date.", observationsInSimulation) {
+                observationsInSimulation = it; applySimulationObservations()
+            }
+            val year = Calendar.getInstance().apply { timeInMillis = clock.nowMs() }.get(Calendar.YEAR)
+            val start = Calendar.getInstance().apply { clear(); set(year, Calendar.JANUARY, 1, 12, 0) }
+            val currentDay = Calendar.getInstance().apply { timeInMillis = clock.nowMs() }.get(Calendar.DAY_OF_YEAR)
+            companionColumn.addView(panelText("Year timeline · $year", 15f))
+            companionColumn.addView(SeekBar(this).apply {
+                max = start.getActualMaximum(Calendar.DAY_OF_YEAR) - 1
+                progress = currentDay - 1
+                contentDescription = "Choose day of year"
+                setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                    override fun onProgressChanged(bar: SeekBar, value: Int, fromUser: Boolean) {
+                        if (fromUser) {
+                            val date = start.clone() as Calendar
+                            date.add(Calendar.DAY_OF_YEAR, value)
+                            clock.seek(date.timeInMillis); updateTimeLabel()
+                        }
+                    }
+                    override fun onStartTrackingTouch(bar: SeekBar) {}
+                    override fun onStopTrackingTouch(bar: SeekBar) { persistExploreTime(); showCompanionPanel("Explore time") }
+                })
+            })
+        }
+        companionColumn.addView(panelText("Seasons · Earth's axis stays tilted about 23.4° as Earth orbits the Sun. Sunlight moves between hemispheres across the year; the scene's Sun already accounts for this tilt.", 15f))
+        companionColumn.addView(object : View(this) {
+            private val paint = Paint(3)
+            override fun onDraw(canvas: Canvas) {
+                super.onDraw(canvas)
+                val cx = width * .5f; val cy = height * .5f; val r = height * .27f
+                paint.style = Paint.Style.STROKE; paint.strokeWidth = dpi(2f).toFloat()
+                paint.color = Color.rgb(165, 210, 255); canvas.drawCircle(cx, cy, r, paint)
+                // A 23.4 degree axis leans relative to the perpendicular of sunlight.
+                val tilt = Math.toRadians(23.44)
+                val dx = (kotlin.math.sin(tilt) * r * 1.55).toFloat()
+                val dy = (kotlin.math.cos(tilt) * r * 1.55).toFloat()
+                paint.color = Color.rgb(255, 224, 151)
+                canvas.drawLine(cx - dx, cy + dy, cx + dx, cy - dy, paint)
+                paint.style = Paint.Style.FILL; paint.textSize = dpi(12f).toFloat()
+                canvas.drawText("23.4° axis", cx + r * .65f, cy - r * .8f, paint)
+                paint.color = Color.rgb(255, 240, 177)
+                for (i in 0..2) {
+                    val y = cy - r * .65f + i * r * .65f
+                    canvas.drawLine(dpi(8f).toFloat(), y, cx-r, y, paint)
+                }
+                canvas.drawText("Sunlight →", dpi(5f).toFloat(), cy + r * 1.3f, paint)
+            }
+        }.apply { minimumHeight = dpi(170f) }, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, dpi(170f)))
+        val current = clock.nowMs()
+        val north = CityCatalog.cities.first { it.id == "city:london" }
+        val south = CityCatalog.cities.first { it.id == "city:sydney" }
+        listOf(north, south).forEach { p ->
+            val day = Daylight.at(p, current)
+            val duration = when (day.state) {
+                Daylight.State.POLAR_DAY -> "polar day"
+                Daylight.State.POLAR_NIGHT -> "polar night"
+                else -> day.daylightMinutes?.let { "about ${it / 60}h ${it % 60}m daylight" } ?: "daylight changing"
+            }
+            panelAction("${p.name} · $duration") { closeCompanionPanel(); globeView.camera.flyTo(p.lat, p.lon) }
+        }
+        companionColumn.addView(panelText("Guides: equator, tropics (±23.4°), and polar circles (±66.6°). Compare the two hemispheres in March, June, September, and December.", 13f))
+    }
+
+    private fun enterExploreTime(ms: Long) {
+        scrubberAnimator?.cancel(); timeScrubber.visibility = View.GONE
+        globeView.sceneClock.enter(ms)
+        persistExploreTime()
+        observationsInSimulation = false
+        applySimulationObservations()
+        globeView.renderer.showLatitudeGuides = true
+        updateTimeLabel(); uiHandler.removeCallbacks(timeTick); uiHandler.post(timeTick)
+        showCompanionPanel("Explore time")
+    }
+
+    private fun exitExploreTime() {
+        globeView.sceneClock.exit()
+        uiHandler.removeCallbacks(timeTick)
+        globeView.renderer.showLatitudeGuides = false
+        globeView.renderer.showEvents = true
+        applyAppLayers()
+        prefs.edit().putBoolean("explore_time_active", false).apply()
+        updateTimeLabel()
+        showCompanionPanel("Explore time")
+    }
+
+    private fun persistExploreTime() {
+        prefs.edit()
+            .putBoolean("explore_time_active", globeView.sceneClock.isExploring)
+            .putLong("explore_time_ms", globeView.sceneClock.nowMs())
+            .apply()
+    }
+
+    private fun applySimulationObservations() {
+        val active = globeView.sceneClock.isExploring
+        globeView.renderer.showEvents = !active || observationsInSimulation
+        globeView.renderer.earthRenderer.cloudMode = if (active && !observationsInSimulation)
+            EarthRenderer.CloudMode.OFF else layers.cloudMode
+    }
+
+    private fun applyAppLayers() {
+        globeView.renderer.applyLayers(layers)
+        applySimulationObservations()
+    }
+
+    private fun chooseExploreDate() {
+        val c = Calendar.getInstance().apply { timeInMillis = globeView.sceneClock.nowMs() }
+        val picker = DatePickerDialog(this, { _, year, month, day ->
+            val chosen = Calendar.getInstance().apply {
+                timeInMillis = globeView.sceneClock.nowMs()
+                set(year, month, day)
+            }
+            TimePickerDialog(this, { _, hour, minute ->
+                chosen.set(Calendar.HOUR_OF_DAY, hour); chosen.set(Calendar.MINUTE, minute)
+                val min = Calendar.getInstance().apply { add(Calendar.YEAR, -1) }.timeInMillis
+                val max = Calendar.getInstance().apply { add(Calendar.YEAR, 1) }.timeInMillis
+                globeView.sceneClock.seek(chosen.timeInMillis.coerceIn(min, max))
+                persistExploreTime()
+                updateTimeLabel(); showCompanionPanel("Explore time")
+            }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true).show()
+        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH))
+        picker.datePicker.minDate = Calendar.getInstance().apply { add(Calendar.YEAR, -1) }.timeInMillis
+        picker.datePicker.maxDate = Calendar.getInstance().apply { add(Calendar.YEAR, 1) }.timeInMillis
+        picker.show()
+    }
+
+    private fun populateJourneys() {
+        panelAction("‹ Explore") { showCompanionPanel("Explore") }
+        val active = journeyStore.active()
+        companionColumn.addView(panelText("Short, local lessons. Each restores your previous globe view and layers when you leave.", 14f))
+        JourneyContent.all(this).forEach { journey ->
+            val complete = journeyStore.completed(journey.id)
+            panelAction("${journey.title} · ${journey.minutes} min${if (complete) " · completed" else ""}") {
+                if (active?.journeyId == journey.id) {
+                    AlertDialog.Builder(this).setTitle(journey.title)
+                        .setItems(arrayOf("Resume", "Restart")) { _, index ->
+                            if (index == 0) resumeJourney() else startJourney(journey, restart = true)
+                        }.show()
+                } else startJourney(journey)
+            }
+        }
+    }
+
+    private fun startJourney(journey: Journey, restart: Boolean = false) {
+        val existing = journeyStore.active()
+        val previous = when {
+            existing == null -> captureJourneyScene()
+            existing.journeyId == journey.id && restart -> existing.previous
+            else -> {
+                restoreJourneyScene(existing.previous)
+                captureJourneyScene()
+            }
+        }
+        journeyStore.start(journey, previous)
+        applyJourneyStepScene(journey, journey.steps.first())
+        showCompanionPanel("Journey")
+    }
+
+    private fun resumeJourney() {
+        val active = journeyStore.active() ?: return
+        val journey = JourneyContent.all(this).firstOrNull { it.id == active.journeyId } ?: return
+        val step = journey.step(active.stepId) ?: journey.steps.first()
+        applyJourneyStepScene(journey, step)
+        showCompanionPanel("Journey")
+    }
+
+    private fun populateJourney() {
+        val active = journeyStore.active() ?: run {
+            panelAction("Choose a journey") { showCompanionPanel("Journeys") }; return
+        }
+        val journey = JourneyContent.all(this).firstOrNull { it.id == active.journeyId } ?: return
+        val step = journey.step(active.stepId) ?: journey.steps.first()
+        val index = journey.steps.indexOf(step) + 1
+        companionColumn.addView(panelText("${journey.title} · step $index of ${journey.steps.size}", 15f, Color.rgb(173, 215, 255)))
+        companionColumn.addView(panelText(step.title, 20f))
+        companionColumn.addView(panelText(step.instruction, 15f))
+        if (step.source != null) companionColumn.addView(panelText("Historical source: ${step.source}", 13f))
+        recentJourneyEvent(step)?.let { event ->
+            companionColumn.addView(panelText("Recent reported example: ${event.title}\n${event.observedAtMs?.let(::formatDate)} · ${event.source}", 14f))
+        }
+        if (journey.id == "understand_seasons" && step.month != null) {
+            val sceneTime = globeView.sceneClock.nowMs()
+            listOf("city:london", "city:sydney").forEach { cityId ->
+                val city = CityCatalog.cities.first { it.id == cityId }
+                val daylight = Daylight.at(city, sceneTime)
+                companionColumn.addView(panelText("${city.name}: ${daylight.daylightMinutes?.let { "about ${it / 60}h ${it % 60}m daylight" } ?: daylight.state.name.lowercase().replace('_', ' ')}", 14f))
+            }
+        }
+        when (step.kind) {
+            "choice" -> step.options.forEachIndexed { answer, option ->
+                panelAction(option) {
+                    AlertDialog.Builder(this).setTitle(if (answer == step.correct) "That's the pattern" else "Look again")
+                        .setMessage(if (answer == step.correct) step.right else step.wrong)
+                        .setPositiveButton("Continue") { _, _ -> advanceJourney() }.show()
+                }
+            }
+            "advance" -> panelAction(step.action ?: "Advance") {
+                globeView.sceneClock.seek(globeView.sceneClock.nowMs() + step.hours * 3_600_000L)
+                updateTimeLabel()
+                AlertDialog.Builder(this).setMessage("The scene moved ${step.hours} hours ahead. Watch the changing sunlight on the globe.")
+                    .setPositiveButton("Continue") { _, _ -> advanceJourney() }.show()
+            }
+            "reveal" -> panelAction(step.action ?: "Reveal") {
+                globeView.renderer.showPlateBoundaries = true
+                AlertDialog.Builder(this).setMessage("The gold PB2002 lines show a broad plate-edge pattern. Some reported events lie away from them.")
+                    .setPositiveButton("Continue") { _, _ -> advanceJourney() }.show()
+            }
+            else -> panelAction(step.action ?: "Continue") { advanceJourney() }
+        }
+        panelAction("View globe") { closeCompanionPanel() }
+        if (index < journey.steps.size) panelAction("Skip this step") { advanceJourney() }
+        panelAction("Leave journey · restore my view") { leaveJourney() }
+    }
+
+    private fun advanceJourney() {
+        val active = journeyStore.active() ?: return
+        val journey = JourneyContent.all(this).firstOrNull { it.id == active.journeyId } ?: return
+        val next = journey.next(active.stepId)
+        if (next == null) {
+            journeyStore.finish(journey.id)
+            restoreJourneyScene(active.previous)
+            AlertDialog.Builder(this).setMessage("${journey.title} is in your Field notebook.")
+                .setPositiveButton("Done") { _, _ -> showCompanionPanel("Journeys") }.show()
+        } else {
+            journeyStore.advance(next.id)
+            applyJourneyStepScene(journey, next)
+            showCompanionPanel("Journey")
+        }
+    }
+
+    private fun leaveJourney() {
+        val previous = journeyStore.active()?.previous
+        journeyStore.exit()
+        if (previous != null) restoreJourneyScene(previous)
+        showCompanionPanel("Journeys")
+    }
+
+    private fun captureJourneyScene(): JourneySceneSnapshot = JourneySceneSnapshot(
+        globeView.camera.azimuth, globeView.camera.elevation, globeView.camera.distance,
+        globeView.sceneClock.isExploring, globeView.sceneClock.nowMs(), globeView.sceneClock.isPlaying,
+        globeView.renderer.showPlateBoundaries, globeView.renderer.showLatitudeGuides,
+        observationsInSimulation
+    )
+
+    private fun restoreJourneyScene(scene: JourneySceneSnapshot) {
+        globeView.camera.restore(scene.cameraAz, scene.cameraEl, scene.cameraDistance)
+        if (scene.exploring) {
+            globeView.sceneClock.enter(scene.timeMs)
+            globeView.sceneClock.setPlaying(scene.playing)
+        } else globeView.sceneClock.exit()
+        observationsInSimulation = scene.compareObservations
+        applyAppLayers()
+        globeView.renderer.showPlateBoundaries = scene.plateLayer
+        globeView.renderer.showLatitudeGuides = scene.latitudeGuides
+        updateTimeLabel()
+    }
+
+    private fun applyJourneyStepScene(journey: Journey, step: JourneyStep) {
+        val year = Calendar.getInstance(TimeZone.getTimeZone("UTC")).get(Calendar.YEAR)
+        if (step.month != null && step.day != null) {
+            val date = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
+                clear(); set(year, step.month - 1, step.day, step.hourUtc ?: 12, 0, 0)
+            }
+            globeView.sceneClock.enter(date.timeInMillis)
+            observationsInSimulation = false
+            applySimulationObservations()
+            updateTimeLabel()
+        } else if (journey.id == "ring_of_fire") {
+            globeView.sceneClock.exit(); updateTimeLabel()
+            globeView.renderer.showEvents = true
+        }
+        if (journey.id == "ring_of_fire") globeView.renderer.showPlateBoundaries = step.plates
+        if (journey.id == "understand_seasons") globeView.renderer.showLatitudeGuides = step.guides
+        val recent = recentJourneyEvent(step)
+        val lat = recent?.lat ?: step.lat
+        val lon = recent?.lon ?: step.lon
+        if (lat != null && lon != null) globeView.camera.flyTo(lat, lon)
+    }
+
+    private fun recentJourneyEvent(step: JourneyStep): EarthEventsProvider.Event? {
+        val type = when (step.recent) {
+            "earthquake" -> EarthEventsProvider.Event.Type.EARTHQUAKE
+            "volcano" -> EarthEventsProvider.Event.Type.VOLCANO
+            else -> return null
+        }
+        val lat = step.lat ?: return null
+        val lon = step.lon ?: return null
+        val now = System.currentTimeMillis()
+        return repository.snapshot().events.filter { it.type == type && it.observedAtMs != null &&
+            now - it.observedAtMs in 0..30L * 86_400_000L &&
+            angularDistanceDeg(lat, lon, it.lat, it.lon) <= 15.0 }
+            .sortedWith(compareByDescending<EarthEventsProvider.Event> { it.observedAtMs }.thenBy { it.id })
+            .firstOrNull()
+    }
+
+    private fun addEventList(limitPerType: Int) {
+        val current = repository.snapshot()
+        for (type in EarthEventsProvider.Event.Type.values()) {
+            if (!layers.enabled(type)) continue
+            val feed = current.feeds.getValue(type)
+            val title = type.name.lowercase().replaceFirstChar { it.uppercase() }
+            val status = when (feed.state) {
+                EarthRepository.State.NOT_LOADED -> "Not loaded"
+                EarthRepository.State.LOADING -> "Checking"
+                EarthRepository.State.READY -> "Checked ${feed.fetchedAtMs?.let(::formatDate) ?: "recently"}"
+                EarthRepository.State.STALE -> "Saved observations · offline or update failed"
+                EarthRepository.State.UNAVAILABLE -> "Unavailable"
+            }
+            companionColumn.addView(panelText("$title · $status", 15f, Color.rgb(173, 215, 255)))
+            if (feed.state == EarthRepository.State.READY && feed.events.isEmpty()) {
+                companionColumn.addView(panelText(getString(R.string.companion_no_events), 13f))
+            }
+            feed.events.take(limitPerType).forEach { event ->
+                panelAction(event.title) { showEventCard(event) }
+            }
+        }
+    }
+
+    private fun formatDate(timeMs: Long): String =
+        SimpleDateFormat("MMM d, yyyy HH:mm z", Locale.getDefault()).format(Date(timeMs))
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleWidgetIntent(intent)
+    }
+
+    private fun handleWidgetIntent(intent: Intent?) {
+        when (intent?.getStringExtra("widget_action")) {
+            "open" -> showCompanionPanel("Today")
+            "place" -> {
+                val place = placeStore.all().firstOrNull { it.id == intent.getStringExtra("widget_value") }
+                if (place == null) showCompanionPanel("Places")
+                else { globeView.camera.flyTo(place.lat, place.lon); showPlaceDetails(place) }
+            }
+            "event" -> {
+                pendingWidgetEventId = intent.getStringExtra("widget_value")
+                resolveWidgetEvent(repository.snapshot())
+            }
+            "journey" -> showCompanionPanel("Explore")
+        }
+    }
+
+    private fun resolveWidgetEvent(snapshot: EarthRepository.Snapshot) {
+        val id = pendingWidgetEventId ?: return
+        val event = snapshot.events.firstOrNull { it.id == id }
+        if (event != null) {
+            pendingWidgetEventId = null
+            globeView.camera.flyTo(event.lat, event.lon)
+            showEventCard(event)
+        } else if (snapshot.feeds.values.none { it.state == EarthRepository.State.NOT_LOADED ||
+                it.state == EarthRepository.State.LOADING }) {
+            pendingWidgetEventId = null
+            AlertDialog.Builder(this).setMessage("This observation is no longer in the saved feed.")
+                .setPositiveButton("Current events") { _, _ -> showCompanionPanel("Explore") }
+                .setNegativeButton("Close", null).show()
+        }
     }
 
     /**
@@ -504,7 +1371,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun shareCurrentView() {
         ParentalGate.show(this) {
-            com.globe.app.share.ShareManager.share(this, globeView)
+            com.globe.app.share.ShareManager.share(this, globeView, globeView.sceneClock.nowMs())
         }
     }
 
@@ -521,7 +1388,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        val picked = GlobePicker.pick(globeView.camera, x, y, globeView.width, globeView.height)
+        val picked = globeView.renderer.pick(x, y, globeView.width, globeView.height)
         if (picked == null) {
             // Tapped the sky beyond Earth — a stargazing moment.
             globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
@@ -529,6 +1396,13 @@ class MainActivity : AppCompatActivity() {
                 "🌟 The night sky!\nBeyond Earth are thousands of stars, planets, and whole galaxies.",
                 Discovery.STARGAZER
             )
+            return
+        }
+
+        val savedHit = placeStore.all().map { it to angularDistanceDeg(picked[0], picked[1], it.lat, it.lon) }
+            .minByOrNull { it.second }
+        if (savedHit != null && savedHit.second <= 3.0) {
+            showPlaceDetails(savedHit.first)
             return
         }
 
@@ -556,15 +1430,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showEventCard(event: EarthEventsProvider.Event) {
-        val (emoji, explain) = when (event.type) {
-            EarthEventsProvider.Event.Type.EARTHQUAKE -> "🔶" to
-                "The ground shook here. Earthquakes happen when giant slabs of rock deep underground suddenly slip past each other."
-            EarthEventsProvider.Event.Type.VOLCANO -> "🌋" to
-                "A volcano is erupting here — hot melted rock called lava is pushing up from deep inside the Earth."
-            EarthEventsProvider.Event.Type.WILDFIRE -> "🔥" to
-                "A large wildfire is burning across the land here. Satellites can spot the heat from space."
-            EarthEventsProvider.Event.Type.STORM -> "🌀" to
-                "A powerful swirling storm is here. The biggest ones are called hurricanes, typhoons, or cyclones."
+        val explain = when (event.type) {
+            EarthEventsProvider.Event.Type.EARTHQUAKE ->
+                "Earthquakes happen when stress makes rock slip along a fault. Some occur far from plate boundaries."
+            EarthEventsProvider.Event.Type.VOLCANO ->
+                "Magma can rise through Earth's crust. This report does not confirm an eruption at this moment."
+            EarthEventsProvider.Event.Type.WILDFIRE ->
+                "Wildfire can begin naturally or through human activity and may spread with dry, windy conditions. This report may be older than today."
+            EarthEventsProvider.Event.Type.STORM ->
+                "Severe storms draw energy from warm, moist air. This marker shows the latest reported point, not a live forecast."
         }
         val discovery = when (event.type) {
             EarthEventsProvider.Event.Type.EARTHQUAKE -> Discovery.EARTHQUAKE
@@ -572,7 +1446,48 @@ class MainActivity : AppCompatActivity() {
             EarthEventsProvider.Event.Type.WILDFIRE -> Discovery.WILDFIRE
             EarthEventsProvider.Event.Type.STORM -> Discovery.STORM
         }
-        showCard("$emoji ${event.title}\n$explain\n· ${relativeTime(event.timeMs)}", discovery)
+        if (journal.unlock(discovery)) refreshJournalButton()
+        val feed = repository.snapshot().feeds.getValue(event.type)
+        val facts = buildString {
+            append(event.title)
+            append("\n\n")
+            event.magnitude?.let { append("Magnitude: ${"%.1f".format(Locale.getDefault(), it)}\n") }
+            event.depthKm?.let { append("Depth: ${"%.1f".format(Locale.getDefault(), it)} km\n") }
+            append("Observed: ${event.observedAtMs?.let(::formatDate) ?: "Time not reported"}\n")
+            event.updatedAtMs?.let { append("Source updated: ${formatDate(it)}\n") }
+            append("Source: ${event.source}\n")
+            append("Feed: ${when (feed.state) {
+                EarthRepository.State.READY -> "checked ${feed.fetchedAtMs?.let(::formatDate) ?: "recently"}"
+                EarthRepository.State.STALE -> "saved copy; refresh unavailable"
+                EarthRepository.State.LOADING -> "checking; showing saved copy"
+                else -> "unavailable"
+            }}")
+            event.sourceUrl?.let { append("\nSource link: $it") }
+        }
+        val cardBody = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dpi(24f), dpi(12f), dpi(24f), dpi(8f))
+            addView(panelText(facts, 15f))
+            addView(panelText("Read aloud", 14f, Color.rgb(173, 215, 255)).apply {
+                minHeight = dpi(48f)
+                setOnClickListener { speak(facts) }
+            })
+        }
+        val cardScroll = ScrollView(this).apply { addView(cardBody) }
+        AlertDialog.Builder(this)
+            .setTitle(event.type.name.lowercase().replaceFirstChar { it.uppercase() })
+            .setView(cardScroll)
+            .setPositiveButton(if (fieldNotebook.hasEvent(event.id)) "Saved" else "Save") { _, _ ->
+                fieldNotebook.saveEvent(event)
+                if (openPanel == "Notebook") showCompanionPanel("Notebook")
+            }
+            .setNeutralButton(getString(R.string.companion_why)) { _, _ ->
+                AlertDialog.Builder(this).setTitle(getString(R.string.companion_why))
+                    .setMessage(explain).setPositiveButton(getString(R.string.companion_close), null).show()
+            }
+            .setNegativeButton(getString(R.string.companion_close), null)
+            .show()
+        if (narrateEnabled) speak(facts)
     }
 
     /**
@@ -585,10 +1500,9 @@ class MainActivity : AppCompatActivity() {
         val h = globeView.height.toFloat()
         if (w <= 0f || h <= 0f) return false
 
-        // Arrow anchors in NDC: y = -0.88, x = -0.10 (sun) / +0.10 (moon).
-        val arrowY = (1f - (-0.88f)) * 0.5f * h
-        val sunX = (-0.10f + 1f) * 0.5f * w
-        val moonX = (0.10f + 1f) * 0.5f * w
+        val arrowY = IndicatorRenderer.arrowCenterY(h, globeView.renderer.indicatorRenderer.bottomOffsetPx)
+        val sunX = (-IndicatorRenderer.ARROW_SPACING + 1f) * 0.5f * w
+        val moonX = (IndicatorRenderer.ARROW_SPACING + 1f) * 0.5f * w
         val radius = dpi(46f).toDouble()
 
         val dSun = Math.hypot((x - sunX).toDouble(), (y - arrowY).toDouble())
@@ -596,10 +1510,10 @@ class MainActivity : AppCompatActivity() {
 
         return when {
             dSun <= radius && dSun <= dMoon -> {
-                faceSkyBody(com.globe.app.earth.SunPosition.calculate()); true
+                faceSkyBody(com.globe.app.earth.SunPosition.calculate(globeView.sceneClock.nowMs())); true
             }
             dMoon <= radius -> {
-                faceSkyBody(com.globe.app.moon.MoonPosition.calculate()); true
+                faceSkyBody(com.globe.app.moon.MoonPosition.calculate(globeView.sceneClock.nowMs())); true
             }
             else -> false
         }
@@ -615,13 +1529,14 @@ class MainActivity : AppCompatActivity() {
      * info card about it. Returns true when handled.
      */
     private fun handleISSTap(x: Float, y: Float): Boolean {
-        val p = globeView.renderer.issOrbitRenderer.currentWorldPosition()
+        if (!layers.iss) return false
+        val p = globeView.renderer.issOrbitRenderer.currentWorldPosition(globeView.sceneClock.nowMs())
         if (issOccluded(p)) return false
         val screen = projectToScreen(p) ?: return false
         val d = Math.hypot((x - screen[0]).toDouble(), (y - screen[1]).toDouble())
         if (d > dpi(42f)) return false
 
-        val sun = com.globe.app.earth.SunPosition.calculate()
+        val sun = com.globe.app.earth.SunPosition.calculate(globeView.sceneClock.nowMs())
         val sunlit = p[0] * sun[0] + p[1] * sun[1] + p[2] * sun[2] > 0
         globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
         showCard(
@@ -634,19 +1549,7 @@ class MainActivity : AppCompatActivity() {
 
     /** Projects a world-space point to screen pixels, or null if behind the camera. */
     private fun projectToScreen(p: FloatArray): FloatArray? {
-        val w = globeView.width
-        val h = globeView.height
-        if (w <= 0 || h <= 0) return null
-        val proj = FloatArray(16)
-        Matrix.perspectiveM(proj, 0, 33f, w.toFloat() / h, 0.1f, 1000f)
-        val vp = FloatArray(16)
-        Matrix.multiplyMM(vp, 0, proj, 0, globeView.camera.getViewMatrix(), 0)
-        val clip = FloatArray(4)
-        Matrix.multiplyMV(clip, 0, vp, 0, floatArrayOf(p[0], p[1], p[2], 1f), 0)
-        if (clip[3] <= 0f) return null
-        val ndcX = clip[0] / clip[3]
-        val ndcY = clip[1] / clip[3]
-        return floatArrayOf((ndcX + 1f) * 0.5f * w, (1f - ndcY) * 0.5f * h)
+        return globeView.renderer.projectWorldToScreen(p, globeView.width, globeView.height)
     }
 
     /** True if the Earth sphere blocks the line of sight from the camera to [p]. */
@@ -681,11 +1584,30 @@ class MainActivity : AppCompatActivity() {
         val nx = -cosLat * Math.cos(lonR)
         val ny = Math.sin(latR)
         val nz = cosLat * Math.sin(lonR)
-        val sun = com.globe.app.earth.SunPosition.calculate()
+        val sun = com.globe.app.earth.SunPosition.calculate(globeView.sceneClock.nowMs())
         return nx * sun[0] + ny * sun[1] + nz * sun[2]
     }
 
     /** Tap any land or ocean to learn whether it's day or night there right now. */
+    /** Names a tapped point; the time zone starts from the nearest offline town and can be changed. */
+    private fun savePlaceAt(lat: Double, lon: Double) {
+        val input = EditText(this).apply {
+            hint = "Place name"
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
+        }
+        AlertDialog.Builder(this).setTitle("Name this place")
+            .setMessage("${"%.3f".format(Locale.getDefault(), lat)}°, ${"%.3f".format(Locale.getDefault(), lon)}°")
+            .setView(input)
+            .setPositiveButton("Save") { _, _ ->
+                val name = input.text.toString().trim()
+                if (name.isNotEmpty()) {
+                    val place = placeStore.create(name, lat, lon, null)
+                    placesChanged(); hideEventCard()
+                    editPlaceZone(place, TimeZoneSuggester.suggest(this, lat, lon))
+                }
+            }.setNegativeButton("Cancel", null).show()
+    }
+
     private fun showDayNightCard(lat: Double, lon: Double) {
         if (facingSun(lat, lon) > 0) {
             showCard(
@@ -698,6 +1620,8 @@ class MainActivity : AppCompatActivity() {
                 Discovery.NIGHT
             )
         }
+        pendingSavePoint = doubleArrayOf(lat, lon)
+        savePlaceButton.visibility = View.VISIBLE
     }
 
     /**
@@ -707,14 +1631,14 @@ class MainActivity : AppCompatActivity() {
     private fun showCard(text: String, discovery: Discovery? = null) {
         var body = text
         if (discovery != null && journal.unlock(discovery)) {
-            body = "✨ New discovery!  (${journal.unlockedCount()}/${journal.total})\n\n$text"
+            body = "Added to Field notebook.\n\n$text"
             globeView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
             refreshJournalButton()
         }
-        eventCard.text = body
+        eventCard.text = "×  Close\n\n$body"
         eventCard.visibility = View.VISIBLE
-        eventCard.removeCallbacks(hideEventCardRunnable)
-        eventCard.postDelayed(hideEventCardRunnable, 10_000L)
+        pendingSavePoint = null
+        savePlaceButton.visibility = View.GONE
         speak(body)
     }
 
@@ -769,7 +1693,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun evaluateChallenge(x: Float, y: Float) {
         val kind = challengeKind ?: return
-        val picked = GlobePicker.pick(globeView.camera, x, y, globeView.width, globeView.height)
+        val picked = globeView.renderer.pick(x, y, globeView.width, globeView.height)
         if (picked == null) {
             showCard("Tap on the Earth to answer! 🌍")
             return
@@ -1025,8 +1949,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideEventCard() {
-        eventCard.removeCallbacks(hideEventCardRunnable)
         eventCard.visibility = View.GONE
+        pendingSavePoint = null
+        savePlaceButton.visibility = View.GONE
     }
 
     private fun relativeTime(timeMs: Long): String {
@@ -1109,11 +2034,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateTimeLabel() {
-        val offsetMs = TimeProvider.offsetMs
+        if (globeView.sceneClock.isExploring) {
+            timeLabel.text = "SIMULATED · ${timeFormat.format(Date(globeView.sceneClock.nowMs()))}"
+            timeLabel.contentDescription = "Explore time, simulated scene"
+            timeLabel.translationY = dpi(55f).toFloat()
+            return
+        }
+        timeLabel.contentDescription = "Time controls"
+        timeLabel.translationY = 0f
+        val offsetMs = globeView.sceneClock.offsetMs
         if (offsetMs == 0L) {
-            timeLabel.text = "\u23f0 Now"
+            timeLabel.text = "Time · Now"
         } else {
-            val simTime = timeFormat.format(Date(TimeProvider.nowMs()))
+            val simTime = timeFormat.format(Date(globeView.sceneClock.nowMs()))
             val hours = offsetMs / 3_600_000.0
             val sign = if (hours >= 0) "+" else ""
             timeLabel.text = "$simTime (${sign}${String.format("%.1f", hours)}h)"
@@ -1545,7 +2478,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun createOnboardingOverlay(): FrameLayout {
         val overlay = FrameLayout(this).apply {
-            setBackgroundColor(Color.argb(240, 0, 2, 12))
+            setBackgroundColor(Color.argb(135, 0, 2, 12))
             visibility = View.GONE
             isClickable = true   // block taps to the globe behind it
         }
@@ -1561,7 +2494,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         card.addView(TextView(this).apply {
-            text = "Welcome to\nPale Blue Dot!"
+            text = "A living window onto Earth"
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 23f)
             typeface = Typeface.DEFAULT_BOLD
@@ -1571,10 +2504,9 @@ class MainActivity : AppCompatActivity() {
         })
 
         val tips = listOf(
-            "\uD83D\uDD90  Spin the globe with your finger",
-            "\uD83D\uDC46  Tap the glowing dots to see what's happening on Earth right now",
-            "\uD83D\uDD50  Slide the time bar to turn day into night",
-            "\uD83D\uDCD6  Collect discoveries and come back each day"
+            "Drag to rotate",
+            "Pinch to zoom",
+            "Tap the globe to discover more"
         )
         for (tip in tips) {
             card.addView(TextView(this).apply {
@@ -1586,7 +2518,7 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        card.addView(makePillButton("Let's explore!  \uD83D\uDE80", ::dpi).apply {
+        card.addView(makePillButton("Explore Earth", ::dpi).apply {
             setOnClickListener {
                 it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                 dismissOnboarding()
@@ -1617,22 +2549,26 @@ class MainActivity : AppCompatActivity() {
      * the info card — returning to the main globe. Only when nothing is open
      * does Back leave the app.
      */
-    @Suppress("DEPRECATION")
-    override fun onBackPressed() {
+    private fun closeTopLayer(): Boolean {
         when {
             onboardingOverlay.visibility == View.VISIBLE -> dismissOnboarding()
+            openPanel != null -> if (openPanel == "Notebook" || openPanel == "Guide" || openPanel == "Places") {
+                showCompanionPanel("Explore")
+            } else closeCompanionPanel()
             todayOverlay.visibility == View.VISIBLE -> hideToday()
             journalOverlay.visibility == View.VISIBLE -> hideJournal()
             legendOverlay.visibility == View.VISIBLE -> hideLegend()
             challengeKind != null -> stopChallenge()
             eventCard.visibility == View.VISIBLE -> hideEventCard()
-            else -> super.onBackPressed()
+            else -> return false
         }
+        return true
     }
 
     override fun onResume() {
         super.onResume()
         globeView.onResume()
+        if (globeView.sceneClock.isExploring) { uiHandler.removeCallbacks(timeTick); uiHandler.post(timeTick) }
         if (musicEnabled) startMusic()
     }
 
@@ -1640,6 +2576,7 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         saveViewState()
         globeView.onPause()
+        uiHandler.removeCallbacks(timeTick)
         stopMusic()
         tts?.stop()
     }
@@ -1650,12 +2587,17 @@ class MainActivity : AppCompatActivity() {
             .putFloat(PREF_CAM_AZ, globeView.camera.azimuth)
             .putFloat(PREF_CAM_EL, globeView.camera.elevation)
             .putFloat(PREF_CAM_DIST, globeView.camera.distance)
-            .putInt(PREF_CLOUD_MODE, globeView.renderer.earthRenderer.cloudMode.ordinal)
+            .putInt(PREF_CLOUD_MODE, layers.cloudMode.ordinal)
+            .putBoolean("explore_time_active", globeView.sceneClock.isExploring)
+            .putLong("explore_time_ms", globeView.sceneClock.nowMs())
             .apply()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        repository.removeObserver(repositoryObserver)
+        repository.removeCloudObserver(cloudObserver)
+        uiHandler.removeCallbacks(timeTick)
         releaseMusic()
         tts?.shutdown()
         tts = null

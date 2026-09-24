@@ -1,33 +1,28 @@
 package com.globe.app.events
 
 import android.opengl.Matrix
-import com.globe.app.camera.OrbitCamera
 
 /**
  * Converts a screen tap into a latitude/longitude on the globe by unprojecting
  * the tap into a world-space ray and intersecting it with the Earth sphere.
  *
- * The projection parameters (33° fov, 0.1 near, 1000 far) must match the ones
- * GlobeRenderer uses in onSurfaceChanged, or picked points will drift.
+ * Receives the exact matrices used for the frame, including any framing offset.
  *
  * Coordinate system: +Y = North Pole, -X = Greenwich, +Z = 90°E.
  */
 object GlobePicker {
 
-    private const val FOV_DEG = 33f
     private const val SPHERE_RADIUS = 1.006  // marker shell radius
 
     /**
      * Returns [latDeg, lonDeg] of the tapped surface point, or null if the tap
      * missed the globe (sky) or the view is degenerate.
      */
-    fun pick(camera: OrbitCamera, x: Float, y: Float, width: Int, height: Int): DoubleArray? {
+    fun pick(view: FloatArray, proj: FloatArray, x: Float, y: Float, width: Int, height: Int): DoubleArray? {
         if (width <= 0 || height <= 0) return null
 
-        val proj = FloatArray(16)
-        Matrix.perspectiveM(proj, 0, FOV_DEG, width.toFloat() / height, 0.1f, 1000f)
         val viewProj = FloatArray(16)
-        Matrix.multiplyMM(viewProj, 0, proj, 0, camera.getViewMatrix(), 0)
+        Matrix.multiplyMM(viewProj, 0, proj, 0, view, 0)
         val inv = FloatArray(16)
         if (!Matrix.invertM(inv, 0, viewProj, 0)) return null
 

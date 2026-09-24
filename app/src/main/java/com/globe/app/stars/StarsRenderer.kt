@@ -23,6 +23,8 @@ import java.nio.FloatBuffer
  * affects them, producing a skybox-like illusion of infinite distance.
  */
 class StarsRenderer {
+    @Volatile var reduceMotion: Boolean = false
+    private val shader = StarsShader()
 
     // GL handles
     private var vboId: Int = 0
@@ -45,7 +47,7 @@ class StarsRenderer {
      * Must be called on the GL thread (e.g. inside onSurfaceCreated).
      */
     fun init() {
-        StarsShader.init()
+        shader.init()
 
         val vertexData: FloatBuffer = StarsModel.generateVertexData()
         starCount = StarsModel.starCount
@@ -71,21 +73,21 @@ class StarsRenderer {
         val stride = StarsModel.STRIDE_BYTES
 
         // aPosition — 3 floats at offset 0
-        GLES30.glEnableVertexAttribArray(StarsShader.aPositionLoc)
+        GLES30.glEnableVertexAttribArray(shader.aPositionLoc)
         GLES30.glVertexAttribPointer(
-            StarsShader.aPositionLoc, 3, GLES30.GL_FLOAT, false, stride, 0
+            shader.aPositionLoc, 3, GLES30.GL_FLOAT, false, stride, 0
         )
 
         // aSize — 1 float at offset 12
-        GLES30.glEnableVertexAttribArray(StarsShader.aSizeLoc)
+        GLES30.glEnableVertexAttribArray(shader.aSizeLoc)
         GLES30.glVertexAttribPointer(
-            StarsShader.aSizeLoc, 1, GLES30.GL_FLOAT, false, stride, 3 * 4
+            shader.aSizeLoc, 1, GLES30.GL_FLOAT, false, stride, 3 * 4
         )
 
         // aColor — 4 floats at offset 16
-        GLES30.glEnableVertexAttribArray(StarsShader.aColorLoc)
+        GLES30.glEnableVertexAttribArray(shader.aColorLoc)
         GLES30.glVertexAttribPointer(
-            StarsShader.aColorLoc, 4, GLES30.GL_FLOAT, false, stride, 4 * 4
+            shader.aColorLoc, 4, GLES30.GL_FLOAT, false, stride, 4 * 4
         )
 
         // Unbind
@@ -125,14 +127,14 @@ class StarsRenderer {
         GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA, GLES30.GL_ONE)
 
         // --- Draw ---
-        GLES30.glUseProgram(StarsShader.programId)
+        GLES30.glUseProgram(shader.programId)
 
         // Upload VP matrix
-        GLES30.glUniformMatrix4fv(StarsShader.uVPMatrixLoc, 1, false, vpMatrix, 0)
+        GLES30.glUniformMatrix4fv(shader.uVPMatrixLoc, 1, false, vpMatrix, 0)
 
         // Upload time for twinkle animation (seconds since init)
-        val elapsed = (System.nanoTime() - startTimeNanos) / 1_000_000_000.0f
-        GLES30.glUniform1f(StarsShader.uTimeLoc, elapsed)
+        val elapsed = if (reduceMotion) 0f else (System.nanoTime() - startTimeNanos) / 1_000_000_000.0f
+        GLES30.glUniform1f(shader.uTimeLoc, elapsed)
 
         GLES30.glBindVertexArray(vaoId)
         GLES30.glDrawArrays(GLES30.GL_POINTS, 0, starCount)
@@ -158,7 +160,7 @@ class StarsRenderer {
             GLES30.glDeleteBuffers(1, intArrayOf(vboId), 0)
             vboId = 0
         }
-        StarsShader.destroy()
+        shader.destroy()
         starCount = 0
     }
 }

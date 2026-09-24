@@ -8,6 +8,7 @@ local.properties
 *.dex
 *.class
 *.bin
+!app/src/main/assets/*.bin
 *.lock
 app/build/
 app/.cxx/

@@ -2,6 +2,7 @@ package com.globe.app.camera
 
 import android.opengl.Matrix
 import java.util.TimeZone
+import kotlin.math.pow
 
 /**
  * Simple orbit camera defined by azimuth, elevation, and distance from origin.
@@ -9,6 +10,7 @@ import java.util.TimeZone
  * from the GL thread.
  */
 class OrbitCamera {
+    @Volatile var reduceMotion: Boolean = false
 
     @Volatile var azimuth: Float = run {
         val tz = TimeZone.getDefault()
@@ -32,6 +34,7 @@ class OrbitCamera {
 
     // Idle auto-rotation
     @Volatile private var lastInteractionMs: Long = System.currentTimeMillis()
+    private var lastUpdateNanos: Long = 0L
 
     companion object {
         private const val MIN_DISTANCE = 1.15f
@@ -70,15 +73,21 @@ class OrbitCamera {
         isDragging = false
     }
 
-    /** Call once per frame to apply fly-to easing, momentum, or idle rotation. */
+    /** Motion is scaled by elapsed time so different rendering rates move alike. */
     fun update() {
+        val nowNanos = System.nanoTime()
+        val dt = if (lastUpdateNanos == 0L) 1f / 60f
+            else ((nowNanos - lastUpdateNanos) / 1_000_000_000f).coerceIn(0f, 0.2f)
+        lastUpdateNanos = nowNanos
+        val frames = dt * 60f
         if (isDragging) return
 
         if (flying) {
-            azimuth += (targetAz - azimuth) * FLY_EASE
-            elevation = (elevation + (targetEl - elevation) * FLY_EASE)
+            val ease = 1f - (1f - FLY_EASE).pow(frames)
+            azimuth += (targetAz - azimuth) * ease
+            elevation = (elevation + (targetEl - elevation) * ease)
                 .coerceIn(-MAX_ELEVATION, MAX_ELEVATION)
-            distance = (distance + (targetDist - distance) * FLY_EASE)
+            distance = (distance + (targetDist - distance) * ease)
                 .coerceIn(MIN_DISTANCE, MAX_DISTANCE)
             if (Math.abs(targetAz - azimuth) < 0.05f &&
                 Math.abs(targetEl - elevation) < 0.05f &&
@@ -94,16 +103,17 @@ class OrbitCamera {
 
         // Momentum
         if (Math.abs(velocityAz) >= MIN_VELOCITY || Math.abs(velocityEl) >= MIN_VELOCITY) {
-            azimuth += velocityAz
-            elevation = (elevation + velocityEl).coerceIn(-MAX_ELEVATION, MAX_ELEVATION)
-            velocityAz *= FRICTION
-            velocityEl *= FRICTION
+            azimuth += velocityAz * frames
+            elevation = (elevation + velocityEl * frames).coerceIn(-MAX_ELEVATION, MAX_ELEVATION)
+            val decay = FRICTION.pow(frames)
+            velocityAz *= decay
+            velocityEl *= decay
             return
         }
 
         // Idle auto-rotation — gentle spin once the user has been still a while
-        if (System.currentTimeMillis() - lastInteractionMs > IDLE_DELAY_MS) {
-            azimuth += AUTO_ROTATE_SPEED
+        if (!reduceMotion && System.currentTimeMillis() - lastInteractionMs > IDLE_DELAY_MS) {
+            azimuth += AUTO_ROTATE_SPEED * frames
         }
     }
 

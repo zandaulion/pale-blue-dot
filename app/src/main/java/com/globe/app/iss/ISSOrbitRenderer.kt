@@ -2,7 +2,6 @@ package com.globe.app.iss
 
 import android.opengl.GLES30
 import android.opengl.Matrix
-import com.globe.app.TimeProvider
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
@@ -127,13 +126,13 @@ class ISSOrbitRenderer {
         GLES30.glBindVertexArray(0)
     }
 
-    fun draw(viewMatrix: FloatArray, projectionMatrix: FloatArray) {
+    fun draw(viewMatrix: FloatArray, projectionMatrix: FloatArray, timeMs: Long) {
         if (programId == 0) return
 
         GLES30.glUseProgram(programId)
 
         // Compute current RAAN and mean anomaly
-        val now = TimeProvider.nowMs()
+        val now = timeMs
         val daysSinceEpoch = (now - EPOCH_MS) / 86_400_000.0
         val raanDeg = (RAAN_EPOCH_DEG + RAAN_RATE_DEG_PER_DAY * daysSinceEpoch) % 360.0
         val maDeg = (MA_EPOCH_DEG + MEAN_MOTION * 360.0 * daysSinceEpoch) % 360.0
@@ -263,8 +262,8 @@ class ISSOrbitRenderer {
      * The ISS marker's current position in world space (radius ~1.064),
      * matching what [draw] renders. Safe to call from any thread.
      */
-    fun currentWorldPosition(): FloatArray {
-        val now = TimeProvider.nowMs()
+    fun currentWorldPosition(timeMs: Long): FloatArray {
+        val now = timeMs
         val days = (now - EPOCH_MS) / 86_400_000.0
         val raanDeg = (RAAN_EPOCH_DEG + RAAN_RATE_DEG_PER_DAY * days) % 360.0
         val maDeg = (MA_EPOCH_DEG + MEAN_MOTION * 360.0 * days) % 360.0

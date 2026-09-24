@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicReference
  * Coordinate system: +Y = North Pole, -X = Greenwich, +Z = 90°E.
  */
 class EarthEventsRenderer {
+    @Volatile var reduceMotion: Boolean = false
 
     companion object {
         private const val PIN_RADIUS = 1.006f
@@ -91,6 +92,7 @@ class EarthEventsRenderer {
         GLES30.glBindVertexArray(0)
 
         startTimeMs = System.currentTimeMillis()
+        setEvents(events)
     }
 
     fun draw(viewMatrix: FloatArray, projectionMatrix: FloatArray) {
@@ -106,7 +108,7 @@ class EarthEventsRenderer {
         val mvpMatrix = FloatArray(16)
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, viewMatrix, 0)
 
-        val elapsed = (System.currentTimeMillis() - startTimeMs) / 1000.0f
+        val elapsed = if (reduceMotion) 0f else (System.currentTimeMillis() - startTimeMs) / 1000.0f
 
         GLES30.glUseProgram(programId)
         GLES30.glUniformMatrix4fv(uMVPLoc, 1, false, mvpMatrix, 0)
@@ -147,7 +149,7 @@ class EarthEventsRenderer {
             data[base + 2] = PIN_RADIUS * cosLat * sinLon    // z (+Z = 90E)
 
             // Point size scales with magnitude: M4.5 -> 12px, M7+ -> 32px
-            data[base + 3] = (8f + (event.magnitude - 4f) * 8f).coerceIn(10f, 36f)
+            data[base + 3] = event.markerSize
 
             data[base + 4] = when (event.type) {
                 EarthEventsProvider.Event.Type.EARTHQUAKE -> 0f

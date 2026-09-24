@@ -18,9 +18,9 @@ import android.util.Log
  *   - Applies the per-star color passed from the vertex stage.
  *   - Incorporates the twinkle brightness variation.
  */
-object StarsShader {
+class StarsShader {
 
-    private const val TAG = "StarsShader"
+    private val TAG = "StarsShader"
 
     // ---------------------------------------------------------------
     // Uniform / attribute locations (populated after link)

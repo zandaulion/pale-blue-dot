@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "journeys": [
+    {
+      "id": "follow_sunrise", "title": "Follow sunrise", "minutes": "2–4",
+      "steps": [
+        {"id":"intro","title":"A turning world","instruction":"Sunrise is a moving boundary between darkness and daylight. We'll follow it from a marked place.","kind":"ack","action":"Begin"},
+        {"id":"london","title":"Find London","instruction":"Look at London on the globe. Notice which side faces the Sun. The marker and the daylight calculation are separate clues.","kind":"ack","action":"I found London","lat":51.50853,"lon":-0.12574,"month":9,"day":23,"hourUtc":5},
+        {"id":"predict","title":"Predict the direction","instruction":"As Earth spins eastward, which way does the dawn boundary move across a map of longitudes?","kind":"choice","options":["Westward","Eastward"],"correct":0,"right":"Yes. At a fixed UTC time, the dawn line moves westward over longitudes as Earth rotates east.","wrong":"It moves westward across longitudes. Earth itself turns eastward, carrying each place into daylight."},
+        {"id":"advance","title":"Advance the scene","instruction":"Move the globe's lesson clock forward two hours and watch the light shift. This is a simulation, while Today stays real-time.","kind":"advance","action":"Advance two hours","hours":2},
+        {"id":"finish","title":"What changed?","instruction":"The sunlight direction changed with time. Did the saved place move on the globe?","kind":"choice","options":["No; Earth rotated relative to the Sun","Yes; its latitude changed"],"correct":0,"right":"Exactly. The place keeps its coordinates while Earth's rotation changes its illumination.","wrong":"A place keeps its latitude and longitude. The changing angle to the Sun creates day and night."}
+      ]
+    },
+    {
+      "id": "ring_of_fire", "title": "Explore the Ring of Fire", "minutes": "3–5",
+      "steps": [
+        {"id":"intro","title":"A pattern around the Pacific","instruction":"Visit three locations, predict a pattern, then reveal plate boundaries. Historical fallback examples are labelled with dates and sources.","kind":"ack","action":"Begin"},
+        {"id":"japan","title":"Off Japan","instruction":"Historical fallback: 2011-03-11 Tohoku earthquake, USGS. A recent Pacific observation is used when available.","kind":"ack","action":"Visit the next location","lat":38.297,"lon":142.373,"recent":"earthquake","source":"https://earthquake.usgs.gov/earthquakes/eventpage/official20110311054624120_30/impact"},
+        {"id":"cascades","title":"The Cascades","instruction":"Historical fallback: 1980-05-18 Mount St. Helens eruption, USGS. This is a dated lesson example, not a live report.","kind":"ack","action":"Visit the next location","lat":46.1912,"lon":-122.1944,"recent":"volcano","source":"https://pubs.usgs.gov/gip/volc/tectonics.html"},
+        {"id":"chile","title":"Along Chile","instruction":"Historical fallback: 1960-05-22 Great Chilean earthquake, USGS. This example stays outside the live-events repository.","kind":"ack","action":"Predict the pattern","lat":-38.14,"lon":-73.41,"recent":"earthquake","source":"https://earthquake.usgs.gov/earthquakes/eventpage/official19600522191120_30/map"},
+        {"id":"predict","title":"What pattern do you see?","instruction":"Which broad pattern links many earthquake and volcano locations around the Pacific?","kind":"choice","options":["A belt near several plate edges","One straight line through the Pacific center","Every event lies exactly on one boundary"],"correct":0,"right":"Yes. Many cluster near plate edges, but some events also happen away from mapped boundaries.","wrong":"The broad pattern is a belt near several plate edges. Individual events need their own evidence; distance to a line is not a diagnosis."},
+        {"id":"reveal","title":"Reveal the boundaries","instruction":"Gold lines show a generalized PB2002 plate-boundary model. Compare the Pacific rim; these lines do not explain every individual event.","kind":"reveal","action":"Reveal gold lines","plates":true},
+        {"id":"finish","title":"What the pattern means","instruction":"Plate motions concentrate many earthquakes and volcanoes around the Pacific. Hotspots and earthquakes within plates show why the pattern has exceptions.","kind":"ack","action":"Complete journey","plates":true}
+      ]
+    },
+    {
+      "id": "understand_seasons", "title": "Understand the seasons", "minutes": "3–5",
+      "steps": [
+        {"id":"intro","title":"Two hemispheres","instruction":"Compare daylight at London and Sydney on two dates. Earth's tilted axis changes how long the Sun stays above the horizon.","kind":"ack","action":"Begin"},
+        {"id":"june_north","title":"London in June","instruction":"Observe London near the June solstice. The Northern Hemisphere has longer daylight.","kind":"ack","action":"Compare Sydney","lat":51.50853,"lon":-0.12574,"month":6,"day":21,"hourUtc":12,"guides":true},
+        {"id":"june_south","title":"Sydney in June","instruction":"Observe Sydney on the same date. Its winter daylight is shorter than London's summer daylight.","kind":"ack","action":"Make a prediction","lat":-33.86785,"lon":151.20732,"month":6,"day":21,"hourUtc":12,"guides":true},
+        {"id":"predict","title":"Predict December","instruction":"Near the December solstice, which marked place has longer daylight?","kind":"choice","options":["Sydney","London","They must be equal"],"correct":0,"right":"Yes. The Southern Hemisphere tilts toward the Sun in December, so Sydney has longer days.","wrong":"Sydney has longer daylight near the December solstice. The Southern Hemisphere tilts toward the Sun then."},
+        {"id":"december","title":"Switch to December","instruction":"Compare the daylight readouts after changing the lesson date. This changes the app scene only.","kind":"ack","action":"Show the axial tilt explanation","month":12,"day":21,"hourUtc":12,"guides":true},
+        {"id":"finish","title":"Why seasons change","instruction":"Earth's axis stays tilted about 23.4° as it orbits the Sun. The Northern and Southern Hemispheres alternate longer daylight. The visible guides mark the equator, tropics, and polar circles.","kind":"ack","action":"Complete journey","guides":true}
+      ]
+    }
+  ]
+}

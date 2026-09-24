@@ -26,6 +26,42 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".wallpaper.WallpaperConfigActivity"
+            android:exported="true"
+            android:label="@string/wallpaper_settings_title" />
+
+        <activity
+            android:name=".widget.EarthWidgetConfigActivity"
+            android:exported="true"
+            android:label="@string/widget_name" />
+
+        <receiver
+            android:name=".widget.EarthTodayWidget"
+            android:exported="true"
+            android:label="@string/widget_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/earth_today_widget" />
+        </receiver>
+
+        <service
+            android:name=".wallpaper.EarthWallpaperService"
+            android:exported="true"
+            android:permission="android.permission.BIND_WALLPAPER"
+            android:label="@string/wallpaper_name">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/earth_wallpaper" />
+        </service>
+
         <!-- Grants temporary read access to the shared screenshot in the app cache -->
         <provider
             android:name="androidx.core.content.FileProvider"

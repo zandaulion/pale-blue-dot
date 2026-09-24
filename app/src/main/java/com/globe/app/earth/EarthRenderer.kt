@@ -2,12 +2,12 @@ package com.globe.app.earth
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.opengl.GLES30
 import android.opengl.GLUtils
 import android.opengl.Matrix
 import android.util.Log
-import com.globe.app.TimeProvider
+import com.globe.app.render.TextureLoader
+import com.globe.app.render.TextureQuality
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.concurrent.atomic.AtomicReference
@@ -54,6 +54,7 @@ class EarthRenderer {
     @Volatile var cloudMode: CloudMode = CloudMode.LIVE
     @Volatile var terminatorVisible = true
     @Volatile var auroraVisible = true
+    @Volatile var reduceMotion = false
 
     // Pending real cloud bitmap from background download (consumed on GL thread)
     private val pendingCloudBitmap = AtomicReference<Bitmap?>(null)
@@ -82,8 +83,11 @@ class EarthRenderer {
     fun onSurfaceCreated(
         context: Context,
         dayTextureResId: Int = 0,
-        nightTextureResId: Int = 0
+        nightTextureResId: Int = 0,
+        maxTextureWidth: Int = TextureQuality.FULL.earthMaxWidth
     ) {
+        liveCloudTextureId = 0
+        liveCloudsAvailable = false
         // --- Shader ---
         val s = EarthShader()
         s.create()
@@ -95,13 +99,13 @@ class EarthRenderer {
 
         // --- Textures ---
         dayTextureId = if (dayTextureResId != 0) {
-            loadTexture(context, dayTextureResId)
+            TextureLoader.load(context, dayTextureResId, maxTextureWidth)
         } else {
             createPlaceholderTexture(isDay = true)
         }
 
         nightTextureId = if (nightTextureResId != 0) {
-            loadTexture(context, nightTextureResId)
+            TextureLoader.load(context, nightTextureResId, maxTextureWidth)
         } else {
             createPlaceholderTexture(isDay = false)
         }
@@ -130,7 +134,7 @@ class EarthRenderer {
      * Thread-safe; the actual GL upload happens on the next frame.
      */
     fun setCloudBitmap(bitmap: Bitmap) {
-        pendingCloudBitmap.set(bitmap)
+        pendingCloudBitmap.getAndSet(bitmap)?.recycle()
     }
 
     /**
@@ -138,7 +142,7 @@ class EarthRenderer {
      * The caller must have called [setMatrices] before this.
      * GL clear and viewport are the caller's responsibility.
      */
-    fun onDrawFrame() {
+    fun onDrawFrame(timeMs: Long) {
         // Upload pending NASA cloud texture into its own slot if available
         pendingCloudBitmap.getAndSet(null)?.let { bitmap ->
             uploadLiveCloudBitmap(bitmap)
@@ -165,7 +169,7 @@ class EarthRenderer {
         GLES30.glUniformMatrix4fv(s.uProjectionLoc, 1, false, projectionMatrix, 0)
 
         // Sun direction (points toward the sun in world space)
-        val sunDir = SunPosition.calculate(null)
+        val sunDir = SunPosition.calculate(timeMs)
         GLES30.glUniform3f(s.uSunDirectionLoc, sunDir[0], sunDir[1], sunDir[2])
 
         // Camera position for fresnel calculation
@@ -182,7 +186,7 @@ class EarthRenderer {
 
         // Choose cloud texture, opacity, and drift from the current mode.
         // Procedural clouds drift slowly; the fixed NASA map renders at 50%.
-        val drift = (TimeProvider.nowMs() - startTimeMs) / 1000.0f * 0.0017f
+        val drift = if (reduceMotion) 0f else (timeMs - startTimeMs) / 1000.0f * 0.0017f
         var cloudTex = cloudTextureId
         var opacity = 0f
         var rotation = 0f
@@ -207,7 +211,7 @@ class EarthRenderer {
 
         // Aurora zones
         GLES30.glUniform1f(s.uShowAuroraLoc, if (auroraVisible) 1.0f else 0.0f)
-        val elapsedSec2 = (System.currentTimeMillis() - startTimeMs) / 1000.0f
+        val elapsedSec2 = if (reduceMotion) 0f else (System.currentTimeMillis() - startTimeMs) / 1000.0f
         GLES30.glUniform1f(s.uTimeLoc, elapsedSec2)
 
         // ---- Draw ----
@@ -223,6 +227,7 @@ class EarthRenderer {
 
     /** Release all GPU resources. */
     fun release() {
+        pendingCloudBitmap.getAndSet(null)?.recycle()
         gpuBuffers?.release()
         gpuBuffers = null
 
@@ -240,43 +245,6 @@ class EarthRenderer {
     // ------------------------------------------------------------------
     // Texture loading
     // ------------------------------------------------------------------
-
-    /**
-     * Loads a texture from a drawable resource.
-     */
-    private fun loadTexture(context: Context, resourceId: Int): Int {
-        val textureIds = IntArray(1)
-        GLES30.glGenTextures(1, textureIds, 0)
-        val texId = textureIds[0]
-
-        if (texId == 0) {
-            Log.e(TAG, "glGenTextures failed")
-            return 0
-        }
-
-        val options = BitmapFactory.Options().apply { inScaled = false }
-        val bitmap = BitmapFactory.decodeResource(context.resources, resourceId, options)
-            ?: run {
-                Log.e(TAG, "Failed to decode resource $resourceId")
-                GLES30.glDeleteTextures(1, textureIds, 0)
-                return 0
-            }
-
-        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, texId)
-
-        GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_LINEAR_MIPMAP_LINEAR)
-        GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MAG_FILTER, GLES30.GL_LINEAR)
-        GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_S, GLES30.GL_REPEAT)
-        GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_T, GLES30.GL_CLAMP_TO_EDGE)
-
-        GLUtils.texImage2D(GLES30.GL_TEXTURE_2D, 0, bitmap, 0)
-        GLES30.glGenerateMipmap(GLES30.GL_TEXTURE_2D)
-
-        bitmap.recycle()
-        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, 0)
-
-        return texId
-    }
 
     /**
      * Creates a small procedural placeholder texture so the app can run

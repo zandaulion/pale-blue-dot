@@ -1,6 +1,6 @@
 # Privacy Policy — Pale Blue Dot
 
-**Last updated: June 5, 2026**
+**Last updated: September 23, 2026**
 
 Pale Blue Dot ("the app") is an interactive 3D globe and astronomy app. This
 policy explains what data the app accesses and how it is handled.
@@ -19,13 +19,20 @@ The app downloads public, openly available data to display on the globe:
 
 - Cloud / satellite imagery from NASA
 - Recent earthquake data from the U.S. Geological Survey (USGS)
-- Active volcano data from NASA EONET
+- Volcano, wildfire, and severe-storm reports from NASA EONET
 
 These are standard requests to public services. The app does **not** include any
 personal information, location, or identifier in these requests. As with any
 internet request, the third-party service you connect to (e.g., NASA, USGS) may
 see your device's IP address as a normal part of delivering the data; their
 handling of that is governed by their own privacy policies.
+
+**On-device choices.** Named places, their coordinates and optional time zones,
+widget selections, saved event observations, journey/notebook progress, and
+preferences stay in app-private storage on the device. The app does not request
+device location to create a place; you choose one from a catalog or tap the globe.
+The live wallpaper and widget use the same public-data cache and do not send
+these saved choices to the developer.
 
 ## Sharing images
 

@@ -8,6 +8,9 @@
 
 | Document | Description |
 |----------|-------------|
+| [Earth Companion Implementation Guide](earth-companion-implementation-guide.md) | Product defaults, milestone specification, and acceptance criteria |
+| [Earth Companion Progress](earth-companion-progress.md) | Implemented behavior, USB device evidence, deviations, and unexecuted checks |
+| [Data Credits](data-credits.md) | Bundled city and plate-boundary data provenance |
 | [Architecture](architecture.md) | Project structure, design principles, class responsibilities |
 | [Features](features.md) | Full list of visual and interactive features |
 | [Rendering Pipeline](rendering-pipeline.md) | Per-frame OpenGL draw order, shader details, GL state management |
@@ -23,9 +26,9 @@
 | Property | Value |
 |----------|-------|
 | App ID | `com.zandaulion.palebluedot` |
-| Version | 2.0 (versionCode 2) |
+| Version | 3.8 (versionCode 10) |
 | Min SDK | 24 (Android 7.0) |
-| Target SDK | 35 (Android 15) |
+| Target SDK | 36 (Android 16) |
 | Rendering | OpenGL ES 3.0 (GLSL 300 es) |
 | Language | Kotlin 2.0.21 |
 | Build system | AGP 8.7.3 / Gradle 8.9 |

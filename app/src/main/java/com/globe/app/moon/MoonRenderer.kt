@@ -1,13 +1,13 @@
 package com.globe.app.moon
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.opengl.GLES30
-import android.opengl.GLUtils
 import android.opengl.Matrix
 import android.util.Log
 import com.globe.app.earth.EarthModel
 import com.globe.app.earth.SunPosition
+import com.globe.app.render.TextureLoader
+import com.globe.app.render.TextureQuality
 
 /**
  * Renders the Moon as a small lit sphere at the astronomically correct position.
@@ -33,7 +33,7 @@ class MoonRenderer {
     private val mvpMatrix = FloatArray(16)
     private val tempMatrix = FloatArray(16)
 
-    fun init(context: Context, textureResId: Int = 0) {
+    fun init(context: Context, textureResId: Int = 0, maxTextureWidth: Int = TextureQuality.FULL.moonMaxWidth) {
         MoonShader.init()
 
         // Reuse EarthModel for a sphere mesh (lower resolution is fine)
@@ -41,18 +41,18 @@ class MoonRenderer {
         gpuBuffers = model.uploadToGpu()
 
         textureId = if (textureResId != 0) {
-            loadTexture(context, textureResId)
+            TextureLoader.load(context, textureResId, maxTextureWidth)
         } else {
             0
         }
     }
 
-    fun draw(viewMatrix: FloatArray, projectionMatrix: FloatArray) {
+    fun draw(viewMatrix: FloatArray, projectionMatrix: FloatArray, timeMs: Long) {
         val buffers = gpuBuffers ?: return
         if (textureId == 0) return
 
-        val moonDir = MoonPosition.calculate(null)
-        val sunDir = SunPosition.calculate(null)
+        val moonDir = MoonPosition.calculate(timeMs)
+        val sunDir = SunPosition.calculate(timeMs)
 
         // Build model matrix: translate to moon position, scale to moon size
         Matrix.setIdentityM(modelMatrix, 0)
@@ -99,39 +99,5 @@ class MoonRenderer {
             textureId = 0
         }
         MoonShader.destroy()
-    }
-
-    private fun loadTexture(context: Context, resourceId: Int): Int {
-        val textureIds = IntArray(1)
-        GLES30.glGenTextures(1, textureIds, 0)
-        val texId = textureIds[0]
-
-        if (texId == 0) {
-            Log.e(TAG, "glGenTextures failed")
-            return 0
-        }
-
-        val options = BitmapFactory.Options().apply { inScaled = false }
-        val bitmap = BitmapFactory.decodeResource(context.resources, resourceId, options)
-            ?: run {
-                Log.e(TAG, "Failed to decode resource $resourceId")
-                GLES30.glDeleteTextures(1, textureIds, 0)
-                return 0
-            }
-
-        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, texId)
-
-        GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_LINEAR_MIPMAP_LINEAR)
-        GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MAG_FILTER, GLES30.GL_LINEAR)
-        GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_S, GLES30.GL_REPEAT)
-        GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_WRAP_T, GLES30.GL_CLAMP_TO_EDGE)
-
-        GLUtils.texImage2D(GLES30.GL_TEXTURE_2D, 0, bitmap, 0)
-        GLES30.glGenerateMipmap(GLES30.GL_TEXTURE_2D)
-
-        bitmap.recycle()
-        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, 0)
-
-        return texId
     }
 }
