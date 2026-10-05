@@ -7,24 +7,26 @@
     <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
         android:background="@drawable/widget_overlay_scrim" />
     <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-        android:orientation="vertical" android:paddingHorizontal="12dp" android:paddingVertical="9dp">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="24dp"
+        android:orientation="vertical" android:padding="12dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="28dp"
             android:gravity="center_vertical" android:orientation="horizontal">
             <TextView android:id="@+id/widget_heading" android:layout_width="0dp" android:layout_height="wrap_content"
                 android:layout_weight="1" android:fontFamily="sans-serif-medium"
                 android:text="@string/widget_title" android:textColor="#FFF4F8FC" android:textSize="14sp" />
-            <ImageView android:id="@+id/widget_configure" android:layout_width="24dp" android:layout_height="24dp"
+            <ImageView android:id="@+id/widget_configure" android:layout_width="28dp" android:layout_height="28dp"
                 android:background="@drawable/widget_action_background" android:contentDescription="@string/widget_change_place"
-                android:padding="5dp" android:src="@drawable/ic_widget_settings" />
+                android:padding="6dp" android:src="@drawable/ic_widget_settings" />
         </LinearLayout>
         <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
         <TextView android:id="@+id/widget_place" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:ellipsize="end" android:fontFamily="sans-serif-medium" android:maxLines="1"
-            android:textColor="#FFF4F8FC" android:textSize="13sp" />
+            android:textColor="#FFF4F8FC" android:textSize="14sp" />
         <TextView android:id="@+id/widget_daylight" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:ellipsize="end" android:maxLines="1" android:textColor="#FFACDAEA" android:textSize="11sp" />
         <TextView android:id="@+id/widget_moon" android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="2dp" android:ellipsize="end" android:maxLines="1"
-            android:textColor="#FFE8F1F8" android:textSize="11sp" />
+            android:layout_marginTop="4dp" android:ellipsize="end" android:maxLines="1"
+            android:textColor="#FFE8F1F8" android:textSize="12sp" />
+        <TextView android:id="@+id/widget_updated" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="3dp" android:maxLines="1" android:textColor="#FFA9C0D2" android:textSize="10sp" />
     </LinearLayout>
 </FrameLayout>

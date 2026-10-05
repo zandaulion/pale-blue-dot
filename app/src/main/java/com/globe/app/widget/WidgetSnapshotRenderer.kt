@@ -30,16 +30,17 @@ object WidgetSnapshotRenderer {
                 val lon = Math.toRadians(place.lon)
                 Math.toDegrees(Math.atan2(-cos(lon), sin(lon))).toFloat()
             }
-            restore(az, place?.lat?.toFloat() ?: 15f, 3.9f)
+            restore(az, place?.lat?.toFloat() ?: 15f, if (height > width) 4.8f else 3.9f)
             reduceMotion = true
         }
         val renderer = GlobeRenderer(context.applicationContext, camera, RealTimeSceneClock(), textureQuality = TextureQuality.WIDGET).apply {
             showEvents = false; showIss = false; showIndicators = false; showConstellations = false
-            showPlacePins = false
+            showPlacePins = false; showStars = false
             earthRenderer.cloudMode = EarthRenderer.CloudMode.OFF
             earthRenderer.auroraVisible = false
             earthRenderer.terminatorVisible = false
             setDecorativeMotionReduced(true)
+            setFraming(0f, -0.15f)
         }
         val display = EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY)
         check(display != EGL14.EGL_NO_DISPLAY) { "No EGL display" }
@@ -63,6 +64,8 @@ object WidgetSnapshotRenderer {
             check(surface != EGL14.EGL_NO_SURFACE)
             check(EGL14.eglMakeCurrent(display, surface, surface, glContext))
             renderer.onSurfaceCreated(null, null)
+            // Match the widget's image panel instead of framing Earth in a hard black rectangle.
+            GLES30.glClearColor(8f / 255f, 24f / 255f, 39f / 255f, 1f)
             initialized = true
             renderer.onSurfaceChanged(null, width, height)
             renderer.onDrawFrame(null)

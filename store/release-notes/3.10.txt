@@ -1,0 +1,5 @@
+<en-US>
+Earth Today has a fresh look: Earth fills the widget, with readable text layered over it and layouts that adapt when resized.
+
+Wallpaper setup is easier: choose a saved place or search cities to center Earth on your location. Your viewpoint is remembered across composition changes. Framing controls expand when needed, and the preview button stays within reach.
+</en-US>

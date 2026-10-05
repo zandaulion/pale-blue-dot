@@ -26,7 +26,7 @@
 | Property | Value |
 |----------|-------|
 | App ID | `com.zandaulion.palebluedot` |
-| Version | 3.8 (versionCode 10) |
+| Version | 3.10 (versionCode 12) |
 | Min SDK | 24 (Android 7.0) |
 | Target SDK | 36 (Android 16) |
 | Rendering | OpenGL ES 3.0 (GLSL 300 es) |

@@ -33,3 +33,4 @@ positioning changes.
 | 3.7 | 9 | Tappable ISS/Sun/Moon, working music + volume slider, cloud cycling (off default), volcano fetch fix, large-screen support, legend close (X), resource shrinking |
 | 3.8 | 10 | Target Android 16 (API 36) to satisfy Play's target-API policy |
 | 3.9 | 11 | Earth Today widget, live wallpaper (parallax, Material You colors), saved places with a 303-city offline catalog and time-zone suggestions, guided journeys, Field notebook, plate boundaries, explore time/seasons; lower texture memory for widget and wallpaper |
+| 3.10 | 12 | Full widget Earth background with readable overlays and responsive layouts; wallpaper location selection from saved places or city search, remembered viewpoints, expandable framing controls, and an always-visible preview button |

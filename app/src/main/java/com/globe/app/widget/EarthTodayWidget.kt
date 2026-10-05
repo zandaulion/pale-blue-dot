@@ -51,6 +51,7 @@ class EarthTodayWidget : AppWidgetProvider() {
     }
 
     companion object {
+        private enum class LayoutSize { COMPACT, MEDIUM, EXPANDED }
         private const val ACTION_REFRESH = "com.globe.app.widget.REFRESH"
         private val executor = Executors.newSingleThreadExecutor()
         private val lock = Any()
@@ -112,56 +113,76 @@ class EarthTodayWidget : AppWidgetProvider() {
                 val views = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     // The launcher picks per actual size, e.g. a Fold's cover vs inner screen.
                     RemoteViews(mapOf(
-                        SizeF(180f, 90f) to build(context, id, now, place, brief, size, expanded = false),
-                        SizeF(180f, 180f) to build(context, id, now, place, brief, size, expanded = true)
+                        SizeF(180f, 90f) to build(context, id, now, place, brief, size, LayoutSize.COMPACT),
+                        SizeF(180f, 190f) to build(context, id, now, place, brief, size, LayoutSize.MEDIUM),
+                        SizeF(180f, 300f) to build(context, id, now, place, brief, size, LayoutSize.EXPANDED)
                     ))
-                } else build(context, id, now, place, brief, size, expanded = size.heightDp >= 180)
+                } else build(context, id, now, place, brief, size, when {
+                    size.heightDp >= 300 -> LayoutSize.EXPANDED
+                    size.heightDp >= 190 -> LayoutSize.MEDIUM
+                    else -> LayoutSize.COMPACT
+                })
                 manager.updateAppWidget(id, views)
             }
         }
 
         private fun build(
             context: Context, id: Int, now: Long, place: SavedPlace?, brief: TodayBriefing.Briefing,
-            size: WidgetSize, expanded: Boolean
+            size: WidgetSize, layoutSize: LayoutSize
         ): RemoteViews {
-            val views = RemoteViews(context.packageName,
-                if (expanded) R.layout.widget_earth_expanded else R.layout.widget_earth_compact)
+            val layout = when (layoutSize) {
+                LayoutSize.COMPACT -> R.layout.widget_earth_compact
+                LayoutSize.MEDIUM -> R.layout.widget_earth_medium
+                LayoutSize.EXPANDED -> R.layout.widget_earth_expanded
+            }
+            val views = RemoteViews(context.packageName, layout)
             views.setTextViewText(R.id.widget_moon,
                 "${brief.moon.emoji} ${brief.moon.name} · ${brief.moon.illuminationPercent}%")
-            val placeLine = if (place == null) "Choose a place" else {
+            views.setTextViewText(R.id.widget_place, place?.name ?: "Choose a place")
+            val daylightLine = if (place == null) "Set your local view" else {
                 val day = brief.daylight!!
-                val whenText = when (day.state) {
-                    Daylight.State.POLAR_DAY -> "polar day"
-                    Daylight.State.POLAR_NIGHT -> "polar night"
-                    Daylight.State.ZONE_UNSET -> "time zone unset"
-                    Daylight.State.ORDINARY -> if (day.isDay) "daytime" else "nighttime"
+                when (day.state) {
+                    Daylight.State.POLAR_DAY -> "Polar day"
+                    Daylight.State.POLAR_NIGHT -> "Polar night"
+                    Daylight.State.ZONE_UNSET -> "Time zone unset"
+                    Daylight.State.ORDINARY -> if (day.isDay) "Daylight now" else "Nighttime now"
                 }
-                "${place.name} · $whenText"
             }
-            views.setTextViewText(R.id.widget_place, placeLine)
-            views.setTextViewText(R.id.widget_updated,
-                "Updated ${SimpleDateFormat("HH:mm z", Locale.getDefault()).format(Date(now))}")
+            views.setTextViewText(R.id.widget_daylight, daylightLine)
+            if (layoutSize != LayoutSize.COMPACT) {
+                views.setTextViewText(R.id.widget_updated,
+                    "Updated ${SimpleDateFormat("HH:mm z", Locale.getDefault()).format(Date(now))}")
+            }
             views.setOnClickPendingIntent(R.id.widget_root, destination(context, id, "open", null))
             views.setOnClickPendingIntent(R.id.widget_configure, destination(context, id, "configure", null))
             views.setOnClickPendingIntent(R.id.widget_place, destination(context, id,
                 if (place == null) "configure" else "place", place?.id))
-            if (!expanded) return views
-            val rendered = snapshot(context, now, place, size)
+            val rendered = snapshot(context, now, place, size, layoutSize)
             if (rendered != null) views.setImageViewBitmap(R.id.widget_globe, rendered)
-            else views.setImageViewResource(R.id.widget_globe, R.mipmap.ic_launcher)
+            else views.setImageViewResource(R.id.widget_globe, R.drawable.wallpaper_thumbnail)
+            if (layoutSize != LayoutSize.EXPANDED) return views
             val event = brief.event
             views.setTextViewText(R.id.widget_event,
                 if (rendered == null) "Illustration · ${brief.eventMessage}"
-                else event?.let { "${it.type.name.lowercase().replaceFirstChar { c -> c.uppercase() }} · ${it.title}" }
+                else event?.let {
+                    val type = it.type.name.lowercase().replaceFirstChar { c -> c.uppercase() }
+                    if (it.title.startsWith(type, ignoreCase = true)) it.title else "$type · ${it.title}"
+                }
                     ?: brief.prompt)
-            views.setOnClickPendingIntent(R.id.widget_event,
+            views.setOnClickPendingIntent(R.id.widget_event_card,
                 destination(context, id, if (event == null) "journey" else "event", event?.id))
             return views
         }
 
         /** Cached per hour, place and pixel size; RemoteViews copies the bitmap, so eviction may recycle. */
-        private fun snapshot(context: Context, now: Long, place: SavedPlace?, size: WidgetSize): Bitmap? {
-            val (w, h) = size.globePixels(context)
+        private fun snapshot(context: Context, now: Long, place: SavedPlace?, size: WidgetSize,
+                             layoutSize: LayoutSize): Bitmap? {
+            val imageHeightDp = when (layoutSize) {
+                LayoutSize.COMPACT -> size.heightDp.coerceAtMost(132)
+                LayoutSize.MEDIUM -> size.heightDp.coerceAtMost(210)
+                LayoutSize.EXPANDED -> size.heightDp
+            }
+            val (w, h) = size.imagePixels(context, imageHeightDp)
             val key = "${now / 3_600_000L}:${place?.id ?: "none"}:${w}x$h"
             bitmaps[key]?.takeIf { !it.isRecycled }?.let { return it }
             return try {

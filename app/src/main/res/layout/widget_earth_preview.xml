@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Static picker preview (Android 12+). Mirrors widget_earth_expanded with sample text. -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Static 3 × 2 picker preview of the full-bleed compact widget. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:padding="14dp" android:background="@drawable/widget_background">
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="@string/widget_title" android:textColor="#FFFFFFFF" android:textSize="16sp" android:textStyle="bold" />
-    <ImageView android:layout_width="match_parent" android:layout_height="0dp"
-        android:layout_weight="1" android:minHeight="72dp" android:layout_marginTop="6dp"
-        android:src="@drawable/wallpaper_thumbnail" android:scaleType="centerCrop"
-        android:contentDescription="@string/widget_globe_description" />
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginTop="5dp" android:text="@string/widget_preview_moon" android:textColor="#FFD3EAFB" android:textSize="14sp" />
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginTop="4dp" android:text="@string/widget_preview_place" android:textColor="#FFFFFFFF" android:textSize="13sp" />
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginTop="4dp" android:text="@string/widget_preview_event" android:textColor="#FFD3EAFB" android:textSize="12sp" />
-</LinearLayout>
+    android:background="@drawable/widget_background" android:clipToOutline="true">
+    <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+        android:contentDescription="@string/widget_globe_description"
+        android:scaleType="centerCrop" android:src="@drawable/wallpaper_thumbnail" />
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:background="@drawable/widget_overlay_scrim" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical" android:paddingHorizontal="12dp" android:paddingVertical="9dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="24dp"
+            android:gravity="center_vertical" android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:fontFamily="sans-serif-medium"
+                android:text="@string/widget_title" android:textColor="#FFF4F8FC" android:textSize="14sp" />
+            <ImageView android:layout_width="24dp" android:layout_height="24dp"
+                android:background="@drawable/widget_action_background"
+                android:contentDescription="@string/widget_change_place"
+                android:padding="5dp" android:src="@drawable/ic_widget_settings" />
+        </LinearLayout>
+        <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:ellipsize="end" android:fontFamily="sans-serif-medium" android:maxLines="1"
+            android:text="@string/widget_preview_place" android:textColor="#FFF4F8FC" android:textSize="13sp" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:ellipsize="end" android:maxLines="1" android:text="@string/widget_preview_daylight"
+            android:textColor="#FFACDAEA" android:textSize="11sp" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="2dp" android:ellipsize="end" android:maxLines="1"
+            android:text="@string/widget_preview_moon" android:textColor="#FFE8F1F8" android:textSize="11sp" />
+    </LinearLayout>
+</FrameLayout>

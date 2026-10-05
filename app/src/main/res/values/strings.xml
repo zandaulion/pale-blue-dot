@@ -20,10 +20,13 @@
     <string name="companion_off">Off</string>
     <string name="app_name">Pale Blue Dot</string>
     <string name="widget_title">Earth Today</string>
-    <string name="widget_description">Tonight\'s Moon, day or night at your place, and a recent event on Earth</string>
+    <string name="widget_description">Moon and daylight; expand for a live Earth view and recent event</string>
     <string name="widget_preview_moon">🌔 Waxing Gibbous · 82%</string>
-    <string name="widget_preview_place">Your place · daytime</string>
-    <string name="widget_preview_event">Volcano · Tap to explore Earth today</string>
+    <string name="widget_preview_place">Bucharest, Romania</string>
+    <string name="widget_preview_event">Explore what is happening across Earth</string>
+    <string name="widget_preview_updated">Updated just now</string>
+    <string name="widget_event_label">On Earth</string>
+    <string name="widget_preview_daylight">Daylight now</string>
     <string name="widget_change_place">Change widget place</string>
     <string name="widget_settings_icon">⚙</string>
     <string name="widget_globe_description">Current Earth scene</string>

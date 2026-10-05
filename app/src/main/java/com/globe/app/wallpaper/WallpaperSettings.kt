@@ -3,6 +3,7 @@ package com.globe.app.wallpaper
 import android.content.Context
 import android.content.SharedPreferences
 import com.globe.app.earth.EarthRenderer
+import com.globe.app.places.SavedPlace
 
 /** Separate from app exploration camera and layers. All values survive process restart. */
 class WallpaperSettings(context: Context) {
@@ -38,18 +39,33 @@ class WallpaperSettings(context: Context) {
     fun setPreset(value: Preset) {
         preferences.edit()
             .putString("preset", value.name)
-            .putString("motion", if (value == Preset.NIGHT_LIGHTS) Motion.FOLLOW_NIGHT.name else Motion.FIXED.name)
+            .putString("motion", if (placeName() != null) read().motion.name
+                else if (value == Preset.NIGHT_LIGHTS) Motion.FOLLOW_NIGHT.name else Motion.FIXED.name)
             .putFloat("frame_y", if (value == Preset.HORIZON) 0.35f else 0f)
             .apply()
     }
     fun setMotion(value: Motion) { preferences.edit().putString("motion", value.name).apply() }
+    fun placeName(): String? = preferences.getString("place_name", null)
+
+    /** A place is a persisted viewpoint, independent of later saved-place edits. */
+    fun setPlace(place: SavedPlace) {
+        val longitude = Math.toRadians(place.lon)
+        val azimuth = Math.toDegrees(Math.atan2(-Math.cos(longitude), Math.sin(longitude))).toFloat()
+        preferences.edit()
+            .putFloat("azimuth", azimuth)
+            .putFloat("elevation", place.lat.toFloat().coerceIn(-80f, 80f))
+            .putString("place_name", place.name)
+            .putString("motion", Motion.FIXED.name)
+            .putBoolean("page_parallax", false)
+            .apply()
+    }
     fun setClouds(value: EarthRenderer.CloudMode) { preferences.edit().putString("clouds", value.name).apply() }
     fun setScale(value: Float) { preferences.edit().putFloat("scale", value.coerceIn(0.7f, 1.4f)).apply() }
     fun setFrameX(value: Float) { preferences.edit().putFloat("frame_x", value.coerceIn(-0.5f, 0.5f)).apply() }
     fun setFrameY(value: Float) { preferences.edit().putFloat("frame_y", value.coerceIn(-0.5f, 0.5f)).apply() }
-    fun setAzimuth(value: Float) { preferences.edit().putFloat("azimuth", value).apply() }
+    fun setAzimuth(value: Float) { preferences.edit().putFloat("azimuth", value).remove("place_name").apply() }
     fun setPageParallax(value: Boolean) { preferences.edit().putBoolean("page_parallax", value).apply() }
-    fun setElevation(value: Float) { preferences.edit().putFloat("elevation", value.coerceIn(-80f, 80f)).apply() }
+    fun setElevation(value: Float) { preferences.edit().putFloat("elevation", value.coerceIn(-80f, 80f)).remove("place_name").apply() }
 
     private inline fun <reified T : Enum<T>> enumValue(raw: String?, fallback: T): T =
         enumValues<T>().firstOrNull { it.name == raw } ?: fallback

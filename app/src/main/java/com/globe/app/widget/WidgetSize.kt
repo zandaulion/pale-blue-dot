@@ -9,19 +9,14 @@ import android.util.SizeF
 
 /** Current widget size in dp, from launcher options for the device's orientation. */
 data class WidgetSize(val widthDp: Int, val heightDp: Int) {
-    /** Pixel size of the expanded layout's globe band: full inner width, height left after the text rows. */
-    fun globePixels(context: Context): Pair<Int, Int> {
+    /** Pixel size of the full-bleed image for the selected responsive layout. */
+    fun imagePixels(context: Context, imageHeightDp: Int): Pair<Int, Int> {
         val density = context.resources.displayMetrics.density
-        val bandWidth = (widthDp - PADDING_DP).coerceAtLeast(MIN_BAND_HEIGHT_DP)
-        val bandHeight = (heightDp - PADDING_DP - TEXT_ROWS_DP).coerceIn(MIN_BAND_HEIGHT_DP, bandWidth)
-        return (bandWidth * density).toInt() to (bandHeight * density).toInt()
+        return (widthDp.coerceAtLeast(180) * density).toInt() to
+            (imageHeightDp.coerceAtLeast(90) * density).toInt()
     }
 
     companion object {
-        private const val PADDING_DP = 28
-        private const val TEXT_ROWS_DP = 124
-        private const val MIN_BAND_HEIGHT_DP = 72
-
         fun from(context: Context, options: Bundle): WidgetSize {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 @Suppress("DEPRECATION") // The typed overload is API 33+.
