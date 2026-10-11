@@ -1,0 +1,791 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="companion_today" formatted="false">"اليوم"</string>
+    <string name="companion_layers" formatted="false">"الطبقات"</string>
+    <string name="companion_explore" formatted="false">"استكشاف"</string>
+    <string name="companion_settings" formatted="false">"الإعدادات"</string>
+    <string name="companion_close" formatted="false">"إغلاق"</string>
+    <string name="companion_refresh" formatted="false">"تحديث الملاحظات"</string>
+    <string name="companion_events" formatted="false">"الملاحظات الأخيرة"</string>
+    <string name="companion_no_events" formatted="false">"لم يتم الإبلاغ عن الأحداث في هذه الفئة"</string>
+    <string name="companion_why" formatted="false">"لماذا يحدث هذا؟"</string>
+    <string name="companion_reduce_motion" formatted="false">"تقليل الحركة"</string>
+    <string name="companion_clouds" formatted="false">"الغيوم"</string>
+    <string name="wallpaper_name" formatted="false">"الأرض Pale Blue Dot"</string>
+    <string name="wallpaper_description" formatted="false">"منظر حي وهادئ للأرض لورق الحائط الخاص بك"</string>
+    <string name="wallpaper_settings_title" formatted="false">"خلفية الأرض"</string>
+    <string name="companion_generated" formatted="false">"تم إنشاؤها"</string>
+    <string name="companion_satellite" formatted="false">"القمر الصناعي"</string>
+    <string name="companion_off" formatted="false">"إيقاف"</string>
+    <string name="widget_title" formatted="false">"الأرض اليوم"</string>
+    <string name="widget_description" formatted="false">"القمر وضوء النهار. قم بالتوسيع لعرض Live Earth والحدث الأخير"</string>
+    <string name="widget_preview_moon" formatted="false">"🌔 الأحدب المتزايد · 82%"</string>
+    <string name="widget_preview_place" formatted="false">"بوخارست، رومانيا"</string>
+    <string name="widget_event_label" formatted="false">"على الأرض"</string>
+    <string name="widget_preview_daylight" formatted="false">"ضوء النهار الآن"</string>
+    <string name="widget_change_place" formatted="false">"تغيير مكان القطعة"</string>
+    <string name="widget_globe_description" formatted="false">"مشهد الأرض الحالي"</string>
+    <string name="widget_name" formatted="false">"الأرض اليوم"</string>
+    <string name="text_clouds_live_loading" formatted="false">"☁ السحب: مباشر (جارٍ التحميل...)"</string>
+    <string name="text_time_now" formatted="false">"الوقت · الآن"</string>
+    <string name="text_time_controls" formatted="false">"ضوابط الوقت"</string>
+    <string name="text_move_time_up_to_24_hours_before_or_after_now" formatted="false">"نقل الوقت حتى 24 ساعة قبل أو بعد الآن"</string>
+    <string name="text_share" formatted="false">"↑ شارك"</string>
+    <string name="text_today" formatted="false">"🗓 اليوم"</string>
+    <string name="text_save_this_place" formatted="false">"+ احفظ هذا المكان"</string>
+    <string name="text_planetary_briefing_real_time" formatted="false">"إحاطة الكواكب · في الوقت الحقيقي"</string>
+    <string name="text_1_s_2_s_3_s_estimated_illumination">"%1$s %2$s · %3$d%% الإضاءة المقدرة"</string>
+    <string name="text_choose_a_primary_place" formatted="false">"اختر مكانًا أساسيًا"</string>
+    <string name="text_fly_to_1_s">"يطير إلى %1$s"</string>
+    <string name="text_satellite_imagery_1_s">"صور الأقمار الصناعية – %1$s"</string>
+    <string name="text_saved_copy" formatted="false">" · نسخة محفوظة"</string>
+    <string name="text_satellite_imagery_unavailable_or_still_loading" formatted="false">"صور القمر الصناعي غير متاحة أو لا تزال قيد التحميل"</string>
+    <string name="text_one_observation_1_s">"ملاحظة واحدة · %1$s"</string>
+    <string name="text_time_unavailable" formatted="false">"الوقت غير متاح"</string>
+    <string name="text_this_observation_is_no_longer_in_the_saved_feed" formatted="false">"لم تعد هذه الملاحظة موجودة في الخلاصة المحفوظة."</string>
+    <string name="text_current_events" formatted="false">"الأحداث الجارية"</string>
+    <string name="text_choose_what_appears_on_the_globe_hidden_events_also_leave_the_eve" formatted="false">"اختر ما يظهر على الكرة الأرضية. الأحداث المخفية تترك أيضًا قائمة الأحداث والتحديات."</string>
+    <string name="text_satellite_imagery_may_be_unavailable_offline_generated_clouds_sti" formatted="false">"قد لا تكون صور القمر الصناعي متاحة في وضع عدم الاتصال؛ الغيوم المولدة لا تزال تعمل."</string>
+    <string name="text_reported_by_usgs" formatted="false">"تم الإبلاغ عنها بواسطة USGS"</string>
+    <string name="text_reported_by_nasa_eonet" formatted="false">"تم الإبلاغ عنها بواسطة NASA EONET"</string>
+    <string name="text_constellations" formatted="false">"الأبراج"</string>
+    <string name="text_catalog_lines_in_the_star_background" formatted="false">"خطوط الكتالوج في خلفية النجمة"</string>
+    <string name="text_iss_illustration" formatted="false">"رسم توضيحي لمحطة الفضاء الدولية"</string>
+    <string name="text_approximate_orbit_not_live_tracking" formatted="false">"المدار التقريبي، وليس التتبع المباشر"</string>
+    <string name="text_aurora_illustration" formatted="false">"أورورا التوضيح"</string>
+    <string name="text_decorative_glow_not_a_forecast" formatted="false">"توهج زخرفي، وليس توقعات"</string>
+    <string name="text_day_night_boundary" formatted="false">"حدود النهار/الليل"</string>
+    <string name="text_calculated_terminator_line" formatted="false">"خط النهاية المحسوب"</string>
+    <string name="text_plate_boundaries" formatted="false">"حدود الصفائح التكتونية"</string>
+    <string name="text_offline_pb2002_model_gold_lines" formatted="false">"نموذج PB2002 غير متصل · خطوط ذهبية"</string>
+    <string name="text_plate_boundaries_gold_lines_mark_modelled_plate_edges_earthquakes" formatted="false">"حدود الصفائح: الخطوط الذهبية تشير إلى حواف الصفائح النموذجية. ويمكن أن تحدث الزلازل أيضًا بعيدًا عنهم. المصدر: بيرد (2003)، PB2002؛ ODbL 1.0."</string>
+    <string name="text_places_1_s_saved">"الأماكن · تم حفظ %1$d"</string>
+    <string name="text_explore_time_and_seasons" formatted="false">"استكشاف الوقت والمواسم"</string>
+    <string name="text_guided_journeys" formatted="false">"الرحلات المصحوبة بمرشدين"</string>
+    <string name="text_field_notebook_1_s_2_s_discoveries">"دفتر الملاحظات الميداني · اكتشافات %1$d/%2$d"</string>
+    <string name="text_try_a_quick_challenge" formatted="false">"جرب التحدي السريع"</string>
+    <string name="text_scene_guide_and_legend" formatted="false">"دليل المشهد والأسطورة"</string>
+    <string name="text_ambient_music" formatted="false">"الموسيقى المحيطة"</string>
+    <string name="text_only_while_the_app_is_open" formatted="false">"فقط عندما يكون التطبيق مفتوحا"</string>
+    <string name="text_music_volume" formatted="false">"حجم الموسيقى"</string>
+    <string name="text_read_aloud" formatted="false">"القراءة بصوت مسموع"</string>
+    <string name="text_speak_cards_when_narration_is_enabled" formatted="false">"نطق البطاقات عند تمكين السرد"</string>
+    <string name="text_stops_idle_spin_and_decorative_marker_movement" formatted="false">"يوقف الدوران الخامل وحركة العلامة المزخرفة"</string>
+    <string name="text_share_globe_image" formatted="false">"مشاركة صورة الكرة الأرضية"</string>
+    <string name="text_earth_live_wallpaper" formatted="false">"خلفية حية للأرض"</string>
+    <string name="text_explore" formatted="false">"‹ اكتشف"</string>
+    <string name="text_completed_journeys" formatted="false">"الرحلات المكتملة"</string>
+    <string name="text_no_journeys_completed_yet" formatted="false">"لم تكتمل الرحلات بعد."</string>
+    <string name="text_saved_observations" formatted="false">"الملاحظات المحفوظة"</string>
+    <string name="text_save_an_observation_from_its_card_to_keep_its_source_and_date" formatted="false">"احفظ ملاحظة من بطاقتها للاحتفاظ بمصدرها وتاريخها."</string>
+    <string name="text_earlier_discoveries_1_s_2_s">"الاكتشافات السابقة · %1$d/%2$d"</string>
+    <string name="text_you_explored_a_reported_earthquake" formatted="false">"لقد استكشفت زلزالًا تم الإبلاغ عنه."</string>
+    <string name="text_you_explored_a_reported_volcanic_event" formatted="false">"لقد استكشفت حدثًا بركانيًا تم الإبلاغ عنه."</string>
+    <string name="text_you_explored_a_reported_wildfire" formatted="false">"لقد استكشفت حريق غابات تم الإبلاغ عنه."</string>
+    <string name="text_you_explored_a_reported_storm" formatted="false">"لقد استكشفت عاصفة تم الإبلاغ عنها."</string>
+    <string name="text_you_found_a_place_facing_the_sun" formatted="false">"لقد وجدت مكانًا يواجه الشمس."</string>
+    <string name="text_you_found_earth_s_night_side" formatted="false">"لقد وجدت الجانب الليلي للأرض."</string>
+    <string name="text_you_looked_beyond_earth" formatted="false">"لقد نظرت إلى ما وراء الأرض."</string>
+    <string name="text_you_changed_the_scene_time" formatted="false">"لقد غيرت وقت المشهد."</string>
+    <string name="text_observed" formatted="false">"لوحظ: "</string>
+    <string name="text_time_not_reported" formatted="false">"لم يتم الإبلاغ عن الوقت"</string>
+    <string name="text_source" formatted="false">"المصدر: "</string>
+    <string name="text_magnitude_1_s">"الحجم: %1$s\n"</string>
+    <string name="text_depth_1_s_km">"العمق: %1$s كم\n"</string>
+    <string name="text_source_link_1_s">"رابط المصدر: %1$s"</string>
+    <string name="text_saved_observation" formatted="false">"الملاحظة المحفوظة"</string>
+    <string name="text_fly_to" formatted="false">"عرض المكان"</string>
+    <string name="text_sunlight_and_city_lights" formatted="false">"ضوء الشمس وأضواء المدينة"</string>
+    <string name="text_calculated_sunlight_shows_the_current_day_and_night_sides" formatted="false">"يُظهر ضوء الشمس المحسوب جوانب النهار والليل الحالية."</string>
+    <string name="text_generated_clouds_are_illustrative_satellite_mode_derives_opacity" formatted="false">"السحب المولدة توضيحية. يستمد وضع القمر الصناعي العتامة من صورة NASA VIIRS مؤرخة."</string>
+    <string name="text_earthquakes" formatted="false">"الزلازل"</string>
+    <string name="text_usgs_reports_magnitude_4_5_earthquakes_from_the_last_seven_days" formatted="false">"تقارير USGS عن زلازل بقوة 4.5+ خلال الأيام السبعة الماضية."</string>
+    <string name="text_volcanoes_wildfires_and_storms" formatted="false">"البراكين وحرائق الغابات والعواصف"</string>
+    <string name="text_nasa_eonet_open_reports_may_have_older_observation_dates" formatted="false">"NASA EONET قد تحتوي التقارير المفتوحة على تواريخ مراقبة أقدم."</string>
+    <string name="text_iss" formatted="false">"محطة الفضاء الدولية"</string>
+    <string name="text_illustrated_orbit_not_live_tracking" formatted="false">"المدار المصور، وليس التتبع المباشر."</string>
+    <string name="text_aurora" formatted="false">"أورورا"</string>
+    <string name="text_decorative_illustration_not_a_forecast" formatted="false">"رسم توضيحي زخرفي، وليس توقعات."</string>
+    <string name="text_calculated_terminator_line_2" formatted="false">"خط النهاية المحسوب."</string>
+    <string name="text_catalog_stars_joined_into_familiar_patterns" formatted="false">"انضمت نجوم الكتالوج إلى أنماط مألوفة."</string>
+    <string name="text_a_simplified_offline_pb2002_model_many_earthquakes_occur_near_bou" formatted="false">"نموذج PB2002 مبسط غير متصل بالإنترنت. تحدث العديد من الزلازل بالقرب من الحدود، على الرغم من أن بعضها يحدث في أماكن أخرى. الخطوط الذهبية ليست تشخيصا لأي حدث."</string>
+    <string name="text_saved_places_stay_on_this_device_cyan_rings_mark_them_on_the_glob" formatted="false">"تبقى الأماكن المحفوظة على هذا الجهاز. حلقات سماوي تميزهم على الكرة الأرضية."</string>
+    <string name="text_search_bundled_cities" formatted="false">"بحث المدن المجمعة"</string>
+    <string name="text_city_or_country_blank_lists_all_1_s">"المدينة أو البلد (قائمة فارغة بجميع %1$d)"</string>
+    <string name="text_find_a_city" formatted="false">"ابحث عن مدينة"</string>
+    <string name="text_search" formatted="false">"بحث"</string>
+    <string name="text_no_bundled_city_matches_that_name" formatted="false">"لا توجد مدينة مجمعة تطابق هذا الاسم."</string>
+    <string name="text_ok" formatted="false">"حسنًا"</string>
+    <string name="text_bundled_cities" formatted="false">"المدن المجمعة"</string>
+    <string name="text_cancel" formatted="false">"إلغاء"</string>
+    <string name="text_add_a_place_from_the_globe" formatted="false">"أضف مكانًا من الكرة الأرضية"</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"اضغط على نقطة على الكرة الأرضية، ثم اضغط على + حفظ هذا المكان أسفل بطاقتها."</string>
+    <string name="text_time_zone_unset" formatted="false">"لم يتم ضبط المنطقة الزمنية"</string>
+    <string name="text_set_as_primary" formatted="false">"تعيين كإعداد أساسي"</string>
+    <string name="text_rename" formatted="false">"إعادة تسمية"</string>
+    <string name="text_set_time_zone" formatted="false">"ضبط المنطقة الزمنية"</string>
+    <string name="text_delete" formatted="false">"حذف"</string>
+    <string name="text_1_s_removed">"تمت إزالة %1$s"</string>
+    <string name="text_undo" formatted="false">"تراجع"</string>
+    <string name="text_done" formatted="false">"تم"</string>
+    <string name="text_name_this_place" formatted="false">"اسم هذا المكان"</string>
+    <string name="text_save" formatted="false">"حفظ"</string>
+    <string name="text_iana_zone_e_g_europe_bucharest" formatted="false">"منطقة IANA، على سبيل المثال. أوروبا/بوخارست"</string>
+    <string name="text_suggested_from_the_nearest_town_change_it_if_this_place_is_across" formatted="false">"مقترح من أقرب مدينة؛ تغييره إذا كان هذا المكان عبر الحدود. "</string>
+    <string name="text_time_zone_for_1_s">"المنطقة الزمنية لـ%1$s"</string>
+    <string name="text_enter_an_iana_time_zone_id_or_leave_blank_to_keep_local_clock_and" formatted="false">"أدخل معرف المنطقة الزمنية IANA، أو اتركه فارغًا لإبقاء الساعة المحلية وشروق الشمس غير مضبوطين."</string>
+    <string name="text_unknown_iana_time_zone_id_1_s">"معرف المنطقة الزمنية IANA غير معروف: %1$s"</string>
+    <string name="text_try_again" formatted="false">"حاول مرة أخرى"</string>
+    <string name="text_time_zone_unset_choose_a_zone_for_local_clock_and_sunrise" formatted="false">"المنطقة الزمنية غير محددة · اختر منطقة للساعة المحلية وشروق الشمس"</string>
+    <string name="text_polar_day_sun_stays_above_the_horizon" formatted="false">"يوم قطبي · بقاء الشمس فوق الأفق"</string>
+    <string name="text_polar_night_sun_stays_below_the_horizon" formatted="false">"ليلة قطبية · بقاء الشمس تحت الأفق"</string>
+    <string name="text_not_available" formatted="false">"غير متوفر"</string>
+    <string name="text_about_1_sh_2_sm_daylight">" · حول %1$d h %2$d دقيقة ضوء النهار"</string>
+    <string name="text_approx_sunrise_1_s_sunset_2_s_3_s">"تقريبا. شروق الشمس %1$s · غروب الشمس %2$s%3$s"</string>
+    <string name="text_day" formatted="false">"نهار"</string>
+    <string name="text_night" formatted="false">"ليل"</string>
+    <string name="text_choose_a_date_to_hold_the_globe_in_an_explicit_lesson_time_today" formatted="false">"اختر تاريخًا لعقد الكرة الأرضية في وقت محدد للدرس. واليوم تظل ورق الحائط في الوقت الفعلي."</string>
+    <string name="text_begin_at_current_time" formatted="false">"تبدأ في الوقت الحالي"</string>
+    <string name="text_simulated_1_s">"محاكاة · %1$s"</string>
+    <string name="text_choose_date_and_time" formatted="false">"اختر التاريخ والوقت"</string>
+    <string name="text_pause" formatted="false">"وقفة"</string>
+    <string name="text_play_at_real_time_speed" formatted="false">"العب بالسرعة الحقيقية"</string>
+    <string name="text_advance_one_hour" formatted="false">"تقدم ساعة واحدة"</string>
+    <string name="text_advance_one_day" formatted="false">"تقدم يوما واحدا"</string>
+    <string name="text_now_leave_time_exploration" formatted="false">"الآن · اترك وقت الاستكشاف"</string>
+    <string name="text_compare_latest_observations" formatted="false">"قارن أحدث الملاحظات"</string>
+    <string name="text_these_reports_are_from_real_dates_not_the_simulated_date" formatted="false">"هذه التقارير من تواريخ حقيقية، وليس من التاريخ المحاكى."</string>
+    <string name="text_year_timeline_1_s">"الجدول الزمني للسنة · %1$d"</string>
+    <string name="text_choose_day_of_year" formatted="false">"اختر يوم من السنة"</string>
+    <string name="text_seasons_earth_s_axis_stays_tilted_about_23_4_as_earth_orbits_the" formatted="false">"المواسم · يظل محور الأرض مائلًا بمقدار 23.4 درجة تقريبًا أثناء دوران الأرض حول الشمس. ينتقل ضوء الشمس بين نصفي الكرة الأرضية على مدار العام؛ شمس المشهد مسؤولة بالفعل عن هذا الميل."</string>
+    <string name="text_23_4_axis" formatted="false">"محور 23.4 درجة"</string>
+    <string name="text_sunlight" formatted="false">"ضوء الشمس →"</string>
+    <string name="text_polar_day" formatted="false">"يوم قطبي"</string>
+    <string name="text_polar_night" formatted="false">"ليلة قطبية"</string>
+    <string name="text_about_1_sh_2_sm_daylight_2">"حول %1$d h %2$d دقيقة ضوء النهار"</string>
+    <string name="text_daylight_changing" formatted="false">"تغيير ضوء النهار"</string>
+    <string name="text_guides_equator_tropics_23_4_and_polar_circles_66_6_compare_the_tw" formatted="false">"الأدلة: خط الاستواء، المناطق الاستوائية (±23.4°)، والدوائر القطبية (±66.6°). قارن بين نصفي الكرة الأرضية في مارس ويونيو وسبتمبر وديسمبر."</string>
+    <string name="text_short_local_lessons_each_restores_your_previous_globe_view_and_la" formatted="false">"دروس محلية قصيرة. يستعيد كل منها عرض الكرة الأرضية وطبقاتها السابقة عند المغادرة."</string>
+    <string name="text_completed" formatted="false">" · اكتمل"</string>
+    <string name="text_1_s_2_s_min_3_s">"%1$s · %2$s دقيقة%3$s"</string>
+    <string name="text_resume" formatted="false">"استئناف"</string>
+    <string name="text_restart" formatted="false">"إعادة التشغيل"</string>
+    <string name="text_choose_a_journey" formatted="false">"اختر رحلة"</string>
+    <string name="text_1_s_step_2_s_of_3_s">"%1$s · الخطوة %2$d من %3$d"</string>
+    <string name="text_historical_source_1_s">"المصدر التاريخي: %1$s"</string>
+    <string name="text_recent_reported_example_1_s_2_s_3_s">"المثال الذي تم الإبلاغ عنه مؤخرًا: %1$s\n%2$s · %3$s"</string>
+    <string name="text_that_s_the_pattern" formatted="false">"هذا هو النمط"</string>
+    <string name="text_look_again" formatted="false">"انظر مرة أخرى"</string>
+    <string name="text_continue" formatted="false">"متابعة"</string>
+    <string name="text_advance" formatted="false">"تقدم"</string>
+    <string name="text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th">"تحرك المشهد %1$d للأمام بساعات. شاهد تغير ضوء الشمس على الكرة الأرضية."</string>
+    <string name="text_reveal" formatted="false">"كشف"</string>
+    <string name="text_the_gold_pb2002_lines_show_a_broad_plate_edge_pattern_some_report" formatted="false">"تُظهر خطوط PB2002 الذهبية نمطًا واسعًا لحواف الصفائح. بعض الأحداث المبلغ عنها تقع بعيدا عنهم."</string>
+    <string name="text_view_globe" formatted="false">"عرض الكرة الأرضية"</string>
+    <string name="text_skip_this_step" formatted="false">"تخطي هذه الخطوة"</string>
+    <string name="text_leave_journey_restore_my_view" formatted="false">"مغادرة الرحلة · استعادة وجهة نظري"</string>
+    <string name="text_1_s_is_in_your_field_notebook">"%1$s موجود في دفتر ملاحظاتك الميداني."</string>
+    <string name="text_not_loaded" formatted="false">"لم يتم تحميلها"</string>
+    <string name="text_checking" formatted="false">"التحقق"</string>
+    <string name="text_recently" formatted="false">"مؤخرا"</string>
+    <string name="text_checked_1_s">"تم التحقق من %1$s"</string>
+    <string name="text_saved_observations_offline_or_update_failed" formatted="false">"الملاحظات المحفوظة · غير متصل أو فشل التحديث"</string>
+    <string name="text_unavailable" formatted="false">"غير متاح"</string>
+    <string name="text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who" formatted="false">"🌟 سماء الليل!\nيوجد خلف الأرض آلاف النجوم والكواكب والمجرات بأكملها."</string>
+    <string name="text_earthquakes_happen_when_stress_makes_rock_slip_along_a_fault_some" formatted="false">"تحدث الزلازل عندما يؤدي الضغط إلى انزلاق الصخور على طول الصدع. بعضها يحدث بعيدًا عن حدود الصفائح."</string>
+    <string name="text_magma_can_rise_through_earth_s_crust_this_report_does_not_confirm" formatted="false">"يمكن أن ترتفع الصهارة عبر القشرة الأرضية. لا يؤكد هذا التقرير حدوث ثوران في هذه اللحظة."</string>
+    <string name="text_wildfire_can_begin_naturally_or_through_human_activity_and_may_sp" formatted="false">"يمكن أن تبدأ حرائق الغابات بشكل طبيعي أو من خلال النشاط البشري وقد تنتشر في الظروف الجافة والرياح. قد يكون هذا التقرير أقدم من اليوم."</string>
+    <string name="text_severe_storms_draw_energy_from_warm_moist_air_this_marker_shows_t" formatted="false">"تستمد العواصف الشديدة الطاقة من الهواء الدافئ الرطب. تعرض هذه العلامة أحدث نقطة تم الإبلاغ عنها، وليس توقعات مباشرة."</string>
+    <string name="text_observed_1_s">"تمت الملاحظة: %1$s\n"</string>
+    <string name="text_source_updated_1_s">"تم تحديث المصدر: %1$s\n"</string>
+    <string name="text_source_1_s">"المصدر: %1$s\n"</string>
+    <string name="text_unavailable_2" formatted="false">"غير متاح"</string>
+    <string name="text_checking_showing_saved_copy" formatted="false">"فحص؛ تظهر النسخة المحفوظة"</string>
+    <string name="text_saved_copy_refresh_unavailable" formatted="false">"نسخة محفوظة؛ التحديث غير متاح"</string>
+    <string name="text_checked_1_s_2">"فحص %1$s"</string>
+    <string name="text_feed_1_s">"تغذية: %1$s"</string>
+    <string name="text_source_link_1_s_2">"\nرابط المصدر: %1$s"</string>
+    <string name="text_saved" formatted="false">"تم الحفظ"</string>
+    <string name="text_place_name" formatted="false">"اسم المكان"</string>
+    <string name="text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now" formatted="false">"☀️ إنه النهار هنا!\nهذا الجانب من الأرض يواجه الشمس الآن. اسحب شريط تمرير الوقت لمشاهدة وصول الليل."</string>
+    <string name="text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those" formatted="false">"🌙 إنه وقت الليل هنا.\nهذا الجانب مبتعد عن الشمس، تلك الأضواء الصغيرة هي مدن. اسحب شريط تمرير الوقت لإعادة الشمس."</string>
+    <string name="text_added_to_field_notebook_1_s">"تمت إضافته إلى دفتر الملاحظات الميداني.\n\n%1$s"</string>
+    <string name="text_close_1_s">"× إغلاق\n\n%1$s"</string>
+    <string name="text_1_s_2_s_tap_to_stop">"🎯 %1$s\n⭐ %2$d · اضغط للإيقاف"</string>
+    <string name="text_challenge_stopped_play_again_anytime" formatted="false">"توقف التحدي - العب مرة أخرى في أي وقت!"</string>
+    <string name="text_tap_on_the_earth_to_answer" formatted="false">"اضغط على الأرض للإجابة! 🌍"</string>
+    <string name="text_yes_that_s_right" formatted="false">"🎉 نعم! هذا صحيح."</string>
+    <string name="text_not_quite_take_another_look_and_try_again" formatted="false">"ليس تمامًا – ألقِ نظرة أخرى وحاول مرة أخرى! 🔍"</string>
+    <string name="text_my_discoveries" formatted="false">"اكتشافاتي"</string>
+    <string name="text_1_s_of_2_s_found_keep_exploring">"تم العثور على %1$d من %2$d - استمر في الاستكشاف!"</string>
+    <string name="text_not_found_yet" formatted="false">"لم يتم العثور عليه بعد"</string>
+    <string name="text_tap_anywhere_to_close" formatted="false">"انقر في أي مكان للإغلاق"</string>
+    <string name="text_1_s_2_s_3_s_lit_up_tonight">"%1$s %2$s\n%3$d%% أضاءت الليلة"</string>
+    <string name="text_did_you_know" formatted="false">"هل تعلم؟"</string>
+    <string name="text_tap_a_glowing_dot_on_earth_to_explore_or_find_a_new_discovery_for" formatted="false">"اضغط على نقطة متوهجة على الأرض لاستكشافها - أو ابحث عن اكتشاف جديد لمذكرتك!"</string>
+    <string name="text_play_a_challenge" formatted="false">"🎯 لعب التحدي!"</string>
+    <string name="text_tap_outside_the_box_to_close" formatted="false">"اضغط خارج الصندوق للإغلاق"</string>
+    <string name="text_ongoing" formatted="false">"مستمر"</string>
+    <string name="text_just_now" formatted="false">"الآن فقط"</string>
+    <string name="text_clouds_off" formatted="false">"☁ الغيوم: متوقفة"</string>
+    <string name="text_clouds_generated" formatted="false">"☁ الغيوم : المتولدة"</string>
+    <string name="text_clouds_live_nasa_viirs_updated_1_s">"☁ السحب: مباشر (NASA VIIRS) تم تحديث\n: %1$s"</string>
+    <string name="text_solar_eclipse" formatted="false">"☀ كسوف الشمس!"</string>
+    <string name="text_lunar_eclipse" formatted="false">"🌙خسوف القمر!"</string>
+    <string name="text_near_solar_eclipse" formatted="false">"قرب كسوف الشمس"</string>
+    <string name="text_near_lunar_eclipse" formatted="false">"قرب خسوف القمر"</string>
+    <string name="text_explore_time_simulated_scene" formatted="false">"استكشاف الوقت، مشهد محاكاة"</string>
+    <string name="text_earth" formatted="false">"الأرض"</string>
+    <string name="text_textured_globe_with_day_night_cycle_and_diffuse_sunlight" formatted="false">"كرة أرضية منسوجة مع دورة نهارية/ليلية وأشعة الشمس المنتشرة"</string>
+    <string name="text_city_lights" formatted="false">"أضواء المدينة"</string>
+    <string name="text_visible_on_the_night_side_of_the_earth" formatted="false">"مرئية على الجانب الليلي من الأرض"</string>
+    <string name="text_procedural_or_live_satellite_imagery_nasa_viirs_tap_cloud_label_t" formatted="false">"صور الأقمار الصناعية الإجرائية أو الحية (NASA VIIRS). اضغط على تسمية السحابة للتبديل"</string>
+    <string name="text_sun" formatted="false">"الشمس"</string>
+    <string name="text_billboard_glow_showing_the_sun_s_real_time_position" formatted="false">"توهج لوحة الإعلانات يُظهر موقع الشمس في الوقت الفعلي"</string>
+    <string name="text_moon" formatted="false">"القمر"</string>
+    <string name="text_textured_sphere_at_its_real_orbital_position" formatted="false">"كرة محكم في موقعها المداري الحقيقي"</string>
+    <string name="text_terminator_line" formatted="false">"خط المنهي"</string>
+    <string name="text_amber_line_at_the_day_night_boundary" formatted="false">"الخط الكهرماني عند حدود النهار/الليل"</string>
+    <string name="text_green_purple_glow_near_the_geomagnetic_poles_night_side_only" formatted="false">"توهج أخضر/أرجواني بالقرب من الأقطاب المغناطيسية الأرضية (الجانب الليلي فقط)"</string>
+    <string name="text_atmosphere" formatted="false">"الجو"</string>
+    <string name="text_blue_fresnel_glow_around_the_earth_s_rim" formatted="false">"يتوهج فريسنل الأزرق حول حافة الأرض"</string>
+    <string name="text_stars" formatted="false">"النجوم"</string>
+    <string name="text_background_star_field" formatted="false">"حقل النجمة الخلفية"</string>
+    <string name="text_pulsing_amber_dots_m4_5_from_usgs_past_7_days" formatted="false">"نقاط كهرمانية نابضة (M4.5+ من USGS، الأيام السبعة الماضية)"</string>
+    <string name="text_volcanoes" formatted="false">"البراكين"</string>
+    <string name="text_pulsing_magenta_dots_active_eruptions_from_nasa_eonet" formatted="false">"النقاط الأرجوانية النابضة (الانفجارات النشطة من NASA EONET)"</string>
+    <string name="text_wildfires" formatted="false">"حرائق الغابات"</string>
+    <string name="text_pulsing_red_dots_active_fires_from_nasa_eonet" formatted="false">"نقاط حمراء نابضة (حرائق نشطة من NASA EONET)"</string>
+    <string name="text_storms" formatted="false">"العواصف"</string>
+    <string name="text_pulsing_blue_dots_severe_storms_from_nasa_eonet_tap_any_dot_for_d" formatted="false">"النقاط الزرقاء النابضة (العواصف الشديدة من NASA EONET) - انقر على أي نقطة للحصول على التفاصيل"</string>
+    <string name="text_iss_orbit" formatted="false">"مدار محطة الفضاء الدولية"</string>
+    <string name="text_thin_line_showing_the_international_space_station_s_path" formatted="false">"خط رفيع يوضح مسار محطة الفضاء الدولية"</string>
+    <string name="text_sun_moon_arrows" formatted="false">"سهام الشمس/القمر"</string>
+    <string name="text_2d_overlay_arrows_pointing_toward_the_sun_and_moon" formatted="false">"أسهم تراكب ثنائية الأبعاد تشير نحو الشمس والقمر"</string>
+    <string name="text_eclipse_alerts" formatted="false">"تنبيهات الكسوف"</string>
+    <string name="text_notifies_when_sun_earth_moon_alignment_approaches_an_eclipse" formatted="false">"ينبهك عندما تقترب محاذاة الشمس والأرض والقمر من الكسوف"</string>
+    <string name="text_time_scrubber" formatted="false">"منظف الوقت"</string>
+    <string name="text_drag_the_slider_to_simulate_24_hours_releases_to_snap_back_to_now" formatted="false">"اسحب شريط التمرير لمحاكاة +/- 24 ساعة؛ الإصدارات للرجوع إلى الآن"</string>
+    <string name="text_legend" formatted="false">"أسطورة"</string>
+    <string name="text_music_on" formatted="false">"♫ الموسيقى: تشغيل"</string>
+    <string name="text_music_off" formatted="false">"♫ الموسيقى: متوقفة"</string>
+    <string name="text_read_to_me_is_on_i_ll_read_the_cards_out_loud" formatted="false">"اقرأ لي قيد التشغيل. سأقرأ البطاقات بصوت عالٍ."</string>
+    <string name="text_read_on" formatted="false">"🔊 إقرأ : على"</string>
+    <string name="text_read_off" formatted="false">"🔊 اقرأ : منطفئ"</string>
+    <string name="text_a_living_window_onto_earth" formatted="false">"نافذة حية على الأرض"</string>
+    <string name="text_drag_to_rotate" formatted="false">"اسحب للتدوير"</string>
+    <string name="text_pinch_to_zoom" formatted="false">"قرصة للتكبير"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"اضغط على الكرة الأرضية لاكتشاف المزيد"</string>
+    <string name="text_explore_earth" formatted="false">"استكشف الأرض"</string>
+    <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"المعاينة المباشرة · ضوء الشمس الحالي · لا يوجد صوت"</string>
+    <string name="text_preview_set_wallpaper" formatted="false">"معاينة وتعيين خلفية الشاشة"</string>
+    <string name="text_choose_home_or_lock_screen_in_the_android_preview" formatted="false">"اختر الشاشة الرئيسية أو شاشة القفل في معاينة Android."</string>
+    <string name="text_view_from" formatted="false">"عرض من"</string>
+    <string name="text_saved_places" formatted="false">"الأماكن المحفوظة"</string>
+    <string name="text_search_cities" formatted="false">"بحث المدن"</string>
+    <string name="text_composition" formatted="false">"تكوين"</string>
+    <string name="text_whole_earth" formatted="false">"الأرض كاملة"</string>
+    <string name="text_night_lights" formatted="false">"أضواء الليل"</string>
+    <string name="text_earth_s_horizon" formatted="false">"افق الارض"</string>
+    <string name="text_complete_globe_with_current_sunlight_and_quiet_stars" formatted="false">"الكرة الأرضية كاملة مع ضوء الشمس الحالي والنجوم الهادئة."</string>
+    <string name="text_city_lights_on_the_dark_side_of_earth_with_current_sunlight" formatted="false">"أضواء المدينة على الجانب المظلم من الأرض، مع ضوء الشمس الحالي."</string>
+    <string name="text_a_close_cropped_view_of_earth_s_atmospheric_limb" formatted="false">"منظر قريب ومقتص للطرف الجوي للأرض."</string>
+    <string name="text_camera_motion" formatted="false">"حركة الكاميرا"</string>
+    <string name="text_fixed_viewpoint" formatted="false">"وجهة نظر ثابتة"</string>
+    <string name="text_slow_orbit" formatted="false">"مدار بطيء"</string>
+    <string name="text_follow_the_night_side" formatted="false">"اتبع الجانب الليلي"</string>
+    <string name="text_keeps_your_chosen_place_in_view_as_daylight_changes" formatted="false">"يحافظ على المكان الذي اخترته ظاهرًا مع تغير ضوء النهار."</string>
+    <string name="text_starts_at_your_chosen_view_then_slowly_travels_around_earth" formatted="false">"يبدأ من العرض الذي اخترته، ثم يسافر ببطء حول الأرض."</string>
+    <string name="text_the_view_moves_with_the_night_side_instead_of_staying_over_a_plac" formatted="false">"يتحرك المنظر مع الجانب الليلي بدلاً من البقاء فوق مكان ما."</string>
+    <string name="text_turn_the_globe_when_i_swipe_between_home_screens" formatted="false">"اقلب الكرة الأرضية عندما أقوم بالتمرير بين الشاشات الرئيسية"</string>
+    <string name="text_generated_illustration" formatted="false">"التوضيح الذي تم إنشاؤه"</string>
+    <string name="text_satellite_imagery_when_cached_or_available" formatted="false">"صور القمر الصناعي، عندما تكون مخزنة مؤقتًا أو متاحة"</string>
+    <string name="text_globe_scale" formatted="false">"مقياس الكرة الأرضية"</string>
+    <string name="text_hide_framing_controls" formatted="false">"إخفاء عناصر التحكم في الإطارات ▴"</string>
+    <string name="text_adjust_framing_angles" formatted="false">"ضبط الإطارات والزوايا ▾"</string>
+    <string name="text_horizontal_framing" formatted="false">"تأطير أفقي"</string>
+    <string name="text_vertical_framing" formatted="false">"تأطير عمودي"</string>
+    <string name="text_view_angle" formatted="false">"زاوية العرض"</string>
+    <string name="text_view_latitude" formatted="false">"عرض خط العرض"</string>
+    <string name="text_saved_view_1_s">" · العرض المحفوظ: %1$s"</string>
+    <string name="text_following_the_night_side_1_s">"بعد الجانب الليلي %1$s"</string>
+    <string name="text_your_custom_view" formatted="false">"طريقة العرض المخصصة الخاصة بك"</string>
+    <string name="text_orbit_starts_at_1_s">"يبدأ المدار عند %1$s"</string>
+    <string name="text_choose_a_place_or_adjust_the_angles_below" formatted="false">"اختر مكانًا، أو اضبط الزوايا أدناه."</string>
+    <string name="text_no_saved_places_yet" formatted="false">"لا توجد أماكن محفوظة حتى الآن"</string>
+    <string name="text_search_for_a_city_here_you_can_also_save_a_custom_point_in_explor" formatted="false">"ابحث عن مدينة هنا. يمكنك أيضًا حفظ نقطة مخصصة في الاستكشاف → الأماكن → إضافة مكان من الكرة الأرضية."</string>
+    <string name="text_view_from_a_saved_place" formatted="false">"عرض من مكان محفوظ"</string>
+    <string name="text_city_or_country" formatted="false">"المدينة أو البلد"</string>
+    <string name="text_search_city_or_country" formatted="false">"ابحث عن المدينة أو البلد"</string>
+    <string name="text_no_matching_city_try_a_country_or_another_name" formatted="false">"لا توجد مدينة مطابقة. جرب بلدًا أو اسمًا آخر."</string>
+    <string name="text_choose_a_city" formatted="false">"اختر مدينة"</string>
+    <string name="text_earth_today_widget" formatted="false">"القطعة الأرض اليوم"</string>
+    <string name="text_which_place_should_this_widget_show_other_widgets_can_show_differ" formatted="false">"ما المكان الذي يجب أن تظهر فيه هذه الأداة؟ يمكن أن تظهر الأدوات الأخرى أماكن مختلفة."</string>
+    <string name="text_no_place_yet" formatted="false">"لا يوجد مكان بعد"</string>
+    <string name="text_save_a_place_in_the_app_explore_places_to_see_its_day_and_night_h" formatted="false">"احفظ مكانًا في التطبيق (استكشف &gt; الأماكن) لترى ليلًا ونهارًا هنا."</string>
+    <string name="text_save_widget" formatted="false">"حفظ القطعة"</string>
+    <string name="text_1_s_2_s_3_s">"%1$s %2$s · %3$d%%"</string>
+    <string name="text_choose_a_place" formatted="false">"اختر مكانا"</string>
+    <string name="text_set_your_local_view" formatted="false">"اضبط طريقة العرض المحلية الخاصة بك"</string>
+    <string name="text_polar_day_2" formatted="false">"يوم قطبي"</string>
+    <string name="text_polar_night_2" formatted="false">"ليلة قطبية"</string>
+    <string name="text_nighttime_now" formatted="false">"الليل الآن"</string>
+    <string name="text_updated_1_s">"تم تحديث %1$s"</string>
+    <string name="text_illustration_1_s">"رسم توضيحي · %1$s"</string>
+    <string name="text_couldn_t_capture_the_view_try_again" formatted="false">"تعذر التقاط العرض — حاول مرة أخرى."</string>
+    <string name="text_couldn_t_prepare_the_image" formatted="false">"لا يمكن تحضير الصورة."</string>
+    <string name="text_share_your_view" formatted="false">"شارك وجهة نظرك"</string>
+    <string name="text_earth_1_s_made_with_pale_blue_dot_2_s">"🌍 الأرض — %1$s\nمصنوعة باستخدام Pale Blue Dot → %2$s"</string>
+    <string name="text_ask_a_grown_up" formatted="false">"اسأل شخصًا بالغًا"</string>
+    <string name="text_what_is_1_s_2_s">"ما هو %1$d × %2$d ؟"</string>
+    <string name="text_maybe_later" formatted="false">"ربما في وقت لاحق"</string>
+    <string name="text_earthquake" formatted="false">"زلزال"</string>
+    <string name="text_you_found_where_the_ground_was_shaking" formatted="false">"لقد وجدت حيث كانت الأرض تهتز!"</string>
+    <string name="text_volcano" formatted="false">"بركان"</string>
+    <string name="text_you_spotted_hot_lava_erupting_from_deep_inside_the_earth" formatted="false">"لقد رصدت الحمم البركانية الساخنة تندلع من أعماق الأرض."</string>
+    <string name="text_wildfire" formatted="false">"حريق غابات"</string>
+    <string name="text_you_caught_a_fire_so_big_that_satellites_can_see_it_from_space" formatted="false">"لقد اشتعلت حريقًا كبيرًا لدرجة أن الأقمار الصناعية يمكنها رؤيته من الفضاء."</string>
+    <string name="text_storm" formatted="false">"عاصفة"</string>
+    <string name="text_you_tracked_a_giant_swirling_storm" formatted="false">"لقد تتبعت عاصفة دوامية عملاقة."</string>
+    <string name="text_daytime_2" formatted="false">"النهار"</string>
+    <string name="text_you_found_the_side_of_earth_facing_the_sun" formatted="false">"لقد وجدت جانب الأرض المواجه للشمس."</string>
+    <string name="text_city_lights_2" formatted="false">"أضواء المدينة"</string>
+    <string name="text_you_found_the_night_side_sparkling_with_city_lights" formatted="false">"لقد وجدت الجانب الليلي، متلألئًا بأضواء المدينة."</string>
+    <string name="text_star_gazer" formatted="false">"ستار جازر"</string>
+    <string name="text_you_looked_past_earth_into_the_stars_and_galaxies_beyond" formatted="false">"لقد نظرت إلى ما وراء الأرض إلى النجوم والمجرات الموجودة خلفها."</string>
+    <string name="text_time_traveler" formatted="false">"مسافر عبر الزمن"</string>
+    <string name="text_you_moved_time_to_turn_day_into_night" formatted="false">"لقد قمت بنقل الوقت لتحويل النهار إلى ليل."</string>
+    <string name="text_tap_a_place_where_it_s_daytime" formatted="false">"اضغط على المكان الذي يكون فيه النهار ☀️"</string>
+    <string name="text_tap_a_place_where_it_s_night_time" formatted="false">"اضغط على المكان الذي يكون فيه وقت الليل 🌙"</string>
+    <string name="text_find_an_earthquake" formatted="false">"اعثر على زلزال 🔶"</string>
+    <string name="text_find_a_volcano" formatted="false">"اعثر على بركان 🌋"</string>
+    <string name="text_find_a_wildfire" formatted="false">"اعثر على حريق غابات 🔥"</string>
+    <string name="text_find_a_storm" formatted="false">"اعثر على عاصفة 🌀"</string>
+    <string name="text_the_sun_is_so_huge_that_about_1_3_million_earths_could_fit_inside" formatted="false">"الشمس ضخمة جدًا بحيث يمكن أن يتسع بداخلها حوالي 1.3 مليون كوكب أرضي."</string>
+    <string name="text_a_day_on_venus_is_longer_than_a_whole_year_on_venus" formatted="false">"يوم واحد على كوكب الزهرة أطول من عام كامل على كوكب الزهرة!"</string>
+    <string name="text_footprints_on_the_moon_can_last_millions_of_years_because_there_s" formatted="false">"يمكن أن تستمر آثار الأقدام على القمر لملايين السنين، لأنه لا توجد رياح تجرفها بعيدًا."</string>
+    <string name="text_jupiter_is_so_big_that_all_the_other_planets_could_fit_inside_it" formatted="false">"كوكب المشتري كبير جدًا لدرجة أن جميع الكواكب الأخرى يمكن أن تتسع بداخله."</string>
+    <string name="text_sunlight_takes_about_8_minutes_to_travel_all_the_way_to_earth" formatted="false">"يستغرق ضوء الشمس حوالي 8 دقائق للسفر إلى الأرض."</string>
+    <string name="text_space_is_completely_silent_because_there_s_no_air_to_carry_sound" formatted="false">"الفضاء صامت تمامًا، لأنه لا يوجد هواء ليحمل الصوت."</string>
+    <string name="text_earth_takes_365_and_a_quarter_days_to_orbit_the_sun_that_s_why_we" formatted="false">"تستغرق الأرض 365 يومًا وربع يومًا للدوران حول الشمس، ولهذا السبب نضيف يومًا كبيسًا كل 4 سنوات."</string>
+    <string name="text_the_tallest_volcano_we_know_of_olympus_mons_on_mars_is_about_thre" formatted="false">"أطول بركان نعرفه، هو أوليمبوس مونس على سطح المريخ، وهو أطول بحوالي ثلاث مرات من جبل إيفرست."</string>
+    <string name="text_earth_is_the_only_planet_not_named_after_a_greek_or_roman_god" formatted="false">"الأرض هي الكوكب الوحيد الذي لم يحمل اسم إله يوناني أو روماني."</string>
+    <string name="text_there_are_more_stars_in_the_universe_than_grains_of_sand_on_all_o" formatted="false">"عدد النجوم في الكون يفوق عدد حبات الرمل الموجودة على جميع شواطئ الأرض."</string>
+    <string name="text_the_moon_drifts_about_3_8_cm_farther_from_earth_every_year" formatted="false">"ويبتعد القمر عن الأرض بحوالي 3.8 سم كل عام."</string>
+    <string name="text_saturn_is_so_light_for_its_size_that_it_would_float_in_a_giant_ba" formatted="false">"زحل خفيف جدًا بالنسبة لحجمه لدرجة أنه يطفو في حوض استحمام ضخم من الماء."</string>
+    <string name="text_lightning_strikes_somewhere_on_earth_about_100_times_every_second" formatted="false">"يضرب البرق في مكان ما على الأرض حوالي 100 مرة في الثانية."</string>
+    <string name="text_the_space_station_zooms_around_the_whole_earth_about_once_every_9" formatted="false">"تدور المحطة الفضائية حول الأرض بأكملها مرة واحدة كل 90 دقيقة تقريبًا."</string>
+    <string name="text_auroras_glow_near_the_poles_when_tiny_particles_from_the_sun_cras" formatted="false">"يتوهج الشفق القطبي بالقرب من القطبين عندما تصطدم جزيئات صغيرة من الشمس بهواءنا."</string>
+    <string name="text_about_70_of_earth_s_surface_is_covered_by_ocean" formatted="false">"حوالي 70% من سطح الأرض مغطى بالمحيطات."</string>
+    <string name="text_venus_is_the_hottest_planet_even_though_mercury_is_closer_to_the" formatted="false">"كوكب الزهرة هو الكوكب الأكثر سخونة، على الرغم من أن عطارد أقرب إلى الشمس."</string>
+    <string name="text_the_great_red_spot_on_jupiter_is_a_storm_bigger_than_the_whole_ea" formatted="false">"البقعة الحمراء الكبرى على كوكب المشتري هي عاصفة أكبر من الأرض بأكملها."</string>
+    <string name="text_earthquakes_happen_when_giant_pieces_of_earth_s_crust_slip_past_e" formatted="false">"تحدث الزلازل عندما تنزلق قطع عملاقة من القشرة الأرضية فوق بعضها البعض."</string>
+    <string name="text_the_sun_is_actually_white_our_air_is_what_makes_it_look_yellow" formatted="false">"الشمس في الواقع بيضاء، وهواءنا هو ما يجعلها تبدو صفراء."</string>
+    <string name="text_comets_are_giant_balls_of_ice_and_dust_that_grow_glowing_tails_ne" formatted="false">"المذنبات عبارة عن كرات عملاقة من الجليد والغبار تنمو لها ذيول متوهجة بالقرب من الشمس."</string>
+    <string name="text_if_you_could_drive_a_car_straight_up_you_d_reach_space_in_about_a" formatted="false">"إذا كان بإمكانك قيادة السيارة بشكل مستقيم، فسوف تصل إلى الفضاء في حوالي ساعة."</string>
+    <string name="text_the_moon_has_no_air_so_its_sky_is_always_black_even_in_the_daytim" formatted="false">"والقمر لا يوجد به هواء، لذا فإن سمائه سوداء دائمًا، حتى في النهار."</string>
+    <string name="text_earth_spins_at_about_1_600_km_h_at_the_equator_but_we_don_t_feel" formatted="false">"تدور الأرض بسرعة حوالي 1600 كيلومتر في الساعة عند خط الاستواء، ولكننا لا نشعر بها لأننا ندور معها."</string>
+    <string name="text_new_moon" formatted="false">"المحاق"</string>
+    <string name="text_waxing_crescent" formatted="false">"الهلال المتزايد"</string>
+    <string name="text_first_quarter" formatted="false">"التربيع الأول"</string>
+    <string name="text_waxing_gibbous" formatted="false">"الأحدب المتزايد"</string>
+    <string name="text_full_moon" formatted="false">"البدر"</string>
+    <string name="text_waning_gibbous" formatted="false">"الأحدب المتناقص"</string>
+    <string name="text_last_quarter" formatted="false">"التربيع الأخير"</string>
+    <string name="text_waning_crescent" formatted="false">"الهلال المتناقص"</string>
+    <string name="text_watch_where_sunrise_reaches_next" formatted="false">"شاهد أين يصل شروق الشمس بعد ذلك."</string>
+    <string name="text_compare_daylight_in_the_north_and_south" formatted="false">"قارن بين ضوء النهار في الشمال والجنوب."</string>
+    <string name="text_trace_a_curve_of_earth_s_plate_boundaries" formatted="false">"تتبع منحنى حدود صفائح الأرض."</string>
+    <string name="text_saved_observation_feed_update_unavailable" formatted="false">"الملاحظة المحفوظة تحديث الخلاصة غير متاح"</string>
+    <string name="text_recent_reported_observation" formatted="false">"الملاحظة الأخيرة المبلغ عنها"</string>
+    <string name="text_observations_are_loading" formatted="false">"يتم تحميل الملاحظات"</string>
+    <string name="text_no_recent_observations_available_the_moon_and_daylight_are_still" formatted="false">"لا توجد ملاحظات حديثة متاحة؛ القمر وضوء النهار لا يزالان هنا"</string>
+    <string name="lesson_follow_sunrise" formatted="false">"اتبع شروق الشمس"</string>
+    <string name="lesson_a_turning_world" formatted="false">"عالم تحول"</string>
+    <string name="lesson_sunrise_is_a_moving_boundary_between_darkness_and_daylight_we_ll" formatted="false">"شروق الشمس هو حد متحرك بين الظلام وضوء النهار. سنتبعه من مكان محدد."</string>
+    <string name="lesson_begin" formatted="false">"ابدأ"</string>
+    <string name="lesson_find_london" formatted="false">"ابحث عن لندن"</string>
+    <string name="lesson_look_at_london_on_the_globe_notice_which_side_faces_the_sun_the_m" formatted="false">"انظر إلى لندن على الكرة الأرضية. لاحظ الجانب الذي يواجه الشمس. العلامة وحساب ضوء النهار هما دليلان منفصلان."</string>
+    <string name="lesson_i_found_london" formatted="false">"لقد وجدت لندن"</string>
+    <string name="lesson_predict_the_direction" formatted="false">"توقع الاتجاه"</string>
+    <string name="lesson_as_earth_spins_eastward_which_way_does_the_dawn_boundary_move_acr" formatted="false">"أثناء دوران الأرض شرقًا، في أي اتجاه تتحرك حدود الفجر عبر خريطة خطوط الطول؟"</string>
+    <string name="lesson_yes_at_a_fixed_utc_time_the_dawn_line_moves_westward_over_longitu" formatted="false">"نعم. وفي وقت UTC ثابت، يتحرك خط الفجر غربًا عبر خطوط الطول بينما تدور الأرض شرقًا."</string>
+    <string name="lesson_it_moves_westward_across_longitudes_earth_itself_turns_eastward_c" formatted="false">"ويتحرك غربا عبر خطوط الطول. وتتجه الأرض نفسها نحو الشرق، وتحمل كل مكان إلى ضوء النهار."</string>
+    <string name="lesson_westward" formatted="false">"غربا"</string>
+    <string name="lesson_eastward" formatted="false">"شرقا"</string>
+    <string name="lesson_advance_the_scene" formatted="false">"تقدم المشهد"</string>
+    <string name="lesson_move_the_globe_s_lesson_clock_forward_two_hours_and_watch_the_lig" formatted="false">"قم بتحريك ساعة درس الكرة الأرضية للأمام لمدة ساعتين وشاهد تحول الضوء. هذه محاكاة، بينما يبقى اليوم في الوقت الفعلي."</string>
+    <string name="lesson_advance_two_hours" formatted="false">"تقدم ساعتين"</string>
+    <string name="lesson_what_changed" formatted="false">"ما الذي تغير؟"</string>
+    <string name="lesson_the_sunlight_direction_changed_with_time_did_the_saved_place_move" formatted="false">"تغير اتجاه ضوء الشمس مع مرور الوقت. هل انتقل المكان المحفوظ على الكرة الأرضية؟"</string>
+    <string name="lesson_exactly_the_place_keeps_its_coordinates_while_earth_s_rotation_ch" formatted="false">"بالضبط. ويحتفظ المكان بإحداثياته ​​بينما يغير دوران الأرض إضاءته."</string>
+    <string name="lesson_a_place_keeps_its_latitude_and_longitude_the_changing_angle_to_th" formatted="false">"يحتفظ المكان بخط الطول وخط العرض. الزاوية المتغيرة للشمس تخلق ليلا ونهارا."</string>
+    <string name="lesson_no_earth_rotated_relative_to_the_sun" formatted="false">"لا؛ دوران الأرض بالنسبة للشمس"</string>
+    <string name="lesson_yes_its_latitude_changed" formatted="false">"نعم فعلا؛ تغير خط العرض"</string>
+    <string name="lesson_explore_the_ring_of_fire" formatted="false">"اكتشف حلقة النار"</string>
+    <string name="lesson_a_pattern_around_the_pacific" formatted="false">"نمط حول المحيط الهادئ"</string>
+    <string name="lesson_visit_three_locations_predict_a_pattern_then_reveal_plate_boundar" formatted="false">"قم بزيارة ثلاثة مواقع، وتنبأ بنمط ما، ثم اكشف عن حدود الصفائح. يتم تصنيف الأمثلة الاحتياطية التاريخية بالتواريخ والمصادر."</string>
+    <string name="lesson_off_japan" formatted="false">"قبالة اليابان"</string>
+    <string name="lesson_historical_fallback_2011_03_11_tohoku_earthquake_usgs_a_recent_pa" formatted="false">"التراجع التاريخي: 11/03/2011 زلزال توهوكو، USGS. يتم استخدام مراقبة المحيط الهادئ الحديثة عندما تكون متاحة."</string>
+    <string name="lesson_visit_the_next_location" formatted="false">"قم بزيارة الموقع التالي"</string>
+    <string name="lesson_the_cascades" formatted="false">"الشلالات"</string>
+    <string name="lesson_historical_fallback_1980_05_18_mount_st_helens_eruption_usgs_this" formatted="false">"التراجع التاريخي: 18 مايو 1980، ثوران بركان جبل سانت هيلين، USGS. هذا مثال درس مؤرخ، وليس تقريرًا مباشرًا."</string>
+    <string name="lesson_along_chile" formatted="false">"على طول تشيلي"</string>
+    <string name="lesson_historical_fallback_1960_05_22_great_chilean_earthquake_usgs_this" formatted="false">"التراجع التاريخي: 22/05/1960 زلزال تشيلي الكبير، USGS. يبقى هذا المثال خارج مستودع الأحداث المباشرة."</string>
+    <string name="lesson_predict_the_pattern" formatted="false">"توقع النمط"</string>
+    <string name="lesson_what_pattern_do_you_see" formatted="false">"ما هو النمط الذي تراه؟"</string>
+    <string name="lesson_which_broad_pattern_links_many_earthquake_and_volcano_locations_a" formatted="false">"ما النمط العريض الذي يربط العديد من مواقع الزلازل والبراكين حول المحيط الهادئ؟"</string>
+    <string name="lesson_yes_many_cluster_near_plate_edges_but_some_events_also_happen_awa" formatted="false">"نعم. تتجمع العديد منها بالقرب من حواف الصفائح، لكن بعض الأحداث تحدث أيضًا بعيدًا عن الحدود المعينة."</string>
+    <string name="lesson_the_broad_pattern_is_a_belt_near_several_plate_edges_individual_e" formatted="false">"النمط العريض عبارة عن حزام بالقرب من عدة حواف الصفائح. الأحداث الفردية تحتاج إلى أدلة خاصة بها؛ المسافة إلى الخط ليست تشخيصا."</string>
+    <string name="lesson_a_belt_near_several_plate_edges" formatted="false">"حزام بالقرب من عدة حواف الصفائح"</string>
+    <string name="lesson_one_straight_line_through_the_pacific_center" formatted="false">"خط مستقيم واحد عبر مركز المحيط الهادئ"</string>
+    <string name="lesson_every_event_lies_exactly_on_one_boundary" formatted="false">"كل حدث يقع بالضبط على حدود واحدة"</string>
+    <string name="lesson_reveal_the_boundaries" formatted="false">"كشف الحدود"</string>
+    <string name="lesson_gold_lines_show_a_generalized_pb2002_plate_boundary_model_compare" formatted="false">"تُظهر الخطوط الذهبية نموذجًا عامًا لحدود الصفائح PB2002. قارن حافة المحيط الهادئ؛ هذه السطور لا تفسر كل حدث على حدة."</string>
+    <string name="lesson_reveal_gold_lines" formatted="false">"كشف الخطوط الذهبية"</string>
+    <string name="lesson_what_the_pattern_means" formatted="false">"ماذا يعني النمط"</string>
+    <string name="lesson_plate_motions_concentrate_many_earthquakes_and_volcanoes_around_t" formatted="false">"تؤدي حركات الصفائح إلى تركيز العديد من الزلازل والبراكين حول المحيط الهادئ. توضح النقاط الساخنة والزلازل داخل الصفائح سبب وجود استثناءات لهذا النمط."</string>
+    <string name="lesson_complete_journey" formatted="false">"رحلة كاملة"</string>
+    <string name="lesson_understand_the_seasons" formatted="false">"فهم الفصول"</string>
+    <string name="lesson_two_hemispheres" formatted="false">"نصفي الكرة الأرضية"</string>
+    <string name="lesson_compare_daylight_at_london_and_sydney_on_two_dates_earth_s_tilted" formatted="false">"قارن بين ضوء النهار في لندن وسيدني في تاريخين. يغير محور الأرض المائل مدة بقاء الشمس فوق الأفق."</string>
+    <string name="lesson_london_in_june" formatted="false">"لندن في يونيو"</string>
+    <string name="lesson_observe_london_near_the_june_solstice_the_northern_hemisphere_has" formatted="false">"مراقبة لندن بالقرب من الانقلاب في يونيو. نصف الكرة الشمالي لديه ضوء النهار أطول."</string>
+    <string name="lesson_compare_sydney" formatted="false">"قارن سيدني"</string>
+    <string name="lesson_sydney_in_june" formatted="false">"سيدني في يونيو"</string>
+    <string name="lesson_observe_sydney_on_the_same_date_its_winter_daylight_is_shorter_th" formatted="false">"مراقبة سيدني في نفس التاريخ. ضوء النهار الشتوي أقصر من ضوء النهار الصيفي في لندن."</string>
+    <string name="lesson_make_a_prediction" formatted="false">"قم بالتنبؤ"</string>
+    <string name="lesson_predict_december" formatted="false">"توقع ديسمبر"</string>
+    <string name="lesson_near_the_december_solstice_which_marked_place_has_longer_daylight" formatted="false">"بالقرب من انقلاب شهر ديسمبر، أي مكان يتميز بضوء نهار أطول؟"</string>
+    <string name="lesson_yes_the_southern_hemisphere_tilts_toward_the_sun_in_december_so_s" formatted="false">"نعم. يميل نصف الكرة الجنوبي نحو الشمس في ديسمبر، لذا فإن أيام سيدني أطول."</string>
+    <string name="lesson_sydney_has_longer_daylight_near_the_december_solstice_the_souther" formatted="false">"سيدني لديها ضوء النهار أطول بالقرب من الانقلاب في ديسمبر. ثم يميل نصف الكرة الجنوبي نحو الشمس."</string>
+    <string name="lesson_sydney" formatted="false">"سيدني"</string>
+    <string name="lesson_london" formatted="false">"لندن"</string>
+    <string name="lesson_they_must_be_equal" formatted="false">"يجب أن يكونوا متساوين"</string>
+    <string name="lesson_switch_to_december" formatted="false">"التبديل إلى ديسمبر"</string>
+    <string name="lesson_compare_the_daylight_readouts_after_changing_the_lesson_date_this" formatted="false">"قارن قراءات ضوء النهار بعد تغيير تاريخ الدرس. يؤدي هذا إلى تغيير مشهد التطبيق فقط."</string>
+    <string name="lesson_show_the_axial_tilt_explanation" formatted="false">"عرض شرح الميل المحوري"</string>
+    <string name="lesson_why_seasons_change" formatted="false">"لماذا تتغير الفصول"</string>
+    <string name="lesson_earth_s_axis_stays_tilted_about_23_4_as_it_orbits_the_sun_the_nor" formatted="false">"يظل محور الأرض مائلًا بمقدار 23.4 درجة تقريبًا أثناء دورانه حول الشمس. يتناوب نصفا الكرة الشمالي والجنوبي على ضوء النهار لفترة أطول. تشير الأدلة المرئية إلى خط الاستواء، والمناطق الاستوائية، والدوائر القطبية."</string>
+    <string name="text_notebook" formatted="false">"دفتر الملاحظات"</string>
+    <string name="text_guide" formatted="false">"الدليل"</string>
+    <string name="text_places" formatted="false">"الأماكن"</string>
+    <string name="text_explore_time" formatted="false">"استكشاف الزمن"</string>
+    <string name="text_journeys" formatted="false">"الرحلات"</string>
+    <string name="text_journey" formatted="false">"رحلة"</string>
+    <string name="text_language" formatted="false">"اللغة"</string>
+    <string name="text_use_device_language" formatted="false">"استخدم لغة الجهاز"</string>
+    <string name="text_a_voice_for_this_language_is_not_installed_on_this_device" formatted="false">"لم يتم تثبيت صوت لهذه اللغة على هذا الجهاز."</string>
+    <string name="text_great_job_challenges_solved_1_s">"🎉 عمل عظيم! التحديات التي تم حلها: %1$d"</string>
+    <string name="text_earth_s_axis_is_tilted_about_23_4_degrees_relative_to_its_orbit_a" formatted="false">"ويميل محور الأرض بنحو 23.4 درجة بالنسبة لمدارها حول الشمس."</string>
+    <string name="city_abidjan" formatted="false">"أبيدجان، ساحل العاج"</string>
+    <string name="city_abu_dhabi" formatted="false">"أبوظبي، الإمارات العربية المتحدة"</string>
+    <string name="city_abuja" formatted="false">"أبوجا، نيجيريا"</string>
+    <string name="city_accra" formatted="false">"أكرا، غانا"</string>
+    <string name="city_adamstown" formatted="false">"ادامستاون، بيتكيرن"</string>
+    <string name="city_addis_ababa" formatted="false">"أديس أبابا، إثيوبيا"</string>
+    <string name="city_adelaide" formatted="false">"أديلايد، أستراليا"</string>
+    <string name="city_alexandria" formatted="false">"الإسكندرية، مصر"</string>
+    <string name="city_algiers" formatted="false">"الجزائر العاصمة"</string>
+    <string name="city_alofi" formatted="false">"ألوفي، نيوي"</string>
+    <string name="city_amman" formatted="false">"عمان، الأردن"</string>
+    <string name="city_amsterdam" formatted="false">"أمستردام، هولندا"</string>
+    <string name="city_andorra_la_vella" formatted="false">"أندورا لا فيلا، أندورا"</string>
+    <string name="city_ankara" formatted="false">"أنقرة، تركيا"</string>
+    <string name="city_antananarivo" formatted="false">"أنتاناناريفو، مدغشقر"</string>
+    <string name="city_apia" formatted="false">"آبيا، ساموا"</string>
+    <string name="city_ashgabat" formatted="false">"عشق أباد، تركمانستان"</string>
+    <string name="city_asmara" formatted="false">"أسمرة، إريتريا"</string>
+    <string name="city_astana" formatted="false">"أستانا، كازاخستان"</string>
+    <string name="city_asuncion" formatted="false">"أسونسيون، باراجواي"</string>
+    <string name="city_athens" formatted="false">"أثينا، اليونان"</string>
+    <string name="city_auckland" formatted="false">"أوكلاند، نيوزيلندا"</string>
+    <string name="city_avarua" formatted="false">"أفاروا، جزر كوك"</string>
+    <string name="city_baghdad" formatted="false">"بغداد، العراق"</string>
+    <string name="city_baku" formatted="false">"باكو، أذربيجان"</string>
+    <string name="city_bamako" formatted="false">"باماكو، مالي"</string>
+    <string name="city_bandar_seri_begawan" formatted="false">"بندر سيري بيغاوان، بروناي"</string>
+    <string name="city_bangkok" formatted="false">"بانكوك، تايلاند"</string>
+    <string name="city_bangui" formatted="false">"بانغي، جمهورية أفريقيا الوسطى"</string>
+    <string name="city_banjul" formatted="false">"بانجول، غامبيا"</string>
+    <string name="city_barcelona" formatted="false">"برشلونة، اسبانيا"</string>
+    <string name="city_basse_terre" formatted="false">"باس تير، جوادلوب"</string>
+    <string name="city_basseterre" formatted="false">"باستير، سانت كيتس ونيفيس"</string>
+    <string name="city_beijing" formatted="false">"بكين، الصين"</string>
+    <string name="city_beirut" formatted="false">"بيروت، لبنان"</string>
+    <string name="city_belgrade" formatted="false">"بلغراد، صربيا"</string>
+    <string name="city_belmopan" formatted="false">"بلموبان، بليز"</string>
+    <string name="city_belo_horizonte" formatted="false">"بيلو هوريزونتي، البرازيل"</string>
+    <string name="city_berlin" formatted="false">"برلين، ألمانيا"</string>
+    <string name="city_bern" formatted="false">"برن، سويسرا"</string>
+    <string name="city_bishkek" formatted="false">"بيشكيك، قيرغيزستان"</string>
+    <string name="city_bissau" formatted="false">"بيساو، غينيا بيساو"</string>
+    <string name="city_bogota" formatted="false">"بوغوتا، كولومبيا"</string>
+    <string name="city_brasilia" formatted="false">"برازيليا، البرازيل"</string>
+    <string name="city_bratislava" formatted="false">"براتيسلافا، سلوفاكيا"</string>
+    <string name="city_brazzaville" formatted="false">"برازافيل، جمهورية الكونغو"</string>
+    <string name="city_bridgetown" formatted="false">"بريدجتاون، بربادوس"</string>
+    <string name="city_brisbane" formatted="false">"بريسبان، أستراليا"</string>
+    <string name="city_brooklyn" formatted="false">"بروكلين، الولايات المتحدة"</string>
+    <string name="city_brussels" formatted="false">"بروكسل، بلجيكا"</string>
+    <string name="city_bucharest" formatted="false">"بوخارست، رومانيا"</string>
+    <string name="city_budapest" formatted="false">"بودابست، المجر"</string>
+    <string name="city_buenos_aires" formatted="false">"بوينس آيرس، الأرجنتين"</string>
+    <string name="city_cairo" formatted="false">"القاهرة، مصر"</string>
+    <string name="city_cali" formatted="false">"كالي، كولومبيا"</string>
+    <string name="city_canberra" formatted="false">"كانبيرا، أستراليا"</string>
+    <string name="city_cape_town" formatted="false">"كيب تاون، جنوب أفريقيا"</string>
+    <string name="city_caracas" formatted="false">"كاراكاس، فنزويلا"</string>
+    <string name="city_casablanca" formatted="false">"الدار البيضاء، المغرب"</string>
+    <string name="city_castries" formatted="false">"كاستريس، سانت لوسيا"</string>
+    <string name="city_cayenne" formatted="false">"كايين، غويانا الفرنسية"</string>
+    <string name="city_central_coast" formatted="false">"سنترال كوست، أستراليا"</string>
+    <string name="city_charlotte_amalie" formatted="false">"شارلوت أمالي، جزر فيرجن الأمريكية"</string>
+    <string name="city_chengdu" formatted="false">"تشنغدو، الصين"</string>
+    <string name="city_chicago" formatted="false">"شيكاغو، الولايات المتحدة"</string>
+    <string name="city_chisinau" formatted="false">"تشيسيناو، مولدوفا"</string>
+    <string name="city_chongqing" formatted="false">"تشونغتشينغ، الصين"</string>
+    <string name="city_christchurch" formatted="false">"كرايستشيرش، نيوزيلندا"</string>
+    <string name="city_ciudad_de_la_paz" formatted="false">"مدينة سيوداد دي لاباز، غينيا الاستوائية"</string>
+    <string name="city_cockburn_town" formatted="false">"(كوكبورن تاون، جزر تركس وكايكوس)."</string>
+    <string name="city_colombo" formatted="false">"كولومبو، سريلانكا"</string>
+    <string name="city_conakry" formatted="false">"كوناكري، غينيا"</string>
+    <string name="city_copenhagen" formatted="false">"كوبنهاغن، الدنمارك"</string>
+    <string name="city_dakar" formatted="false">"داكار، السنغال"</string>
+    <string name="city_damascus" formatted="false">"دمشق، سوريا"</string>
+    <string name="city_dar_es_salaam" formatted="false">"دار السلام، تنزانيا"</string>
+    <string name="city_delhi" formatted="false">"دلهي، الهند"</string>
+    <string name="city_dhaka" formatted="false">"دكا، بنجلاديش"</string>
+    <string name="city_dili" formatted="false">"ديلي، تيمور الشرقية"</string>
+    <string name="city_djibouti" formatted="false">"جيبوتي، جيبوتي"</string>
+    <string name="city_dodoma" formatted="false">"دودوما، تنزانيا"</string>
+    <string name="city_doha" formatted="false">"الدوحة، قطر"</string>
+    <string name="city_douglas" formatted="false">"دوغلاس، جزيرة مان"</string>
+    <string name="city_dublin" formatted="false">"دبلن، أيرلندا"</string>
+    <string name="city_dushanbe" formatted="false">"دوشانبي، طاجيكستان"</string>
+    <string name="city_flying_fish_cove" formatted="false">"فلاينج فيش كوف، جزيرة كريسماس"</string>
+    <string name="city_fort_de_france" formatted="false">"فورت دو فرانس، المارتينيك"</string>
+    <string name="city_fortaleza" formatted="false">"فورتاليزا، البرازيل"</string>
+    <string name="city_freetown" formatted="false">"فريتاون، سيراليون"</string>
+    <string name="city_funafuti" formatted="false">"فونافوتي، توفالو"</string>
+    <string name="city_gaborone" formatted="false">"جابورون، بوتسوانا"</string>
+    <string name="city_george_town" formatted="false">"(جورج تاون، جزر كايمان)."</string>
+    <string name="city_georgetown" formatted="false">"جورج تاون، غيانا"</string>
+    <string name="city_gibraltar" formatted="false">"جبل طارق، جبل طارق"</string>
+    <string name="city_gitega" formatted="false">"جيتيجا، بوروندي"</string>
+    <string name="city_giza" formatted="false">"الجيزة، مصر"</string>
+    <string name="city_gold_coast" formatted="false">"جولد كوست، أستراليا"</string>
+    <string name="city_grytviken" formatted="false">"جريتفيكن، جورجيا الجنوبية وجزر ساندويتش الجنوبية"</string>
+    <string name="city_guangzhou" formatted="false">"قوانغتشو، الصين"</string>
+    <string name="city_guatemala_city" formatted="false">"مدينة غواتيمالا، غواتيمالا"</string>
+    <string name="city_guayaquil" formatted="false">"غواياكيل، الإكوادور"</string>
+    <string name="city_gustavia" formatted="false">"غوستافيا، القديس بارتيليمي"</string>
+    <string name="city_hagatna" formatted="false">"هاغاتنيا، غوام"</string>
+    <string name="city_hamburg" formatted="false">"هامبورغ، ألمانيا"</string>
+    <string name="city_hamilton" formatted="false">"هاملتون، برمودا"</string>
+    <string name="city_hangzhou" formatted="false">"هانغتشو، الصين"</string>
+    <string name="city_hanoi" formatted="false">"هانوي، فيتنام"</string>
+    <string name="city_harare" formatted="false">"هراري، زيمبابوي"</string>
+    <string name="city_havana" formatted="false">"هافانا، كوبا"</string>
+    <string name="city_helsinki" formatted="false">"هلسنكي، فنلندا"</string>
+    <string name="city_ho_chi_minh_city" formatted="false">"مدينة هوشي منه، فيتنام"</string>
+    <string name="city_hong_kong" formatted="false">"هونج كونج، هونج كونج"</string>
+    <string name="city_honiara" formatted="false">"هونيارا، جزر سليمان"</string>
+    <string name="city_houston" formatted="false">"هيوستن، الولايات المتحدة"</string>
+    <string name="city_ibadan" formatted="false">"إبادان، نيجيريا"</string>
+    <string name="city_islamabad" formatted="false">"إسلام آباد، باكستان"</string>
+    <string name="city_istanbul" formatted="false">"اسطنبول، تركيا"</string>
+    <string name="city_iztapalapa" formatted="false">"إزتابالابا، المكسيك"</string>
+    <string name="city_jakarta" formatted="false">"جاكرتا، إندونيسيا"</string>
+    <string name="city_jamestown" formatted="false">"جيمستاون، سانت هيلانة"</string>
+    <string name="city_johannesburg" formatted="false">"جوهانسبرغ، جنوب أفريقيا"</string>
+    <string name="city_juba" formatted="false">"جوبا، جنوب السودان"</string>
+    <string name="city_kabul" formatted="false">"كابول، أفغانستان"</string>
+    <string name="city_kampala" formatted="false">"كمبالا، أوغندا"</string>
+    <string name="city_kano" formatted="false">"كانو، نيجيريا"</string>
+    <string name="city_karachi" formatted="false">"كراتشي، باكستان"</string>
+    <string name="city_kathmandu" formatted="false">"كاتماندو، نيبال"</string>
+    <string name="city_khartoum" formatted="false">"الخرطوم، السودان"</string>
+    <string name="city_kigali" formatted="false">"كيجالي، رواندا"</string>
+    <string name="city_kingston" formatted="false">"كينغستون، جامايكا"</string>
+    <string name="city_kingston_nf" formatted="false">"كينغستون، جزيرة نورفولك"</string>
+    <string name="city_kingstown" formatted="false">"كينغستاون، سانت فنسنت وجزر غرينادين"</string>
+    <string name="city_kinshasa" formatted="false">"كينشاسا، جمهورية الكونغو الديمقراطية"</string>
+    <string name="city_kralendijk" formatted="false">"كرالينديجك، بونير، سانت أوستاتيوس وسابا "</string>
+    <string name="city_kuala_lumpur" formatted="false">"كوالالمبور، ماليزيا"</string>
+    <string name="city_kuwait_city" formatted="false">"مدينة الكويت، الكويت"</string>
+    <string name="city_kyiv" formatted="false">"كييف، أوكرانيا"</string>
+    <string name="city_lagos" formatted="false">"لاغوس، نيجيريا"</string>
+    <string name="city_lahore" formatted="false">"لاهور، باكستان"</string>
+    <string name="city_libreville" formatted="false">"ليبرفيل، الجابون"</string>
+    <string name="city_lilongwe" formatted="false">"ليلونغوي، ملاوي"</string>
+    <string name="city_lima" formatted="false">"ليما، بيرو"</string>
+    <string name="city_lisbon" formatted="false">"لشبونة، البرتغال"</string>
+    <string name="city_ljubljana" formatted="false">"ليوبليانا، سلوفينيا"</string>
+    <string name="city_logan_city" formatted="false">"مدينة لوغان، أستراليا"</string>
+    <string name="city_lome" formatted="false">"لومي، توغو"</string>
+    <string name="city_london" formatted="false">"لندن، المملكة المتحدة"</string>
+    <string name="city_longyearbyen" formatted="false">"لونجييربين، سفالبارد وجان ماين"</string>
+    <string name="city_los_angeles" formatted="false">"لوس أنجلوس، الولايات المتحدة"</string>
+    <string name="city_luanda" formatted="false">"لواندا، أنغولا"</string>
+    <string name="city_lusaka" formatted="false">"لوساكا، زامبيا"</string>
+    <string name="city_luxembourg" formatted="false">"لوكسمبورغ، لوكسمبورغ"</string>
+    <string name="city_macau" formatted="false">"ماكاو، ماكاو"</string>
+    <string name="city_madrid" formatted="false">"مدريد، اسبانيا"</string>
+    <string name="city_majuro" formatted="false">"ماجورو، جزر مارشال"</string>
+    <string name="city_male" formatted="false">"ذكر، جزر المالديف"</string>
+    <string name="city_mamoudzou" formatted="false">"مامودزو، مايوت"</string>
+    <string name="city_managua" formatted="false">"ماناغوا، نيكاراجوا"</string>
+    <string name="city_manama" formatted="false">"المنامة، البحرين"</string>
+    <string name="city_manaus" formatted="false">"ماناوس، البرازيل"</string>
+    <string name="city_manila" formatted="false">"مانيلا، الفلبين"</string>
+    <string name="city_manukau_city" formatted="false">"مدينة مانوكاو، نيوزيلندا"</string>
+    <string name="city_maputo" formatted="false">"مابوتو، موزمبيق"</string>
+    <string name="city_mariehamn" formatted="false">"(ماريهامن، جزر آلاند)."</string>
+    <string name="city_marigot" formatted="false">"ماريجوت، سانت مارتن"</string>
+    <string name="city_maseru" formatted="false">"ماسيرو، ليسوتو"</string>
+    <string name="city_mata_utu" formatted="false">"ماتا أوتو، واليس وفوتونا"</string>
+    <string name="city_mbabane" formatted="false">"مبابان، إيسواتيني"</string>
+    <string name="city_melbourne" formatted="false">"ملبورن، أستراليا"</string>
+    <string name="city_mexico_city" formatted="false">"مدينة مكسيكو، المكسيك"</string>
+    <string name="city_minsk" formatted="false">"مينسك، بيلاروسيا"</string>
+    <string name="city_mogadishu" formatted="false">"مقديشو، الصومال"</string>
+    <string name="city_monaco" formatted="false">"موناكو، موناكو"</string>
+    <string name="city_monrovia" formatted="false">"مونروفيا، ليبيريا"</string>
+    <string name="city_montevideo" formatted="false">"مونتيفيديو، أوروغواي"</string>
+    <string name="city_montreal" formatted="false">"مونتريال، كندا"</string>
+    <string name="city_moroni" formatted="false">"موروني، جزر القمر"</string>
+    <string name="city_moscow" formatted="false">"موسكو، روسيا"</string>
+    <string name="city_mumbai" formatted="false">"مومباي، الهند"</string>
+    <string name="city_muscat" formatted="false">"مسقط، عمان"</string>
+    <string name="city_n_djamena" formatted="false">"نجامينا، تشاد"</string>
+    <string name="city_nairobi" formatted="false">"نيروبي، كينيا"</string>
+    <string name="city_nassau" formatted="false">"ناسو، جزر البهاما"</string>
+    <string name="city_nay_pyi_taw" formatted="false">"ناي بي تاو، ميانمار"</string>
+    <string name="city_new_delhi" formatted="false">"نيودلهي، الهند"</string>
+    <string name="city_new_york" formatted="false">"مدينة نيويورك، الولايات المتحدة"</string>
+    <string name="city_newcastle" formatted="false">"نيوكاسل، أستراليا"</string>
+    <string name="city_ngerulmud" formatted="false">"نغيرولمود، بالاو"</string>
+    <string name="city_niamey" formatted="false">"نيامي، النيجر"</string>
+    <string name="city_nicosia" formatted="false">"نيقوسيا، قبرص"</string>
+    <string name="city_nouakchott" formatted="false">"نواكشوط، موريتانيا"</string>
+    <string name="city_noumea" formatted="false">"نوميا، كاليدونيا الجديدة"</string>
+    <string name="city_nukualofa" formatted="false">"نوكوالوفا، تونغا"</string>
+    <string name="city_nuuk" formatted="false">"نوك، جرينلاند"</string>
+    <string name="city_oranjestad" formatted="false">"أورانجيستاد، أروبا"</string>
+    <string name="city_oslo" formatted="false">"أوسلو، النرويج"</string>
+    <string name="city_ottawa" formatted="false">"أوتاوا، كندا"</string>
+    <string name="city_ouagadougou" formatted="false">"واغادوغو، بوركينا فاسو"</string>
+    <string name="city_pago_pago" formatted="false">"باجو باجو، ساموا الأمريكية"</string>
+    <string name="city_palikir" formatted="false">"باليكير، ميكرونيزيا"</string>
+    <string name="city_panama_city" formatted="false">"مدينة بنما، بنما"</string>
+    <string name="city_papeete" formatted="false">"بابيتي، بولينيزيا الفرنسية"</string>
+    <string name="city_paramaribo" formatted="false">"باراماريبو، سورينام"</string>
+    <string name="city_paris" formatted="false">"باريس، فرنسا"</string>
+    <string name="city_perth" formatted="false">"بيرث، أستراليا"</string>
+    <string name="city_philipsburg" formatted="false">"فيليبسبورج، سينت مارتن"</string>
+    <string name="city_phnom_penh" formatted="false">"بنوم بنه، كمبوديا"</string>
+    <string name="city_phoenix" formatted="false">"فينيكس، الولايات المتحدة"</string>
+    <string name="city_plymouth" formatted="false">"بليموث، مونتسيرات"</string>
+    <string name="city_podgorica" formatted="false">"بودغوريتشا، الجبل الأسود"</string>
+    <string name="city_port_au_prince" formatted="false">"بورت أو برنس، هايتي"</string>
+    <string name="city_port_aux_francais" formatted="false">"بورت أوكس فرانسيه، الأراضي الجنوبية الفرنسية"</string>
+    <string name="city_port_louis" formatted="false">"بورت لويس، موريشيوس"</string>
+    <string name="city_port_moresby" formatted="false">"بورت مورسبي، بابوا غينيا الجديدة"</string>
+    <string name="city_port_of_spain" formatted="false">"بورت أوف سبين، ترينيداد وتوباغو"</string>
+    <string name="city_port_vila" formatted="false">"بورت فيلا، فانواتو"</string>
+    <string name="city_porto_novo" formatted="false">"بورتو نوفو، بنين"</string>
+    <string name="city_prague" formatted="false">"براغ، التشيك"</string>
+    <string name="city_praia" formatted="false">"برايا، كابو فيردي"</string>
+    <string name="city_pretoria" formatted="false">"بريتوريا، جنوب أفريقيا"</string>
+    <string name="city_pristina" formatted="false">"بريشتينا، كوسوفو"</string>
+    <string name="city_puebla" formatted="false">"بويبلا، المكسيك"</string>
+    <string name="city_pyongyang" formatted="false">"بيونغ يانغ، كوريا الشمالية"</string>
+    <string name="city_queens" formatted="false">"كوينز، الولايات المتحدة"</string>
+    <string name="city_quito" formatted="false">"كيتو، الإكوادور"</string>
+    <string name="city_rabat" formatted="false">"الرباط، المغرب"</string>
+    <string name="city_reykjavik" formatted="false">"ريكيافيك، أيسلندا"</string>
+    <string name="city_riga" formatted="false">"ريغا، لاتفيا"</string>
+    <string name="city_rio" formatted="false">"ريو دي جانيرو، البرازيل"</string>
+    <string name="city_riyadh" formatted="false">"الرياض، المملكة العربية السعودية"</string>
+    <string name="city_road_town" formatted="false">"(رود تاون، جزر فيرجن البريطانية)."</string>
+    <string name="city_rome" formatted="false">"روما، إيطاليا"</string>
+    <string name="city_roseau" formatted="false">"روسو، دومينيكا"</string>
+    <string name="city_saint_denis" formatted="false">"سان دوني، ريونيون"</string>
+    <string name="city_saint_george_s" formatted="false">"سانت جورج، غرينادا"</string>
+    <string name="city_saint_helier" formatted="false">"سانت هيلير، جيرسي"</string>
+    <string name="city_saint_johns" formatted="false">"سانت جون، أنتيغوا وبربودا"</string>
+    <string name="city_saint_peter_port" formatted="false">"(سانت بيتر بورت في غيرنسي)."</string>
+    <string name="city_saint_petersburg" formatted="false">"سانت بطرسبرغ، روسيا"</string>
+    <string name="city_saint_pierre" formatted="false">"سان بيير، وسانت بيير وميكلون"</string>
+    <string name="city_saipan" formatted="false">"سايبان، جزر ماريانا الشمالية"</string>
+    <string name="city_salvador" formatted="false">"سلفادور، البرازيل"</string>
+    <string name="city_san_jose" formatted="false">"سان خوسيه، كوستاريكا"</string>
+    <string name="city_san_juan" formatted="false">"سان خوان، بورتوريكو"</string>
+    <string name="city_san_marino" formatted="false">"سان مارينو، سان مارينو"</string>
+    <string name="city_san_salvador" formatted="false">"سان سلفادور، السلفادور"</string>
+    <string name="city_sanaa" formatted="false">"صنعاء، اليمن"</string>
+    <string name="city_santiago" formatted="false">"سانتياغو، تشيلي"</string>
+    <string name="city_santo_domingo" formatted="false">"سانتو دومينغو، جمهورية الدومينيكان"</string>
+    <string name="city_sao_paulo" formatted="false">"ساو باولو، البرازيل"</string>
+    <string name="city_sao_tome" formatted="false">"ساو تومي، ساو تومي وبرينسيبي"</string>
+    <string name="city_sarajevo" formatted="false">"سراييفو، البوسنة والهرسك"</string>
+    <string name="city_seoul" formatted="false">"سيول، كوريا الجنوبية"</string>
+    <string name="city_shanghai" formatted="false">"شنغهاي، الصين"</string>
+    <string name="city_shenzhen" formatted="false">"شنتشن، الصين"</string>
+    <string name="city_singapore" formatted="false">"سنغافورة، سنغافورة"</string>
+    <string name="city_skopje" formatted="false">"سكوبيي، مقدونيا الشمالية"</string>
+    <string name="city_sofia" formatted="false">"صوفيا، بلغاريا"</string>
+    <string name="city_stanley" formatted="false">"ستانلي، جزر فوكلاند"</string>
+    <string name="city_stockholm" formatted="false">"ستوكهولم، السويد"</string>
+    <string name="city_sucre" formatted="false">"سوكري، بوليفيا"</string>
+    <string name="city_sunshine_coast" formatted="false">"صن شاين كوست، أستراليا"</string>
+    <string name="city_suva" formatted="false">"سوفا، فيجي"</string>
+    <string name="city_sydney" formatted="false">"سيدني، أستراليا"</string>
+    <string name="city_taipei" formatted="false">"تايبيه، تايوان"</string>
+    <string name="city_tallinn" formatted="false">"تالين، إستونيا"</string>
+    <string name="city_tarawa" formatted="false">"تاراوا، كيريباتي"</string>
+    <string name="city_tashkent" formatted="false">"طشقند، أوزبكستان"</string>
+    <string name="city_tbilisi" formatted="false">"تبليسي، جورجيا"</string>
+    <string name="city_tegucigalpa" formatted="false">"تيغوسيغالبا، هندوراس"</string>
+    <string name="city_tehran" formatted="false">"طهران، إيران"</string>
+    <string name="city_the_valley" formatted="false">"الوادي، أنغيلا"</string>
+    <string name="city_thimphu" formatted="false">"تيمفو، بوتان"</string>
+    <string name="city_tianjin" formatted="false">"تيانجين، الصين"</string>
+    <string name="city_tijuana" formatted="false">"تيخوانا، المكسيك"</string>
+    <string name="city_tirana" formatted="false">"تيرانا، ألبانيا"</string>
+    <string name="city_tokyo" formatted="false">"طوكيو، اليابان"</string>
+    <string name="city_toronto" formatted="false">"تورونتو، كندا"</string>
+    <string name="city_torshavn" formatted="false">"تورشافن، جزر فارو"</string>
+    <string name="city_tripoli" formatted="false">"طرابلس، ليبيا"</string>
+    <string name="city_tromso" formatted="false">"ترومسو، النرويج"</string>
+    <string name="city_tunis" formatted="false">"تونس، تونس"</string>
+    <string name="city_ulan_bator" formatted="false">"أولان باتور، منغوليا"</string>
+    <string name="city_vaduz" formatted="false">"فادوز، ليختنشتاين"</string>
+    <string name="city_valletta" formatted="false">"فاليتا، مالطا"</string>
+    <string name="city_vatican_city" formatted="false">"مدينة الفاتيكان، الفاتيكان"</string>
+    <string name="city_victoria" formatted="false">"فيكتوريا، سيشيل"</string>
+    <string name="city_vienna" formatted="false">"فيينا، النمسا"</string>
+    <string name="city_vientiane" formatted="false">"فينتيان، لاوس"</string>
+    <string name="city_vilnius" formatted="false">"فيلنيوس، ليتوانيا"</string>
+    <string name="city_warsaw" formatted="false">"وارسو، بولندا"</string>
+    <string name="city_washington" formatted="false">"واشنطن، الولايات المتحدة"</string>
+    <string name="city_wellington" formatted="false">"ويلينغتون، نيوزيلندا"</string>
+    <string name="city_west_island" formatted="false">"الجزيرة الغربية، جزر كوكوس"</string>
+    <string name="city_willemstad" formatted="false">"ويلمستاد، كوراكاو"</string>
+    <string name="city_windhoek" formatted="false">"ويندهوك، ناميبيا"</string>
+    <string name="city_wuhan" formatted="false">"ووهان، الصين"</string>
+    <string name="city_xian" formatted="false">"شيان، الصين"</string>
+    <string name="city_yamoussoukro" formatted="false">"ياموسوكرو، ساحل العاج"</string>
+    <string name="city_yaounde" formatted="false">"ياوندي، الكاميرون"</string>
+    <string name="city_yaren" formatted="false">"يارين، ناورو"</string>
+    <string name="city_yerevan" formatted="false">"يريفان، أرمينيا"</string>
+    <string name="city_zagreb" formatted="false">"زغرب، كرواتيا"</string>
+    <string name="text_iss_day" formatted="false">"🛰 محطة الفضاء الدولية\nيعيش ويعمل رواد الفضاء هنا، على ارتفاع حوالي 400 كيلومتر فوق الأرض - ويدورون حول الكوكب بأكمله كل 90 دقيقة تقريبًا بسرعة 28000 كم/ساعة!\nفي هذا الرسم التوضيحي، يظهر فوق الجانب النهاري من الأرض."</string>
+    <string name="text_iss_night" formatted="false">"🛰 محطة الفضاء الدولية\nيعيش ويعمل رواد الفضاء هنا، على ارتفاع حوالي 400 كيلومتر فوق الأرض - ويدورون حول الكوكب بأكمله كل 90 دقيقة تقريبًا بسرعة 28000 كم/ساعة!\nفي هذا الرسم التوضيحي، يظهر فوق الجانب الليلي للأرض."</string>
+    <string name="text_elapsed_minutes">"الدقائق المنقضية: %1$d"</string>
+    <string name="text_elapsed_hours">"الساعات المنقضية: %1$d"</string>
+    <string name="text_elapsed_days">"الأيام المنقضية: %1$d"</string>
+    <string name="moon_guide_new_moon">"%1$s\nالجانب غير المضاء · حدود إرشادية"</string>
+    <string name="moon_guide_crescent">"هلال رفيع · %1$s مضاء\nحدود إرشادية"</string>
+</resources>

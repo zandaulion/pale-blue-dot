@@ -25,6 +25,7 @@ import android.view.Gravity
 import android.view.HapticFeedbackConstants
 import android.view.WindowManager
 import android.widget.FrameLayout
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
@@ -47,6 +48,8 @@ import android.view.View
 import com.globe.app.earth.EarthRenderer
 import com.globe.app.indicators.IndicatorRenderer
 import com.globe.app.eclipse.EclipseDetector
+import com.globe.app.events.label
+import com.globe.app.events.eventCategoryLabel
 import com.globe.app.events.EarthEventsProvider
 import com.globe.app.data.EarthRepository
 import com.globe.app.data.TodayBriefing
@@ -69,10 +72,11 @@ import com.globe.app.kids.DailyFacts
 import com.globe.app.kids.Discovery
 import com.globe.app.kids.DiscoveryJournal
 import com.globe.app.kids.MoonPhase
+import com.globe.app.moon.MoonGuideOverlay
 import com.globe.app.kids.ParentalGate
+import com.globe.app.kids.NarrationText
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 import java.util.TimeZone
 
 class MainActivity : AppCompatActivity() {
@@ -88,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         private const val PREF_TODAY_SHOWN_DAY = "today_shown_day"
         private const val PREF_NARRATE = "narrate_enabled"
         private const val PREF_ONBOARDED = "onboarded"
+        private const val STATE_SETTINGS_OPEN = "settings_open"
     }
 
     private lateinit var globeView: GlobeSurfaceView
@@ -163,14 +168,17 @@ class MainActivity : AppCompatActivity() {
     private var cloudTimestamp: String? = null
     private var lastEclipseState: EclipseDetector.EclipseState = EclipseDetector.EclipseState.NONE
 
-    private val timeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm z", Locale.getDefault()).apply {
-        timeZone = TimeZone.getDefault()
+    private val timeFormat by lazy {
+        val locale = AppLanguage.locale(this)
+        SimpleDateFormat(android.text.format.DateFormat.getBestDateTimePattern(locale, "yMMMdHm") + " z", locale)
+            .apply { timeZone = TimeZone.getDefault() }
     }
 
     /** Range of the scrubber: +/- 24 hours in milliseconds. */
     private val scrubberRangeMs = 24 * 60 * 60 * 1000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppLanguage.restore(this)
         super.onCreate(savedInstanceState)
 
         // Keep screen on while the app is visible
@@ -187,7 +195,7 @@ class MainActivity : AppCompatActivity() {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
             typeface = Typeface.MONOSPACE
             setShadowLayer(2f, 1f, 1f, Color.BLACK)
-            text = "\u2601 Clouds: live (loading\u2026)"
+            text = getString(R.string.text_clouds_live_loading)
             setOnClickListener {
                 it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                 cycleClouds()
@@ -201,9 +209,9 @@ class MainActivity : AppCompatActivity() {
             typeface = Typeface.MONOSPACE
             setShadowLayer(2f, 1f, 1f, Color.BLACK)
             gravity = Gravity.CENTER
-            text = "Time · Now"
+            text = getString(R.string.text_time_now)
             minHeight = dp(48f)
-            contentDescription = "Time controls"
+            contentDescription = getString(R.string.text_time_controls)
             setOnClickListener {
                 if (::globeView.isInitialized && globeView.sceneClock.isExploring)
                     showCompanionPanel("Explore time")
@@ -216,7 +224,7 @@ class MainActivity : AppCompatActivity() {
             max = 1000
             progress = 500 // center = now
             visibility = View.GONE
-            contentDescription = "Move time up to 24 hours before or after now"
+            contentDescription = getString(R.string.text_move_time_up_to_24_hours_before_or_after_now)
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     if (!fromUser) return
@@ -298,8 +306,8 @@ class MainActivity : AppCompatActivity() {
 
         tts = TextToSpeech(this) { status ->
             if (status == TextToSpeech.SUCCESS) {
-                tts?.language = Locale.US
-                ttsReady = true
+                val result = tts?.setLanguage(AppLanguage.locale(this))
+                ttsReady = result != null && result >= TextToSpeech.LANG_AVAILABLE
             }
         }
 
@@ -346,7 +354,7 @@ class MainActivity : AppCompatActivity() {
         }
         updateNarrateButton()
 
-        shareButton = makePillButton("↑  Share", dp).apply {
+        shareButton = makePillButton(getString(R.string.text_share), dp).apply {
             setOnClickListener {
                 it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                 shareCurrentView()
@@ -361,7 +369,7 @@ class MainActivity : AppCompatActivity() {
         }
         refreshJournalButton()
 
-        todayButton = makePillButton("🗓  Today", dp).apply {
+        todayButton = makePillButton(getString(R.string.text_today), dp).apply {
             setOnClickListener {
                 it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                 showToday()
@@ -385,7 +393,7 @@ class MainActivity : AppCompatActivity() {
             visibility = View.GONE
             setOnClickListener { hideEventCard() }
         }
-        savePlaceButton = makePillButton("+  Save this place", dp).apply {
+        savePlaceButton = makePillButton(getString(R.string.text_save_this_place), dp).apply {
             minHeight = dp(48f)
             gravity = Gravity.CENTER
             visibility = View.GONE
@@ -443,12 +451,52 @@ class MainActivity : AppCompatActivity() {
         val root = FrameLayout(this)
         root.addView(globeView)
 
-        // Time label — top center
-        root.addView(timeLabel, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            Gravity.TOP or Gravity.CENTER_HORIZONTAL
-        ).apply { setMargins(margin, dp(14f), margin, 0) })
+        // Reserve separate space for time and Settings so translated labels can wrap.
+        val settingsButton = makePillButton(getString(R.string.companion_settings), dp).apply {
+            minHeight = dp(48f)
+            contentDescription = getString(R.string.companion_settings)
+            setOnClickListener { showCompanionPanel("Settings") }
+        }
+        val topControls = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            addView(LinearLayout(this@MainActivity).apply {
+                gravity = Gravity.CENTER_VERTICAL
+                addView(timeLabel, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+                addView(settingsButton, LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply { marginStart = dp(8f) })
+            }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT))
+            addView(challengeBanner, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { gravity = Gravity.CENTER_HORIZONTAL; topMargin = dp(8f) })
+        }
+        root.addView(MoonGuideOverlay(this,
+            frame = { globeView.renderer.moonGuideFrame },
+            blockedAreas = {
+                buildList {
+                    add(android.graphics.Rect(0, 0, globeView.width, topControls.bottom + dp(8f)))
+                    add(android.graphics.Rect(0, globeView.height - dp(144f), globeView.width, globeView.height))
+                    for (view in listOf(eventCard, savePlaceButton, timeScrubber)) {
+                        if (view.isShown) {
+                            val area = android.graphics.Rect()
+                            view.getDrawingRect(area)
+                            root.offsetDescendantRectToMyCoords(view, area)
+                            area.offset(-globeView.left, -globeView.top)
+                            area.inset(-dp(8f), -dp(8f))
+                            add(area)
+                        }
+                    }
+                }
+            },
+            isCovered = {
+                openPanel != null || onboardingOverlay.visibility == View.VISIBLE ||
+                    legendOverlay.visibility == View.VISIBLE || journalOverlay.visibility == View.VISIBLE ||
+                    todayOverlay.visibility == View.VISIBLE
+            }
+        ), FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT))
+        root.addView(topControls, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.TOP
+        ).apply { setMargins(margin, dp(8f), margin, 0) })
 
         // Sun/Moon arrows sit just above the 56dp bottom bar; the scrubber and card stack above them.
         globeView.renderer.indicatorRenderer.bottomOffsetPx = dp(56f + 32f).toFloat()
@@ -476,13 +524,6 @@ class MainActivity : AppCompatActivity() {
             Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
         ).apply { setMargins(margin, 0, margin, dp(184f)) })
 
-        // Challenge banner — top center, below the time label
-        root.addView(challengeBanner, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            Gravity.TOP or Gravity.CENTER_HORIZONTAL
-        ).apply { setMargins(margin, dp(72f), margin, 0) })
-
         // Legend overlay — full screen, initially hidden
         root.addView(legendOverlay, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
@@ -503,21 +544,8 @@ class MainActivity : AppCompatActivity() {
 
         // Onboarding overlay — full screen, shown once on the very first launch
         onboardingOverlay = createOnboardingOverlay()
-        root.addView(onboardingOverlay, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.MATCH_PARENT
-        ))
 
         companionPanel = createCompanionPanel()
-
-        val settingsButton = makePillButton(getString(R.string.companion_settings), dp).apply {
-            minHeight = dp(48f)
-            contentDescription = getString(R.string.companion_settings)
-            setOnClickListener { showCompanionPanel("Settings") }
-        }
-        root.addView(settingsButton, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT, dp(48f), Gravity.TOP or Gravity.END
-        ).apply { setMargins(margin, dp(8f), margin, 0) })
 
         val nav = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
@@ -536,13 +564,17 @@ class MainActivity : AppCompatActivity() {
                     minHeight = dp(56f)
                     contentDescription = label
                     setOnClickListener { showCompanionPanel(panel) }
-                }, LinearLayout.LayoutParams(0, dp(56f), 1f))
+                }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
             }
         }
         root.addView(nav, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT, dp(56f), Gravity.BOTTOM
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM
         ))
 
+        // Welcome content must cover globe controls, including Settings and navigation.
+        root.addView(onboardingOverlay, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
+        ))
         root.addView(companionPanel, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
         ))
@@ -553,7 +585,13 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(root)
         updateTimeLabel()
-        root.post { handleWidgetIntent(intent) }
+        root.post {
+            if (savedInstanceState?.getBoolean(STATE_SETTINGS_OPEN) == true) {
+                showCompanionPanel("Settings")
+            } else {
+                handleWidgetIntent(intent)
+            }
+        }
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (!closeTopLayer()) {
@@ -567,6 +605,11 @@ class MainActivity : AppCompatActivity() {
             // A short, dismissible instruction leaves the globe in view.
             onboardingOverlay.visibility = View.VISIBLE
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean(STATE_SETTINGS_OPEN, openPanel == "Settings")
+        super.onSaveInstanceState(outState)
     }
 
     /** Cycle clouds: off -> generated -> live -> off. */
@@ -659,7 +702,20 @@ class MainActivity : AppCompatActivity() {
         openPanel = name
         companionColumn.removeAllViews()
         val heading = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
-        heading.addView(panelText(name, 23f).apply { typeface = Typeface.DEFAULT_BOLD },
+        val title = when (name) {
+            "Today" -> getString(R.string.companion_today)
+            "Layers" -> getString(R.string.companion_layers)
+            "Explore" -> getString(R.string.companion_explore)
+            "Settings" -> getString(R.string.companion_settings)
+            "Notebook" -> getString(R.string.text_notebook)
+            "Guide" -> getString(R.string.text_guide)
+            "Places" -> getString(R.string.text_places)
+            "Explore time" -> getString(R.string.text_explore_time)
+            "Journeys" -> getString(R.string.text_journeys)
+            "Journey" -> getString(R.string.text_journey)
+            else -> name
+        }
+        heading.addView(panelText(title, 23f).apply { typeface = Typeface.DEFAULT_BOLD },
             LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
         heading.addView(panelText("×", 30f).apply {
             contentDescription = getString(R.string.companion_close)
@@ -687,36 +743,36 @@ class MainActivity : AppCompatActivity() {
 
     private fun populateCompanionToday() {
         val briefing = TodayBriefing.build(System.currentTimeMillis(), placeStore.primary(), repository.snapshot())
-        companionColumn.addView(panelText("Planetary briefing · real time", 14f, Color.rgb(173, 215, 255)))
-        companionColumn.addView(panelText("${briefing.moon.emoji} ${briefing.moon.name} · ${briefing.moon.illuminationPercent}% estimated illumination", 17f))
+        companionColumn.addView(panelText(getString(R.string.text_planetary_briefing_real_time), 14f, Color.rgb(173, 215, 255)))
+        companionColumn.addView(panelText(getString(R.string.text_1_s_2_s_3_s_estimated_illumination, briefing.moon.emoji, briefing.moon.name(this), briefing.moon.illuminationPercent), 17f))
         val place = briefing.place
-        if (place == null) panelAction("Choose a primary place") { showCompanionPanel("Places") }
+        if (place == null) panelAction(getString(R.string.text_choose_a_primary_place)) { showCompanionPanel("Places") }
         else {
             companionColumn.addView(panelText("${place.name}\n${formatPlaceDaylight(place, briefing.daylight!!)}", 15f))
-            panelAction("Fly to ${place.name}") { closeCompanionPanel(); globeView.camera.flyTo(place.lat, place.lon) }
+            panelAction(getString(R.string.text_fly_to_1_s, place.name)) { closeCompanionPanel(); globeView.camera.flyTo(place.lat, place.lon) }
         }
         companionColumn.addView(panelText(
             cloudTimestamp?.let {
-                "Satellite imagery — $it" +
-                    if (repository.cloudState == EarthRepository.State.STALE) " · saved copy" else ""
-            } ?: "Satellite imagery unavailable or still loading",
+                getString(R.string.text_satellite_imagery_1_s, it) +
+                    if (repository.cloudState == EarthRepository.State.STALE) getString(R.string.text_saved_copy) else ""
+            } ?: getString(R.string.text_satellite_imagery_unavailable_or_still_loading),
             13f, Color.rgb(190, 205, 219)
         ))
-        companionColumn.addView(panelText(briefing.prompt, 15f))
-        companionColumn.addView(panelText("One observation · ${briefing.eventMessage}", 17f))
+        companionColumn.addView(panelText(briefing.prompt(this), 15f))
+        companionColumn.addView(panelText(getString(R.string.text_one_observation_1_s, briefing.eventMessage(this)), 17f))
         briefing.event?.let { event ->
-            panelAction("${event.type.name.lowercase().replaceFirstChar { it.uppercase() }} · ${event.title}\n${event.observedAtMs?.let(::formatDate) ?: "Time unavailable"} · ${event.source}") {
+            panelAction("${event.type.label(this)} · ${event.title}\n${event.observedAtMs?.let(::formatDate) ?: getString(R.string.text_time_unavailable)} · ${event.source}") {
                 if (repository.snapshot().events.any { it.id == event.id }) {
                     closeCompanionPanel(); globeView.camera.flyTo(event.lat, event.lon); showEventCard(event)
-                } else AlertDialog.Builder(this).setMessage("This observation is no longer in the saved feed.")
-                    .setPositiveButton("Current events") { _, _ -> showCompanionPanel("Explore") }.show()
+                } else AlertDialog.Builder(this).setMessage(getString(R.string.text_this_observation_is_no_longer_in_the_saved_feed))
+                    .setPositiveButton(getString(R.string.text_current_events)) { _, _ -> showCompanionPanel("Explore") }.show()
             }
         }
         panelAction(getString(R.string.companion_refresh)) { repository.refresh(manual = true) }
     }
 
     private fun populateCompanionLayers() {
-        companionColumn.addView(panelText("Choose what appears on the globe. Hidden events also leave the event list and challenges.",
+        companionColumn.addView(panelText(getString(R.string.text_choose_what_appears_on_the_globe_hidden_events_also_leave_the_eve),
             14f, Color.rgb(190, 205, 219)))
         companionColumn.addView(panelText(getString(R.string.companion_clouds), 18f))
         val cloudChoices = listOf(EarthRenderer.CloudMode.OFF, EarthRenderer.CloudMode.GENERATED, EarthRenderer.CloudMode.LIVE)
@@ -737,62 +793,81 @@ class MainActivity : AppCompatActivity() {
             })
         }
         companionColumn.addView(radio)
-        companionColumn.addView(panelText(cloudTimestamp?.let { "Satellite imagery — $it" +
-            if (repository.cloudState == EarthRepository.State.STALE) " · saved copy" else "" }
-            ?: "Satellite imagery may be unavailable offline; generated clouds still work.", 13f,
+        companionColumn.addView(panelText(cloudTimestamp?.let { getString(R.string.text_satellite_imagery_1_s, it) +
+            if (repository.cloudState == EarthRepository.State.STALE) getString(R.string.text_saved_copy) else "" }
+            ?: getString(R.string.text_satellite_imagery_may_be_unavailable_offline_generated_clouds_sti), 13f,
             Color.rgb(190, 205, 219)))
         val descriptions = mapOf(
-            EarthEventsProvider.Event.Type.EARTHQUAKE to "Reported by USGS",
-            EarthEventsProvider.Event.Type.VOLCANO to "Reported by NASA EONET",
-            EarthEventsProvider.Event.Type.WILDFIRE to "Reported by NASA EONET",
-            EarthEventsProvider.Event.Type.STORM to "Reported by NASA EONET"
+            EarthEventsProvider.Event.Type.EARTHQUAKE to getString(R.string.text_reported_by_usgs),
+            EarthEventsProvider.Event.Type.VOLCANO to getString(R.string.text_reported_by_nasa_eonet),
+            EarthEventsProvider.Event.Type.WILDFIRE to getString(R.string.text_reported_by_nasa_eonet),
+            EarthEventsProvider.Event.Type.STORM to getString(R.string.text_reported_by_nasa_eonet)
         )
         for (type in EarthEventsProvider.Event.Type.values()) {
-            panelSwitch(type.name.lowercase().replaceFirstChar { it.uppercase() }, descriptions.getValue(type),
+            panelSwitch(type.label(this), descriptions.getValue(type),
                 layers.enabled(type)) {
                 layers.setEnabled(type, it)
                 applyAppLayers()
             }
         }
-        panelSwitch("Constellations", "Catalog lines in the star background", layers.constellations) {
+        panelSwitch(getString(R.string.text_constellations), getString(R.string.text_catalog_lines_in_the_star_background), layers.constellations) {
             layers.constellations = it; applyAppLayers()
         }
-        panelSwitch("ISS illustration", "Approximate orbit, not live tracking", layers.iss) {
+        panelSwitch(getString(R.string.text_iss_illustration), getString(R.string.text_approximate_orbit_not_live_tracking), layers.iss) {
             layers.iss = it; applyAppLayers()
         }
-        panelSwitch("Aurora illustration", "Decorative glow, not a forecast", layers.aurora) {
+        panelSwitch(getString(R.string.text_aurora_illustration), getString(R.string.text_decorative_glow_not_a_forecast), layers.aurora) {
             layers.aurora = it; applyAppLayers()
         }
-        panelSwitch("Day/night boundary", "Calculated terminator line", layers.terminator) {
+        panelSwitch(getString(R.string.text_day_night_boundary), getString(R.string.text_calculated_terminator_line), layers.terminator) {
             layers.terminator = it; applyAppLayers()
         }
-        panelSwitch("Plate boundaries", "Offline PB2002 model · gold lines", layers.plateBoundaries) {
+        panelSwitch(getString(R.string.text_plate_boundaries), getString(R.string.text_offline_pb2002_model_gold_lines), layers.plateBoundaries) {
             layers.plateBoundaries = it; applyAppLayers()
         }
-        companionColumn.addView(panelText("Plate boundaries: gold lines mark modelled plate edges. Earthquakes can also happen away from them. Source: Bird (2003), PB2002; ODbL 1.0.", 13f))
+        companionColumn.addView(panelText(getString(R.string.text_plate_boundaries_gold_lines_mark_modelled_plate_edges_earthquakes), 13f))
     }
 
     private fun populateCompanionExplore() {
-        panelAction("Places · ${placeStore.all().size} saved") { showCompanionPanel("Places") }
-        panelAction("Explore time and seasons") { showCompanionPanel("Explore time") }
-        panelAction("Guided journeys") { showCompanionPanel("Journeys") }
-        panelAction("Field notebook · ${journal.unlockedCount()}/${journal.total} discoveries") {
+        panelAction(getString(R.string.text_places_1_s_saved, placeStore.all().size)) { showCompanionPanel("Places") }
+        panelAction(getString(R.string.text_explore_time_and_seasons)) { showCompanionPanel("Explore time") }
+        panelAction(getString(R.string.text_guided_journeys)) { showCompanionPanel("Journeys") }
+        panelAction(getString(R.string.text_field_notebook_1_s_2_s_discoveries, journal.unlockedCount(), journal.total)) {
             showCompanionPanel("Notebook")
         }
-        panelAction("Try a quick challenge") { closeCompanionPanel(); startChallenge() }
-        panelAction("Scene guide and legend") { showCompanionPanel("Guide") }
+        panelAction(getString(R.string.text_try_a_quick_challenge)) { closeCompanionPanel(); startChallenge() }
+        panelAction(getString(R.string.text_scene_guide_and_legend)) { showCompanionPanel("Guide") }
         companionColumn.addView(panelText(getString(R.string.companion_events), 19f))
         addEventList(limitPerType = 12)
     }
 
     private fun populateCompanionSettings() {
-        panelSwitch("Ambient music", "Only while the app is open", musicEnabled) { enabled ->
+        val languageIndex = AppLanguage.tags.indexOf(AppLanguage.selected(this).substringBefore(','))
+        val languageName = AppLanguage.nativeNames.getOrNull(languageIndex)
+            ?: getString(R.string.text_use_device_language)
+        companionColumn.addView(Button(this).apply {
+            text = listOf(getString(R.string.text_language), languageName).joinToString("\n")
+            isAllCaps = false
+            gravity = Gravity.START or Gravity.CENTER_VERTICAL
+            setTextColor(Color.rgb(173, 215, 255))
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+            minHeight = dpi(64f)
+            setPadding(dpi(12f), dpi(8f), dpi(12f), dpi(8f))
+            background = GradientDrawable().apply {
+                cornerRadius = dpi(10f).toFloat()
+                setColor(Color.rgb(22, 38, 57))
+            }
+            setOnClickListener { chooseLanguage() }
+        }, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        ))
+        panelSwitch(getString(R.string.text_ambient_music), getString(R.string.text_only_while_the_app_is_open), musicEnabled) { enabled ->
             if (musicEnabled != enabled) toggleMusic()
         }
-        companionColumn.addView(panelText("Music volume", 14f))
+        companionColumn.addView(panelText(getString(R.string.text_music_volume), 14f))
         companionColumn.addView(SeekBar(this).apply {
             max = 100; progress = (musicVolume * 100).toInt()
-            contentDescription = "Music volume"
+            contentDescription = getString(R.string.text_music_volume)
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(bar: SeekBar, value: Int, fromUser: Boolean) {
                     if (fromUser) {
@@ -805,107 +880,119 @@ class MainActivity : AppCompatActivity() {
                 override fun onStopTrackingTouch(bar: SeekBar) {}
             })
         })
-        panelSwitch("Read aloud", "Speak cards when narration is enabled", narrateEnabled) { enabled ->
+        panelSwitch(getString(R.string.text_read_aloud), getString(R.string.text_speak_cards_when_narration_is_enabled), narrateEnabled) { enabled ->
             if (narrateEnabled != enabled) toggleNarration()
         }
         panelSwitch(getString(R.string.companion_reduce_motion),
-            "Stops idle spin and decorative marker movement", layers.reduceMotion) {
+            getString(R.string.text_stops_idle_spin_and_decorative_marker_movement), layers.reduceMotion) {
             layers.reduceMotion = it; applyAppLayers()
         }
-        panelAction("Share globe image") { closeCompanionPanel(); shareCurrentView() }
-        panelAction("Earth live wallpaper") {
+        panelAction(getString(R.string.text_share_globe_image)) { closeCompanionPanel(); shareCurrentView() }
+        panelAction(getString(R.string.text_earth_live_wallpaper)) {
             closeCompanionPanel()
             startActivity(Intent(this, WallpaperConfigActivity::class.java))
         }
-        panelAction("Scene guide and legend") { showCompanionPanel("Guide") }
+        panelAction(getString(R.string.text_scene_guide_and_legend)) { showCompanionPanel("Guide") }
+    }
+
+    private fun chooseLanguage() {
+        val labels = listOf(getString(R.string.text_use_device_language)) + AppLanguage.nativeNames
+        val selected = AppLanguage.selected(this).substringBefore(',')
+        val index = AppLanguage.tags.indexOf(selected) + 1
+        AlertDialog.Builder(this).setTitle(getString(R.string.text_language))
+            .setSingleChoiceItems(labels.toTypedArray(), index) { dialog, which ->
+                dialog.dismiss()
+                AppLanguage.select(this, if (which == 0) "" else AppLanguage.tags[which - 1])
+                showCompanionPanel("Settings")
+            }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
     private fun populateCompanionNotebook() {
-        panelAction("‹ Explore") { showCompanionPanel("Explore") }
+        panelAction(getString(R.string.text_explore)) { showCompanionPanel("Explore") }
         fieldNotebook.migrateLegacy(journal)
-        companionColumn.addView(panelText("Completed journeys", 19f))
+        companionColumn.addView(panelText(getString(R.string.text_completed_journeys), 19f))
         val completed = JourneyContent.all(this).filter { journeyStore.completed(it.id) }
-        if (completed.isEmpty()) companionColumn.addView(panelText("No journeys completed yet.", 14f))
+        if (completed.isEmpty()) companionColumn.addView(panelText(getString(R.string.text_no_journeys_completed_yet), 14f))
         completed.forEach { companionColumn.addView(panelText("✓ ${it.title}", 15f)) }
-        companionColumn.addView(panelText("Saved observations", 19f))
+        companionColumn.addView(panelText(getString(R.string.text_saved_observations), 19f))
         val saved = fieldNotebook.savedEvents()
-        if (saved.isEmpty()) companionColumn.addView(panelText("Save an observation from its card to keep its source and date.", 14f))
+        if (saved.isEmpty()) companionColumn.addView(panelText(getString(R.string.text_save_an_observation_from_its_card_to_keep_its_source_and_date), 14f))
         saved.asReversed().forEach { item ->
-            panelAction("${item.category.lowercase().replaceFirstChar { it.uppercase() }} · ${item.title}") {
+            panelAction("${eventCategoryLabel(this, item.category)} · ${item.title}") {
                 showSavedObservation(item)
             }
         }
-        companionColumn.addView(panelText("Earlier discoveries · ${fieldNotebook.legacyDiscoveries().size}/${journal.total}", 19f))
+        companionColumn.addView(panelText(getString(R.string.text_earlier_discoveries_1_s_2_s, fieldNotebook.legacyDiscoveries().size, journal.total), 19f))
         val descriptions = mapOf(
-            Discovery.EARTHQUAKE to "You explored a reported earthquake.",
-            Discovery.VOLCANO to "You explored a reported volcanic event.",
-            Discovery.WILDFIRE to "You explored a reported wildfire.",
-            Discovery.STORM to "You explored a reported storm.",
-            Discovery.DAYTIME to "You found a place facing the Sun.",
-            Discovery.NIGHT to "You found Earth's night side.",
-            Discovery.STARGAZER to "You looked beyond Earth.",
-            Discovery.TIME_TRAVELER to "You changed the scene time."
+            Discovery.EARTHQUAKE to getString(R.string.text_you_explored_a_reported_earthquake),
+            Discovery.VOLCANO to getString(R.string.text_you_explored_a_reported_volcanic_event),
+            Discovery.WILDFIRE to getString(R.string.text_you_explored_a_reported_wildfire),
+            Discovery.STORM to getString(R.string.text_you_explored_a_reported_storm),
+            Discovery.DAYTIME to getString(R.string.text_you_found_a_place_facing_the_sun),
+            Discovery.NIGHT to getString(R.string.text_you_found_earth_s_night_side),
+            Discovery.STARGAZER to getString(R.string.text_you_looked_beyond_earth),
+            Discovery.TIME_TRAVELER to getString(R.string.text_you_changed_the_scene_time)
         )
         fieldNotebook.legacyDiscoveries().forEach {
-            companionColumn.addView(panelText("${it.emoji} ${it.title}\n${descriptions[it]}", 15f))
+            companionColumn.addView(panelText("${it.emoji} ${it.title(this)}\n${descriptions[it]}", 15f))
         }
     }
 
     private fun showSavedObservation(item: SavedObservation) {
         val facts = buildString {
             append(item.title).append("\n")
-            append("Observed: ").append(item.observedAtMs?.let(::formatDate) ?: "Time not reported").append("\n")
-            append("Source: ").append(item.source).append("\n")
-            item.magnitude?.let { append("Magnitude: ${"%.1f".format(Locale.getDefault(), it)}\n") }
-            item.depthKm?.let { append("Depth: ${"%.1f".format(Locale.getDefault(), it)} km\n") }
-            item.sourceUrl?.let { append("Source link: $it") }
+            append(getString(R.string.text_observed)).append(item.observedAtMs?.let(::formatDate) ?: getString(R.string.text_time_not_reported)).append("\n")
+            append(getString(R.string.text_source)).append(item.source).append("\n")
+            item.magnitude?.let { append(getString(R.string.text_magnitude_1_s, "%.1f".format(AppLanguage.locale(this@MainActivity), it))) }
+            item.depthKm?.let { append(getString(R.string.text_depth_1_s_km, "%.1f".format(AppLanguage.locale(this@MainActivity), it))) }
+            item.sourceUrl?.let { append(getString(R.string.text_source_link_1_s, it)) }
         }
-        AlertDialog.Builder(this).setTitle("Saved observation").setMessage(facts)
-            .setPositiveButton("Fly to") { _, _ -> closeCompanionPanel(); globeView.camera.flyTo(item.lat, item.lon) }
-            .setNegativeButton("Close", null).show()
+        AlertDialog.Builder(this).setTitle(getString(R.string.text_saved_observation)).setMessage(facts)
+            .setPositiveButton(getString(R.string.text_fly_to)) { _, _ -> closeCompanionPanel(); globeView.camera.flyTo(item.lat, item.lon) }
+            .setNegativeButton(getString(R.string.companion_close), null).show()
     }
 
     private fun populateCompanionGuide() {
-        panelAction("‹ Explore") { showCompanionPanel("Explore") }
+        panelAction(getString(R.string.text_explore)) { showCompanionPanel("Explore") }
         listOf(
-            "Sunlight and city lights" to "Calculated sunlight shows the current day and night sides.",
-            "Clouds" to "Generated clouds are illustrative. Satellite mode derives opacity from a dated NASA VIIRS image.",
-            "Earthquakes" to "USGS reports magnitude 4.5+ earthquakes from the last seven days.",
-            "Volcanoes, wildfires and storms" to "NASA EONET open reports may have older observation dates.",
-            "ISS" to "Illustrated orbit, not live tracking.",
-            "Aurora" to "Decorative illustration, not a forecast.",
-            "Day/night boundary" to "Calculated terminator line.",
-            "Constellations" to "Catalog stars joined into familiar patterns.",
-            "Plate boundaries" to "A simplified offline PB2002 model. Many earthquakes occur near boundaries, though some occur elsewhere. Gold lines are not a diagnosis for any event."
+            getString(R.string.text_sunlight_and_city_lights) to getString(R.string.text_calculated_sunlight_shows_the_current_day_and_night_sides),
+            getString(R.string.companion_clouds) to getString(R.string.text_generated_clouds_are_illustrative_satellite_mode_derives_opacity),
+            getString(R.string.text_earthquakes) to getString(R.string.text_usgs_reports_magnitude_4_5_earthquakes_from_the_last_seven_days),
+            getString(R.string.text_volcanoes_wildfires_and_storms) to getString(R.string.text_nasa_eonet_open_reports_may_have_older_observation_dates),
+            getString(R.string.text_iss) to getString(R.string.text_illustrated_orbit_not_live_tracking),
+            getString(R.string.text_aurora) to getString(R.string.text_decorative_illustration_not_a_forecast),
+            getString(R.string.text_day_night_boundary) to getString(R.string.text_calculated_terminator_line_2),
+            getString(R.string.text_constellations) to getString(R.string.text_catalog_stars_joined_into_familiar_patterns),
+            getString(R.string.text_plate_boundaries) to getString(R.string.text_a_simplified_offline_pb2002_model_many_earthquakes_occur_near_bou)
         ).forEach { (title, body) -> companionColumn.addView(panelText("$title\n$body", 15f)) }
     }
 
     private fun populatePlaces() {
-        panelAction("‹ Explore") { showCompanionPanel("Explore") }
-        companionColumn.addView(panelText("Saved places stay on this device. Cyan rings mark them on the globe.", 14f))
-        panelAction("Search bundled cities") {
+        panelAction(getString(R.string.text_explore)) { showCompanionPanel("Explore") }
+        companionColumn.addView(panelText(getString(R.string.text_saved_places_stay_on_this_device_cyan_rings_mark_them_on_the_glob), 14f))
+        panelAction(getString(R.string.text_search_bundled_cities)) {
             val query = EditText(this).apply {
-                hint = "City or country (blank lists all ${CityCatalog.cities.size})"; inputType = InputType.TYPE_CLASS_TEXT
+                hint = getString(R.string.text_city_or_country_blank_lists_all_1_s, CityCatalog.cities.size); inputType = InputType.TYPE_CLASS_TEXT
             }
-            AlertDialog.Builder(this).setTitle("Find a city").setView(query)
-                .setPositiveButton("Search") { _, _ ->
-                    val matches = CityCatalog.search(query.text.toString())
-                    if (matches.isEmpty()) AlertDialog.Builder(this).setMessage("No bundled city matches that name.")
-                        .setPositiveButton("OK", null).show()
-                    else AlertDialog.Builder(this).setTitle("Bundled cities")
+            AlertDialog.Builder(this).setTitle(getString(R.string.text_find_a_city)).setView(query)
+                .setPositiveButton(getString(R.string.text_search)) { _, _ ->
+                    val matches = CityCatalog.search(query.text.toString(), this)
+                    if (matches.isEmpty()) AlertDialog.Builder(this).setMessage(getString(R.string.text_no_bundled_city_matches_that_name))
+                        .setPositiveButton(getString(R.string.text_ok), null).show()
+                    else AlertDialog.Builder(this).setTitle(getString(R.string.text_bundled_cities))
                         .setItems(matches.map { it.name }.toTypedArray()) { _, which ->
                             placeStore.save(matches[which]); placesChanged(); showPlaceDetails(matches[which])
                         }.show()
-                }.setNegativeButton("Cancel", null).show()
+                }.setNegativeButton(getString(R.string.text_cancel), null).show()
         }
-        panelAction("Add a place from the globe") {
+        panelAction(getString(R.string.text_add_a_place_from_the_globe)) {
             closeCompanionPanel()
-            AlertDialog.Builder(this).setMessage("Tap a point on the globe, then tap + Save this place under its card.")
-                .setPositiveButton("OK", null).show()
+            AlertDialog.Builder(this).setMessage(getString(R.string.text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card))
+                .setPositiveButton(getString(R.string.text_ok), null).show()
         }
         val primary = placeStore.primaryId()
         placeStore.all().forEach { place ->
-            panelAction("${if (place.id == primary) "★ " else ""}${place.name}\n${place.zoneId ?: "Time zone unset"}") {
+            panelAction("${if (place.id == primary) "★ " else ""}${place.name}\n${place.zoneId ?: getString(R.string.text_time_zone_unset)}") {
                 showPlaceDetails(place)
             }
         }
@@ -919,10 +1006,10 @@ class MainActivity : AppCompatActivity() {
     private fun showPlaceDetails(place: SavedPlace) {
         val current = placeStore.all().firstOrNull { it.id == place.id } ?: return
         val summary = Daylight.at(current, System.currentTimeMillis())
-        val options = arrayOf("Fly to", "Set as primary", "Rename", "Set time zone", "Delete")
+        val options = arrayOf(getString(R.string.text_fly_to), getString(R.string.text_set_as_primary), getString(R.string.text_rename), getString(R.string.text_set_time_zone), getString(R.string.text_delete))
         AlertDialog.Builder(this).setTitle(current.name + "\n" + formatPlaceDaylight(current, summary) +
-            "\n${"%.3f".format(Locale.getDefault(), current.lat)}°, " +
-            "${"%.3f".format(Locale.getDefault(), current.lon)}°")
+            "\n${"%.3f".format(AppLanguage.locale(this@MainActivity), current.lat)}°, " +
+            "${"%.3f".format(AppLanguage.locale(this@MainActivity), current.lon)}°")
             .setItems(options) { _, which -> when (which) {
                 0 -> { closeCompanionPanel(); globeView.camera.flyTo(current.lat, current.lon) }
                 1 -> { placeStore.setPrimary(current.id); placesChanged() }
@@ -931,91 +1018,91 @@ class MainActivity : AppCompatActivity() {
                 4 -> {
                     val wasPrimary = placeStore.primaryId() == current.id
                     placeStore.delete(current.id); placesChanged()
-                    AlertDialog.Builder(this).setMessage("${current.name} removed")
-                        .setPositiveButton("Undo") { _, _ ->
+                    AlertDialog.Builder(this).setMessage(getString(R.string.text_1_s_removed, current.name))
+                        .setPositiveButton(getString(R.string.text_undo)) { _, _ ->
                             placeStore.save(current)
                             if (wasPrimary) placeStore.setPrimary(current.id)
                             placesChanged()
-                        }.setNegativeButton("Done", null).show()
+                        }.setNegativeButton(getString(R.string.text_done), null).show()
                 }
-            } }.setNegativeButton("Close", null).show()
+            } }.setNegativeButton(getString(R.string.companion_close), null).show()
     }
 
     private fun editPlaceName(place: SavedPlace) {
         val input = EditText(this).apply { setText(place.name); selectAll() }
-        AlertDialog.Builder(this).setTitle("Name this place").setView(input)
-            .setPositiveButton("Save") { _, _ ->
+        AlertDialog.Builder(this).setTitle(getString(R.string.text_name_this_place)).setView(input)
+            .setPositiveButton(getString(R.string.text_save)) { _, _ ->
                 val name = input.text.toString().trim()
                 if (name.isNotEmpty()) { placeStore.save(place.copy(name = name)); placesChanged() }
-            }.setNegativeButton("Cancel", null).show()
+            }.setNegativeButton(getString(R.string.text_cancel), null).show()
     }
 
     private fun editPlaceZone(place: SavedPlace, suggestedZone: String? = null) {
         val input = EditText(this).apply {
-            hint = "IANA zone, e.g. Europe/Bucharest"
+            hint = getString(R.string.text_iana_zone_e_g_europe_bucharest)
             setText(place.zoneId ?: suggestedZone ?: "")
             inputType = InputType.TYPE_CLASS_TEXT
         }
         val suggestion = if (place.zoneId == null && suggestedZone != null)
-            "Suggested from the nearest town; change it if this place is across a border. " else ""
-        AlertDialog.Builder(this).setTitle("Time zone for ${place.name}")
-            .setMessage(suggestion + "Enter an IANA time-zone ID, or leave blank to keep local clock and sunrise unset.")
-            .setView(input).setPositiveButton("Save") { _, _ ->
+            getString(R.string.text_suggested_from_the_nearest_town_change_it_if_this_place_is_across) else ""
+        AlertDialog.Builder(this).setTitle(getString(R.string.text_time_zone_for_1_s, place.name))
+            .setMessage(suggestion + getString(R.string.text_enter_an_iana_time_zone_id_or_leave_blank_to_keep_local_clock_and))
+            .setView(input).setPositiveButton(getString(R.string.text_save)) { _, _ ->
                 val zone = input.text.toString().trim().ifBlank { null }
                 if (zone == null || PlaceStore.validZone(zone)) {
                     placeStore.save(place.copy(zoneId = zone)); placesChanged()
-                } else AlertDialog.Builder(this).setMessage("Unknown IANA time-zone ID: $zone")
-                    .setPositiveButton("Try again") { _, _ -> editPlaceZone(place) }.show()
-            }.setNegativeButton("Cancel", null).show()
+                } else AlertDialog.Builder(this).setMessage(getString(R.string.text_unknown_iana_time_zone_id_1_s, zone))
+                    .setPositiveButton(getString(R.string.text_try_again)) { _, _ -> editPlaceZone(place) }.show()
+            }.setNegativeButton(getString(R.string.text_cancel), null).show()
     }
 
     private fun formatPlaceDaylight(place: SavedPlace, info: Daylight.Summary): String {
-        val zone = place.zoneId ?: return "Time zone unset · choose a zone for local clock and sunrise"
-        val formatter = SimpleDateFormat("EEE, MMM d · HH:mm z", Locale.getDefault()).apply {
+        val zone = place.zoneId ?: return getString(R.string.text_time_zone_unset_choose_a_zone_for_local_clock_and_sunrise)
+        val formatter = SimpleDateFormat(android.text.format.DateFormat.getBestDateTimePattern(AppLanguage.locale(this@MainActivity), "EEEMMMdHm") + " z", AppLanguage.locale(this@MainActivity)).apply {
             timeZone = TimeZone.getTimeZone(zone)
         }
         val clock = formatter.format(Date(info.localTimeMs))
         val sun = when (info.state) {
-            Daylight.State.POLAR_DAY -> "Polar day · Sun stays above the horizon"
-            Daylight.State.POLAR_NIGHT -> "Polar night · Sun stays below the horizon"
-            Daylight.State.ZONE_UNSET -> "Time zone unset"
+            Daylight.State.POLAR_DAY -> getString(R.string.text_polar_day_sun_stays_above_the_horizon)
+            Daylight.State.POLAR_NIGHT -> getString(R.string.text_polar_night_sun_stays_below_the_horizon)
+            Daylight.State.ZONE_UNSET -> getString(R.string.text_time_zone_unset)
             Daylight.State.ORDINARY -> {
-                val hour = SimpleDateFormat("HH:mm", Locale.getDefault()).apply { timeZone = TimeZone.getTimeZone(zone) }
-                val rise = info.sunriseMs?.let { hour.format(Date(it)) } ?: "not available"
-                val set = info.sunsetMs?.let { hour.format(Date(it)) } ?: "not available"
-                val duration = info.daylightMinutes?.let { " · about ${it / 60}h ${it % 60}m daylight" } ?: ""
-                "Approx. sunrise $rise · sunset $set$duration"
+                val hour = SimpleDateFormat("HH:mm", AppLanguage.locale(this@MainActivity)).apply { timeZone = TimeZone.getTimeZone(zone) }
+                val rise = info.sunriseMs?.let { hour.format(Date(it)) } ?: getString(R.string.text_not_available)
+                val set = info.sunsetMs?.let { hour.format(Date(it)) } ?: getString(R.string.text_not_available)
+                val duration = info.daylightMinutes?.let { getString(R.string.text_about_1_sh_2_sm_daylight, it / 60, it % 60) } ?: ""
+                getString(R.string.text_approx_sunrise_1_s_sunset_2_s_3_s, rise, set, duration)
             }
         }
-        return "$clock · ${if (info.isDay) "day" else "night"}\n$sun"
+        return "$clock · ${if (info.isDay) getString(R.string.text_day) else getString(R.string.text_night)}\n$sun"
     }
 
     private fun populateExploreTime() {
-        panelAction("‹ Explore") { showCompanionPanel("Explore") }
+        panelAction(getString(R.string.text_explore)) { showCompanionPanel("Explore") }
         val clock = globeView.sceneClock
         if (!clock.isExploring) {
-            companionColumn.addView(panelText("Choose a date to hold the globe in an explicit lesson time. Today and wallpaper remain on real time.", 15f))
-            panelAction("Begin at current time") { enterExploreTime(System.currentTimeMillis()) }
+            companionColumn.addView(panelText(getString(R.string.text_choose_a_date_to_hold_the_globe_in_an_explicit_lesson_time_today), 15f))
+            panelAction(getString(R.string.text_begin_at_current_time)) { enterExploreTime(System.currentTimeMillis()) }
         } else {
-            companionColumn.addView(panelText("SIMULATED · ${timeFormat.format(Date(clock.nowMs()))}", 17f, Color.rgb(255, 225, 160)))
-            panelAction("Choose date and time") { chooseExploreDate() }
-            panelAction(if (clock.isPlaying) "Pause" else "Play at real-time speed") {
+            companionColumn.addView(panelText(getString(R.string.text_simulated_1_s, timeFormat.format(Date(clock.nowMs()))), 17f, Color.rgb(255, 225, 160)))
+            panelAction(getString(R.string.text_choose_date_and_time)) { chooseExploreDate() }
+            panelAction(if (clock.isPlaying) getString(R.string.text_pause) else getString(R.string.text_play_at_real_time_speed)) {
                 clock.setPlaying(!clock.isPlaying); persistExploreTime(); showCompanionPanel("Explore time")
             }
-            panelAction("Advance one hour") { clock.seek(clock.nowMs() + 3_600_000L); persistExploreTime(); updateTimeLabel(); showCompanionPanel("Explore time") }
-            panelAction("Advance one day") { clock.seek(clock.nowMs() + 86_400_000L); persistExploreTime(); updateTimeLabel(); showCompanionPanel("Explore time") }
-            panelAction("Now · leave time exploration") { exitExploreTime() }
-            panelSwitch("Compare latest observations", "These reports are from real dates, not the simulated date.", observationsInSimulation) {
+            panelAction(getString(R.string.text_advance_one_hour)) { clock.seek(clock.nowMs() + 3_600_000L); persistExploreTime(); updateTimeLabel(); showCompanionPanel("Explore time") }
+            panelAction(getString(R.string.text_advance_one_day)) { clock.seek(clock.nowMs() + 86_400_000L); persistExploreTime(); updateTimeLabel(); showCompanionPanel("Explore time") }
+            panelAction(getString(R.string.text_now_leave_time_exploration)) { exitExploreTime() }
+            panelSwitch(getString(R.string.text_compare_latest_observations), getString(R.string.text_these_reports_are_from_real_dates_not_the_simulated_date), observationsInSimulation) {
                 observationsInSimulation = it; applySimulationObservations()
             }
             val year = Calendar.getInstance().apply { timeInMillis = clock.nowMs() }.get(Calendar.YEAR)
             val start = Calendar.getInstance().apply { clear(); set(year, Calendar.JANUARY, 1, 12, 0) }
             val currentDay = Calendar.getInstance().apply { timeInMillis = clock.nowMs() }.get(Calendar.DAY_OF_YEAR)
-            companionColumn.addView(panelText("Year timeline · $year", 15f))
+            companionColumn.addView(panelText(getString(R.string.text_year_timeline_1_s, year), 15f))
             companionColumn.addView(SeekBar(this).apply {
                 max = start.getActualMaximum(Calendar.DAY_OF_YEAR) - 1
                 progress = currentDay - 1
-                contentDescription = "Choose day of year"
+                contentDescription = getString(R.string.text_choose_day_of_year)
                 setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                     override fun onProgressChanged(bar: SeekBar, value: Int, fromUser: Boolean) {
                         if (fromUser) {
@@ -1029,7 +1116,7 @@ class MainActivity : AppCompatActivity() {
                 })
             })
         }
-        companionColumn.addView(panelText("Seasons · Earth's axis stays tilted about 23.4° as Earth orbits the Sun. Sunlight moves between hemispheres across the year; the scene's Sun already accounts for this tilt.", 15f))
+        companionColumn.addView(panelText(getString(R.string.text_seasons_earth_s_axis_stays_tilted_about_23_4_as_earth_orbits_the), 15f))
         companionColumn.addView(object : View(this) {
             private val paint = Paint(3)
             override fun onDraw(canvas: Canvas) {
@@ -1044,29 +1131,29 @@ class MainActivity : AppCompatActivity() {
                 paint.color = Color.rgb(255, 224, 151)
                 canvas.drawLine(cx - dx, cy + dy, cx + dx, cy - dy, paint)
                 paint.style = Paint.Style.FILL; paint.textSize = dpi(12f).toFloat()
-                canvas.drawText("23.4° axis", cx + r * .65f, cy - r * .8f, paint)
+                canvas.drawText(getString(R.string.text_23_4_axis), cx + r * .65f, cy - r * .8f, paint)
                 paint.color = Color.rgb(255, 240, 177)
                 for (i in 0..2) {
                     val y = cy - r * .65f + i * r * .65f
                     canvas.drawLine(dpi(8f).toFloat(), y, cx-r, y, paint)
                 }
-                canvas.drawText("Sunlight →", dpi(5f).toFloat(), cy + r * 1.3f, paint)
+                canvas.drawText(getString(R.string.text_sunlight), dpi(5f).toFloat(), cy + r * 1.3f, paint)
             }
-        }.apply { minimumHeight = dpi(170f) }, LinearLayout.LayoutParams(
+        }.apply { minimumHeight = dpi(170f); contentDescription = getString(R.string.text_earth_s_axis_is_tilted_about_23_4_degrees_relative_to_its_orbit_a) }, LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, dpi(170f)))
         val current = clock.nowMs()
-        val north = CityCatalog.cities.first { it.id == "city:london" }
-        val south = CityCatalog.cities.first { it.id == "city:sydney" }
+        val north = CityCatalog.search("", this).first { it.id == "city:london" }
+        val south = CityCatalog.search("", this).first { it.id == "city:sydney" }
         listOf(north, south).forEach { p ->
             val day = Daylight.at(p, current)
             val duration = when (day.state) {
-                Daylight.State.POLAR_DAY -> "polar day"
-                Daylight.State.POLAR_NIGHT -> "polar night"
-                else -> day.daylightMinutes?.let { "about ${it / 60}h ${it % 60}m daylight" } ?: "daylight changing"
+                Daylight.State.POLAR_DAY -> getString(R.string.text_polar_day)
+                Daylight.State.POLAR_NIGHT -> getString(R.string.text_polar_night)
+                else -> day.daylightMinutes?.let { getString(R.string.text_about_1_sh_2_sm_daylight_2, it / 60, it % 60) } ?: getString(R.string.text_daylight_changing)
             }
             panelAction("${p.name} · $duration") { closeCompanionPanel(); globeView.camera.flyTo(p.lat, p.lon) }
         }
-        companionColumn.addView(panelText("Guides: equator, tropics (±23.4°), and polar circles (±66.6°). Compare the two hemispheres in March, June, September, and December.", 13f))
+        companionColumn.addView(panelText(getString(R.string.text_guides_equator_tropics_23_4_and_polar_circles_66_6_compare_the_tw), 13f))
     }
 
     private fun enterExploreTime(ms: Long) {
@@ -1132,15 +1219,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun populateJourneys() {
-        panelAction("‹ Explore") { showCompanionPanel("Explore") }
+        panelAction(getString(R.string.text_explore)) { showCompanionPanel("Explore") }
         val active = journeyStore.active()
-        companionColumn.addView(panelText("Short, local lessons. Each restores your previous globe view and layers when you leave.", 14f))
+        companionColumn.addView(panelText(getString(R.string.text_short_local_lessons_each_restores_your_previous_globe_view_and_la), 14f))
         JourneyContent.all(this).forEach { journey ->
             val complete = journeyStore.completed(journey.id)
-            panelAction("${journey.title} · ${journey.minutes} min${if (complete) " · completed" else ""}") {
+            panelAction(getString(R.string.text_1_s_2_s_min_3_s, journey.title, journey.minutes, if (complete) getString(R.string.text_completed) else "")) {
                 if (active?.journeyId == journey.id) {
                     AlertDialog.Builder(this).setTitle(journey.title)
-                        .setItems(arrayOf("Resume", "Restart")) { _, index ->
+                        .setItems(arrayOf(getString(R.string.text_resume), getString(R.string.text_restart))) { _, index ->
                             if (index == 0) resumeJourney() else startJourney(journey, restart = true)
                         }.show()
                 } else startJourney(journey)
@@ -1173,50 +1260,54 @@ class MainActivity : AppCompatActivity() {
 
     private fun populateJourney() {
         val active = journeyStore.active() ?: run {
-            panelAction("Choose a journey") { showCompanionPanel("Journeys") }; return
+            panelAction(getString(R.string.text_choose_a_journey)) { showCompanionPanel("Journeys") }; return
         }
         val journey = JourneyContent.all(this).firstOrNull { it.id == active.journeyId } ?: return
         val step = journey.step(active.stepId) ?: journey.steps.first()
         val index = journey.steps.indexOf(step) + 1
-        companionColumn.addView(panelText("${journey.title} · step $index of ${journey.steps.size}", 15f, Color.rgb(173, 215, 255)))
+        companionColumn.addView(panelText(getString(R.string.text_1_s_step_2_s_of_3_s, journey.title, index, journey.steps.size), 15f, Color.rgb(173, 215, 255)))
         companionColumn.addView(panelText(step.title, 20f))
         companionColumn.addView(panelText(step.instruction, 15f))
-        if (step.source != null) companionColumn.addView(panelText("Historical source: ${step.source}", 13f))
+        if (step.source != null) companionColumn.addView(panelText(getString(R.string.text_historical_source_1_s, step.source), 13f))
         recentJourneyEvent(step)?.let { event ->
-            companionColumn.addView(panelText("Recent reported example: ${event.title}\n${event.observedAtMs?.let(::formatDate)} · ${event.source}", 14f))
+            companionColumn.addView(panelText(getString(R.string.text_recent_reported_example_1_s_2_s_3_s, event.title, event.observedAtMs?.let(::formatDate), event.source), 14f))
         }
         if (journey.id == "understand_seasons" && step.month != null) {
             val sceneTime = globeView.sceneClock.nowMs()
             listOf("city:london", "city:sydney").forEach { cityId ->
-                val city = CityCatalog.cities.first { it.id == cityId }
+                val city = CityCatalog.search("", this).first { it.id == cityId }
                 val daylight = Daylight.at(city, sceneTime)
-                companionColumn.addView(panelText("${city.name}: ${daylight.daylightMinutes?.let { "about ${it / 60}h ${it % 60}m daylight" } ?: daylight.state.name.lowercase().replace('_', ' ')}", 14f))
+                companionColumn.addView(panelText("${city.name}: ${daylight.daylightMinutes?.let { getString(R.string.text_about_1_sh_2_sm_daylight_2, it / 60, it % 60) } ?: when (daylight.state) {
+                    Daylight.State.POLAR_DAY -> getString(R.string.text_polar_day)
+                    Daylight.State.POLAR_NIGHT -> getString(R.string.text_polar_night)
+                    else -> getString(R.string.text_time_zone_unset)
+                }}", 14f))
             }
         }
         when (step.kind) {
             "choice" -> step.options.forEachIndexed { answer, option ->
                 panelAction(option) {
-                    AlertDialog.Builder(this).setTitle(if (answer == step.correct) "That's the pattern" else "Look again")
+                    AlertDialog.Builder(this).setTitle(if (answer == step.correct) getString(R.string.text_that_s_the_pattern) else getString(R.string.text_look_again))
                         .setMessage(if (answer == step.correct) step.right else step.wrong)
-                        .setPositiveButton("Continue") { _, _ -> advanceJourney() }.show()
+                        .setPositiveButton(getString(R.string.text_continue)) { _, _ -> advanceJourney() }.show()
                 }
             }
-            "advance" -> panelAction(step.action ?: "Advance") {
+            "advance" -> panelAction(step.action ?: getString(R.string.text_advance)) {
                 globeView.sceneClock.seek(globeView.sceneClock.nowMs() + step.hours * 3_600_000L)
                 updateTimeLabel()
-                AlertDialog.Builder(this).setMessage("The scene moved ${step.hours} hours ahead. Watch the changing sunlight on the globe.")
-                    .setPositiveButton("Continue") { _, _ -> advanceJourney() }.show()
+                AlertDialog.Builder(this).setMessage(getString(R.string.text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th, step.hours))
+                    .setPositiveButton(getString(R.string.text_continue)) { _, _ -> advanceJourney() }.show()
             }
-            "reveal" -> panelAction(step.action ?: "Reveal") {
+            "reveal" -> panelAction(step.action ?: getString(R.string.text_reveal)) {
                 globeView.renderer.showPlateBoundaries = true
-                AlertDialog.Builder(this).setMessage("The gold PB2002 lines show a broad plate-edge pattern. Some reported events lie away from them.")
-                    .setPositiveButton("Continue") { _, _ -> advanceJourney() }.show()
+                AlertDialog.Builder(this).setMessage(getString(R.string.text_the_gold_pb2002_lines_show_a_broad_plate_edge_pattern_some_report))
+                    .setPositiveButton(getString(R.string.text_continue)) { _, _ -> advanceJourney() }.show()
             }
-            else -> panelAction(step.action ?: "Continue") { advanceJourney() }
+            else -> panelAction(step.action ?: getString(R.string.text_continue)) { advanceJourney() }
         }
-        panelAction("View globe") { closeCompanionPanel() }
-        if (index < journey.steps.size) panelAction("Skip this step") { advanceJourney() }
-        panelAction("Leave journey · restore my view") { leaveJourney() }
+        panelAction(getString(R.string.text_view_globe)) { closeCompanionPanel() }
+        if (index < journey.steps.size) panelAction(getString(R.string.text_skip_this_step)) { advanceJourney() }
+        panelAction(getString(R.string.text_leave_journey_restore_my_view)) { leaveJourney() }
     }
 
     private fun advanceJourney() {
@@ -1226,8 +1317,8 @@ class MainActivity : AppCompatActivity() {
         if (next == null) {
             journeyStore.finish(journey.id)
             restoreJourneyScene(active.previous)
-            AlertDialog.Builder(this).setMessage("${journey.title} is in your Field notebook.")
-                .setPositiveButton("Done") { _, _ -> showCompanionPanel("Journeys") }.show()
+            AlertDialog.Builder(this).setMessage(getString(R.string.text_1_s_is_in_your_field_notebook, journey.title))
+                .setPositiveButton(getString(R.string.text_done)) { _, _ -> showCompanionPanel("Journeys") }.show()
         } else {
             journeyStore.advance(next.id)
             applyJourneyStepScene(journey, next)
@@ -1305,13 +1396,13 @@ class MainActivity : AppCompatActivity() {
         for (type in EarthEventsProvider.Event.Type.values()) {
             if (!layers.enabled(type)) continue
             val feed = current.feeds.getValue(type)
-            val title = type.name.lowercase().replaceFirstChar { it.uppercase() }
+            val title = type.label(this)
             val status = when (feed.state) {
-                EarthRepository.State.NOT_LOADED -> "Not loaded"
-                EarthRepository.State.LOADING -> "Checking"
-                EarthRepository.State.READY -> "Checked ${feed.fetchedAtMs?.let(::formatDate) ?: "recently"}"
-                EarthRepository.State.STALE -> "Saved observations · offline or update failed"
-                EarthRepository.State.UNAVAILABLE -> "Unavailable"
+                EarthRepository.State.NOT_LOADED -> getString(R.string.text_not_loaded)
+                EarthRepository.State.LOADING -> getString(R.string.text_checking)
+                EarthRepository.State.READY -> getString(R.string.text_checked_1_s, feed.fetchedAtMs?.let(::formatDate) ?: getString(R.string.text_recently))
+                EarthRepository.State.STALE -> getString(R.string.text_saved_observations_offline_or_update_failed)
+                EarthRepository.State.UNAVAILABLE -> getString(R.string.text_unavailable)
             }
             companionColumn.addView(panelText("$title · $status", 15f, Color.rgb(173, 215, 255)))
             if (feed.state == EarthRepository.State.READY && feed.events.isEmpty()) {
@@ -1324,7 +1415,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun formatDate(timeMs: Long): String =
-        SimpleDateFormat("MMM d, yyyy HH:mm z", Locale.getDefault()).format(Date(timeMs))
+        SimpleDateFormat(android.text.format.DateFormat.getBestDateTimePattern(AppLanguage.locale(this@MainActivity), "yMMMdHm") + " z", AppLanguage.locale(this@MainActivity)).format(Date(timeMs))
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
@@ -1358,9 +1449,9 @@ class MainActivity : AppCompatActivity() {
         } else if (snapshot.feeds.values.none { it.state == EarthRepository.State.NOT_LOADED ||
                 it.state == EarthRepository.State.LOADING }) {
             pendingWidgetEventId = null
-            AlertDialog.Builder(this).setMessage("This observation is no longer in the saved feed.")
-                .setPositiveButton("Current events") { _, _ -> showCompanionPanel("Explore") }
-                .setNegativeButton("Close", null).show()
+            AlertDialog.Builder(this).setMessage(getString(R.string.text_this_observation_is_no_longer_in_the_saved_feed))
+                .setPositiveButton(getString(R.string.text_current_events)) { _, _ -> showCompanionPanel("Explore") }
+                .setNegativeButton(getString(R.string.companion_close), null).show()
         }
     }
 
@@ -1393,7 +1484,7 @@ class MainActivity : AppCompatActivity() {
             // Tapped the sky beyond Earth — a stargazing moment.
             globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             showCard(
-                "🌟 The night sky!\nBeyond Earth are thousands of stars, planets, and whole galaxies.",
+                getString(R.string.text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who),
                 Discovery.STARGAZER
             )
             return
@@ -1432,13 +1523,13 @@ class MainActivity : AppCompatActivity() {
     private fun showEventCard(event: EarthEventsProvider.Event) {
         val explain = when (event.type) {
             EarthEventsProvider.Event.Type.EARTHQUAKE ->
-                "Earthquakes happen when stress makes rock slip along a fault. Some occur far from plate boundaries."
+                getString(R.string.text_earthquakes_happen_when_stress_makes_rock_slip_along_a_fault_some)
             EarthEventsProvider.Event.Type.VOLCANO ->
-                "Magma can rise through Earth's crust. This report does not confirm an eruption at this moment."
+                getString(R.string.text_magma_can_rise_through_earth_s_crust_this_report_does_not_confirm)
             EarthEventsProvider.Event.Type.WILDFIRE ->
-                "Wildfire can begin naturally or through human activity and may spread with dry, windy conditions. This report may be older than today."
+                getString(R.string.text_wildfire_can_begin_naturally_or_through_human_activity_and_may_sp)
             EarthEventsProvider.Event.Type.STORM ->
-                "Severe storms draw energy from warm, moist air. This marker shows the latest reported point, not a live forecast."
+                getString(R.string.text_severe_storms_draw_energy_from_warm_moist_air_this_marker_shows_t)
         }
         val discovery = when (event.type) {
             EarthEventsProvider.Event.Type.EARTHQUAKE -> Discovery.EARTHQUAKE
@@ -1451,33 +1542,33 @@ class MainActivity : AppCompatActivity() {
         val facts = buildString {
             append(event.title)
             append("\n\n")
-            event.magnitude?.let { append("Magnitude: ${"%.1f".format(Locale.getDefault(), it)}\n") }
-            event.depthKm?.let { append("Depth: ${"%.1f".format(Locale.getDefault(), it)} km\n") }
-            append("Observed: ${event.observedAtMs?.let(::formatDate) ?: "Time not reported"}\n")
-            event.updatedAtMs?.let { append("Source updated: ${formatDate(it)}\n") }
-            append("Source: ${event.source}\n")
-            append("Feed: ${when (feed.state) {
-                EarthRepository.State.READY -> "checked ${feed.fetchedAtMs?.let(::formatDate) ?: "recently"}"
-                EarthRepository.State.STALE -> "saved copy; refresh unavailable"
-                EarthRepository.State.LOADING -> "checking; showing saved copy"
-                else -> "unavailable"
-            }}")
-            event.sourceUrl?.let { append("\nSource link: $it") }
+            event.magnitude?.let { append(getString(R.string.text_magnitude_1_s, "%.1f".format(AppLanguage.locale(this@MainActivity), it))) }
+            event.depthKm?.let { append(getString(R.string.text_depth_1_s_km, "%.1f".format(AppLanguage.locale(this@MainActivity), it))) }
+            append(getString(R.string.text_observed_1_s, event.observedAtMs?.let(::formatDate) ?: getString(R.string.text_time_not_reported)))
+            event.updatedAtMs?.let { append(getString(R.string.text_source_updated_1_s, formatDate(it))) }
+            append(getString(R.string.text_source_1_s, event.source))
+            append(getString(R.string.text_feed_1_s, when (feed.state) {
+                EarthRepository.State.READY -> getString(R.string.text_checked_1_s_2, feed.fetchedAtMs?.let(::formatDate) ?: getString(R.string.text_recently))
+                EarthRepository.State.STALE -> getString(R.string.text_saved_copy_refresh_unavailable)
+                EarthRepository.State.LOADING -> getString(R.string.text_checking_showing_saved_copy)
+                else -> getString(R.string.text_unavailable_2)
+            }))
+            event.sourceUrl?.let { append(getString(R.string.text_source_link_1_s_2, it)) }
         }
         val cardBody = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dpi(24f), dpi(12f), dpi(24f), dpi(8f))
             addView(panelText(facts, 15f))
-            addView(panelText("Read aloud", 14f, Color.rgb(173, 215, 255)).apply {
+            addView(panelText(getString(R.string.text_read_aloud), 14f, Color.rgb(173, 215, 255)).apply {
                 minHeight = dpi(48f)
                 setOnClickListener { speak(facts) }
             })
         }
         val cardScroll = ScrollView(this).apply { addView(cardBody) }
         AlertDialog.Builder(this)
-            .setTitle(event.type.name.lowercase().replaceFirstChar { it.uppercase() })
+            .setTitle(event.type.label(this))
             .setView(cardScroll)
-            .setPositiveButton(if (fieldNotebook.hasEvent(event.id)) "Saved" else "Save") { _, _ ->
+            .setPositiveButton(if (fieldNotebook.hasEvent(event.id)) getString(R.string.text_saved) else getString(R.string.text_save)) { _, _ ->
                 fieldNotebook.saveEvent(event)
                 if (openPanel == "Notebook") showCompanionPanel("Notebook")
             }
@@ -1513,15 +1604,15 @@ class MainActivity : AppCompatActivity() {
                 faceSkyBody(com.globe.app.earth.SunPosition.calculate(globeView.sceneClock.nowMs())); true
             }
             dMoon <= radius -> {
-                faceSkyBody(com.globe.app.moon.MoonPosition.calculate(globeView.sceneClock.nowMs())); true
+                faceSkyBody(com.globe.app.moon.MoonPosition.calculate(globeView.sceneClock.nowMs()), aboveGlobe = true); true
             }
             else -> false
         }
     }
 
-    private fun faceSkyBody(dir: FloatArray) {
+    private fun faceSkyBody(dir: FloatArray, aboveGlobe: Boolean = false) {
         globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-        globeView.camera.faceSky(dir[0], dir[1], dir[2])
+        globeView.camera.faceSky(dir[0], dir[1], dir[2], aboveGlobe)
     }
 
     /**
@@ -1540,9 +1631,7 @@ class MainActivity : AppCompatActivity() {
         val sunlit = p[0] * sun[0] + p[1] * sun[1] + p[2] * sun[2] > 0
         globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
         showCard(
-            "🛰 International Space Station\n" +
-            "Astronauts live and work here, about 400 km above Earth — circling the whole planet about every 90 minutes at 28,000 km/h!\n" +
-            "Right now it's over the ${if (sunlit) "daytime" else "night"} side."
+            getString(if (sunlit) R.string.text_iss_day else R.string.text_iss_night)
         )
         return true
     }
@@ -1592,31 +1681,31 @@ class MainActivity : AppCompatActivity() {
     /** Names a tapped point; the time zone starts from the nearest offline town and can be changed. */
     private fun savePlaceAt(lat: Double, lon: Double) {
         val input = EditText(this).apply {
-            hint = "Place name"
+            hint = getString(R.string.text_place_name)
             inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
         }
-        AlertDialog.Builder(this).setTitle("Name this place")
-            .setMessage("${"%.3f".format(Locale.getDefault(), lat)}°, ${"%.3f".format(Locale.getDefault(), lon)}°")
+        AlertDialog.Builder(this).setTitle(getString(R.string.text_name_this_place))
+            .setMessage("${"%.3f".format(AppLanguage.locale(this@MainActivity), lat)}°, ${"%.3f".format(AppLanguage.locale(this@MainActivity), lon)}°")
             .setView(input)
-            .setPositiveButton("Save") { _, _ ->
+            .setPositiveButton(getString(R.string.text_save)) { _, _ ->
                 val name = input.text.toString().trim()
                 if (name.isNotEmpty()) {
                     val place = placeStore.create(name, lat, lon, null)
                     placesChanged(); hideEventCard()
                     editPlaceZone(place, TimeZoneSuggester.suggest(this, lat, lon))
                 }
-            }.setNegativeButton("Cancel", null).show()
+            }.setNegativeButton(getString(R.string.text_cancel), null).show()
     }
 
     private fun showDayNightCard(lat: Double, lon: Double) {
         if (facingSun(lat, lon) > 0) {
             showCard(
-                "☀️ It's daytime here!\nThis side of Earth is facing the Sun right now. Drag the time slider to watch night arrive.",
+                getString(R.string.text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now),
                 Discovery.DAYTIME
             )
         } else {
             showCard(
-                "🌙 It's night-time here.\nThis side is turned away from the Sun — those tiny lights are cities. Drag the time slider to bring the Sun back.",
+                getString(R.string.text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those),
                 Discovery.NIGHT
             )
         }
@@ -1631,11 +1720,11 @@ class MainActivity : AppCompatActivity() {
     private fun showCard(text: String, discovery: Discovery? = null) {
         var body = text
         if (discovery != null && journal.unlock(discovery)) {
-            body = "Added to Field notebook.\n\n$text"
+            body = getString(R.string.text_added_to_field_notebook_1_s, text)
             globeView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
             refreshJournalButton()
         }
-        eventCard.text = "×  Close\n\n$body"
+        eventCard.text = getString(R.string.text_close_1_s, body)
         eventCard.visibility = View.VISIBLE
         pendingSavePoint = null
         savePlaceButton.visibility = View.GONE
@@ -1646,7 +1735,7 @@ class MainActivity : AppCompatActivity() {
     private fun awardTimeTraveler() {
         if (!journal.isUnlocked(Discovery.TIME_TRAVELER)) {
             showCard(
-                "${Discovery.TIME_TRAVELER.emoji} ${Discovery.TIME_TRAVELER.title}\n${Discovery.TIME_TRAVELER.fact}",
+                "${Discovery.TIME_TRAVELER.emoji} ${Discovery.TIME_TRAVELER.title(this)}\n${Discovery.TIME_TRAVELER.fact(this)}",
                 Discovery.TIME_TRAVELER
             )
         }
@@ -1677,7 +1766,7 @@ class MainActivity : AppCompatActivity() {
 
         // Avoid repeating the same challenge back-to-back when there's a choice.
         challengeKind = options.filter { it != challengeKind }.ifEmpty { options }.random()
-        challengeBanner.text = "🎯 ${challengeKind!!.prompt}\n⭐ $challengeScore   ·   tap to stop"
+        challengeBanner.text = getString(R.string.text_1_s_2_s_tap_to_stop, challengeKind!!.prompt(this), challengeScore)
         challengeBanner.visibility = View.VISIBLE
     }
 
@@ -1686,8 +1775,8 @@ class MainActivity : AppCompatActivity() {
         challengeKind = null
         challengeBanner.visibility = View.GONE
         showCard(
-            if (score > 0) "🎉 Great job! You solved $score challenge${if (score == 1) "" else "s"}!"
-            else "Challenge stopped — play again anytime!"
+            if (score > 0) getString(R.string.text_great_job_challenges_solved_1_s, score)
+            else getString(R.string.text_challenge_stopped_play_again_anytime)
         )
     }
 
@@ -1695,7 +1784,7 @@ class MainActivity : AppCompatActivity() {
         val kind = challengeKind ?: return
         val picked = globeView.renderer.pick(x, y, globeView.width, globeView.height)
         if (picked == null) {
-            showCard("Tap on the Earth to answer! 🌍")
+            showCard(getString(R.string.text_tap_on_the_earth_to_answer))
             return
         }
 
@@ -1717,11 +1806,11 @@ class MainActivity : AppCompatActivity() {
         if (correct) {
             globeView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
             challengeScore++
-            showCard("🎉 Yes! That's right.")
+            showCard(getString(R.string.text_yes_that_s_right))
             nextChallenge()
         } else {
             globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            showCard("Not quite — take another look and try again! 🔍")
+            showCard(getString(R.string.text_not_quite_take_another_look_and_try_again))
         }
     }
 
@@ -1765,14 +1854,14 @@ class MainActivity : AppCompatActivity() {
         journalColumn.removeAllViews()
 
         journalColumn.addView(TextView(this).apply {
-            text = "My Discoveries"
+            text = getString(R.string.text_my_discoveries)
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
             typeface = Typeface.DEFAULT_BOLD
             gravity = Gravity.CENTER
         })
         journalColumn.addView(TextView(this).apply {
-            text = "${journal.unlockedCount()} of ${journal.total} found — keep exploring!"
+            text = getString(R.string.text_1_s_of_2_s_found_keep_exploring, journal.unlockedCount(), journal.total)
             setTextColor(Color.rgb(150, 200, 255))
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
             typeface = Typeface.MONOSPACE
@@ -1796,13 +1885,13 @@ class MainActivity : AppCompatActivity() {
             })
             val textCol = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
             textCol.addView(TextView(this).apply {
-                text = if (unlocked) d.title else "? ? ?"
+                text = if (unlocked) d.title(this@MainActivity) else "? ? ?"
                 setTextColor(Color.WHITE)
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
                 typeface = Typeface.DEFAULT_BOLD
             })
             textCol.addView(TextView(this).apply {
-                text = if (unlocked) d.fact else "Not found yet"
+                text = if (unlocked) d.fact(this@MainActivity) else getString(R.string.text_not_found_yet)
                 setTextColor(Color.rgb(180, 180, 185))
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
             })
@@ -1813,7 +1902,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         journalColumn.addView(TextView(this).apply {
-            text = "Tap anywhere to close"
+            text = getString(R.string.text_tap_anywhere_to_close)
             setTextColor(Color.rgb(140, 140, 140))
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f)
             gravity = Gravity.CENTER
@@ -1879,14 +1968,14 @@ class MainActivity : AppCompatActivity() {
         todayColumn.removeAllViews()
 
         todayColumn.addView(TextView(this).apply {
-            text = "Today"
+            text = getString(R.string.companion_today)
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f)
             typeface = Typeface.DEFAULT_BOLD
             gravity = Gravity.CENTER
         })
         todayColumn.addView(TextView(this).apply {
-            text = SimpleDateFormat("EEEE, MMMM d", Locale.getDefault()).format(Date())
+            text = SimpleDateFormat(android.text.format.DateFormat.getBestDateTimePattern(AppLanguage.locale(this@MainActivity), "EEEEMMMMd") + "", AppLanguage.locale(this@MainActivity)).format(Date())
             setTextColor(Color.rgb(150, 200, 255))
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
             typeface = Typeface.MONOSPACE
@@ -1896,7 +1985,7 @@ class MainActivity : AppCompatActivity() {
 
         val phase = MoonPhase.current()
         todayColumn.addView(TextView(this).apply {
-            text = "${phase.emoji}  ${phase.name}\n${phase.illuminationPercent}% lit up tonight"
+            text = getString(R.string.text_1_s_2_s_3_s_lit_up_tonight, phase.emoji, phase.name(this@MainActivity), phase.illuminationPercent)
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 17f)
             typeface = Typeface.MONOSPACE
@@ -1906,13 +1995,13 @@ class MainActivity : AppCompatActivity() {
         })
 
         todayColumn.addView(TextView(this).apply {
-            text = "Did you know?"
+            text = getString(R.string.text_did_you_know)
             setTextColor(Color.rgb(150, 200, 255))
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
             typeface = Typeface.DEFAULT_BOLD
         })
         todayColumn.addView(TextView(this).apply {
-            text = DailyFacts.today()
+            text = DailyFacts.today(this@MainActivity)
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
             setLineSpacing(dpi(3f).toFloat(), 1f)
@@ -1920,13 +2009,13 @@ class MainActivity : AppCompatActivity() {
         })
 
         todayColumn.addView(TextView(this).apply {
-            text = "Tap a glowing dot on Earth to explore — or find a new discovery for your journal!"
+            text = getString(R.string.text_tap_a_glowing_dot_on_earth_to_explore_or_find_a_new_discovery_for)
             setTextColor(Color.rgb(190, 190, 195))
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
             setLineSpacing(dpi(3f).toFloat(), 1f)
         })
 
-        todayColumn.addView(makePillButton("🎯  Play a challenge!", ::dpi).apply {
+        todayColumn.addView(makePillButton(getString(R.string.text_play_a_challenge), ::dpi).apply {
             setOnClickListener {
                 it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                 startChallenge()
@@ -1940,7 +2029,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         todayColumn.addView(TextView(this).apply {
-            text = "Tap outside the box to close"
+            text = getString(R.string.text_tap_outside_the_box_to_close)
             setTextColor(Color.rgb(140, 140, 140))
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f)
             gravity = Gravity.CENTER
@@ -1955,13 +2044,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun relativeTime(timeMs: Long): String {
-        if (timeMs <= 0L) return "ongoing"
+        if (timeMs <= 0L) return getString(R.string.text_ongoing)
         val diffMin = (System.currentTimeMillis() - timeMs) / 60_000L
         return when {
-            diffMin < 1 -> "just now"
-            diffMin < 60 -> "$diffMin min ago"
-            diffMin < 48 * 60 -> "${diffMin / 60} h ago"
-            else -> "${diffMin / (24 * 60)} days ago"
+            diffMin < 1 -> getString(R.string.text_just_now)
+            diffMin < 60 -> getString(R.string.text_elapsed_minutes, diffMin)
+            diffMin < 48 * 60 -> getString(R.string.text_elapsed_hours, diffMin / 60)
+            else -> getString(R.string.text_elapsed_days, diffMin / (24 * 60))
         }
     }
 
@@ -1997,33 +2086,33 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateCloudLabel() {
         cloudLabel.text = when (globeView.renderer.earthRenderer.cloudMode) {
-            EarthRenderer.CloudMode.OFF -> "\u2601 Clouds: off"
-            EarthRenderer.CloudMode.GENERATED -> "\u2601 Clouds: generated"
+            EarthRenderer.CloudMode.OFF -> getString(R.string.text_clouds_off)
+            EarthRenderer.CloudMode.GENERATED -> getString(R.string.text_clouds_generated)
             EarthRenderer.CloudMode.LIVE ->
-                if (cloudTimestamp != null) "\u2601 Clouds: live (NASA VIIRS)\n    Updated: $cloudTimestamp"
-                else "\u2601 Clouds: live (loading\u2026)"
+                if (cloudTimestamp != null) getString(R.string.text_clouds_live_nasa_viirs_updated_1_s, cloudTimestamp)
+                else getString(R.string.text_clouds_live_loading)
         }
     }
 
     private fun updateEclipseLabel(state: EclipseDetector.EclipseState) {
         when (state) {
             EclipseDetector.EclipseState.SOLAR -> {
-                eclipseLabel.text = "\u2600 Solar Eclipse!"
+                eclipseLabel.text = getString(R.string.text_solar_eclipse)
                 eclipseLabel.setTextColor(Color.rgb(255, 191, 0)) // amber/gold
                 eclipseLabel.visibility = View.VISIBLE
             }
             EclipseDetector.EclipseState.LUNAR -> {
-                eclipseLabel.text = "\uD83C\uDF19 Lunar Eclipse!"
+                eclipseLabel.text = getString(R.string.text_lunar_eclipse)
                 eclipseLabel.setTextColor(Color.rgb(173, 216, 230)) // pale blue
                 eclipseLabel.visibility = View.VISIBLE
             }
             EclipseDetector.EclipseState.NEAR_SOLAR -> {
-                eclipseLabel.text = "Near solar eclipse"
+                eclipseLabel.text = getString(R.string.text_near_solar_eclipse)
                 eclipseLabel.setTextColor(Color.rgb(180, 150, 80)) // dim amber
                 eclipseLabel.visibility = View.VISIBLE
             }
             EclipseDetector.EclipseState.NEAR_LUNAR -> {
-                eclipseLabel.text = "Near lunar eclipse"
+                eclipseLabel.text = getString(R.string.text_near_lunar_eclipse)
                 eclipseLabel.setTextColor(Color.rgb(120, 150, 170)) // dim blue
                 eclipseLabel.visibility = View.VISIBLE
             }
@@ -2035,21 +2124,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateTimeLabel() {
         if (globeView.sceneClock.isExploring) {
-            timeLabel.text = "SIMULATED · ${timeFormat.format(Date(globeView.sceneClock.nowMs()))}"
-            timeLabel.contentDescription = "Explore time, simulated scene"
-            timeLabel.translationY = dpi(55f).toFloat()
+            timeLabel.text = getString(R.string.text_simulated_1_s, timeFormat.format(Date(globeView.sceneClock.nowMs())))
+            timeLabel.contentDescription = getString(R.string.text_explore_time_simulated_scene)
             return
         }
-        timeLabel.contentDescription = "Time controls"
-        timeLabel.translationY = 0f
+        timeLabel.contentDescription = getString(R.string.text_time_controls)
         val offsetMs = globeView.sceneClock.offsetMs
         if (offsetMs == 0L) {
-            timeLabel.text = "Time · Now"
+            timeLabel.text = getString(R.string.text_time_now)
         } else {
             val simTime = timeFormat.format(Date(globeView.sceneClock.nowMs()))
             val hours = offsetMs / 3_600_000.0
             val sign = if (hours >= 0) "+" else ""
-            timeLabel.text = "$simTime (${sign}${String.format("%.1f", hours)}h)"
+            timeLabel.text = "$simTime (${sign}${String.format(AppLanguage.locale(this), "%.1f", hours)}h)"
         }
     }
 
@@ -2081,7 +2168,7 @@ class MainActivity : AppCompatActivity() {
                 // Dark half
                 pt.color = Color.argb(140, 0, 0, 30)
                 c.drawArc(RectF(s*0.08f, s*0.08f, s*0.92f, s*0.92f), -90f, 180f, true, pt)
-            }, "Earth", "Textured globe with day/night cycle and diffuse sunlight"),
+            }, getString(R.string.text_earth), getString(R.string.text_textured_globe_with_day_night_cycle_and_diffuse_sunlight)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // City lights: dark circle with orange dots
@@ -2093,7 +2180,7 @@ class MainActivity : AppCompatActivity() {
                 for (i in dots.indices step 2) {
                     c.drawCircle(s*dots[i], s*dots[i+1], s*0.03f, pt)
                 }
-            }, "City lights", "Visible on the night side of the Earth"),
+            }, getString(R.string.text_city_lights), getString(R.string.text_visible_on_the_night_side_of_the_earth)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Clouds: soft white wisps
@@ -2103,7 +2190,7 @@ class MainActivity : AppCompatActivity() {
                 c.drawOval(RectF(s*0.3f, s*0.2f, s*0.85f, s*0.55f), pt)
                 pt.color = Color.argb(120, 255, 255, 255)
                 c.drawOval(RectF(s*0.15f, s*0.5f, s*0.7f, s*0.78f), pt)
-            }, "Clouds", "Procedural or live satellite imagery (NASA VIIRS). Tap cloud label to toggle"),
+            }, getString(R.string.companion_clouds), getString(R.string.text_procedural_or_live_satellite_imagery_nasa_viirs_tap_cloud_label_t)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Sun: yellow circle with radial glow
@@ -2112,7 +2199,7 @@ class MainActivity : AppCompatActivity() {
                     floatArrayOf(0f, 0.4f, 1f), Shader.TileMode.CLAMP)
                 c.drawCircle(s/2f, s/2f, s*0.45f, pt)
                 pt.shader = null
-            }, "Sun", "Billboard glow showing the sun's real-time position"),
+            }, getString(R.string.text_sun), getString(R.string.text_billboard_glow_showing_the_sun_s_real_time_position)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Moon: gray sphere with craters
@@ -2125,7 +2212,7 @@ class MainActivity : AppCompatActivity() {
                 c.drawCircle(s*0.4f, s*0.4f, s*0.07f, pt)
                 c.drawCircle(s*0.6f, s*0.55f, s*0.05f, pt)
                 c.drawCircle(s*0.35f, s*0.6f, s*0.04f, pt)
-            }, "Moon", "Textured sphere at its real orbital position"),
+            }, getString(R.string.text_moon), getString(R.string.text_textured_sphere_at_its_real_orbital_position)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Terminator: circle split with amber line
@@ -2138,7 +2225,7 @@ class MainActivity : AppCompatActivity() {
                 pt.style = Paint.Style.STROKE
                 c.drawLine(s/2f, s*0.08f, s/2f, s*0.92f, pt)
                 pt.style = Paint.Style.FILL
-            }, "Terminator line", "Amber line at the day/night boundary"),
+            }, getString(R.string.text_terminator_line), getString(R.string.text_amber_line_at_the_day_night_boundary)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Aurora: wavy green/purple bands near top of circle
@@ -2158,7 +2245,7 @@ class MainActivity : AppCompatActivity() {
                     c.drawPath(path, pt)
                 }
                 pt.style = Paint.Style.FILL
-            }, "Aurora", "Green/purple glow near the geomagnetic poles (night side only)"),
+            }, getString(R.string.text_aurora), getString(R.string.text_green_purple_glow_near_the_geomagnetic_poles_night_side_only)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Atmosphere: blue ring around dark circle
@@ -2169,7 +2256,7 @@ class MainActivity : AppCompatActivity() {
                 pt.color = Color.argb(160, 80, 160, 255)
                 c.drawCircle(s/2f, s/2f, s*0.39f, pt)
                 pt.style = Paint.Style.FILL
-            }, "Atmosphere", "Blue fresnel glow around the Earth's rim"),
+            }, getString(R.string.text_atmosphere), getString(R.string.text_blue_fresnel_glow_around_the_earth_s_rim)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Stars: white dots on dark background
@@ -2181,7 +2268,7 @@ class MainActivity : AppCompatActivity() {
                 for (i in stars.indices step 3) {
                     c.drawCircle(s*stars[i], s*stars[i+1], stars[i+2], pt)
                 }
-            }, "Stars", "Background star field"),
+            }, getString(R.string.text_stars), getString(R.string.text_background_star_field)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Earthquakes: amber/golden pulsing dot
@@ -2190,7 +2277,7 @@ class MainActivity : AppCompatActivity() {
                     floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP)
                 c.drawCircle(s/2f, s/2f, s*0.4f, pt)
                 pt.shader = null
-            }, "Earthquakes", "Pulsing amber dots (M4.5+ from USGS, past 7 days)"),
+            }, getString(R.string.text_earthquakes), getString(R.string.text_pulsing_amber_dots_m4_5_from_usgs_past_7_days)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Volcanoes: magenta/hot-red pulsing dot
@@ -2199,7 +2286,7 @@ class MainActivity : AppCompatActivity() {
                     floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP)
                 c.drawCircle(s/2f, s/2f, s*0.4f, pt)
                 pt.shader = null
-            }, "Volcanoes", "Pulsing magenta dots (active eruptions from NASA EONET)"),
+            }, getString(R.string.text_volcanoes), getString(R.string.text_pulsing_magenta_dots_active_eruptions_from_nasa_eonet)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Wildfires: red pulsing dot
@@ -2208,7 +2295,7 @@ class MainActivity : AppCompatActivity() {
                     floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP)
                 c.drawCircle(s/2f, s/2f, s*0.4f, pt)
                 pt.shader = null
-            }, "Wildfires", "Pulsing red dots (active fires from NASA EONET)"),
+            }, getString(R.string.text_wildfires), getString(R.string.text_pulsing_red_dots_active_fires_from_nasa_eonet)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Storms: electric blue pulsing dot
@@ -2217,7 +2304,7 @@ class MainActivity : AppCompatActivity() {
                     floatArrayOf(0f, 0.5f, 1f), Shader.TileMode.CLAMP)
                 c.drawCircle(s/2f, s/2f, s*0.4f, pt)
                 pt.shader = null
-            }, "Storms", "Pulsing blue dots (severe storms from NASA EONET) — tap any dot for details"),
+            }, getString(R.string.text_storms), getString(R.string.text_pulsing_blue_dots_severe_storms_from_nasa_eonet_tap_any_dot_for_d)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // ISS orbit: curved red line with dot
@@ -2231,7 +2318,7 @@ class MainActivity : AppCompatActivity() {
                 pt.style = Paint.Style.FILL
                 pt.color = Color.WHITE
                 c.drawCircle(s*0.5f, s*0.5f, s*0.06f, pt)
-            }, "ISS orbit", "Thin line showing the International Space Station's path"),
+            }, getString(R.string.text_iss_orbit), getString(R.string.text_thin_line_showing_the_international_space_station_s_path)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Sun/Moon arrows: two small arrows
@@ -2255,7 +2342,7 @@ class MainActivity : AppCompatActivity() {
                 pt.color = Color.rgb(180, 200, 220)
                 c.drawPath(moonArrow, pt)
                 c.drawLine(s*0.5f, s*0.6f, s*0.5f, s*0.85f, pt)
-            }, "Sun/Moon arrows", "2D overlay arrows pointing toward the sun and moon"),
+            }, getString(R.string.text_sun_moon_arrows), getString(R.string.text_2d_overlay_arrows_pointing_toward_the_sun_and_moon)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Eclipse: overlapping sun and moon circles
@@ -2272,7 +2359,7 @@ class MainActivity : AppCompatActivity() {
                 pt.color = Color.argb(120, 255, 200, 80)
                 c.drawCircle(s*0.58f, s*0.5f, s*0.32f, pt)
                 pt.style = Paint.Style.FILL
-            }, "Eclipse alerts", "Notifies when sun-earth-moon alignment approaches an eclipse"),
+            }, getString(R.string.text_eclipse_alerts), getString(R.string.text_notifies_when_sun_earth_moon_alignment_approaches_an_eclipse)),
 
             LegendEntry(drawLegendIcon(iconSize, p) { c, s, pt ->
                 // Time scrubber: slider track with knob
@@ -2282,7 +2369,7 @@ class MainActivity : AppCompatActivity() {
                 c.drawRoundRect(RectF(s*0.08f, s*0.44f, s*0.55f, s*0.56f), s*0.06f, s*0.06f, pt)
                 pt.color = Color.WHITE
                 c.drawCircle(s*0.55f, s*0.5f, s*0.12f, pt)
-            }, "Time scrubber", "Drag the slider to simulate +/- 24 hours; releases to snap back to now")
+            }, getString(R.string.text_time_scrubber), getString(R.string.text_drag_the_slider_to_simulate_24_hours_releases_to_snap_back_to_now))
         )
 
         val pad = dp(20f)
@@ -2297,7 +2384,7 @@ class MainActivity : AppCompatActivity() {
 
         // Title
         column.addView(TextView(this).apply {
-            text = "Legend"
+            text = getString(R.string.text_legend)
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
             typeface = Typeface.DEFAULT_BOLD
@@ -2317,7 +2404,7 @@ class MainActivity : AppCompatActivity() {
                 setImageBitmap(entry.icon)
                 scaleType = ImageView.ScaleType.FIT_CENTER
             }, LinearLayout.LayoutParams(iconSize, iconSize).apply {
-                setMargins(0, 0, dp(14f), 0)
+                marginEnd = dp(14f)
             })
 
             // Text column
@@ -2342,7 +2429,7 @@ class MainActivity : AppCompatActivity() {
 
         // Dismiss hint
         column.addView(TextView(this).apply {
-            text = "Tap anywhere to close"
+            text = getString(R.string.text_tap_anywhere_to_close)
             setTextColor(Color.rgb(140, 140, 140))
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 11f)
             gravity = Gravity.CENTER
@@ -2363,6 +2450,7 @@ class MainActivity : AppCompatActivity() {
 
         // Close (X) button — top right, an obvious way to dismiss the legend
         val closeButton = TextView(this).apply {
+            contentDescription = getString(R.string.companion_close)
             text = "✕"
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
@@ -2445,7 +2533,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateMusicButton() {
-        musicButton.text = if (musicEnabled) "\u266B Music: on" else "\u266B Music: off"
+        musicButton.text = if (musicEnabled) getString(R.string.text_music_on) else getString(R.string.text_music_off)
     }
 
     // ------------------------------------------------------------------
@@ -2456,19 +2544,21 @@ class MainActivity : AppCompatActivity() {
         narrateEnabled = !narrateEnabled
         prefs.edit().putBoolean(PREF_NARRATE, narrateEnabled).apply()
         updateNarrateButton()
-        if (narrateEnabled) speak("Read to me is on. I'll read the cards out loud.") else tts?.stop()
+        if (narrateEnabled) {
+            if (ttsReady) speak(getString(R.string.text_read_to_me_is_on_i_ll_read_the_cards_out_loud))
+            else AlertDialog.Builder(this).setMessage(getString(R.string.text_a_voice_for_this_language_is_not_installed_on_this_device))
+                .setPositiveButton(android.R.string.ok, null).show()
+        } else tts?.stop()
     }
 
     private fun updateNarrateButton() {
-        narrateButton.text = if (narrateEnabled) "\uD83D\uDD0A Read: on" else "\uD83D\uDD0A Read: off"
+        narrateButton.text = if (narrateEnabled) getString(R.string.text_read_on) else getString(R.string.text_read_off)
     }
 
     /** Speaks [text] aloud when narration is on, stripping emoji for clean speech. */
     private fun speak(text: String) {
         if (!narrateEnabled || !ttsReady) return
-        val clean = text.replace(Regex("[^\\p{L}\\p{N} .,!?'\\-]"), " ")
-            .replace(Regex("\\s+"), " ")
-            .trim()
+        val clean = NarrationText.clean(text)
         if (clean.isNotEmpty()) tts?.speak(clean, TextToSpeech.QUEUE_FLUSH, null, "card")
     }
 
@@ -2494,7 +2584,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         card.addView(TextView(this).apply {
-            text = "A living window onto Earth"
+            text = getString(R.string.text_a_living_window_onto_earth)
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 23f)
             typeface = Typeface.DEFAULT_BOLD
@@ -2504,9 +2594,9 @@ class MainActivity : AppCompatActivity() {
         })
 
         val tips = listOf(
-            "Drag to rotate",
-            "Pinch to zoom",
-            "Tap the globe to discover more"
+            getString(R.string.text_drag_to_rotate),
+            getString(R.string.text_pinch_to_zoom),
+            getString(R.string.text_tap_the_globe_to_discover_more)
         )
         for (tip in tips) {
             card.addView(TextView(this).apply {
@@ -2518,7 +2608,7 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        card.addView(makePillButton("Explore Earth", ::dpi).apply {
+        card.addView(makePillButton(getString(R.string.text_explore_earth), ::dpi).apply {
             setOnClickListener {
                 it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                 dismissOnboarding()
@@ -2531,9 +2621,10 @@ class MainActivity : AppCompatActivity() {
             topMargin = dpi(20f)
         })
 
-        overlay.addView(card, FrameLayout.LayoutParams(
+        val scroll = ScrollView(this).apply { addView(card) }
+        overlay.addView(scroll, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.MATCH_PARENT,
             Gravity.CENTER
         ).apply { setMargins(dpi(28f), dpi(28f), dpi(28f), dpi(28f)) })
         return overlay

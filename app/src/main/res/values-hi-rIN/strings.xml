@@ -1,0 +1,791 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="companion_today" formatted="false">"आज"</string>
+    <string name="companion_layers" formatted="false">"परतें"</string>
+    <string name="companion_explore" formatted="false">"खोजें"</string>
+    <string name="companion_settings" formatted="false">"सेटिंग्स"</string>
+    <string name="companion_close" formatted="false">"बंद करें"</string>
+    <string name="companion_refresh" formatted="false">"अवलोकनों को ताज़ा करें"</string>
+    <string name="companion_events" formatted="false">"हालिया अवलोकन"</string>
+    <string name="companion_no_events" formatted="false">"इस श्रेणी में कोई घटना रिपोर्ट नहीं की गई"</string>
+    <string name="companion_why" formatted="false">"ऐसा क्यों होता है?"</string>
+    <string name="companion_reduce_motion" formatted="false">"गति कम करें"</string>
+    <string name="companion_clouds" formatted="false">"बादल"</string>
+    <string name="wallpaper_name" formatted="false">"Pale Blue Dot पृथ्वी"</string>
+    <string name="wallpaper_description" formatted="false">"आपके वॉलपेपर के लिए पृथ्वी का एक शांत, सजीव दृश्य"</string>
+    <string name="wallpaper_settings_title" formatted="false">"पृथ्वी वॉलपेपर"</string>
+    <string name="companion_generated" formatted="false">"उत्पन्न"</string>
+    <string name="companion_satellite" formatted="false">"सैटेलाइट"</string>
+    <string name="companion_off" formatted="false">"बंद"</string>
+    <string name="widget_title" formatted="false">"पृथ्वी आज"</string>
+    <string name="widget_description" formatted="false">"चंद्रमा और दिन का प्रकाश; लाइव अर्थ दृश्य और हाल की घटना के लिए विस्तार करें"</string>
+    <string name="widget_preview_moon" formatted="false">"🌔 बढ़ता उभरा चंद्रमा · 82%"</string>
+    <string name="widget_preview_place" formatted="false">"बुखारेस्ट, रोमानिया"</string>
+    <string name="widget_event_label" formatted="false">"पृथ्वी पर"</string>
+    <string name="widget_preview_daylight" formatted="false">"अभी दिन का उजाला है"</string>
+    <string name="widget_change_place" formatted="false">"विजेट स्थान बदलें"</string>
+    <string name="widget_globe_description" formatted="false">"वर्तमान पृथ्वी दृश्य"</string>
+    <string name="widget_name" formatted="false">"पृथ्वी आज"</string>
+    <string name="text_clouds_live_loading" formatted="false">"☁ बादल: लाइव (लोड हो रहा है...)"</string>
+    <string name="text_time_now" formatted="false">"समय · अभी"</string>
+    <string name="text_time_controls" formatted="false">"समय नियंत्रित करता है"</string>
+    <string name="text_move_time_up_to_24_hours_before_or_after_now" formatted="false">"समय को अब से 24 घंटे पहले या बाद तक ले जाएँ"</string>
+    <string name="text_share" formatted="false">"↑ साझा करें"</string>
+    <string name="text_today" formatted="false">"🗓 आज"</string>
+    <string name="text_save_this_place" formatted="false">"+ इस स्थान को बचाएं"</string>
+    <string name="text_planetary_briefing_real_time" formatted="false">"ग्रह संबंधी ब्रीफिंग · वास्तविक समय"</string>
+    <string name="text_1_s_2_s_3_s_estimated_illumination">"%1$s %2$s · %3$d%% अनुमानित रोशनी"</string>
+    <string name="text_choose_a_primary_place" formatted="false">"एक प्राथमिक स्थान चुनें"</string>
+    <string name="text_fly_to_1_s">"%1$s के लिए उड़ान भरें"</string>
+    <string name="text_satellite_imagery_1_s">"सैटेलाइट इमेजरी - %1$s"</string>
+    <string name="text_saved_copy" formatted="false">" · सहेजी गई प्रति"</string>
+    <string name="text_satellite_imagery_unavailable_or_still_loading" formatted="false">"सैटेलाइट इमेजरी अनुपलब्ध है या अभी भी लोड हो रही है"</string>
+    <string name="text_one_observation_1_s">"एक अवलोकन · %1$s"</string>
+    <string name="text_time_unavailable" formatted="false">"समय अनुपलब्ध"</string>
+    <string name="text_this_observation_is_no_longer_in_the_saved_feed" formatted="false">"यह अवलोकन अब सहेजे गए फ़ीड में नहीं है।"</string>
+    <string name="text_current_events" formatted="false">"समसामयिक घटनाएँ"</string>
+    <string name="text_choose_what_appears_on_the_globe_hidden_events_also_leave_the_eve" formatted="false">"ग्लोब पर जो दिखाई देता है उसे चुनें. छिपी हुई घटनाएँ भी घटना सूची और चुनौतियों को छोड़ देती हैं।"</string>
+    <string name="text_satellite_imagery_may_be_unavailable_offline_generated_clouds_sti" formatted="false">"सैटेलाइट इमेजरी ऑफ़लाइन उपलब्ध नहीं हो सकती है; उत्पन्न बादल अभी भी काम करते हैं।"</string>
+    <string name="text_reported_by_usgs" formatted="false">"USGS द्वारा रिपोर्ट किया गया"</string>
+    <string name="text_reported_by_nasa_eonet" formatted="false">"NASA EONET द्वारा रिपोर्ट किया गया"</string>
+    <string name="text_constellations" formatted="false">"नक्षत्र"</string>
+    <string name="text_catalog_lines_in_the_star_background" formatted="false">"तारा पृष्ठभूमि में कैटलॉग पंक्तियाँ"</string>
+    <string name="text_iss_illustration" formatted="false">"आईएसएस चित्रण"</string>
+    <string name="text_approximate_orbit_not_live_tracking" formatted="false">"अनुमानित कक्षा, लाइव ट्रैकिंग नहीं"</string>
+    <string name="text_aurora_illustration" formatted="false">"अरोरा चित्रण"</string>
+    <string name="text_decorative_glow_not_a_forecast" formatted="false">"सजावटी चमक, पूर्वानुमान नहीं"</string>
+    <string name="text_day_night_boundary" formatted="false">"दिन/रात की सीमा"</string>
+    <string name="text_calculated_terminator_line" formatted="false">"परिकलित टर्मिनेटर लाइन"</string>
+    <string name="text_plate_boundaries" formatted="false">"प्लेट सीमाएँ"</string>
+    <string name="text_offline_pb2002_model_gold_lines" formatted="false">"ऑफ़लाइन PB2002 मॉडल · सोने की रेखाएँ"</string>
+    <string name="text_plate_boundaries_gold_lines_mark_modelled_plate_edges_earthquakes" formatted="false">"प्लेट की सीमाएँ: सोने की रेखाएँ मॉडल किए गए प्लेट किनारों को चिह्नित करती हैं। इनसे दूर भी भूकंप आ सकता है. स्रोत: बर्ड (2003), PB2002; ODbL 1.0."</string>
+    <string name="text_places_1_s_saved">"स्थान · %1$d सहेजे गए"</string>
+    <string name="text_explore_time_and_seasons" formatted="false">"समय और ऋतुओं का अन्वेषण करें"</string>
+    <string name="text_guided_journeys" formatted="false">"निर्देशित यात्राएँ"</string>
+    <string name="text_field_notebook_1_s_2_s_discoveries">"फ़ील्ड नोटबुक · %1$d/%2$d खोजें"</string>
+    <string name="text_try_a_quick_challenge" formatted="false">"त्वरित चुनौती का प्रयास करें"</string>
+    <string name="text_scene_guide_and_legend" formatted="false">"दृश्य मार्गदर्शक और किंवदंती"</string>
+    <string name="text_ambient_music" formatted="false">"परिवेशीय संगीत"</string>
+    <string name="text_only_while_the_app_is_open" formatted="false">"केवल तभी जब ऐप खुला हो"</string>
+    <string name="text_music_volume" formatted="false">"संगीत की मात्रा"</string>
+    <string name="text_read_aloud" formatted="false">"पढ़कर सुनाएँ"</string>
+    <string name="text_speak_cards_when_narration_is_enabled" formatted="false">"कथन सक्षम होने पर कार्ड बोलें"</string>
+    <string name="text_stops_idle_spin_and_decorative_marker_movement" formatted="false">"निष्क्रिय स्पिन और सजावटी मार्कर मूवमेंट को रोकता है"</string>
+    <string name="text_share_globe_image" formatted="false">"ग्लोब छवि साझा करें"</string>
+    <string name="text_earth_live_wallpaper" formatted="false">"पृथ्वी लाइव वॉलपेपर"</string>
+    <string name="text_explore" formatted="false">"‹ अन्वेषण करें"</string>
+    <string name="text_completed_journeys" formatted="false">"यात्राएँ पूरी कीं"</string>
+    <string name="text_no_journeys_completed_yet" formatted="false">"अभी तक कोई यात्रा पूरी नहीं हुई."</string>
+    <string name="text_saved_observations" formatted="false">"सहेजे गए अवलोकन"</string>
+    <string name="text_save_an_observation_from_its_card_to_keep_its_source_and_date" formatted="false">"किसी अवलोकन का स्रोत और दिनांक रखने के लिए उसके कार्ड से उसे सहेजें।"</string>
+    <string name="text_earlier_discoveries_1_s_2_s">"पहले की खोजें · %1$d/%2$d"</string>
+    <string name="text_you_explored_a_reported_earthquake" formatted="false">"आपने एक रिपोर्ट किए गए भूकंप का पता लगाया।"</string>
+    <string name="text_you_explored_a_reported_volcanic_event" formatted="false">"आपने एक रिपोर्ट की गई ज्वालामुखीय घटना का पता लगाया।"</string>
+    <string name="text_you_explored_a_reported_wildfire" formatted="false">"आपने एक रिपोर्ट की गई जंगल की आग का पता लगाया।"</string>
+    <string name="text_you_explored_a_reported_storm" formatted="false">"आपने एक रिपोर्ट किए गए तूफान का पता लगाया।"</string>
+    <string name="text_you_found_a_place_facing_the_sun" formatted="false">"आपको सूर्य के सम्मुख एक स्थान मिल गया।"</string>
+    <string name="text_you_found_earth_s_night_side" formatted="false">"आपको पृथ्वी का रात्रि पक्ष मिल गया।"</string>
+    <string name="text_you_looked_beyond_earth" formatted="false">"आपने पृथ्वी से परे देखा।"</string>
+    <string name="text_you_changed_the_scene_time" formatted="false">"आपने दृश्य का समय बदल दिया."</string>
+    <string name="text_observed" formatted="false">"अवलोकन किया गया: "</string>
+    <string name="text_time_not_reported" formatted="false">"समय नहीं बताया गया"</string>
+    <string name="text_source" formatted="false">"स्रोत: "</string>
+    <string name="text_magnitude_1_s">"परिमाण: %1$s\n"</string>
+    <string name="text_depth_1_s_km">"गहराई: %1$s किमी\n"</string>
+    <string name="text_source_link_1_s">"स्रोत लिंक: %1$s"</string>
+    <string name="text_saved_observation" formatted="false">"अवलोकन सहेजा गया"</string>
+    <string name="text_fly_to" formatted="false">"स्थान देखें"</string>
+    <string name="text_sunlight_and_city_lights" formatted="false">"सूरज की रोशनी और शहर की रोशनी"</string>
+    <string name="text_calculated_sunlight_shows_the_current_day_and_night_sides" formatted="false">"परिकलित सूर्य का प्रकाश वर्तमान दिन और रात के पक्षों को दर्शाता है।"</string>
+    <string name="text_generated_clouds_are_illustrative_satellite_mode_derives_opacity" formatted="false">"उत्पन्न बादल उदाहरणात्मक हैं। सैटेलाइट मोड दिनांकित NASA VIIRS छवि से अपारदर्शिता प्राप्त करता है।"</string>
+    <string name="text_earthquakes" formatted="false">"भूकंप"</string>
+    <string name="text_usgs_reports_magnitude_4_5_earthquakes_from_the_last_seven_days" formatted="false">"USGS ने पिछले सात दिनों में 4.5+ तीव्रता के भूकंप की रिपोर्ट दी है।"</string>
+    <string name="text_volcanoes_wildfires_and_storms" formatted="false">"ज्वालामुखी, जंगल की आग और तूफान"</string>
+    <string name="text_nasa_eonet_open_reports_may_have_older_observation_dates" formatted="false">"NASA EONET खुली रिपोर्ट में पुरानी अवलोकन तिथियां हो सकती हैं।"</string>
+    <string name="text_iss" formatted="false">"आईएसएस"</string>
+    <string name="text_illustrated_orbit_not_live_tracking" formatted="false">"सचित्र कक्षा, लाइव ट्रैकिंग नहीं।"</string>
+    <string name="text_aurora" formatted="false">"अरोड़ा"</string>
+    <string name="text_decorative_illustration_not_a_forecast" formatted="false">"सजावटी चित्रण, पूर्वानुमान नहीं."</string>
+    <string name="text_calculated_terminator_line_2" formatted="false">"परिकलित टर्मिनेटर लाइन."</string>
+    <string name="text_catalog_stars_joined_into_familiar_patterns" formatted="false">"कैटलॉग सितारे परिचित पैटर्न में शामिल हो गए।"</string>
+    <string name="text_a_simplified_offline_pb2002_model_many_earthquakes_occur_near_bou" formatted="false">"एक सरलीकृत ऑफ़लाइन PB2002 मॉडल। कई भूकंप सीमाओं के निकट आते हैं, हालांकि कुछ अन्यत्र भी आते हैं। स्वर्ण रेखाएं किसी भी घटना का निदान नहीं हैं।"</string>
+    <string name="text_saved_places_stay_on_this_device_cyan_rings_mark_them_on_the_glob" formatted="false">"सहेजे गए स्थान इस डिवाइस पर रहते हैं. सियान के छल्ले उन्हें ग्लोब पर चिह्नित करते हैं।"</string>
+    <string name="text_search_bundled_cities" formatted="false">"बंडल किए गए शहर खोजें"</string>
+    <string name="text_city_or_country_blank_lists_all_1_s">"शहर या देश (रिक्त सूचियाँ सभी %1$d)"</string>
+    <string name="text_find_a_city" formatted="false">"एक शहर खोजें"</string>
+    <string name="text_search" formatted="false">"खोजें"</string>
+    <string name="text_no_bundled_city_matches_that_name" formatted="false">"कोई भी बंडल शहर उस नाम से मेल नहीं खाता।"</string>
+    <string name="text_ok" formatted="false">"ठीक है"</string>
+    <string name="text_bundled_cities" formatted="false">"बंडल शहर"</string>
+    <string name="text_cancel" formatted="false">"रद्द करें"</string>
+    <string name="text_add_a_place_from_the_globe" formatted="false">"ग्लोब से एक स्थान जोड़ें"</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"ग्लोब पर एक बिंदु पर टैप करें, फिर इसके कार्ड के नीचे + इस स्थान को सहेजें पर टैप करें।"</string>
+    <string name="text_time_zone_unset" formatted="false">"समय क्षेत्र अनिर्धारित"</string>
+    <string name="text_set_as_primary" formatted="false">"प्राथमिक के रूप में सेट करें"</string>
+    <string name="text_rename" formatted="false">"नाम बदलें"</string>
+    <string name="text_set_time_zone" formatted="false">"समय क्षेत्र निर्धारित करें"</string>
+    <string name="text_delete" formatted="false">"हटाएँ"</string>
+    <string name="text_1_s_removed">"%1$s हटा दिया गया"</string>
+    <string name="text_undo" formatted="false">"पूर्ववत करें"</string>
+    <string name="text_done" formatted="false">"हो गया"</string>
+    <string name="text_name_this_place" formatted="false">"इस जगह का नाम बताएं"</string>
+    <string name="text_save" formatted="false">"सहेजें"</string>
+    <string name="text_iana_zone_e_g_europe_bucharest" formatted="false">"IANA ज़ोन, उदा. यूरोप/बुखारेस्ट"</string>
+    <string name="text_suggested_from_the_nearest_town_change_it_if_this_place_is_across" formatted="false">"निकटतम शहर से सुझाव दिया गया; यदि यह स्थान सीमा पार है तो इसे बदल दें। "</string>
+    <string name="text_time_zone_for_1_s">"%1$s के लिए समय क्षेत्र"</string>
+    <string name="text_enter_an_iana_time_zone_id_or_leave_blank_to_keep_local_clock_and" formatted="false">"एक IANA समय-क्षेत्र आईडी दर्ज करें, या स्थानीय घड़ी और सूर्योदय को अनिर्धारित रखने के लिए खाली छोड़ दें।"</string>
+    <string name="text_unknown_iana_time_zone_id_1_s">"अज्ञात IANA समय-क्षेत्र आईडी: %1$s"</string>
+    <string name="text_try_again" formatted="false">"पुनः प्रयास करें"</string>
+    <string name="text_time_zone_unset_choose_a_zone_for_local_clock_and_sunrise" formatted="false">"समय क्षेत्र अनिर्धारित · स्थानीय घड़ी और सूर्योदय के लिए एक क्षेत्र चुनें"</string>
+    <string name="text_polar_day_sun_stays_above_the_horizon" formatted="false">"ध्रुवीय दिन · सूर्य क्षितिज के ऊपर रहता है"</string>
+    <string name="text_polar_night_sun_stays_below_the_horizon" formatted="false">"ध्रुवीय रात्रि · सूर्य क्षितिज के नीचे रहता है"</string>
+    <string name="text_not_available" formatted="false">"उपलब्ध नहीं है"</string>
+    <string name="text_about_1_sh_2_sm_daylight">" · लगभग %1$d h %2$d न्यूनतम दिन का प्रकाश"</string>
+    <string name="text_approx_sunrise_1_s_sunset_2_s_3_s">"लगभग. सूर्योदय %1$s · सूर्यास्त %2$s%3$s"</string>
+    <string name="text_day" formatted="false">"दिन"</string>
+    <string name="text_night" formatted="false">"रात"</string>
+    <string name="text_choose_a_date_to_hold_the_globe_in_an_explicit_lesson_time_today" formatted="false">"ग्लोब को स्पष्ट पाठ समय में रखने के लिए एक तिथि चुनें। आज और वॉलपेपर वास्तविक समय पर बने हुए हैं।"</string>
+    <string name="text_begin_at_current_time" formatted="false">"वर्तमान समय से प्रारंभ करें"</string>
+    <string name="text_simulated_1_s">"सिम्युलेटेड · %1$s"</string>
+    <string name="text_choose_date_and_time" formatted="false">"दिनांक और समय चुनें"</string>
+    <string name="text_pause" formatted="false">"विराम"</string>
+    <string name="text_play_at_real_time_speed" formatted="false">"वास्तविक समय की गति से खेलें"</string>
+    <string name="text_advance_one_hour" formatted="false">"एक घंटा आगे बढ़ें"</string>
+    <string name="text_advance_one_day" formatted="false">"एक दिन आगे बढ़ो"</string>
+    <string name="text_now_leave_time_exploration" formatted="false">"अब · समय की खोज छोड़ें"</string>
+    <string name="text_compare_latest_observations" formatted="false">"नवीनतम अवलोकनों की तुलना करें"</string>
+    <string name="text_these_reports_are_from_real_dates_not_the_simulated_date" formatted="false">"ये रिपोर्टें वास्तविक तारीखों की हैं, न कि नकली तारीख की।"</string>
+    <string name="text_year_timeline_1_s">"वर्ष समयरेखा · %1$d"</string>
+    <string name="text_choose_day_of_year" formatted="false">"वर्ष का दिन चुनें"</string>
+    <string name="text_seasons_earth_s_axis_stays_tilted_about_23_4_as_earth_orbits_the" formatted="false">"ऋतुएँ · जब पृथ्वी सूर्य की परिक्रमा करती है तो पृथ्वी की धुरी लगभग 23.4° झुकी रहती है। सूर्य का प्रकाश वर्ष भर गोलार्धों के बीच चलता रहता है; दृश्य का सूर्य पहले से ही इस झुकाव के लिए जिम्मेदार है।"</string>
+    <string name="text_23_4_axis" formatted="false">"23.4° अक्ष"</string>
+    <string name="text_sunlight" formatted="false">"सूर्य का प्रकाश →"</string>
+    <string name="text_polar_day" formatted="false">"ध्रुवीय दिन"</string>
+    <string name="text_polar_night" formatted="false">"ध्रुवीय रात"</string>
+    <string name="text_about_1_sh_2_sm_daylight_2">"लगभग %1$d h %2$d न्यूनतम दिन का प्रकाश"</string>
+    <string name="text_daylight_changing" formatted="false">"दिन का उजाला बदल रहा है"</string>
+    <string name="text_guides_equator_tropics_23_4_and_polar_circles_66_6_compare_the_tw" formatted="false">"मार्गदर्शक: भूमध्य रेखा, उष्णकटिबंधीय (±23.4°), और ध्रुवीय वृत्त (±66.6°)। मार्च, जून, सितंबर और दिसंबर में दोनों गोलार्धों की तुलना करें।"</string>
+    <string name="text_short_local_lessons_each_restores_your_previous_globe_view_and_la" formatted="false">"लघु, स्थानीय पाठ. जब आप निकलते हैं तो प्रत्येक आपके पिछले ग्लोब दृश्य और परतों को पुनर्स्थापित करता है।"</string>
+    <string name="text_completed" formatted="false">" · पूरा हुआ"</string>
+    <string name="text_1_s_2_s_min_3_s">"%1$s · %2$s min%3$s"</string>
+    <string name="text_resume" formatted="false">"बायोडाटा"</string>
+    <string name="text_restart" formatted="false">"पुनः प्रारंभ करें"</string>
+    <string name="text_choose_a_journey" formatted="false">"एक यात्रा चुनें"</string>
+    <string name="text_1_s_step_2_s_of_3_s">"%1$s · %3$d का चरण %2$d"</string>
+    <string name="text_historical_source_1_s">"ऐतिहासिक स्रोत: %1$s"</string>
+    <string name="text_recent_reported_example_1_s_2_s_3_s">"हाल ही में रिपोर्ट किया गया उदाहरण: %1$s\n%2$s · %3$s"</string>
+    <string name="text_that_s_the_pattern" formatted="false">"यही पैटर्न है"</string>
+    <string name="text_look_again" formatted="false">"फिर से देखो"</string>
+    <string name="text_continue" formatted="false">"जारी रखें"</string>
+    <string name="text_advance" formatted="false">"आगे बढ़ना"</string>
+    <string name="text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th">"दृश्य %1$d घंटे आगे बढ़ गया। ग्लोब पर बदलती सूरज की रोशनी को देखें।"</string>
+    <string name="text_reveal" formatted="false">"खुलासा"</string>
+    <string name="text_the_gold_pb2002_lines_show_a_broad_plate_edge_pattern_some_report" formatted="false">"सोने की PB2002 लाइनें एक विस्तृत प्लेट-किनारे पैटर्न दिखाती हैं। कुछ रिपोर्ट की गई घटनाएँ उनसे दूर हैं।"</string>
+    <string name="text_view_globe" formatted="false">"ग्लोब देखें"</string>
+    <string name="text_skip_this_step" formatted="false">"इस चरण को छोड़ें"</string>
+    <string name="text_leave_journey_restore_my_view" formatted="false">"यात्रा छोड़ें · मेरा दृष्टिकोण बहाल करें"</string>
+    <string name="text_1_s_is_in_your_field_notebook">"%1$s आपकी फ़ील्ड नोटबुक में है।"</string>
+    <string name="text_not_loaded" formatted="false">"लोड नहीं किया गया"</string>
+    <string name="text_checking" formatted="false">"जाँच हो रही है"</string>
+    <string name="text_recently" formatted="false">"हाल ही में"</string>
+    <string name="text_checked_1_s">"%1$s की जाँच की गई"</string>
+    <string name="text_saved_observations_offline_or_update_failed" formatted="false">"सहेजे गए अवलोकन · ऑफ़लाइन या अपडेट विफल"</string>
+    <string name="text_unavailable" formatted="false">"अनुपलब्ध"</string>
+    <string name="text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who" formatted="false">"🌟रात का आसमान!\nपृथ्वी से परे हजारों तारे, ग्रह और पूरी आकाशगंगाएँ हैं।"</string>
+    <string name="text_earthquakes_happen_when_stress_makes_rock_slip_along_a_fault_some" formatted="false">"भूकंप तब आते हैं जब तनाव के कारण चट्टान किसी भ्रंश के साथ खिसक जाती है। कुछ प्लेट सीमाओं से दूर पाए जाते हैं।"</string>
+    <string name="text_magma_can_rise_through_earth_s_crust_this_report_does_not_confirm" formatted="false">"मैग्मा पृथ्वी की पपड़ी से ऊपर उठ सकता है। यह रिपोर्ट फिलहाल किसी विस्फोट की पुष्टि नहीं करती है।"</string>
+    <string name="text_wildfire_can_begin_naturally_or_through_human_activity_and_may_sp" formatted="false">"जंगल की आग प्राकृतिक रूप से या मानवीय गतिविधि के माध्यम से शुरू हो सकती है और शुष्क, हवादार परिस्थितियों में फैल सकती है। यह रिपोर्ट आज से भी पुरानी हो सकती है."</string>
+    <string name="text_severe_storms_draw_energy_from_warm_moist_air_this_marker_shows_t" formatted="false">"भयंकर तूफ़ान गर्म, नम हवा से ऊर्जा लेते हैं। यह मार्कर नवीनतम रिपोर्ट किए गए बिंदु को दिखाता है, लाइव पूर्वानुमान को नहीं।"</string>
+    <string name="text_observed_1_s">"अवलोकन किया गया: %1$s\n"</string>
+    <string name="text_source_updated_1_s">"स्रोत अद्यतन: %1$s\n"</string>
+    <string name="text_source_1_s">"स्रोत: %1$s\n"</string>
+    <string name="text_unavailable_2" formatted="false">"अनुपलब्ध"</string>
+    <string name="text_checking_showing_saved_copy" formatted="false">"जाँच करना; सहेजी गई प्रति दिखा रहा हूँ"</string>
+    <string name="text_saved_copy_refresh_unavailable" formatted="false">"सहेजी गई प्रति; ताज़ा करना अनुपलब्ध"</string>
+    <string name="text_checked_1_s_2">"%1$s की जाँच की गई"</string>
+    <string name="text_feed_1_s">"फ़ीड: %1$s"</string>
+    <string name="text_source_link_1_s_2">"\nस्रोत लिंक: %1$s"</string>
+    <string name="text_saved" formatted="false">"सहेजा गया"</string>
+    <string name="text_place_name" formatted="false">"स्थान का नाम"</string>
+    <string name="text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now" formatted="false">"☀️ यहाँ दिन का समय है!\nपृथ्वी का यह भाग अभी सूर्य की ओर है। रात का आगमन देखने के लिए समय स्लाइडर को खींचें।"</string>
+    <string name="text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those" formatted="false">"🌙यहाँ रात का समय है।\nयह पक्ष सूर्य से दूर है - वे छोटी रोशनी शहर हैं। सूर्य को वापस लाने के लिए समय स्लाइडर को खींचें।"</string>
+    <string name="text_added_to_field_notebook_1_s">"फ़ील्ड नोटबुक में जोड़ा गया.\n\n%1$s"</string>
+    <string name="text_close_1_s">"× बंद करें\n\n%1$s"</string>
+    <string name="text_1_s_2_s_tap_to_stop">"🎯 %1$s\n⭐ %2$d · रुकने के लिए टैप करें"</string>
+    <string name="text_challenge_stopped_play_again_anytime" formatted="false">"चुनौती बंद हो गई - किसी भी समय दोबारा खेलें!"</string>
+    <string name="text_tap_on_the_earth_to_answer" formatted="false">"उत्तर देने के लिए पृथ्वी पर टैप करें! 🌍"</string>
+    <string name="text_yes_that_s_right" formatted="false">"🎉 हाँ! यह सही है।"</string>
+    <string name="text_not_quite_take_another_look_and_try_again" formatted="false">"बिलकुल नहीं - दोबारा देखें और पुनः प्रयास करें! 🔍"</string>
+    <string name="text_my_discoveries" formatted="false">"मेरी खोजें"</string>
+    <string name="text_1_s_of_2_s_found_keep_exploring">"%2$d में से %1$d मिला - खोज जारी रखें!"</string>
+    <string name="text_not_found_yet" formatted="false">"अभी तक नहीं मिला"</string>
+    <string name="text_tap_anywhere_to_close" formatted="false">"बंद करने के लिए कहीं भी टैप करें"</string>
+    <string name="text_1_s_2_s_3_s_lit_up_tonight">"%1$s %2$s\n%3$d%% आज रात जगमगा उठा"</string>
+    <string name="text_did_you_know" formatted="false">"क्या आप जानते हैं?"</string>
+    <string name="text_tap_a_glowing_dot_on_earth_to_explore_or_find_a_new_discovery_for" formatted="false">"अन्वेषण करने के लिए पृथ्वी पर एक चमकते बिंदु को टैप करें - या अपनी पत्रिका के लिए एक नई खोज खोजें!"</string>
+    <string name="text_play_a_challenge" formatted="false">"🎯एक चुनौती खेलें!"</string>
+    <string name="text_tap_outside_the_box_to_close" formatted="false">"बंद करने के लिए बॉक्स के बाहर टैप करें"</string>
+    <string name="text_ongoing" formatted="false">"जारी है"</string>
+    <string name="text_just_now" formatted="false">"अभी अभी"</string>
+    <string name="text_clouds_off" formatted="false">"☁ बादल: बंद"</string>
+    <string name="text_clouds_generated" formatted="false">"☁ बादल: उत्पन्न"</string>
+    <string name="text_clouds_live_nasa_viirs_updated_1_s">"☁ बादल: लाइव (NASA VIIRS)\nअपडेट किया गया: %1$s"</string>
+    <string name="text_solar_eclipse" formatted="false">"☀ सूर्य ग्रहण!"</string>
+    <string name="text_lunar_eclipse" formatted="false">"🌙 चंद्र ग्रहण!"</string>
+    <string name="text_near_solar_eclipse" formatted="false">"सूर्य ग्रहण के निकट"</string>
+    <string name="text_near_lunar_eclipse" formatted="false">"चंद्र ग्रहण के निकट"</string>
+    <string name="text_explore_time_simulated_scene" formatted="false">"समय, अनुरूपित दृश्य का अन्वेषण करें"</string>
+    <string name="text_earth" formatted="false">"पृथ्वी"</string>
+    <string name="text_textured_globe_with_day_night_cycle_and_diffuse_sunlight" formatted="false">"दिन/रात के चक्र और विसरित सूर्य के प्रकाश के साथ बनावट वाला ग्लोब"</string>
+    <string name="text_city_lights" formatted="false">"शहर की रोशनी"</string>
+    <string name="text_visible_on_the_night_side_of_the_earth" formatted="false">"पृथ्वी के रात्रि पक्ष पर दृश्यमान"</string>
+    <string name="text_procedural_or_live_satellite_imagery_nasa_viirs_tap_cloud_label_t" formatted="false">"प्रक्रियात्मक या लाइव उपग्रह इमेजरी (NASA VIIRS)। टॉगल करने के लिए क्लाउड लेबल टैप करें"</string>
+    <string name="text_sun" formatted="false">"रवि"</string>
+    <string name="text_billboard_glow_showing_the_sun_s_real_time_position" formatted="false">"बिलबोर्ड की चमक सूर्य की वास्तविक समय स्थिति दिखा रही है"</string>
+    <string name="text_moon" formatted="false">"चाँद"</string>
+    <string name="text_textured_sphere_at_its_real_orbital_position" formatted="false">"बनावट वाला गोला अपनी वास्तविक कक्षीय स्थिति में"</string>
+    <string name="text_terminator_line" formatted="false">"टर्मिनेटर लाइन"</string>
+    <string name="text_amber_line_at_the_day_night_boundary" formatted="false">"दिन/रात की सीमा पर एम्बर रेखा"</string>
+    <string name="text_green_purple_glow_near_the_geomagnetic_poles_night_side_only" formatted="false">"भू-चुंबकीय ध्रुवों के पास हरी/बैंगनी चमक (केवल रात की ओर)"</string>
+    <string name="text_atmosphere" formatted="false">"माहौल"</string>
+    <string name="text_blue_fresnel_glow_around_the_earth_s_rim" formatted="false">"पृथ्वी की परिधि के चारों ओर नीली फ़्रेज़नेल चमकती है"</string>
+    <string name="text_stars" formatted="false">"सितारे"</string>
+    <string name="text_background_star_field" formatted="false">"पृष्ठभूमि सितारा क्षेत्र"</string>
+    <string name="text_pulsing_amber_dots_m4_5_from_usgs_past_7_days" formatted="false">"स्पंदित एम्बर बिंदु (USGS से M4.5+, पिछले 7 दिन)"</string>
+    <string name="text_volcanoes" formatted="false">"ज्वालामुखी"</string>
+    <string name="text_pulsing_magenta_dots_active_eruptions_from_nasa_eonet" formatted="false">"स्पंदनशील मैजेंटा बिंदु (NASA EONET से सक्रिय विस्फोट)"</string>
+    <string name="text_wildfires" formatted="false">"जंगल की आग"</string>
+    <string name="text_pulsing_red_dots_active_fires_from_nasa_eonet" formatted="false">"स्पंदित लाल बिंदु (NASA EONET से सक्रिय आग)"</string>
+    <string name="text_storms" formatted="false">"तूफ़ान"</string>
+    <string name="text_pulsing_blue_dots_severe_storms_from_nasa_eonet_tap_any_dot_for_d" formatted="false">"स्पंदित नीले बिंदु (NASA EONET से गंभीर तूफान) - विवरण के लिए किसी भी बिंदु को टैप करें"</string>
+    <string name="text_iss_orbit" formatted="false">"आईएसएस कक्षा"</string>
+    <string name="text_thin_line_showing_the_international_space_station_s_path" formatted="false">"अंतर्राष्ट्रीय अंतरिक्ष स्टेशन का मार्ग दिखाने वाली पतली रेखा"</string>
+    <string name="text_sun_moon_arrows" formatted="false">"सूर्य/चंद्र बाण"</string>
+    <string name="text_2d_overlay_arrows_pointing_toward_the_sun_and_moon" formatted="false">"सूर्य और चंद्रमा की ओर इशारा करते हुए 2डी ओवरले तीर"</string>
+    <string name="text_eclipse_alerts" formatted="false">"ग्रहण की चेतावनी"</string>
+    <string name="text_notifies_when_sun_earth_moon_alignment_approaches_an_eclipse" formatted="false">"जब सूर्य-पृथ्वी-चंद्रमा संरेखण ग्रहण के करीब पहुंचता है तो सूचित करता है"</string>
+    <string name="text_time_scrubber" formatted="false">"समय साफ़ करने वाला"</string>
+    <string name="text_drag_the_slider_to_simulate_24_hours_releases_to_snap_back_to_now" formatted="false">"+/- 24 घंटे अनुकरण करने के लिए स्लाइडर को खींचें; अब वापस स्नैप करने के लिए रिलीज़"</string>
+    <string name="text_legend" formatted="false">"किंवदंती"</string>
+    <string name="text_music_on" formatted="false">"♫ संगीत: चालू"</string>
+    <string name="text_music_off" formatted="false">"♫ संगीत: बंद"</string>
+    <string name="text_read_to_me_is_on_i_ll_read_the_cards_out_loud" formatted="false">"मेरे लिए पढ़ें चालू है. मैं कार्ड ज़ोर से पढ़ूंगा."</string>
+    <string name="text_read_on" formatted="false">"🔊 पढ़ें: चालू"</string>
+    <string name="text_read_off" formatted="false">"🔊 पढ़ें: बंद"</string>
+    <string name="text_a_living_window_onto_earth" formatted="false">"पृथ्वी पर एक जीवित खिड़की"</string>
+    <string name="text_drag_to_rotate" formatted="false">"घुमाने के लिए खींचें"</string>
+    <string name="text_pinch_to_zoom" formatted="false">"ज़ूम करने के लिए पिंच करें"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"अधिक जानने के लिए ग्लोब पर टैप करें"</string>
+    <string name="text_explore_earth" formatted="false">"पृथ्वी का अन्वेषण करें"</string>
+    <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"लाइव पूर्वावलोकन · वर्तमान धूप · कोई ऑडियो नहीं"</string>
+    <string name="text_preview_set_wallpaper" formatted="false">"वॉलपेपर का पूर्वावलोकन करें और सेट करें"</string>
+    <string name="text_choose_home_or_lock_screen_in_the_android_preview" formatted="false">"Android पूर्वावलोकन में होम या लॉक स्क्रीन चुनें।"</string>
+    <string name="text_view_from" formatted="false">"से देखें"</string>
+    <string name="text_saved_places" formatted="false">"सहेजे गए स्थान"</string>
+    <string name="text_search_cities" formatted="false">"शहर खोजें"</string>
+    <string name="text_composition" formatted="false">"रचना"</string>
+    <string name="text_whole_earth" formatted="false">"पूरी पृथ्वी"</string>
+    <string name="text_night_lights" formatted="false">"रात की रोशनी"</string>
+    <string name="text_earth_s_horizon" formatted="false">"पृथ्वी का क्षितिज"</string>
+    <string name="text_complete_globe_with_current_sunlight_and_quiet_stars" formatted="false">"वर्तमान सूर्य के प्रकाश और शांत तारों से युक्त संपूर्ण विश्व।"</string>
+    <string name="text_city_lights_on_the_dark_side_of_earth_with_current_sunlight" formatted="false">"वर्तमान सूर्य के प्रकाश से शहर पृथ्वी के अंधेरे पक्ष पर प्रकाश डालता है।"</string>
+    <string name="text_a_close_cropped_view_of_earth_s_atmospheric_limb" formatted="false">"पृथ्वी के वायुमंडलीय अंग का एक नज़दीकी, काटा हुआ दृश्य।"</string>
+    <string name="text_camera_motion" formatted="false">"कैमरे की गति"</string>
+    <string name="text_fixed_viewpoint" formatted="false">"निश्चित दृष्टिकोण"</string>
+    <string name="text_slow_orbit" formatted="false">"धीमी कक्षा"</string>
+    <string name="text_follow_the_night_side" formatted="false">"रात्रि पक्ष का पालन करें"</string>
+    <string name="text_keeps_your_chosen_place_in_view_as_daylight_changes" formatted="false">"दिन के उजाले में बदलाव के अनुसार आपके चुने हुए स्थान को ध्यान में रखता है।"</string>
+    <string name="text_starts_at_your_chosen_view_then_slowly_travels_around_earth" formatted="false">"आपके चुने हुए दृश्य से शुरू होता है, फिर धीरे-धीरे पृथ्वी के चारों ओर यात्रा करता है।"</string>
+    <string name="text_the_view_moves_with_the_night_side_instead_of_staying_over_a_plac" formatted="false">"दृश्य एक स्थान पर रुकने के बजाय रात की ओर बढ़ता है।"</string>
+    <string name="text_turn_the_globe_when_i_swipe_between_home_screens" formatted="false">"जब मैं होम स्क्रीन के बीच स्वाइप करता हूं तो ग्लोब घुमाएं"</string>
+    <string name="text_generated_illustration" formatted="false">"उत्पन्न चित्रण"</string>
+    <string name="text_satellite_imagery_when_cached_or_available" formatted="false">"सैटेलाइट इमेजरी, जब कैश्ड या उपलब्ध हो"</string>
+    <string name="text_globe_scale" formatted="false">"ग्लोब स्केल"</string>
+    <string name="text_hide_framing_controls" formatted="false">"फ़्रेमिंग नियंत्रण छिपाएँ ▴"</string>
+    <string name="text_adjust_framing_angles" formatted="false">"फ़्रेमिंग और कोण समायोजित करें ▾"</string>
+    <string name="text_horizontal_framing" formatted="false">"क्षैतिज फ़्रेमिंग"</string>
+    <string name="text_vertical_framing" formatted="false">"लंबवत फ़्रेमिंग"</string>
+    <string name="text_view_angle" formatted="false">"देखने का कोण"</string>
+    <string name="text_view_latitude" formatted="false">"अक्षांश देखें"</string>
+    <string name="text_saved_view_1_s">" · सहेजा गया दृश्य: %1$s"</string>
+    <string name="text_following_the_night_side_1_s">"रात्रि पक्ष के बाद%1$s"</string>
+    <string name="text_your_custom_view" formatted="false">"आपका कस्टम दृश्य"</string>
+    <string name="text_orbit_starts_at_1_s">"कक्षा %1$s से शुरू होती है"</string>
+    <string name="text_choose_a_place_or_adjust_the_angles_below" formatted="false">"कोई स्थान चुनें, या नीचे दिए गए कोणों को समायोजित करें।"</string>
+    <string name="text_no_saved_places_yet" formatted="false">"अभी तक कोई सहेजा गया स्थान नहीं"</string>
+    <string name="text_search_for_a_city_here_you_can_also_save_a_custom_point_in_explor" formatted="false">"यहां एक शहर खोजें. आप एक्सप्लोर → स्थान → ग्लोब से एक स्थान जोड़ें में एक कस्टम पॉइंट भी सहेज सकते हैं।"</string>
+    <string name="text_view_from_a_saved_place" formatted="false">"सहेजे गए स्थान से देखें"</string>
+    <string name="text_city_or_country" formatted="false">"शहर या देश"</string>
+    <string name="text_search_city_or_country" formatted="false">"शहर या देश खोजें"</string>
+    <string name="text_no_matching_city_try_a_country_or_another_name" formatted="false">"कोई मेल खाता शहर नहीं. किसी देश या अन्य नाम का प्रयास करें."</string>
+    <string name="text_choose_a_city" formatted="false">"एक शहर चुनें"</string>
+    <string name="text_earth_today_widget" formatted="false">"अर्थ टुडे विजेट"</string>
+    <string name="text_which_place_should_this_widget_show_other_widgets_can_show_differ" formatted="false">"यह विजेट किस स्थान पर दिखना चाहिए? अन्य विजेट विभिन्न स्थान दिखा सकते हैं."</string>
+    <string name="text_no_place_yet" formatted="false">"अभी तक कोई जगह नहीं है"</string>
+    <string name="text_save_a_place_in_the_app_explore_places_to_see_its_day_and_night_h" formatted="false">"किसी स्थान का दिन और रात यहां देखने के लिए उसे ऐप में सहेजें (एक्सप्लोर करें &gt; स्थान)।"</string>
+    <string name="text_save_widget" formatted="false">"विजेट सहेजें"</string>
+    <string name="text_1_s_2_s_3_s">"%1$s %2$s · %3$d%%"</string>
+    <string name="text_choose_a_place" formatted="false">"एक जगह चुनें"</string>
+    <string name="text_set_your_local_view" formatted="false">"अपना स्थानीय दृश्य सेट करें"</string>
+    <string name="text_polar_day_2" formatted="false">"ध्रुवीय दिन"</string>
+    <string name="text_polar_night_2" formatted="false">"ध्रुवीय रात"</string>
+    <string name="text_nighttime_now" formatted="false">"अभी रात का समय है"</string>
+    <string name="text_updated_1_s">"अद्यतन %1$s"</string>
+    <string name="text_illustration_1_s">"चित्रण · %1$s"</string>
+    <string name="text_couldn_t_capture_the_view_try_again" formatted="false">"दृश्य कैप्चर नहीं किया जा सका - पुनः प्रयास करें।"</string>
+    <string name="text_couldn_t_prepare_the_image" formatted="false">"छवि तैयार नहीं की जा सकी."</string>
+    <string name="text_share_your_view" formatted="false">"अपना विचार साझा करें"</string>
+    <string name="text_earth_1_s_made_with_pale_blue_dot_2_s">"🌍 पृथ्वी - %1$s\nPale Blue Dot से निर्मित → %2$s"</string>
+    <string name="text_ask_a_grown_up" formatted="false">"किसी बड़े से पूछो"</string>
+    <string name="text_what_is_1_s_2_s">"%1$d × %2$d क्या है?"</string>
+    <string name="text_maybe_later" formatted="false">"शायद बाद में"</string>
+    <string name="text_earthquake" formatted="false">"भूकंप"</string>
+    <string name="text_you_found_where_the_ground_was_shaking" formatted="false">"आपने पाया कि ज़मीन कहाँ हिल रही थी!"</string>
+    <string name="text_volcano" formatted="false">"ज्वालामुखी"</string>
+    <string name="text_you_spotted_hot_lava_erupting_from_deep_inside_the_earth" formatted="false">"आपने पृथ्वी के अंदर से गर्म लावा फूटते हुए देखा।"</string>
+    <string name="text_wildfire" formatted="false">"जंगल की आग"</string>
+    <string name="text_you_caught_a_fire_so_big_that_satellites_can_see_it_from_space" formatted="false">"आपने इतनी बड़ी आग पकड़ ली है कि उपग्रह इसे अंतरिक्ष से देख सकते हैं।"</string>
+    <string name="text_storm" formatted="false">"तूफ़ान"</string>
+    <string name="text_you_tracked_a_giant_swirling_storm" formatted="false">"आपने एक विशाल घुमड़ते तूफान का पता लगाया।"</string>
+    <string name="text_daytime_2" formatted="false">"दिन का समय"</string>
+    <string name="text_you_found_the_side_of_earth_facing_the_sun" formatted="false">"आपने पाया कि पृथ्वी का भाग सूर्य की ओर है।"</string>
+    <string name="text_city_lights_2" formatted="false">"शहर की रोशनी"</string>
+    <string name="text_you_found_the_night_side_sparkling_with_city_lights" formatted="false">"आपको रात का किनारा शहर की रोशनी से जगमगाता हुआ मिला।"</string>
+    <string name="text_star_gazer" formatted="false">"स्टार गेजर"</string>
+    <string name="text_you_looked_past_earth_into_the_stars_and_galaxies_beyond" formatted="false">"आपने पृथ्वी से परे तारों और आकाशगंगाओं में देखा।"</string>
+    <string name="text_time_traveler" formatted="false">"समय यात्री"</string>
+    <string name="text_you_moved_time_to_turn_day_into_night" formatted="false">"आपने समय को आगे बढ़ाकर दिन को रात में बदल दिया।"</string>
+    <string name="text_tap_a_place_where_it_s_daytime" formatted="false">"उस स्थान पर टैप करें जहां दिन का समय है ☀️"</string>
+    <string name="text_tap_a_place_where_it_s_night_time" formatted="false">"उस स्थान पर टैप करें जहां रात का समय है 🌙"</string>
+    <string name="text_find_an_earthquake" formatted="false">"भूकंप खोजें 🔶"</string>
+    <string name="text_find_a_volcano" formatted="false">"ज्वालामुखी खोजें 🌋"</string>
+    <string name="text_find_a_wildfire" formatted="false">"जंगल की आग खोजें 🔥"</string>
+    <string name="text_find_a_storm" formatted="false">"तूफ़ान खोजें 🌀"</string>
+    <string name="text_the_sun_is_so_huge_that_about_1_3_million_earths_could_fit_inside" formatted="false">"सूर्य इतना विशाल है कि इसके अंदर लगभग 13 लाख पृथ्वियाँ समा सकती हैं।"</string>
+    <string name="text_a_day_on_venus_is_longer_than_a_whole_year_on_venus" formatted="false">"शुक्र ग्रह पर एक दिन पूरे वर्ष से भी बड़ा होता है!"</string>
+    <string name="text_footprints_on_the_moon_can_last_millions_of_years_because_there_s" formatted="false">"चंद्रमा पर पैरों के निशान लाखों वर्षों तक रह सकते हैं, क्योंकि उन्हें उड़ाने के लिए कोई हवा नहीं है।"</string>
+    <string name="text_jupiter_is_so_big_that_all_the_other_planets_could_fit_inside_it" formatted="false">"बृहस्पति इतना बड़ा है कि बाकी सभी ग्रह इसके अंदर समा सकते हैं।"</string>
+    <string name="text_sunlight_takes_about_8_minutes_to_travel_all_the_way_to_earth" formatted="false">"सूर्य के प्रकाश को पृथ्वी तक पहुँचने में लगभग 8 मिनट का समय लगता है।"</string>
+    <string name="text_space_is_completely_silent_because_there_s_no_air_to_carry_sound" formatted="false">"अंतरिक्ष पूरी तरह से शांत है, क्योंकि वहां ध्वनि ले जाने के लिए हवा नहीं है।"</string>
+    <string name="text_earth_takes_365_and_a_quarter_days_to_orbit_the_sun_that_s_why_we" formatted="false">"पृथ्वी को सूर्य की परिक्रमा करने में सवा 365 दिन लगते हैं - इसीलिए हम हर 4 साल में एक लीप दिन जोड़ते हैं।"</string>
+    <string name="text_the_tallest_volcano_we_know_of_olympus_mons_on_mars_is_about_thre" formatted="false">"सबसे ऊंचे ज्वालामुखी के बारे में हम जानते हैं, मंगल ग्रह पर ओलंपस मॉन्स, माउंट एवरेस्ट से लगभग तीन गुना ऊंचा है।"</string>
+    <string name="text_earth_is_the_only_planet_not_named_after_a_greek_or_roman_god" formatted="false">"पृथ्वी एकमात्र ऐसा ग्रह है जिसका नाम किसी ग्रीक या रोमन देवता के नाम पर नहीं रखा गया है।"</string>
+    <string name="text_there_are_more_stars_in_the_universe_than_grains_of_sand_on_all_o" formatted="false">"ब्रह्मांड में पृथ्वी के सभी समुद्र तटों पर रेत के कणों की तुलना में अधिक तारे हैं।"</string>
+    <string name="text_the_moon_drifts_about_3_8_cm_farther_from_earth_every_year" formatted="false">"चंद्रमा हर साल पृथ्वी से लगभग 3.8 सेमी दूर चला जाता है।"</string>
+    <string name="text_saturn_is_so_light_for_its_size_that_it_would_float_in_a_giant_ba" formatted="false">"शनि अपने आकार के हिसाब से इतना हल्का है कि यह पानी के विशाल बाथटब में भी तैर सकता है।"</string>
+    <string name="text_lightning_strikes_somewhere_on_earth_about_100_times_every_second" formatted="false">"पृथ्वी पर हर सेकंड लगभग 100 बार बिजली गिरती है।"</string>
+    <string name="text_the_space_station_zooms_around_the_whole_earth_about_once_every_9" formatted="false">"अंतरिक्ष स्टेशन हर 90 मिनट में लगभग एक बार पूरी पृथ्वी का चक्कर लगाता है।"</string>
+    <string name="text_auroras_glow_near_the_poles_when_tiny_particles_from_the_sun_cras" formatted="false">"जब सूर्य के छोटे-छोटे कण हमारी हवा से टकराते हैं तो ध्रुवों के पास ऑरोरा चमकता है।"</string>
+    <string name="text_about_70_of_earth_s_surface_is_covered_by_ocean" formatted="false">"पृथ्वी की सतह का लगभग 70% भाग महासागर से ढका हुआ है।"</string>
+    <string name="text_venus_is_the_hottest_planet_even_though_mercury_is_closer_to_the" formatted="false">"शुक्र सबसे गर्म ग्रह है, हालांकि बुध सूर्य के करीब है।"</string>
+    <string name="text_the_great_red_spot_on_jupiter_is_a_storm_bigger_than_the_whole_ea" formatted="false">"बृहस्पति पर ग्रेट रेड स्पॉट पूरी पृथ्वी से भी बड़ा तूफान है।"</string>
+    <string name="text_earthquakes_happen_when_giant_pieces_of_earth_s_crust_slip_past_e" formatted="false">"भूकंप तब आते हैं जब पृथ्वी की पपड़ी के विशाल टुकड़े एक दूसरे के ऊपर से खिसक जाते हैं।"</string>
+    <string name="text_the_sun_is_actually_white_our_air_is_what_makes_it_look_yellow" formatted="false">"सूर्य वास्तव में सफेद है - हमारी हवा ही उसे पीला दिखाती है।"</string>
+    <string name="text_comets_are_giant_balls_of_ice_and_dust_that_grow_glowing_tails_ne" formatted="false">"धूमकेतु बर्फ और धूल के विशाल गोले हैं जो सूर्य के निकट चमकती हुई पूँछें विकसित करते हैं।"</string>
+    <string name="text_if_you_could_drive_a_car_straight_up_you_d_reach_space_in_about_a" formatted="false">"यदि आप सीधे कार चला सकते हैं, तो आप लगभग एक घंटे में अंतरिक्ष तक पहुंच जाएंगे।"</string>
+    <string name="text_the_moon_has_no_air_so_its_sky_is_always_black_even_in_the_daytim" formatted="false">"चंद्रमा में हवा नहीं है, इसलिए इसका आकाश हमेशा काला रहता है, यहां तक कि दिन में भी।"</string>
+    <string name="text_earth_spins_at_about_1_600_km_h_at_the_equator_but_we_don_t_feel" formatted="false">"पृथ्वी भूमध्य रेखा पर लगभग 1,600 किमी/घंटा की गति से घूमती है - लेकिन हम इसे महसूस नहीं करते क्योंकि हम इसके साथ-साथ घूमते हैं।"</string>
+    <string name="text_new_moon" formatted="false">"अमावस्या"</string>
+    <string name="text_waxing_crescent" formatted="false">"बढ़ती चंद्रकला"</string>
+    <string name="text_first_quarter" formatted="false">"प्रथम चतुर्थांश"</string>
+    <string name="text_waxing_gibbous" formatted="false">"बढ़ता उभरा चंद्रमा"</string>
+    <string name="text_full_moon" formatted="false">"पूर्णिमा"</string>
+    <string name="text_waning_gibbous" formatted="false">"घटता उभरा चंद्रमा"</string>
+    <string name="text_last_quarter" formatted="false">"अंतिम चतुर्थांश"</string>
+    <string name="text_waning_crescent" formatted="false">"घटती चंद्रकला"</string>
+    <string name="text_watch_where_sunrise_reaches_next" formatted="false">"देखें कि सूर्योदय आगे कहां पहुंचता है।"</string>
+    <string name="text_compare_daylight_in_the_north_and_south" formatted="false">"उत्तर और दक्षिण में दिन के उजाले की तुलना करें।"</string>
+    <string name="text_trace_a_curve_of_earth_s_plate_boundaries" formatted="false">"पृथ्वी की प्लेट सीमाओं का एक वक्र ट्रेस करें।"</string>
+    <string name="text_saved_observation_feed_update_unavailable" formatted="false">"सहेजा गया अवलोकन; फ़ीड अद्यतन अनुपलब्ध"</string>
+    <string name="text_recent_reported_observation" formatted="false">"हाल ही में रिपोर्ट किया गया अवलोकन"</string>
+    <string name="text_observations_are_loading" formatted="false">"अवलोकन लोड हो रहे हैं"</string>
+    <string name="text_no_recent_observations_available_the_moon_and_daylight_are_still" formatted="false">"कोई हालिया अवलोकन उपलब्ध नहीं है; चाँद और दिन का उजाला अभी भी यहाँ है"</string>
+    <string name="lesson_follow_sunrise" formatted="false">"सूर्योदय का पालन करें"</string>
+    <string name="lesson_a_turning_world" formatted="false">"एक बदलती दुनिया"</string>
+    <string name="lesson_sunrise_is_a_moving_boundary_between_darkness_and_daylight_we_ll" formatted="false">"सूर्योदय अंधकार और दिन के उजाले के बीच एक गतिशील सीमा है। हम एक चिन्हित स्थान से इसका पालन करेंगे."</string>
+    <string name="lesson_begin" formatted="false">"शुरू करो"</string>
+    <string name="lesson_find_london" formatted="false">"लंदन खोजें"</string>
+    <string name="lesson_look_at_london_on_the_globe_notice_which_side_faces_the_sun_the_m" formatted="false">"ग्लोब पर लंदन को देखें। ध्यान दें कि कौन सा पक्ष सूर्य की ओर है। मार्कर और दिन के उजाले की गणना अलग-अलग सुराग हैं।"</string>
+    <string name="lesson_i_found_london" formatted="false">"मुझे लंदन मिल गया"</string>
+    <string name="lesson_predict_the_direction" formatted="false">"दिशा की भविष्यवाणी करें"</string>
+    <string name="lesson_as_earth_spins_eastward_which_way_does_the_dawn_boundary_move_acr" formatted="false">"जैसे ही पृथ्वी पूर्व की ओर घूमती है, भोर की सीमा देशांतर के मानचित्र पर किस दिशा में घूमती है?"</string>
+    <string name="lesson_yes_at_a_fixed_utc_time_the_dawn_line_moves_westward_over_longitu" formatted="false">"हाँ. एक निश्चित यूटीसी समय पर, जैसे ही पृथ्वी पूर्व की ओर घूमती है, भोर रेखा देशांतर पर पश्चिम की ओर बढ़ती है।"</string>
+    <string name="lesson_it_moves_westward_across_longitudes_earth_itself_turns_eastward_c" formatted="false">"यह देशांतरों में पश्चिम की ओर बढ़ता है। पृथ्वी स्वयं पूर्व की ओर मुड़ जाती है, जिससे प्रत्येक स्थान दिन के उजाले में आ जाता है।"</string>
+    <string name="lesson_westward" formatted="false">"पश्चिम की ओर"</string>
+    <string name="lesson_eastward" formatted="false">"पूर्व की ओर"</string>
+    <string name="lesson_advance_the_scene" formatted="false">"दृश्य को आगे बढ़ाएं"</string>
+    <string name="lesson_move_the_globe_s_lesson_clock_forward_two_hours_and_watch_the_lig" formatted="false">"ग्लोब की पाठ घड़ी को दो घंटे आगे बढ़ाएं और प्रकाश परिवर्तन को देखें। यह एक अनुकरण है, जबकि टुडे वास्तविक समय में रहता है।"</string>
+    <string name="lesson_advance_two_hours" formatted="false">"दो घंटे आगे बढ़ें"</string>
+    <string name="lesson_what_changed" formatted="false">"क्या बदला?"</string>
+    <string name="lesson_the_sunlight_direction_changed_with_time_did_the_saved_place_move" formatted="false">"समय के साथ सूर्य की रोशनी की दिशा बदलती गई। क्या सहेजा गया स्थान ग्लोब पर चला गया?"</string>
+    <string name="lesson_exactly_the_place_keeps_its_coordinates_while_earth_s_rotation_ch" formatted="false">"बिलकुल. यह स्थान अपने निर्देशांक बनाए रखता है जबकि पृथ्वी के घूमने से इसकी रोशनी बदल जाती है।"</string>
+    <string name="lesson_a_place_keeps_its_latitude_and_longitude_the_changing_angle_to_th" formatted="false">"एक स्थान अपना अक्षांश और देशांतर रखता है। सूर्य के प्रति कोण बदलने से दिन और रात का निर्माण होता है।"</string>
+    <string name="lesson_no_earth_rotated_relative_to_the_sun" formatted="false">"नहीं; पृथ्वी सूर्य के सापेक्ष घूमती है"</string>
+    <string name="lesson_yes_its_latitude_changed" formatted="false">"हाँ; इसका अक्षांश बदल गया"</string>
+    <string name="lesson_explore_the_ring_of_fire" formatted="false">"रिंग ऑफ फायर का अन्वेषण करें"</string>
+    <string name="lesson_a_pattern_around_the_pacific" formatted="false">"प्रशांत महासागर के चारों ओर एक पैटर्न"</string>
+    <string name="lesson_visit_three_locations_predict_a_pattern_then_reveal_plate_boundar" formatted="false">"तीन स्थानों पर जाएँ, एक पैटर्न की भविष्यवाणी करें, फिर प्लेट की सीमाएँ प्रकट करें। ऐतिहासिक फ़ॉलबैक उदाहरणों को दिनांकों और स्रोतों के साथ लेबल किया गया है।"</string>
+    <string name="lesson_off_japan" formatted="false">"जापान से बाहर"</string>
+    <string name="lesson_historical_fallback_2011_03_11_tohoku_earthquake_usgs_a_recent_pa" formatted="false">"ऐतिहासिक फ़ॉलबैक: 2011-03-11 तोहोकू भूकंप, USGS। उपलब्ध होने पर हालिया प्रशांत अवलोकन का उपयोग किया जाता है।"</string>
+    <string name="lesson_visit_the_next_location" formatted="false">"अगले स्थान पर जाएँ"</string>
+    <string name="lesson_the_cascades" formatted="false">"कैस्केड"</string>
+    <string name="lesson_historical_fallback_1980_05_18_mount_st_helens_eruption_usgs_this" formatted="false">"ऐतिहासिक फ़ॉलबैक: 1980-05-18 माउंट सेंट हेलेन्स विस्फोट, USGS। यह एक दिनांकित पाठ उदाहरण है, कोई लाइव रिपोर्ट नहीं।"</string>
+    <string name="lesson_along_chile" formatted="false">"चिली के साथ"</string>
+    <string name="lesson_historical_fallback_1960_05_22_great_chilean_earthquake_usgs_this" formatted="false">"ऐतिहासिक फ़ॉलबैक: 1960-05-22 महान चिली भूकंप, USGS। यह उदाहरण लाइव-इवेंट रिपॉजिटरी के बाहर रहता है।"</string>
+    <string name="lesson_predict_the_pattern" formatted="false">"पैटर्न की भविष्यवाणी करें"</string>
+    <string name="lesson_what_pattern_do_you_see" formatted="false">"आप क्या पैटर्न देखते हैं?"</string>
+    <string name="lesson_which_broad_pattern_links_many_earthquake_and_volcano_locations_a" formatted="false">"कौन सा व्यापक पैटर्न प्रशांत महासागर के आसपास कई भूकंप और ज्वालामुखी स्थानों को जोड़ता है?"</string>
+    <string name="lesson_yes_many_cluster_near_plate_edges_but_some_events_also_happen_awa" formatted="false">"हाँ. कई घटनाएँ प्लेट किनारों के निकट एकत्रित होती हैं, लेकिन कुछ घटनाएँ मानचित्रित सीमाओं से दूर भी घटित होती हैं।"</string>
+    <string name="lesson_the_broad_pattern_is_a_belt_near_several_plate_edges_individual_e" formatted="false">"विस्तृत पैटर्न कई प्लेट किनारों के पास एक बेल्ट है। व्यक्तिगत घटनाओं को अपने स्वयं के साक्ष्य की आवश्यकता होती है; एक रेखा से दूरी कोई निदान नहीं है."</string>
+    <string name="lesson_a_belt_near_several_plate_edges" formatted="false">"कई प्लेट किनारों के पास एक बेल्ट"</string>
+    <string name="lesson_one_straight_line_through_the_pacific_center" formatted="false">"प्रशांत केंद्र से होकर गुजरने वाली एक सीधी रेखा"</string>
+    <string name="lesson_every_event_lies_exactly_on_one_boundary" formatted="false">"प्रत्येक घटना बिल्कुल एक सीमा पर स्थित होती है"</string>
+    <string name="lesson_reveal_the_boundaries" formatted="false">"सीमाओं को उजागर करें"</string>
+    <string name="lesson_gold_lines_show_a_generalized_pb2002_plate_boundary_model_compare" formatted="false">"सोने की रेखाएँ एक सामान्यीकृत PB2002 प्लेट-सीमा मॉडल दिखाती हैं। प्रशांत रिम की तुलना करें; ये पंक्तियाँ प्रत्येक व्यक्तिगत घटना की व्याख्या नहीं करतीं।"</string>
+    <string name="lesson_reveal_gold_lines" formatted="false">"सोने की रेखाएँ प्रकट करें"</string>
+    <string name="lesson_what_the_pattern_means" formatted="false">"पैटर्न का क्या मतलब है"</string>
+    <string name="lesson_plate_motions_concentrate_many_earthquakes_and_volcanoes_around_t" formatted="false">"प्लेट गतियाँ प्रशांत महासागर के आसपास कई भूकंपों और ज्वालामुखियों को केंद्रित करती हैं। प्लेटों के भीतर हॉटस्पॉट और भूकंप दिखाते हैं कि पैटर्न में अपवाद क्यों हैं।"</string>
+    <string name="lesson_complete_journey" formatted="false">"पूरी यात्रा"</string>
+    <string name="lesson_understand_the_seasons" formatted="false">"ऋतुओं को समझें"</string>
+    <string name="lesson_two_hemispheres" formatted="false">"दो गोलार्ध"</string>
+    <string name="lesson_compare_daylight_at_london_and_sydney_on_two_dates_earth_s_tilted" formatted="false">"दो तिथियों पर लंदन और सिडनी में दिन के उजाले की तुलना करें। पृथ्वी की झुकी हुई धुरी बदल जाती है कि सूर्य क्षितिज के ऊपर कितनी देर तक रहता है।"</string>
+    <string name="lesson_london_in_june" formatted="false">"जून में लंदन"</string>
+    <string name="lesson_observe_london_near_the_june_solstice_the_northern_hemisphere_has" formatted="false">"जून संक्रांति के निकट लंदन का निरीक्षण करें। उत्तरी गोलार्ध में दिन का प्रकाश अधिक लम्बा होता है।"</string>
+    <string name="lesson_compare_sydney" formatted="false">"सिडनी की तुलना करें"</string>
+    <string name="lesson_sydney_in_june" formatted="false">"सिडनी जून में"</string>
+    <string name="lesson_observe_sydney_on_the_same_date_its_winter_daylight_is_shorter_th" formatted="false">"उसी तिथि को सिडनी का निरीक्षण करें। इसकी शीतकालीन दिन की रोशनी लंदन की गर्मियों की दिन की रोशनी से कम है।"</string>
+    <string name="lesson_make_a_prediction" formatted="false">"एक भविष्यवाणी करें"</string>
+    <string name="lesson_predict_december" formatted="false">"दिसंबर की भविष्यवाणी करें"</string>
+    <string name="lesson_near_the_december_solstice_which_marked_place_has_longer_daylight" formatted="false">"दिसंबर संक्रांति के निकट, किस चिन्हित स्थान पर दिन का प्रकाश अधिक लंबा होता है?"</string>
+    <string name="lesson_yes_the_southern_hemisphere_tilts_toward_the_sun_in_december_so_s" formatted="false">"हाँ. दिसंबर में दक्षिणी गोलार्ध सूर्य की ओर झुक जाता है, इसलिए सिडनी में दिन बड़े होते हैं।"</string>
+    <string name="lesson_sydney_has_longer_daylight_near_the_december_solstice_the_souther" formatted="false">"दिसंबर संक्रांति के निकट सिडनी में दिन की रोशनी लंबी हो जाती है। तब दक्षिणी गोलार्ध सूर्य की ओर झुक जाता है।"</string>
+    <string name="lesson_sydney" formatted="false">"सिडनी"</string>
+    <string name="lesson_london" formatted="false">"लंदन"</string>
+    <string name="lesson_they_must_be_equal" formatted="false">"वे बराबर होने चाहिए"</string>
+    <string name="lesson_switch_to_december" formatted="false">"दिसंबर पर स्विच करें"</string>
+    <string name="lesson_compare_the_daylight_readouts_after_changing_the_lesson_date_this" formatted="false">"पाठ की तारीख बदलने के बाद डेलाइट रीडआउट की तुलना करें। इससे केवल ऐप दृश्य बदल जाता है."</string>
+    <string name="lesson_show_the_axial_tilt_explanation" formatted="false">"अक्षीय झुकाव स्पष्टीकरण दिखाएँ"</string>
+    <string name="lesson_why_seasons_change" formatted="false">"ऋतुएँ क्यों बदलती हैं"</string>
+    <string name="lesson_earth_s_axis_stays_tilted_about_23_4_as_it_orbits_the_sun_the_nor" formatted="false">"सूर्य की परिक्रमा करते समय पृथ्वी की धुरी लगभग 23.4° झुकी रहती है। उत्तरी और दक्षिणी गोलार्ध में दिन का प्रकाश बारी-बारी से लंबा होता है। दृश्यमान गाइड भूमध्य रेखा, उष्णकटिबंधीय और ध्रुवीय वृत्तों को चिह्नित करते हैं।"</string>
+    <string name="text_notebook" formatted="false">"नोटबुक"</string>
+    <string name="text_guide" formatted="false">"मार्गदर्शिका"</string>
+    <string name="text_places" formatted="false">"स्थान"</string>
+    <string name="text_explore_time" formatted="false">"समय में खोजें"</string>
+    <string name="text_journeys" formatted="false">"यात्राएँ"</string>
+    <string name="text_journey" formatted="false">"यात्रा"</string>
+    <string name="text_language" formatted="false">"भाषा"</string>
+    <string name="text_use_device_language" formatted="false">"डिवाइस भाषा का प्रयोग करें"</string>
+    <string name="text_a_voice_for_this_language_is_not_installed_on_this_device" formatted="false">"इस उपकरण पर इस भाषा के लिए ध्वनि स्थापित नहीं है."</string>
+    <string name="text_great_job_challenges_solved_1_s">"🎉 बढ़िया काम! चुनौतियाँ हल हुईं: %1$d"</string>
+    <string name="text_earth_s_axis_is_tilted_about_23_4_degrees_relative_to_its_orbit_a" formatted="false">"पृथ्वी की धुरी सूर्य के चारों ओर अपनी कक्षा के सापेक्ष लगभग 23.4 डिग्री झुकी हुई है।"</string>
+    <string name="city_abidjan" formatted="false">"आबिदजान, आइवरी कोस्ट"</string>
+    <string name="city_abu_dhabi" formatted="false">"अबू धाबी, संयुक्त अरब अमीरात"</string>
+    <string name="city_abuja" formatted="false">"अबुजा, नाइजीरिया"</string>
+    <string name="city_accra" formatted="false">"अकरा, घाना"</string>
+    <string name="city_adamstown" formatted="false">"एडमस्टाउन, पिटकेर्न"</string>
+    <string name="city_addis_ababa" formatted="false">"अदीस अबाबा, इथियोपिया"</string>
+    <string name="city_adelaide" formatted="false">"एडिलेड, ऑस्ट्रेलिया"</string>
+    <string name="city_alexandria" formatted="false">"अलेक्जेंड्रिया, मिस्र"</string>
+    <string name="city_algiers" formatted="false">"अल्जीयर्स, अल्जीरिया"</string>
+    <string name="city_alofi" formatted="false">"अलोफी, नीयू"</string>
+    <string name="city_amman" formatted="false">"अम्मान, जॉर्डन"</string>
+    <string name="city_amsterdam" formatted="false">"एम्स्टर्डम, नीदरलैंड"</string>
+    <string name="city_andorra_la_vella" formatted="false">"अंडोरा ला वेला, अंडोरा"</string>
+    <string name="city_ankara" formatted="false">"अंकारा, तुर्की"</string>
+    <string name="city_antananarivo" formatted="false">"एंटानानारिवो, मेडागास्कर"</string>
+    <string name="city_apia" formatted="false">"एपिया, समोआ"</string>
+    <string name="city_ashgabat" formatted="false">"अश्गाबात, तुर्कमेनिस्तान"</string>
+    <string name="city_asmara" formatted="false">"अस्मारा, इरिट्रिया"</string>
+    <string name="city_astana" formatted="false">"अस्ताना, कजाकिस्तान"</string>
+    <string name="city_asuncion" formatted="false">"असुनसियन, पैराग्वे"</string>
+    <string name="city_athens" formatted="false">"एथेंस, ग्रीस"</string>
+    <string name="city_auckland" formatted="false">"ऑकलैंड, न्यूज़ीलैंड"</string>
+    <string name="city_avarua" formatted="false">"अवारुआ, कुक आइलैंड्स"</string>
+    <string name="city_baghdad" formatted="false">"बगदाद, इराक"</string>
+    <string name="city_baku" formatted="false">"बाकू, अज़रबैजान"</string>
+    <string name="city_bamako" formatted="false">"बमाको, माली"</string>
+    <string name="city_bandar_seri_begawan" formatted="false">"बंदर सेरी बेगवान, ब्रुनेई"</string>
+    <string name="city_bangkok" formatted="false">"बैंकॉक, थाईलैंड"</string>
+    <string name="city_bangui" formatted="false">"बांगुई, मध्य अफ़्रीकी गणराज्य"</string>
+    <string name="city_banjul" formatted="false">"बंजुल, गाम्बिया"</string>
+    <string name="city_barcelona" formatted="false">"बार्सिलोना, स्पेन"</string>
+    <string name="city_basse_terre" formatted="false">"बस्से-टेरे, ग्वाडेलोप"</string>
+    <string name="city_basseterre" formatted="false">"बस्सेटेरे, सेंट किट्स और नेविस"</string>
+    <string name="city_beijing" formatted="false">"बीजिंग, चीन"</string>
+    <string name="city_beirut" formatted="false">"बेरुत, लेबनान"</string>
+    <string name="city_belgrade" formatted="false">"बेलग्रेड, सर्बिया"</string>
+    <string name="city_belmopan" formatted="false">"बेलमोपन, बेलीज़"</string>
+    <string name="city_belo_horizonte" formatted="false">"बेलो होरिज़ोंटे, ब्राज़ील"</string>
+    <string name="city_berlin" formatted="false">"बर्लिन, जर्मनी"</string>
+    <string name="city_bern" formatted="false">"बर्न, स्विट्जरलैंड"</string>
+    <string name="city_bishkek" formatted="false">"बिश्केक, किर्गिस्तान"</string>
+    <string name="city_bissau" formatted="false">"बिसाऊ, गिनी-बिसाऊ"</string>
+    <string name="city_bogota" formatted="false">"बोगोटा, कोलंबिया"</string>
+    <string name="city_brasilia" formatted="false">"ब्रासीलिया, ब्राज़ील"</string>
+    <string name="city_bratislava" formatted="false">"ब्रातिस्लावा, स्लोवाकिया"</string>
+    <string name="city_brazzaville" formatted="false">"ब्रेज़ाविल, कांगो गणराज्य"</string>
+    <string name="city_bridgetown" formatted="false">"ब्रिजटाउन, बारबाडोस"</string>
+    <string name="city_brisbane" formatted="false">"ब्रिस्बेन, ऑस्ट्रेलिया"</string>
+    <string name="city_brooklyn" formatted="false">"ब्रुकलिन, संयुक्त राज्य अमेरिका"</string>
+    <string name="city_brussels" formatted="false">"ब्रुसेल्स, बेल्जियम"</string>
+    <string name="city_bucharest" formatted="false">"बुखारेस्ट, रोमानिया"</string>
+    <string name="city_budapest" formatted="false">"बुडापेस्ट, हंगरी"</string>
+    <string name="city_buenos_aires" formatted="false">"ब्यूनस आयर्स, अर्जेंटीना"</string>
+    <string name="city_cairo" formatted="false">"काहिरा, मिस्र"</string>
+    <string name="city_cali" formatted="false">"कैली, कोलम्बिया"</string>
+    <string name="city_canberra" formatted="false">"कैनबरा, ऑस्ट्रेलिया"</string>
+    <string name="city_cape_town" formatted="false">"केप टाउन, दक्षिण अफ़्रीका"</string>
+    <string name="city_caracas" formatted="false">"कराकस, वेनेज़ुएला"</string>
+    <string name="city_casablanca" formatted="false">"कैसाब्लांका, मोरक्को"</string>
+    <string name="city_castries" formatted="false">"कास्ट्रीज़, सेंट लूसिया"</string>
+    <string name="city_cayenne" formatted="false">"केयेन, फ़्रेंच गुयाना"</string>
+    <string name="city_central_coast" formatted="false">"सेंट्रल कोस्ट, ऑस्ट्रेलिया"</string>
+    <string name="city_charlotte_amalie" formatted="false">"चार्लोट अमालि, यू.एस. वर्जिन द्वीप समूह"</string>
+    <string name="city_chengdu" formatted="false">"चेंगदू, चीन"</string>
+    <string name="city_chicago" formatted="false">"शिकागो, संयुक्त राज्य अमेरिका"</string>
+    <string name="city_chisinau" formatted="false">"चिसीनाउ, मोल्दोवा"</string>
+    <string name="city_chongqing" formatted="false">"चोंगकिंग, चीन"</string>
+    <string name="city_christchurch" formatted="false">"क्राइस्टचर्च, न्यूजीलैंड"</string>
+    <string name="city_ciudad_de_la_paz" formatted="false">"स्यूदाद डे ला पाज़, इक्वेटोरियल गिनी"</string>
+    <string name="city_cockburn_town" formatted="false">"कॉकबर्न टाउन, तुर्क और कैकोस द्वीप समूह"</string>
+    <string name="city_colombo" formatted="false">"कोलंबो, श्रीलंका"</string>
+    <string name="city_conakry" formatted="false">"कोनाक्री, गिनी"</string>
+    <string name="city_copenhagen" formatted="false">"कोपेनहेगन, डेनमार्क"</string>
+    <string name="city_dakar" formatted="false">"डकार, सेनेगल"</string>
+    <string name="city_damascus" formatted="false">"दमिश्क, सीरिया"</string>
+    <string name="city_dar_es_salaam" formatted="false">"दार एस सलाम, तंजानिया"</string>
+    <string name="city_delhi" formatted="false">"दिल्ली, भारत"</string>
+    <string name="city_dhaka" formatted="false">"ढाका, बांग्लादेश"</string>
+    <string name="city_dili" formatted="false">"डिली, तिमोर लेस्ते"</string>
+    <string name="city_djibouti" formatted="false">"जिबूती, जिबूती"</string>
+    <string name="city_dodoma" formatted="false">"डोडोमा, तंजानिया"</string>
+    <string name="city_doha" formatted="false">"दोहा, कतर"</string>
+    <string name="city_douglas" formatted="false">"डगलस, आइल ऑफ मैन"</string>
+    <string name="city_dublin" formatted="false">"डबलिन, आयरलैंड"</string>
+    <string name="city_dushanbe" formatted="false">"दुशांबे, ताजिकिस्तान"</string>
+    <string name="city_flying_fish_cove" formatted="false">"फ्लाइंग फिश कोव, क्रिसमस द्वीप"</string>
+    <string name="city_fort_de_france" formatted="false">"फोर्ट-डी-फ़्रांस, मार्टीनिक"</string>
+    <string name="city_fortaleza" formatted="false">"फ़ोर्टालेज़ा, ब्राज़ील"</string>
+    <string name="city_freetown" formatted="false">"फ़्रीटाउन, सिएरा लियोन"</string>
+    <string name="city_funafuti" formatted="false">"फुनाफुटी, तुवालु"</string>
+    <string name="city_gaborone" formatted="false">"गैबोरोन, बोत्सवाना"</string>
+    <string name="city_george_town" formatted="false">"जॉर्ज टाउन, केमैन आइलैंड्स"</string>
+    <string name="city_georgetown" formatted="false">"जॉर्जटाउन, गुयाना"</string>
+    <string name="city_gibraltar" formatted="false">"जिब्राल्टर, जिब्राल्टर"</string>
+    <string name="city_gitega" formatted="false">"गिटेगा, बुरुंडी"</string>
+    <string name="city_giza" formatted="false">"गीज़ा, मिस्र"</string>
+    <string name="city_gold_coast" formatted="false">"गोल्ड कोस्ट, ऑस्ट्रेलिया"</string>
+    <string name="city_grytviken" formatted="false">"ग्रिटविकेन, दक्षिण जॉर्जिया और दक्षिण सैंडविच द्वीप समूह"</string>
+    <string name="city_guangzhou" formatted="false">"गुआंगज़ौ, चीन"</string>
+    <string name="city_guatemala_city" formatted="false">"ग्वाटेमाला सिटी, ग्वाटेमाला"</string>
+    <string name="city_guayaquil" formatted="false">"ग्वायाक्विल, इक्वाडोर"</string>
+    <string name="city_gustavia" formatted="false">"गुस्ताविया, सेंट बार्थेलेमी"</string>
+    <string name="city_hagatna" formatted="false">"हगताना, गुआम"</string>
+    <string name="city_hamburg" formatted="false">"हैम्बर्ग, जर्मनी"</string>
+    <string name="city_hamilton" formatted="false">"हैमिल्टन, बरमूडा"</string>
+    <string name="city_hangzhou" formatted="false">"हांग्जो, चीन"</string>
+    <string name="city_hanoi" formatted="false">"हनोई, वियतनाम"</string>
+    <string name="city_harare" formatted="false">"हरारे, ज़िम्बाब्वे"</string>
+    <string name="city_havana" formatted="false">"हवाना, क्यूबा"</string>
+    <string name="city_helsinki" formatted="false">"हेलसिंकी, फ़िनलैंड"</string>
+    <string name="city_ho_chi_minh_city" formatted="false">"हो ची मिन्ह सिटी, वियतनाम"</string>
+    <string name="city_hong_kong" formatted="false">"हांगकांग, हांगकांग"</string>
+    <string name="city_honiara" formatted="false">"होनियारा, सोलोमन द्वीप"</string>
+    <string name="city_houston" formatted="false">"ह्यूस्टन, संयुक्त राज्य अमेरिका"</string>
+    <string name="city_ibadan" formatted="false">"इबादान, नाइजीरिया"</string>
+    <string name="city_islamabad" formatted="false">"इस्लामाबाद, पाकिस्तान"</string>
+    <string name="city_istanbul" formatted="false">"इस्तांबुल, तुर्की"</string>
+    <string name="city_iztapalapa" formatted="false">"इज़्तापलापा, मेक्सिको"</string>
+    <string name="city_jakarta" formatted="false">"जकार्ता, इंडोनेशिया"</string>
+    <string name="city_jamestown" formatted="false">"जेम्सटाउन, सेंट हेलेना"</string>
+    <string name="city_johannesburg" formatted="false">"जोहांसबर्ग, दक्षिण अफ़्रीका"</string>
+    <string name="city_juba" formatted="false">"जुबा, दक्षिण सूडान"</string>
+    <string name="city_kabul" formatted="false">"काबुल, अफगानिस्तान"</string>
+    <string name="city_kampala" formatted="false">"कंपाला, युगांडा"</string>
+    <string name="city_kano" formatted="false">"कानो, नाइजीरिया"</string>
+    <string name="city_karachi" formatted="false">"कराची, पाकिस्तान"</string>
+    <string name="city_kathmandu" formatted="false">"काठमांडू, नेपाल"</string>
+    <string name="city_khartoum" formatted="false">"खार्तूम, सूडान"</string>
+    <string name="city_kigali" formatted="false">"किगाली, रवांडा"</string>
+    <string name="city_kingston" formatted="false">"किंग्स्टन, जमैका"</string>
+    <string name="city_kingston_nf" formatted="false">"किंग्स्टन, नॉरफ़ॉक द्वीप"</string>
+    <string name="city_kingstown" formatted="false">"किंग्सटाउन, सेंट विंसेंट और ग्रेनेडाइंस"</string>
+    <string name="city_kinshasa" formatted="false">"किंशासा, कांगो लोकतांत्रिक गणराज्य"</string>
+    <string name="city_kralendijk" formatted="false">"क्रालेंडिज्क, बोनेयर, सेंट यूस्टैटियस और सबा "</string>
+    <string name="city_kuala_lumpur" formatted="false">"कुआलालंपुर, मलेशिया"</string>
+    <string name="city_kuwait_city" formatted="false">"कुवैत सिटी, कुवैत"</string>
+    <string name="city_kyiv" formatted="false">"कीव, यूक्रेन"</string>
+    <string name="city_lagos" formatted="false">"लागोस, नाइजीरिया"</string>
+    <string name="city_lahore" formatted="false">"लाहौर, पाकिस्तान"</string>
+    <string name="city_libreville" formatted="false">"लिब्रेविले, गैबॉन"</string>
+    <string name="city_lilongwe" formatted="false">"लिलोंग्वे, मलावी"</string>
+    <string name="city_lima" formatted="false">"लीमा, पेरू"</string>
+    <string name="city_lisbon" formatted="false">"लिस्बन, पुर्तगाल"</string>
+    <string name="city_ljubljana" formatted="false">"ज़ुब्लज़ाना, स्लोवेनिया"</string>
+    <string name="city_logan_city" formatted="false">"लोगान शहर, ऑस्ट्रेलिया"</string>
+    <string name="city_lome" formatted="false">"लोमे, टोगो"</string>
+    <string name="city_london" formatted="false">"लंदन, यूनाइटेड किंगडम"</string>
+    <string name="city_longyearbyen" formatted="false">"लॉन्गइयरब्येन, स्वालबार्ड और जान मायेन"</string>
+    <string name="city_los_angeles" formatted="false">"लॉस एंजिल्स, संयुक्त राज्य अमेरिका"</string>
+    <string name="city_luanda" formatted="false">"लुआंडा, अंगोला"</string>
+    <string name="city_lusaka" formatted="false">"लुसाका, जाम्बिया"</string>
+    <string name="city_luxembourg" formatted="false">"लक्ज़मबर्ग, लक्ज़मबर्ग"</string>
+    <string name="city_macau" formatted="false">"मकाऊ, मकाओ"</string>
+    <string name="city_madrid" formatted="false">"मैड्रिड, स्पेन"</string>
+    <string name="city_majuro" formatted="false">"माजुरो, मार्शल द्वीप"</string>
+    <string name="city_male" formatted="false">"पुरुष, मालदीव"</string>
+    <string name="city_mamoudzou" formatted="false">"मामौदज़ौ, मैयट"</string>
+    <string name="city_managua" formatted="false">"मानागुआ, निकारागुआ"</string>
+    <string name="city_manama" formatted="false">"मनामा, बहरीन"</string>
+    <string name="city_manaus" formatted="false">"मनौस, ब्राज़ील"</string>
+    <string name="city_manila" formatted="false">"मनीला, फिलीपींस"</string>
+    <string name="city_manukau_city" formatted="false">"मनुकाउ शहर, न्यूजीलैंड"</string>
+    <string name="city_maputo" formatted="false">"मापुटो, मोज़ाम्बिक"</string>
+    <string name="city_mariehamn" formatted="false">"मैरीहैमन, अलैंड द्वीप समूह"</string>
+    <string name="city_marigot" formatted="false">"मैरीगॉट, सेंट मार्टिन"</string>
+    <string name="city_maseru" formatted="false">"मासेरू, लेसोथो"</string>
+    <string name="city_mata_utu" formatted="false">"माता-उतु, वालिस और फ़्यूचूना"</string>
+    <string name="city_mbabane" formatted="false">"मबाबेन, इस्वातिनी"</string>
+    <string name="city_melbourne" formatted="false">"मेलबर्न, ऑस्ट्रेलिया"</string>
+    <string name="city_mexico_city" formatted="false">"मेक्सिको सिटी, मेक्सिको"</string>
+    <string name="city_minsk" formatted="false">"मिन्स्क, बेलारूस"</string>
+    <string name="city_mogadishu" formatted="false">"मोगादिशू, सोमालिया"</string>
+    <string name="city_monaco" formatted="false">"मोनाको, मोनाको"</string>
+    <string name="city_monrovia" formatted="false">"मोन्रोविया, लाइबेरिया"</string>
+    <string name="city_montevideo" formatted="false">"मोंटेवीडियो, उरुग्वे"</string>
+    <string name="city_montreal" formatted="false">"मॉन्ट्रियल, कनाडा"</string>
+    <string name="city_moroni" formatted="false">"मोरोनी, कोमोरोस"</string>
+    <string name="city_moscow" formatted="false">"मॉस्को, रूस"</string>
+    <string name="city_mumbai" formatted="false">"मुंबई, भारत"</string>
+    <string name="city_muscat" formatted="false">"मस्कट, ओमान"</string>
+    <string name="city_n_djamena" formatted="false">"एन\'जामेना, चाड"</string>
+    <string name="city_nairobi" formatted="false">"नैरोबी, केन्या"</string>
+    <string name="city_nassau" formatted="false">"नासाउ, बहामास"</string>
+    <string name="city_nay_pyi_taw" formatted="false">"ने प्यी ताव, म्यांमार"</string>
+    <string name="city_new_delhi" formatted="false">"नई दिल्ली, भारत"</string>
+    <string name="city_new_york" formatted="false">"न्यूयॉर्क शहर, संयुक्त राज्य अमेरिका"</string>
+    <string name="city_newcastle" formatted="false">"न्यूकैसल, ऑस्ट्रेलिया"</string>
+    <string name="city_ngerulmud" formatted="false">"नगेरुलमुद, पलाऊ"</string>
+    <string name="city_niamey" formatted="false">"नियामी, नाइजर"</string>
+    <string name="city_nicosia" formatted="false">"निकोसिया, साइप्रस"</string>
+    <string name="city_nouakchott" formatted="false">"नौआकोट, मॉरिटानिया"</string>
+    <string name="city_noumea" formatted="false">"नौमिया, न्यू कैलेडोनिया"</string>
+    <string name="city_nukualofa" formatted="false">"नुकु\'आलोफ़ा, टोंगा"</string>
+    <string name="city_nuuk" formatted="false">"नुउक, ग्रीनलैंड"</string>
+    <string name="city_oranjestad" formatted="false">"ओरान्जेस्टैड, अरूबा"</string>
+    <string name="city_oslo" formatted="false">"ओस्लो, नॉर्वे"</string>
+    <string name="city_ottawa" formatted="false">"ओटावा, कनाडा"</string>
+    <string name="city_ouagadougou" formatted="false">"औगाडौगू, बुर्किना फासो"</string>
+    <string name="city_pago_pago" formatted="false">"पागो पागो, अमेरिकन समोआ"</string>
+    <string name="city_palikir" formatted="false">"पालिकिर, माइक्रोनेशिया"</string>
+    <string name="city_panama_city" formatted="false">"पनामा सिटी, पनामा"</string>
+    <string name="city_papeete" formatted="false">"पपीते, फ़्रेंच पोलिनेशिया"</string>
+    <string name="city_paramaribo" formatted="false">"पारामारिबो, सूरीनाम"</string>
+    <string name="city_paris" formatted="false">"पेरिस, फ़्रांस"</string>
+    <string name="city_perth" formatted="false">"पर्थ, ऑस्ट्रेलिया"</string>
+    <string name="city_philipsburg" formatted="false">"फिलिप्सबर्ग, सिंट मार्टेन"</string>
+    <string name="city_phnom_penh" formatted="false">"नोम पेन्ह, कंबोडिया"</string>
+    <string name="city_phoenix" formatted="false">"फीनिक्स, संयुक्त राज्य अमेरिका"</string>
+    <string name="city_plymouth" formatted="false">"प्लायमाउथ, मोंटसेराट"</string>
+    <string name="city_podgorica" formatted="false">"पॉडगोरिका, मोंटेनेग्रो"</string>
+    <string name="city_port_au_prince" formatted="false">"पोर्ट-औ-प्रिंस, हैती"</string>
+    <string name="city_port_aux_francais" formatted="false">"पोर्ट-ऑक्स-फ़्रैंक, फ़्रांसीसी दक्षिणी क्षेत्र"</string>
+    <string name="city_port_louis" formatted="false">"पोर्ट लुइस, मॉरीशस"</string>
+    <string name="city_port_moresby" formatted="false">"पोर्ट मोरेस्बी, पापुआ न्यू गिनी"</string>
+    <string name="city_port_of_spain" formatted="false">"स्पेन का बंदरगाह, त्रिनिदाद और टोबैगो"</string>
+    <string name="city_port_vila" formatted="false">"पोर्ट-विला, वानुअतु"</string>
+    <string name="city_porto_novo" formatted="false">"पोर्टो-नोवो, बेनिन"</string>
+    <string name="city_prague" formatted="false">"प्राग, चेकिया"</string>
+    <string name="city_praia" formatted="false">"प्रिया, काबो वर्डे"</string>
+    <string name="city_pretoria" formatted="false">"प्रिटोरिया, दक्षिण अफ़्रीका"</string>
+    <string name="city_pristina" formatted="false">"प्रिस्टिना, कोसोवो"</string>
+    <string name="city_puebla" formatted="false">"प्यूब्ला, मेक्सिको"</string>
+    <string name="city_pyongyang" formatted="false">"प्योंगयांग, उत्तर कोरिया"</string>
+    <string name="city_queens" formatted="false">"क्वींस, संयुक्त राज्य अमेरिका"</string>
+    <string name="city_quito" formatted="false">"क्विटो, इक्वाडोर"</string>
+    <string name="city_rabat" formatted="false">"रबात, मोरक्को"</string>
+    <string name="city_reykjavik" formatted="false">"रेक्जाविक, आइसलैंड"</string>
+    <string name="city_riga" formatted="false">"रीगा, लातविया"</string>
+    <string name="city_rio" formatted="false">"रियो डी जनेरियो, ब्राज़ील"</string>
+    <string name="city_riyadh" formatted="false">"रियाद, सऊदी अरब"</string>
+    <string name="city_road_town" formatted="false">"रोड टाउन, ब्रिटिश वर्जिन द्वीप समूह"</string>
+    <string name="city_rome" formatted="false">"रोम, इटली"</string>
+    <string name="city_roseau" formatted="false">"रोसेउ, डोमिनिका"</string>
+    <string name="city_saint_denis" formatted="false">"सेंट-डेनिस, रीयूनियन"</string>
+    <string name="city_saint_george_s" formatted="false">"सेंट जॉर्ज, ग्रेनेडा"</string>
+    <string name="city_saint_helier" formatted="false">"सेंट हेलियर, जर्सी"</string>
+    <string name="city_saint_johns" formatted="false">"सेंट जॉन्स, एंटीगुआ और बारबुडा"</string>
+    <string name="city_saint_peter_port" formatted="false">"सेंट पीटर पोर्ट, ग्वेर्नसे"</string>
+    <string name="city_saint_petersburg" formatted="false">"सेंट पीटर्सबर्ग, रूस"</string>
+    <string name="city_saint_pierre" formatted="false">"सेंट-पियरे, सेंट पियरे और मिकेलॉन"</string>
+    <string name="city_saipan" formatted="false">"सायपन, उत्तरी मारियाना द्वीप समूह"</string>
+    <string name="city_salvador" formatted="false">"साल्वाडोर, ब्राज़ील"</string>
+    <string name="city_san_jose" formatted="false">"सैन जोस, कोस्टा रिका"</string>
+    <string name="city_san_juan" formatted="false">"सैन जुआन, प्यूर्टो रिको"</string>
+    <string name="city_san_marino" formatted="false">"सैन मैरिनो, सैन मैरिनो"</string>
+    <string name="city_san_salvador" formatted="false">"सैन साल्वाडोर, अल साल्वाडोर"</string>
+    <string name="city_sanaa" formatted="false">"सना, यमन"</string>
+    <string name="city_santiago" formatted="false">"सैंटियागो, चिली"</string>
+    <string name="city_santo_domingo" formatted="false">"सेंटो डोमिंगो, डोमिनिकन गणराज्य"</string>
+    <string name="city_sao_paulo" formatted="false">"साओ पाउलो, ब्राज़ील"</string>
+    <string name="city_sao_tome" formatted="false">"साओ टोमे, साओ टोमे और प्रिंसिपे"</string>
+    <string name="city_sarajevo" formatted="false">"साराजेवो, बोस्निया और हर्जेगोविना"</string>
+    <string name="city_seoul" formatted="false">"सियोल, दक्षिण कोरिया"</string>
+    <string name="city_shanghai" formatted="false">"शंघाई, चीन"</string>
+    <string name="city_shenzhen" formatted="false">"शेन्ज़ेन, चीन"</string>
+    <string name="city_singapore" formatted="false">"सिंगापुर, सिंगापुर"</string>
+    <string name="city_skopje" formatted="false">"स्कोप्जे, उत्तरी मैसेडोनिया"</string>
+    <string name="city_sofia" formatted="false">"सोफिया, बुल्गारिया"</string>
+    <string name="city_stanley" formatted="false">"स्टेनली, फ़ॉकलैंड द्वीप समूह"</string>
+    <string name="city_stockholm" formatted="false">"स्टॉकहोम, स्वीडन"</string>
+    <string name="city_sucre" formatted="false">"सुक्रे, बोलीविया"</string>
+    <string name="city_sunshine_coast" formatted="false">"सनशाइन कोस्ट, ऑस्ट्रेलिया"</string>
+    <string name="city_suva" formatted="false">"सुवा, फिजी"</string>
+    <string name="city_sydney" formatted="false">"सिडनी, ऑस्ट्रेलिया"</string>
+    <string name="city_taipei" formatted="false">"ताइपे, ताइवान"</string>
+    <string name="city_tallinn" formatted="false">"तेलिन, एस्टोनिया"</string>
+    <string name="city_tarawa" formatted="false">"तरावा, किरिबाती"</string>
+    <string name="city_tashkent" formatted="false">"ताशकंद, उज़्बेकिस्तान"</string>
+    <string name="city_tbilisi" formatted="false">"त्बिलिसी, जॉर्जिया"</string>
+    <string name="city_tegucigalpa" formatted="false">"तेगुसिगाल्पा, होंडुरास"</string>
+    <string name="city_tehran" formatted="false">"तेहरान, ईरान"</string>
+    <string name="city_the_valley" formatted="false">"घाटी, एंगुइला"</string>
+    <string name="city_thimphu" formatted="false">"थिम्पू, भूटान"</string>
+    <string name="city_tianjin" formatted="false">"तियानजिन, चीन"</string>
+    <string name="city_tijuana" formatted="false">"तिजुआना, मेक्सिको"</string>
+    <string name="city_tirana" formatted="false">"तिराना, अल्बानिया"</string>
+    <string name="city_tokyo" formatted="false">"टोक्यो, जापान"</string>
+    <string name="city_toronto" formatted="false">"टोरंटो, कनाडा"</string>
+    <string name="city_torshavn" formatted="false">"टॉर्शन, फरो आइलैंड्स"</string>
+    <string name="city_tripoli" formatted="false">"त्रिपोली, लीबिया"</string>
+    <string name="city_tromso" formatted="false">"ट्रोम्सो, नॉर्वे"</string>
+    <string name="city_tunis" formatted="false">"ट्यूनिस, ट्यूनीशिया"</string>
+    <string name="city_ulan_bator" formatted="false">"उलानबटोर, मंगोलिया"</string>
+    <string name="city_vaduz" formatted="false">"वाडुज़, लिकटेंस्टीन"</string>
+    <string name="city_valletta" formatted="false">"वैलेटा, माल्टा"</string>
+    <string name="city_vatican_city" formatted="false">"वेटिकन सिटी, वेटिकन"</string>
+    <string name="city_victoria" formatted="false">"विक्टोरिया, सेशेल्स"</string>
+    <string name="city_vienna" formatted="false">"वियना, ऑस्ट्रिया"</string>
+    <string name="city_vientiane" formatted="false">"वियनतियाने, लाओस"</string>
+    <string name="city_vilnius" formatted="false">"विनियस, लिथुआनिया"</string>
+    <string name="city_warsaw" formatted="false">"वारसॉ, पोलैंड"</string>
+    <string name="city_washington" formatted="false">"वाशिंगटन, संयुक्त राज्य अमेरिका"</string>
+    <string name="city_wellington" formatted="false">"वेलिंग्टन, न्यूज़ीलैंड"</string>
+    <string name="city_west_island" formatted="false">"वेस्ट आइलैंड, कोकोस आइलैंड"</string>
+    <string name="city_willemstad" formatted="false">"विलेमस्टेड, कुराकाओ"</string>
+    <string name="city_windhoek" formatted="false">"विंडहोक, नामीबिया"</string>
+    <string name="city_wuhan" formatted="false">"वुहान, चीन"</string>
+    <string name="city_xian" formatted="false">"शीआन, चीन"</string>
+    <string name="city_yamoussoukro" formatted="false">"यमौसोक्रो, आइवरी कोस्ट"</string>
+    <string name="city_yaounde" formatted="false">"याओंडे, कैमरून"</string>
+    <string name="city_yaren" formatted="false">"यारेन, नाउरू"</string>
+    <string name="city_yerevan" formatted="false">"येरेवन, आर्मेनिया"</string>
+    <string name="city_zagreb" formatted="false">"ज़गरेब, क्रोएशिया"</string>
+    <string name="text_iss_day" formatted="false">"🛰 अंतर्राष्ट्रीय अंतरिक्ष स्टेशन\nअंतरिक्ष यात्री यहाँ रहते हैं और काम करते हैं, पृथ्वी से लगभग 400 किमी ऊपर - 28,000 किमी/घंटा की गति से लगभग हर 90 मिनट में पूरे ग्रह का चक्कर लगाते हैं!\nइस चित्रण में, यह पृथ्वी के दिन के समय के ऊपर है।"</string>
+    <string name="text_iss_night" formatted="false">"🛰 अंतर्राष्ट्रीय अंतरिक्ष स्टेशन\nअंतरिक्ष यात्री यहाँ रहते हैं और काम करते हैं, पृथ्वी से लगभग 400 किमी ऊपर - 28,000 किमी/घंटा की गति से लगभग हर 90 मिनट में पूरे ग्रह का चक्कर लगाते हैं!\nइस चित्रण में, यह पृथ्वी के रात्रि पक्ष के ऊपर है।"</string>
+    <string name="text_elapsed_minutes">"बीता हुआ मिनट: %1$d"</string>
+    <string name="text_elapsed_hours">"बीते हुए घंटे: %1$d"</string>
+    <string name="text_elapsed_days">"बीते हुए दिन: %1$d"</string>
+    <string name="moon_guide_new_moon">"%1$s\nअप्रकाशित भाग · रूपरेखा संकेत"</string>
+    <string name="moon_guide_crescent">"पतला चाँद · %1$s प्रकाशित\nरूपरेखा संकेत"</string>
+</resources>

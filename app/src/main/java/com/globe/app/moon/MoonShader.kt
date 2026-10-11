@@ -15,6 +15,10 @@ class MoonShader {
     var uModelLoc: Int = -1; private set
     var uSunDirectionLoc: Int = -1; private set
     var uMoonTextureLoc: Int = -1; private set
+    var uOutlinePassLoc: Int = -1; private set
+    var uOutlineStrengthLoc: Int = -1; private set
+    var uViewportLoc: Int = -1; private set
+    var uOutlineWidthLoc: Int = -1; private set
 
     val VERTEX_SOURCE = """#version 300 es
 precision highp float;
@@ -25,6 +29,9 @@ layout(location = 2) in vec2 aTexCoord;
 
 uniform mat4 uMVP;
 uniform mat4 uModel;
+uniform bool uOutlinePass;
+uniform vec2 uViewport;
+uniform float uOutlineWidth;
 
 out vec3 vWorldNormal;
 out vec2 vTexCoord;
@@ -32,7 +39,17 @@ out vec2 vTexCoord;
 void main() {
     vWorldNormal = normalize(mat3(uModel) * aNormal);
     vTexCoord = aTexCoord;
-    gl_Position = uMVP * vec4(aPosition, 1.0);
+    vec4 clip = uMVP * vec4(aPosition, 1.0);
+    if (uOutlinePass && clip.w > 0.0) {
+        // Expand the silhouette by a constant screen width, independent of zoom.
+        vec4 direction = uMVP * vec4(aNormal, 0.0);
+        vec2 pixelNormal = (direction.xy * clip.w - clip.xy * direction.w) * uViewport;
+        float len = length(pixelNormal);
+        if (len > 0.00001) {
+            clip.xy += pixelNormal / len * (2.0 * uOutlineWidth / uViewport) * clip.w;
+        }
+    }
+    gl_Position = clip;
 }
 """
 
@@ -44,10 +61,17 @@ in vec2 vTexCoord;
 
 uniform vec3 uSunDirection;
 uniform sampler2D uMoonTexture;
+uniform bool uOutlinePass;
+uniform float uOutlineStrength;
 
 out vec4 fragColor;
 
 void main() {
+    if (uOutlinePass) {
+        // Neutral UI stroke: no glow, texture, or simulated sunlight.
+        fragColor = vec4(0.55, 0.63, 0.72, 0.9 * uOutlineStrength);
+        return;
+    }
     vec3 normal = normalize(vWorldNormal);
     vec3 sunDir = normalize(uSunDirection);
 
@@ -86,6 +110,10 @@ void main() {
         uModelLoc = GLES30.glGetUniformLocation(programId, "uModel")
         uSunDirectionLoc = GLES30.glGetUniformLocation(programId, "uSunDirection")
         uMoonTextureLoc = GLES30.glGetUniformLocation(programId, "uMoonTexture")
+        uOutlinePassLoc = GLES30.glGetUniformLocation(programId, "uOutlinePass")
+        uOutlineStrengthLoc = GLES30.glGetUniformLocation(programId, "uOutlineStrength")
+        uViewportLoc = GLES30.glGetUniformLocation(programId, "uViewport")
+        uOutlineWidthLoc = GLES30.glGetUniformLocation(programId, "uOutlineWidth")
     }
 
     fun destroy() {

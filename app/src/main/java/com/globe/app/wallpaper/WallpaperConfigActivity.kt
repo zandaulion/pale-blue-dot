@@ -27,6 +27,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AlertDialog
 import com.globe.app.GlobeRenderer
+import com.globe.app.AppLanguage
 import com.globe.app.R
 import com.globe.app.camera.OrbitCamera
 import com.globe.app.data.EarthRepository
@@ -61,6 +62,7 @@ class WallpaperConfigActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppLanguage.restore(this)
         super.onCreate(savedInstanceState)
         settings = WallpaperSettings(applicationContext)
         repository = EarthRepository.get(applicationContext)
@@ -85,7 +87,7 @@ class WallpaperConfigActivity : AppCompatActivity() {
             dp((resources.configuration.screenHeightDp * 0.3f).toInt().coerceIn(150, 250))
         ))
         root.addView(TextView(this).apply {
-            text = "Live preview · current sunlight · no audio"
+            text = getString(R.string.text_live_preview_current_sunlight_no_audio)
             setTextColor(Color.WHITE)
             textSize = 14f
             gravity = Gravity.CENTER
@@ -100,14 +102,14 @@ class WallpaperConfigActivity : AppCompatActivity() {
         root.addView(LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(18), dp(8), dp(18), dp(12))
-            addView(actionButton("Preview & set wallpaper", primary = true) {
+            addView(actionButton(getString(R.string.text_preview_set_wallpaper), primary = true) {
                 startActivity(Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER).apply {
                     putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
                         ComponentName(this@WallpaperConfigActivity, EarthWallpaperService::class.java))
                 })
             })
             addView(TextView(this@WallpaperConfigActivity).apply {
-                text = "Choose home or lock screen in the Android preview."
+                text = getString(R.string.text_choose_home_or_lock_screen_in_the_android_preview)
                 setTextColor(Color.rgb(190, 205, 219))
                 textSize = 12f
                 gravity = Gravity.CENTER
@@ -124,7 +126,7 @@ class WallpaperConfigActivity : AppCompatActivity() {
     private fun renderControls() {
         controls.removeAllViews()
         heading(getString(R.string.wallpaper_settings_title))
-        heading("View from")
+        heading(getString(R.string.text_view_from))
         placeSummary = TextView(this).apply {
             textSize = 16f
             setTextColor(Color.rgb(190, 205, 219))
@@ -133,65 +135,65 @@ class WallpaperConfigActivity : AppCompatActivity() {
         controls.addView(placeSummary)
         updatePlaceSummary()
         val locationActions = LinearLayout(this)
-        locationActions.addView(actionButton("Saved places") { chooseSavedPlace() },
-            LinearLayout.LayoutParams(0, dp(48), 1f).apply { marginEnd = dp(8) })
-        locationActions.addView(actionButton("Search cities") { searchCities() },
-            LinearLayout.LayoutParams(0, dp(48), 1f))
+        locationActions.addView(actionButton(getString(R.string.text_saved_places)) { chooseSavedPlace() },
+            LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { marginEnd = dp(8) })
+        locationActions.addView(actionButton(getString(R.string.text_search_cities)) { searchCities() },
+            LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
         controls.addView(locationActions)
-        heading("Composition")
+        heading(getString(R.string.text_composition))
         radioOptions(WallpaperSettings.Preset.values().toList(), settings.read().preset,
             { when (it) {
-                WallpaperSettings.Preset.WHOLE_EARTH -> "Whole Earth"
-                WallpaperSettings.Preset.NIGHT_LIGHTS -> "Night Lights"
-                WallpaperSettings.Preset.HORIZON -> "Earth's Horizon"
+                WallpaperSettings.Preset.WHOLE_EARTH -> getString(R.string.text_whole_earth)
+                WallpaperSettings.Preset.NIGHT_LIGHTS -> getString(R.string.text_night_lights)
+                WallpaperSettings.Preset.HORIZON -> getString(R.string.text_earth_s_horizon)
             } }) { settings.setPreset(it) }
         paragraph(when (settings.read().preset) {
-            WallpaperSettings.Preset.WHOLE_EARTH -> "Complete globe with current sunlight and quiet stars."
-            WallpaperSettings.Preset.NIGHT_LIGHTS -> "City lights on the dark side of Earth, with current sunlight."
-            WallpaperSettings.Preset.HORIZON -> "A close, cropped view of Earth's atmospheric limb."
+            WallpaperSettings.Preset.WHOLE_EARTH -> getString(R.string.text_complete_globe_with_current_sunlight_and_quiet_stars)
+            WallpaperSettings.Preset.NIGHT_LIGHTS -> getString(R.string.text_city_lights_on_the_dark_side_of_earth_with_current_sunlight)
+            WallpaperSettings.Preset.HORIZON -> getString(R.string.text_a_close_cropped_view_of_earth_s_atmospheric_limb)
         })
-        heading("Camera motion")
+        heading(getString(R.string.text_camera_motion))
         radioOptions(WallpaperSettings.Motion.values().toList(), settings.read().motion,
             { when (it) {
-                WallpaperSettings.Motion.FIXED -> "Fixed viewpoint"
-                WallpaperSettings.Motion.SLOW_ORBIT -> "Slow orbit"
-                WallpaperSettings.Motion.FOLLOW_NIGHT -> "Follow the night side"
+                WallpaperSettings.Motion.FIXED -> getString(R.string.text_fixed_viewpoint)
+                WallpaperSettings.Motion.SLOW_ORBIT -> getString(R.string.text_slow_orbit)
+                WallpaperSettings.Motion.FOLLOW_NIGHT -> getString(R.string.text_follow_the_night_side)
             } }) { settings.setMotion(it) }
         paragraph(when (settings.read().motion) {
-            WallpaperSettings.Motion.FIXED -> "Keeps your chosen place in view as daylight changes."
-            WallpaperSettings.Motion.SLOW_ORBIT -> "Starts at your chosen view, then slowly travels around Earth."
-            WallpaperSettings.Motion.FOLLOW_NIGHT -> "The view moves with the night side instead of staying over a place."
+            WallpaperSettings.Motion.FIXED -> getString(R.string.text_keeps_your_chosen_place_in_view_as_daylight_changes)
+            WallpaperSettings.Motion.SLOW_ORBIT -> getString(R.string.text_starts_at_your_chosen_view_then_slowly_travels_around_earth)
+            WallpaperSettings.Motion.FOLLOW_NIGHT -> getString(R.string.text_the_view_moves_with_the_night_side_instead_of_staying_over_a_plac)
         })
         controls.addView(CheckBox(this).apply {
-            text = "Turn the globe when I swipe between home screens"
+            text = getString(R.string.text_turn_the_globe_when_i_swipe_between_home_screens)
             isChecked = settings.read().pageParallax
             minHeight = dp(48)
             setTextColor(Color.WHITE)
             setOnCheckedChangeListener { _, checked -> settings.setPageParallax(checked) }
         })
-        heading("Clouds")
+        heading(getString(R.string.companion_clouds))
         radioOptions(EarthRenderer.CloudMode.values().toList(), settings.read().clouds,
             { when (it) {
-                EarthRenderer.CloudMode.OFF -> "Off"
-                EarthRenderer.CloudMode.GENERATED -> "Generated illustration"
-                EarthRenderer.CloudMode.LIVE -> "Satellite imagery, when cached or available"
+                EarthRenderer.CloudMode.OFF -> getString(R.string.companion_off)
+                EarthRenderer.CloudMode.GENERATED -> getString(R.string.text_generated_illustration)
+                EarthRenderer.CloudMode.LIVE -> getString(R.string.text_satellite_imagery_when_cached_or_available)
             } }) { settings.setClouds(it) }
-        slider("Globe scale", 70, 140, (settings.read().scale * 100).toInt()) { settings.setScale(it / 100f) }
-        controls.addView(actionButton(if (advancedExpanded) "Hide framing controls ▴" else "Adjust framing & angles ▾") {
+        slider(getString(R.string.text_globe_scale), 70, 140, (settings.read().scale * 100).toInt()) { settings.setScale(it / 100f) }
+        controls.addView(actionButton(if (advancedExpanded) getString(R.string.text_hide_framing_controls) else getString(R.string.text_adjust_framing_angles)) {
             advancedExpanded = !advancedExpanded
             renderControls()
         })
         if (advancedExpanded) {
-            slider("Horizontal framing", 0, 100, ((settings.read().frameX + 0.5f) * 100).toInt()) {
+            slider(getString(R.string.text_horizontal_framing), 0, 100, ((settings.read().frameX + 0.5f) * 100).toInt()) {
                 settings.setFrameX(it / 100f - 0.5f)
             }
-            slider("Vertical framing", 0, 100, ((settings.read().frameY + 0.5f) * 100).toInt()) {
+            slider(getString(R.string.text_vertical_framing), 0, 100, ((settings.read().frameY + 0.5f) * 100).toInt()) {
                 settings.setFrameY(it / 100f - 0.5f)
             }
-            slider("View angle", 0, 360, (settings.read().azimuth + 180).toInt()) {
+            slider(getString(R.string.text_view_angle), 0, 360, (settings.read().azimuth + 180).toInt()) {
                 settings.setAzimuth(it - 180f)
             }
-            slider("View latitude", 0, 160, (settings.read().elevation + 80).toInt()) {
+            slider(getString(R.string.text_view_latitude), 0, 160, (settings.read().elevation + 80).toInt()) {
                 settings.setElevation(it - 80f)
             }
         }
@@ -200,9 +202,9 @@ class WallpaperConfigActivity : AppCompatActivity() {
     private fun updatePlaceSummary() {
         val name = settings.placeName()
         placeSummary.text = when (settings.read().motion) {
-            WallpaperSettings.Motion.FOLLOW_NIGHT -> "Following the night side${name?.let { " · saved view: $it" } ?: ""}"
-            WallpaperSettings.Motion.SLOW_ORBIT -> "Orbit starts at ${name ?: "your custom view"}"
-            WallpaperSettings.Motion.FIXED -> name ?: "Choose a place, or adjust the angles below."
+            WallpaperSettings.Motion.FOLLOW_NIGHT -> getString(R.string.text_following_the_night_side_1_s, name?.let { getString(R.string.text_saved_view_1_s, it) } ?: "")
+            WallpaperSettings.Motion.SLOW_ORBIT -> getString(R.string.text_orbit_starts_at_1_s, name ?: getString(R.string.text_your_custom_view))
+            WallpaperSettings.Motion.FIXED -> name ?: getString(R.string.text_choose_a_place_or_adjust_the_angles_below)
         }
     }
 
@@ -214,15 +216,15 @@ class WallpaperConfigActivity : AppCompatActivity() {
     private fun chooseSavedPlace() {
         val places = PlaceStore(this).all()
         if (places.isEmpty()) {
-            AlertDialog.Builder(this).setTitle("No saved places yet")
-                .setMessage("Search for a city here. You can also save a custom point in Explore → Places → Add a place from the globe.")
-                .setPositiveButton("Search cities") { _, _ -> searchCities() }
-                .setNegativeButton("Cancel", null).show()
+            AlertDialog.Builder(this).setTitle(getString(R.string.text_no_saved_places_yet))
+                .setMessage(getString(R.string.text_search_for_a_city_here_you_can_also_save_a_custom_point_in_explor))
+                .setPositiveButton(getString(R.string.text_search_cities)) { _, _ -> searchCities() }
+                .setNegativeButton(getString(R.string.text_cancel), null).show()
             return
         }
-        AlertDialog.Builder(this).setTitle("View from a saved place")
+        AlertDialog.Builder(this).setTitle(getString(R.string.text_view_from_a_saved_place))
             .setItems(places.map { it.name }.toTypedArray()) { _, index -> choosePlace(places[index]) }
-            .setNegativeButton("Cancel", null).show()
+            .setNegativeButton(getString(R.string.text_cancel), null).show()
     }
 
     private fun searchCities() {
@@ -231,17 +233,17 @@ class WallpaperConfigActivity : AppCompatActivity() {
             setPadding(dp(20), dp(8), dp(20), 0)
         }
         val search = EditText(this).apply {
-            hint = "City or country"
+            hint = getString(R.string.text_city_or_country)
             isSingleLine = true
             inputType = android.text.InputType.TYPE_CLASS_TEXT
-            contentDescription = "Search city or country"
+            contentDescription = getString(R.string.text_search_city_or_country)
         }
         val empty = TextView(this).apply {
-            text = "No matching city. Try a country or another name."
+            text = getString(R.string.text_no_matching_city_try_a_country_or_another_name)
             setPadding(0, dp(12), 0, dp(12))
             visibility = View.GONE
         }
-        var matches = CityCatalog.search("")
+        var matches = CityCatalog.search("", this)
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1,
             matches.map { it.name }.toMutableList())
         val list = ListView(this).apply { this.adapter = adapter; emptyView = empty }
@@ -249,8 +251,8 @@ class WallpaperConfigActivity : AppCompatActivity() {
         content.addView(empty)
         content.addView(list, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
             dp((resources.configuration.screenHeightDp * 0.4f).toInt().coerceIn(150, 340))))
-        val dialog = AlertDialog.Builder(this).setTitle("Choose a city")
-            .setView(content).setNegativeButton("Cancel", null).create()
+        val dialog = AlertDialog.Builder(this).setTitle(getString(R.string.text_choose_a_city))
+            .setView(content).setNegativeButton(getString(R.string.text_cancel), null).create()
         list.setOnItemClickListener { _, _, index, _ ->
             val place = matches[index]
             PlaceStore(this).save(place)
@@ -260,7 +262,7 @@ class WallpaperConfigActivity : AppCompatActivity() {
         search.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                matches = CityCatalog.search(s.toString())
+                matches = CityCatalog.search(s.toString(), this@WallpaperConfigActivity)
                 adapter.clear()
                 adapter.addAll(matches.map { it.name })
             }

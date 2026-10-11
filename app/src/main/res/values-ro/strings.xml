@@ -1,0 +1,791 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="companion_today" formatted="false">"Astăzi"</string>
+    <string name="companion_layers" formatted="false">"Straturi"</string>
+    <string name="companion_explore" formatted="false">"Explorează"</string>
+    <string name="companion_settings" formatted="false">"Setări"</string>
+    <string name="companion_close" formatted="false">"Închide"</string>
+    <string name="companion_refresh" formatted="false">"Reîmprospătați observațiile"</string>
+    <string name="companion_events" formatted="false">"Observatii recente"</string>
+    <string name="companion_no_events" formatted="false">"Nu există evenimente raportate în această categorie"</string>
+    <string name="companion_why" formatted="false">"De ce se întâmplă asta?"</string>
+    <string name="companion_reduce_motion" formatted="false">"Redu mișcarea"</string>
+    <string name="companion_clouds" formatted="false">"nori"</string>
+    <string name="wallpaper_name" formatted="false">"Pale Blue Dot Pământ"</string>
+    <string name="wallpaper_description" formatted="false">"O vedere liniștită și vie a Pământului pentru tapet"</string>
+    <string name="wallpaper_settings_title" formatted="false">"Tapet Pământ"</string>
+    <string name="companion_generated" formatted="false">"Generat"</string>
+    <string name="companion_satellite" formatted="false">"Satelit"</string>
+    <string name="companion_off" formatted="false">"Oprit"</string>
+    <string name="widget_title" formatted="false">"Pământul de azi"</string>
+    <string name="widget_description" formatted="false">"Luna și lumina zilei; extindeți pentru o vizualizare live a Pământului și un eveniment recent"</string>
+    <string name="widget_preview_moon" formatted="false">"🌔 Lună gibboasă în creștere · 82%"</string>
+    <string name="widget_preview_place" formatted="false">"București, România"</string>
+    <string name="widget_event_label" formatted="false">"Pe Pământ"</string>
+    <string name="widget_preview_daylight" formatted="false">"Lumina zilei acum"</string>
+    <string name="widget_change_place" formatted="false">"Schimbați locul widgetului"</string>
+    <string name="widget_globe_description" formatted="false">"Scena actuală a Pământului"</string>
+    <string name="widget_name" formatted="false">"Pământul de azi"</string>
+    <string name="text_clouds_live_loading" formatted="false">"☁ Nori: live (se încarcă...)"</string>
+    <string name="text_time_now" formatted="false">"Timp · Acum"</string>
+    <string name="text_time_controls" formatted="false">"Controlul timpului"</string>
+    <string name="text_move_time_up_to_24_hours_before_or_after_now" formatted="false">"Mutați timpul cu până la 24 de ore înainte sau după acum"</string>
+    <string name="text_share" formatted="false">"↑ Distribuie"</string>
+    <string name="text_today" formatted="false">"🗓 Astăzi"</string>
+    <string name="text_save_this_place" formatted="false">"+ Salvați acest loc"</string>
+    <string name="text_planetary_briefing_real_time" formatted="false">"Briefing planetar · timp real"</string>
+    <string name="text_1_s_2_s_3_s_estimated_illumination">"%1$s %2$s · %3$d%% iluminare estimată"</string>
+    <string name="text_choose_a_primary_place" formatted="false">"Alegeți un loc principal"</string>
+    <string name="text_fly_to_1_s">"Zboară către %1$s"</string>
+    <string name="text_satellite_imagery_1_s">"Imagini din satelit — %1$s"</string>
+    <string name="text_saved_copy" formatted="false">" · copie salvată"</string>
+    <string name="text_satellite_imagery_unavailable_or_still_loading" formatted="false">"Imaginile din satelit indisponibile sau încă se încarcă"</string>
+    <string name="text_one_observation_1_s">"O observație · %1$s"</string>
+    <string name="text_time_unavailable" formatted="false">"Timp indisponibil"</string>
+    <string name="text_this_observation_is_no_longer_in_the_saved_feed" formatted="false">"Această observație nu se mai află în fluxul salvat."</string>
+    <string name="text_current_events" formatted="false">"Evenimente curente"</string>
+    <string name="text_choose_what_appears_on_the_globe_hidden_events_also_leave_the_eve" formatted="false">"Alegeți ceea ce apare pe glob. Evenimentele ascunse părăsesc, de asemenea, lista de evenimente și provocări."</string>
+    <string name="text_satellite_imagery_may_be_unavailable_offline_generated_clouds_sti" formatted="false">"Imaginile din satelit pot fi indisponibile offline; norii generați încă funcționează."</string>
+    <string name="text_reported_by_usgs" formatted="false">"Raportat de USGS"</string>
+    <string name="text_reported_by_nasa_eonet" formatted="false">"Raportat de NASA EONET"</string>
+    <string name="text_constellations" formatted="false">"Constelații"</string>
+    <string name="text_catalog_lines_in_the_star_background" formatted="false">"Linii de catalog pe fundalul cu stea"</string>
+    <string name="text_iss_illustration" formatted="false">"Ilustrație ISS"</string>
+    <string name="text_approximate_orbit_not_live_tracking" formatted="false">"Orbită aproximativă, nu urmărire în direct"</string>
+    <string name="text_aurora_illustration" formatted="false">"Ilustrație Aurora"</string>
+    <string name="text_decorative_glow_not_a_forecast" formatted="false">"Strălucire decorativă, nu o prognoză"</string>
+    <string name="text_day_night_boundary" formatted="false">"Limita zi/noapte"</string>
+    <string name="text_calculated_terminator_line" formatted="false">"Linie de terminare calculată"</string>
+    <string name="text_plate_boundaries" formatted="false">"Limitele plăcilor tectonice"</string>
+    <string name="text_offline_pb2002_model_gold_lines" formatted="false">"Model offline PB2002 · linii de aur"</string>
+    <string name="text_plate_boundaries_gold_lines_mark_modelled_plate_edges_earthquakes" formatted="false">"Limitele plăcilor: liniile aurii marchează marginile plăcilor modelate. Cutremurele pot avea loc și departe de ele. Sursa: Bird (2003), PB2002; ODbL 1.0."</string>
+    <string name="text_places_1_s_saved">"Locații · %1$d salvate"</string>
+    <string name="text_explore_time_and_seasons" formatted="false">"Explorați timpul și anotimpurile"</string>
+    <string name="text_guided_journeys" formatted="false">"Călătorii cu ghid"</string>
+    <string name="text_field_notebook_1_s_2_s_discoveries">"Caiet de teren · %1$d/%2$d descoperiri"</string>
+    <string name="text_try_a_quick_challenge" formatted="false">"Încercați o provocare rapidă"</string>
+    <string name="text_scene_guide_and_legend" formatted="false">"Ghid de scenă și legendă"</string>
+    <string name="text_ambient_music" formatted="false">"Muzică ambientală"</string>
+    <string name="text_only_while_the_app_is_open" formatted="false">"Doar când aplicația este deschisă"</string>
+    <string name="text_music_volume" formatted="false">"Volumul muzicii"</string>
+    <string name="text_read_aloud" formatted="false">"Citește cu voce tare"</string>
+    <string name="text_speak_cards_when_narration_is_enabled" formatted="false">"Rostiți cărți când narațiunea este activată"</string>
+    <string name="text_stops_idle_spin_and_decorative_marker_movement" formatted="false">"Oprește rotirea în gol și mișcarea markerului decorativ"</string>
+    <string name="text_share_globe_image" formatted="false">"Partajați imaginea globului"</string>
+    <string name="text_earth_live_wallpaper" formatted="false">"Tapet viu Pământ"</string>
+    <string name="text_explore" formatted="false">"‹ Explorează"</string>
+    <string name="text_completed_journeys" formatted="false">"Călătorii finalizate"</string>
+    <string name="text_no_journeys_completed_yet" formatted="false">"Nicio călătorie nu a fost finalizată încă."</string>
+    <string name="text_saved_observations" formatted="false">"Observații salvate"</string>
+    <string name="text_save_an_observation_from_its_card_to_keep_its_source_and_date" formatted="false">"Salvați o observație de pe cardul său pentru a-și păstra sursa și data."</string>
+    <string name="text_earlier_discoveries_1_s_2_s">"Descoperiri anterioare · %1$d/%2$d"</string>
+    <string name="text_you_explored_a_reported_earthquake" formatted="false">"Ai explorat un cutremur raportat."</string>
+    <string name="text_you_explored_a_reported_volcanic_event" formatted="false">"Ai explorat un eveniment vulcanic raportat."</string>
+    <string name="text_you_explored_a_reported_wildfire" formatted="false">"Ai explorat un incendiu raportat."</string>
+    <string name="text_you_explored_a_reported_storm" formatted="false">"Ai explorat o furtună semnalată."</string>
+    <string name="text_you_found_a_place_facing_the_sun" formatted="false">"Ai găsit un loc cu fața spre Soare."</string>
+    <string name="text_you_found_earth_s_night_side" formatted="false">"Ai găsit partea de noapte a Pământului."</string>
+    <string name="text_you_looked_beyond_earth" formatted="false">"Ai privit dincolo de Pământ."</string>
+    <string name="text_you_changed_the_scene_time" formatted="false">"Ai schimbat ora scenei."</string>
+    <string name="text_observed" formatted="false">"Observat: "</string>
+    <string name="text_time_not_reported" formatted="false">"Ora nu a raportat"</string>
+    <string name="text_source" formatted="false">"Sursa: "</string>
+    <string name="text_magnitude_1_s">"Magnitudine: %1$s\n"</string>
+    <string name="text_depth_1_s_km">"Adâncime: %1$s km\n"</string>
+    <string name="text_source_link_1_s">"Link sursă: %1$s"</string>
+    <string name="text_saved_observation" formatted="false">"Observație salvată"</string>
+    <string name="text_fly_to" formatted="false">"Arată locul"</string>
+    <string name="text_sunlight_and_city_lights" formatted="false">"Lumina soarelui și luminile orașului"</string>
+    <string name="text_calculated_sunlight_shows_the_current_day_and_night_sides" formatted="false">"Lumina solară calculată arată părțile curente de zi și noapte."</string>
+    <string name="text_generated_clouds_are_illustrative_satellite_mode_derives_opacity" formatted="false">"Norii generați sunt ilustrativi. Modul satelit derivă opacitatea dintr-o imagine datată NASA VIIRS."</string>
+    <string name="text_earthquakes" formatted="false">"Cutremurele"</string>
+    <string name="text_usgs_reports_magnitude_4_5_earthquakes_from_the_last_seven_days" formatted="false">"USGS raportează cutremure cu magnitudinea 4,5+ din ultimele șapte zile."</string>
+    <string name="text_volcanoes_wildfires_and_storms" formatted="false">"Vulcani, incendii și furtuni"</string>
+    <string name="text_nasa_eonet_open_reports_may_have_older_observation_dates" formatted="false">"NASA EONET rapoartele deschise pot avea date de observare mai vechi."</string>
+    <string name="text_iss" formatted="false">"ISS"</string>
+    <string name="text_illustrated_orbit_not_live_tracking" formatted="false">"Orbită ilustrată, nu urmărire în direct."</string>
+    <string name="text_aurora" formatted="false">"Aurora"</string>
+    <string name="text_decorative_illustration_not_a_forecast" formatted="false">"Ilustrație decorativă, nu o prognoză."</string>
+    <string name="text_calculated_terminator_line_2" formatted="false">"Linie de terminare calculată."</string>
+    <string name="text_catalog_stars_joined_into_familiar_patterns" formatted="false">"Stele de catalog s-au unit în modele familiare."</string>
+    <string name="text_a_simplified_offline_pb2002_model_many_earthquakes_occur_near_bou" formatted="false">"Un model offline simplificat PB2002. Multe cutremure au loc în apropierea granițelor, deși unele au loc în altă parte. Liniile de aur nu sunt un diagnostic pentru niciun eveniment."</string>
+    <string name="text_saved_places_stay_on_this_device_cyan_rings_mark_them_on_the_glob" formatted="false">"Locurile salvate rămân pe acest dispozitiv. Inelele cian le marchează pe glob."</string>
+    <string name="text_search_bundled_cities" formatted="false">"Căutați orașe grupate"</string>
+    <string name="text_city_or_country_blank_lists_all_1_s">"Orașul sau țara (listele goale pe toate %1$d)"</string>
+    <string name="text_find_a_city" formatted="false">"Găsiți un oraș"</string>
+    <string name="text_search" formatted="false">"Caută"</string>
+    <string name="text_no_bundled_city_matches_that_name" formatted="false">"Niciun oraș grupat nu se potrivește cu acest nume."</string>
+    <string name="text_ok" formatted="false">"OK"</string>
+    <string name="text_bundled_cities" formatted="false">"Orașe grupate"</string>
+    <string name="text_cancel" formatted="false">"Anulează"</string>
+    <string name="text_add_a_place_from_the_globe" formatted="false">"Adăugați un loc de pe glob"</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Atingeți un punct de pe glob, apoi atingeți + Salvați acest loc sub cardul său."</string>
+    <string name="text_time_zone_unset" formatted="false">"Fus orar dezactivat"</string>
+    <string name="text_set_as_primary" formatted="false">"Setați ca principal"</string>
+    <string name="text_rename" formatted="false">"Redenumește"</string>
+    <string name="text_set_time_zone" formatted="false">"Setați fusul orar"</string>
+    <string name="text_delete" formatted="false">"Șterge"</string>
+    <string name="text_1_s_removed">"%1$s a fost eliminat"</string>
+    <string name="text_undo" formatted="false">"Anulați"</string>
+    <string name="text_done" formatted="false">"Gata"</string>
+    <string name="text_name_this_place" formatted="false">"Denumiți acest loc"</string>
+    <string name="text_save" formatted="false">"Salvează"</string>
+    <string name="text_iana_zone_e_g_europe_bucharest" formatted="false">"Zona IANA, de ex. Europa/București"</string>
+    <string name="text_suggested_from_the_nearest_town_change_it_if_this_place_is_across" formatted="false">"Sugerat din cel mai apropiat oraș; schimbați-l dacă acest loc este peste graniță. "</string>
+    <string name="text_time_zone_for_1_s">"Fus orar pentru %1$s"</string>
+    <string name="text_enter_an_iana_time_zone_id_or_leave_blank_to_keep_local_clock_and" formatted="false">"Introduceți un ID de fus orar IANA sau lăsați necompletat pentru a menține ceasul local și răsăritul nesetat."</string>
+    <string name="text_unknown_iana_time_zone_id_1_s">"ID de fus orar IANA necunoscut: %1$s"</string>
+    <string name="text_try_again" formatted="false">"Încercați din nou"</string>
+    <string name="text_time_zone_unset_choose_a_zone_for_local_clock_and_sunrise" formatted="false">"Fus orar dezactivat · alegeți un fus pentru ceasul local și răsăritul soarelui"</string>
+    <string name="text_polar_day_sun_stays_above_the_horizon" formatted="false">"Zi polară · Soarele rămâne deasupra orizontului"</string>
+    <string name="text_polar_night_sun_stays_below_the_horizon" formatted="false">"Noapte polară · Soarele rămâne sub orizont"</string>
+    <string name="text_not_available" formatted="false">"nu este disponibil"</string>
+    <string name="text_about_1_sh_2_sm_daylight">" · despre %1$d h %2$d min lumina zilei"</string>
+    <string name="text_approx_sunrise_1_s_sunset_2_s_3_s">"Aprox. răsărit %1$s · apus de soare %2$s%3$s"</string>
+    <string name="text_day" formatted="false">"zi"</string>
+    <string name="text_night" formatted="false">"noapte"</string>
+    <string name="text_choose_a_date_to_hold_the_globe_in_an_explicit_lesson_time_today" formatted="false">"Alegeți o dată pentru a ține globul într-un timp explicit de lecție. Astăzi și tapetul rămân în timp real."</string>
+    <string name="text_begin_at_current_time" formatted="false">"Începe la ora curentă"</string>
+    <string name="text_simulated_1_s">"SIMULAT · %1$s"</string>
+    <string name="text_choose_date_and_time" formatted="false">"Alegeți data și ora"</string>
+    <string name="text_pause" formatted="false">"Pauză"</string>
+    <string name="text_play_at_real_time_speed" formatted="false">"Joacă cu viteză în timp real"</string>
+    <string name="text_advance_one_hour" formatted="false">"Avansați o oră"</string>
+    <string name="text_advance_one_day" formatted="false">"Înaintați o zi"</string>
+    <string name="text_now_leave_time_exploration" formatted="false">"Acum · lăsați explorarea timpului"</string>
+    <string name="text_compare_latest_observations" formatted="false">"Comparați ultimele observații"</string>
+    <string name="text_these_reports_are_from_real_dates_not_the_simulated_date" formatted="false">"Aceste rapoarte sunt din date reale, nu din data simulată."</string>
+    <string name="text_year_timeline_1_s">"Cronologia anului · %1$d"</string>
+    <string name="text_choose_day_of_year" formatted="false">"Alege ziua anului"</string>
+    <string name="text_seasons_earth_s_axis_stays_tilted_about_23_4_as_earth_orbits_the" formatted="false">"Anotimpuri · Axa Pământului rămâne înclinată cu aproximativ 23,4° pe măsură ce Pământul orbitează în jurul Soarelui. Lumina soarelui se deplasează între emisfere de-a lungul anului; Soarele scenei explică deja această înclinare."</string>
+    <string name="text_23_4_axis" formatted="false">"axa 23,4°"</string>
+    <string name="text_sunlight" formatted="false">"Lumina soarelui →"</string>
+    <string name="text_polar_day" formatted="false">"zi polară"</string>
+    <string name="text_polar_night" formatted="false">"noapte polară"</string>
+    <string name="text_about_1_sh_2_sm_daylight_2">"despre %1$d h %2$d min lumina zilei"</string>
+    <string name="text_daylight_changing" formatted="false">"schimbarea luminii zilei"</string>
+    <string name="text_guides_equator_tropics_23_4_and_polar_circles_66_6_compare_the_tw" formatted="false">"Ghiduri: ecuator, tropice (±23,4°) și cercuri polare (±66,6°). Comparați cele două emisfere în martie, iunie, septembrie și decembrie."</string>
+    <string name="text_short_local_lessons_each_restores_your_previous_globe_view_and_la" formatted="false">"Lecții scurte, locale. Fiecare vă restabilește vizualizarea anterioară a globului și straturile când plecați."</string>
+    <string name="text_completed" formatted="false">" · finalizat"</string>
+    <string name="text_1_s_2_s_min_3_s">"%1$s · %2$s min%3$s"</string>
+    <string name="text_resume" formatted="false">"Reluați"</string>
+    <string name="text_restart" formatted="false">"Reporniți"</string>
+    <string name="text_choose_a_journey" formatted="false">"Alege o călătorie"</string>
+    <string name="text_1_s_step_2_s_of_3_s">"%1$s · pasul %2$d din %3$d"</string>
+    <string name="text_historical_source_1_s">"Sursa istorică: %1$s"</string>
+    <string name="text_recent_reported_example_1_s_2_s_3_s">"Exemplu raportat recent: %1$s\n%2$s · %3$s"</string>
+    <string name="text_that_s_the_pattern" formatted="false">"Acesta este tiparul"</string>
+    <string name="text_look_again" formatted="false">"Uită-te din nou"</string>
+    <string name="text_continue" formatted="false">"Continuă"</string>
+    <string name="text_advance" formatted="false">"Avans"</string>
+    <string name="text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th">"Scena a mutat %1$d cu câteva ore înainte. Priviți lumina soarelui în schimbare de pe glob."</string>
+    <string name="text_reveal" formatted="false">"Dezvăluie"</string>
+    <string name="text_the_gold_pb2002_lines_show_a_broad_plate_edge_pattern_some_report" formatted="false">"Liniile aurii PB2002 prezintă un model larg de margine a plăcii. Unele evenimente raportate se află departe de ele."</string>
+    <string name="text_view_globe" formatted="false">"Vedeți globul"</string>
+    <string name="text_skip_this_step" formatted="false">"Sari peste acest pas"</string>
+    <string name="text_leave_journey_restore_my_view" formatted="false">"Părăsi călătoria · restabilește-mi vederea"</string>
+    <string name="text_1_s_is_in_your_field_notebook">"%1$s este în caietul dvs. de câmp."</string>
+    <string name="text_not_loaded" formatted="false">"Nu este încărcat"</string>
+    <string name="text_checking" formatted="false">"Verificarea"</string>
+    <string name="text_recently" formatted="false">"recent"</string>
+    <string name="text_checked_1_s">"Bifat %1$s"</string>
+    <string name="text_saved_observations_offline_or_update_failed" formatted="false">"Observații salvate · offline sau actualizare eșuată"</string>
+    <string name="text_unavailable" formatted="false">"Indisponibil"</string>
+    <string name="text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who" formatted="false">"🌟 Cerul nopții!\nDincolo de Pământ sunt mii de stele, planete și galaxii întregi."</string>
+    <string name="text_earthquakes_happen_when_stress_makes_rock_slip_along_a_fault_some" formatted="false">"Cutremurele au loc atunci când stresul face ca piatra să alunece de-a lungul unei falii. Unele apar departe de limitele plăcilor."</string>
+    <string name="text_magma_can_rise_through_earth_s_crust_this_report_does_not_confirm" formatted="false">"Magma se poate ridica prin scoarța terestră. Acest raport nu confirmă o erupție în acest moment."</string>
+    <string name="text_wildfire_can_begin_naturally_or_through_human_activity_and_may_sp" formatted="false">"Incendiile de pădure pot începe în mod natural sau prin activitatea umană și se pot răspândi în condiții uscate și cu vânt. Acest raport poate fi mai vechi decât astăzi."</string>
+    <string name="text_severe_storms_draw_energy_from_warm_moist_air_this_marker_shows_t" formatted="false">"Furtunile severe atrag energie din aerul cald și umed. Acest marcator arată cel mai recent punct raportat, nu o prognoză în direct."</string>
+    <string name="text_observed_1_s">"Observat: %1$s\n"</string>
+    <string name="text_source_updated_1_s">"Sursa actualizată: %1$s\n"</string>
+    <string name="text_source_1_s">"Sursa: %1$s\n"</string>
+    <string name="text_unavailable_2" formatted="false">"indisponibil"</string>
+    <string name="text_checking_showing_saved_copy" formatted="false">"verificarea; afișând copia salvată"</string>
+    <string name="text_saved_copy_refresh_unavailable" formatted="false">"copie salvată; reîmprospătare indisponibilă"</string>
+    <string name="text_checked_1_s_2">"verificat %1$s"</string>
+    <string name="text_feed_1_s">"Feed: %1$s"</string>
+    <string name="text_source_link_1_s_2">"\nLink sursă: %1$s"</string>
+    <string name="text_saved" formatted="false">"Salvat"</string>
+    <string name="text_place_name" formatted="false">"Numele locului"</string>
+    <string name="text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now" formatted="false">"☀️ Aici e zi!\nAceastă parte a Pământului este îndreptată spre Soare chiar acum. Trageți glisorul de timp pentru a urmări noaptea sosirea."</string>
+    <string name="text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those" formatted="false">"🌙 Aici e noapte.\nAceastă parte este îndepărtată de Soare - acele luminițe sunt orașe. Trageți cursorul de timp pentru a aduce Soarele înapoi."</string>
+    <string name="text_added_to_field_notebook_1_s">"Adăugat în caietul de câmp.\n\n%1$s"</string>
+    <string name="text_close_1_s">"× Închide\n\n%1$s"</string>
+    <string name="text_1_s_2_s_tap_to_stop">"🎯 %1$s\n⭐ %2$d · atingeți pentru a opri"</string>
+    <string name="text_challenge_stopped_play_again_anytime" formatted="false">"Provocarea s-a oprit – joacă din nou oricând!"</string>
+    <string name="text_tap_on_the_earth_to_answer" formatted="false">"Atingeți Pământul pentru a răspunde! 🌍"</string>
+    <string name="text_yes_that_s_right" formatted="false">"🎉 Da! Asta e corect."</string>
+    <string name="text_not_quite_take_another_look_and_try_again" formatted="false">"Nu chiar – aruncați o altă privire și încercați din nou! 🔍"</string>
+    <string name="text_my_discoveries" formatted="false">"Descoperirile mele"</string>
+    <string name="text_1_s_of_2_s_found_keep_exploring">"%1$d din %2$d găsit — explorați în continuare!"</string>
+    <string name="text_not_found_yet" formatted="false">"Nu a fost găsit încă"</string>
+    <string name="text_tap_anywhere_to_close" formatted="false">"Atingeți oriunde pentru a închide"</string>
+    <string name="text_1_s_2_s_3_s_lit_up_tonight">"%1$s %2$s\n%3$d%% aprins în seara asta"</string>
+    <string name="text_did_you_know" formatted="false">"știai?"</string>
+    <string name="text_tap_a_glowing_dot_on_earth_to_explore_or_find_a_new_discovery_for" formatted="false">"Atingeți un punct strălucitor de pe Pământ pentru a explora - sau găsiți o nouă descoperire pentru jurnalul dvs.!"</string>
+    <string name="text_play_a_challenge" formatted="false">"🎯 Joacă o provocare!"</string>
+    <string name="text_tap_outside_the_box_to_close" formatted="false">"Atingeți în afara casetei pentru a închide"</string>
+    <string name="text_ongoing" formatted="false">"în curs de desfășurare"</string>
+    <string name="text_just_now" formatted="false">"tocmai acum"</string>
+    <string name="text_clouds_off" formatted="false">"☁ Nori: oprit"</string>
+    <string name="text_clouds_generated" formatted="false">"☁ Nori: generați"</string>
+    <string name="text_clouds_live_nasa_viirs_updated_1_s">"☁ Nori: live (NASA VIIRS)\nActualizat: %1$s"</string>
+    <string name="text_solar_eclipse" formatted="false">"☀ Eclipsa de Soare!"</string>
+    <string name="text_lunar_eclipse" formatted="false">"🌙 Eclipsa de Luna!"</string>
+    <string name="text_near_solar_eclipse" formatted="false">"Aproape de eclipsa de soare"</string>
+    <string name="text_near_lunar_eclipse" formatted="false">"Aproape de eclipsa de Lună"</string>
+    <string name="text_explore_time_simulated_scene" formatted="false">"Explorează timpul, scena simulată"</string>
+    <string name="text_earth" formatted="false">"Pământ"</string>
+    <string name="text_textured_globe_with_day_night_cycle_and_diffuse_sunlight" formatted="false">"Glob texturat cu ciclu zi/noapte și lumină solară difuză"</string>
+    <string name="text_city_lights" formatted="false">"Luminile orașului"</string>
+    <string name="text_visible_on_the_night_side_of_the_earth" formatted="false">"Vizibil pe partea de noapte a Pământului"</string>
+    <string name="text_procedural_or_live_satellite_imagery_nasa_viirs_tap_cloud_label_t" formatted="false">"Imagini prin satelit procedurale sau în direct (NASA VIIRS). Atingeți eticheta cloud pentru a comuta"</string>
+    <string name="text_sun" formatted="false">"soare"</string>
+    <string name="text_billboard_glow_showing_the_sun_s_real_time_position" formatted="false">"Strălucire panou publicitar care arată poziția în timp real a soarelui"</string>
+    <string name="text_moon" formatted="false">"Luna"</string>
+    <string name="text_textured_sphere_at_its_real_orbital_position" formatted="false">"Sferă texturată în poziția sa orbitală reală"</string>
+    <string name="text_terminator_line" formatted="false">"Linie de terminare"</string>
+    <string name="text_amber_line_at_the_day_night_boundary" formatted="false">"Linie chihlimbar la limita zi/noapte"</string>
+    <string name="text_green_purple_glow_near_the_geomagnetic_poles_night_side_only" formatted="false">"Strălucire verde/violet lângă polii geomagnetici (numai pe partea de noapte)"</string>
+    <string name="text_atmosphere" formatted="false">"Atmosferă"</string>
+    <string name="text_blue_fresnel_glow_around_the_earth_s_rim" formatted="false">"Fresnel albastru strălucește în jurul marginii Pământului"</string>
+    <string name="text_stars" formatted="false">"Stele"</string>
+    <string name="text_background_star_field" formatted="false">"Câmp de stele de fundal"</string>
+    <string name="text_pulsing_amber_dots_m4_5_from_usgs_past_7_days" formatted="false">"Puncte chihlimbar care pulsa (M4.5+ de la USGS, ultimele 7 zile)"</string>
+    <string name="text_volcanoes" formatted="false">"Vulcanii"</string>
+    <string name="text_pulsing_magenta_dots_active_eruptions_from_nasa_eonet" formatted="false">"Puncte magenta pulsatoare (erupții active de la NASA EONET)"</string>
+    <string name="text_wildfires" formatted="false">"Incendii de vegetație"</string>
+    <string name="text_pulsing_red_dots_active_fires_from_nasa_eonet" formatted="false">"Puncte roșii pulsatoare (focuri active de la NASA EONET)"</string>
+    <string name="text_storms" formatted="false">"Furtuni"</string>
+    <string name="text_pulsing_blue_dots_severe_storms_from_nasa_eonet_tap_any_dot_for_d" formatted="false">"Puncte albastre care pulsa (furtuni puternice de la NASA EONET) - atingeți orice punct pentru detalii"</string>
+    <string name="text_iss_orbit" formatted="false">"orbita ISS"</string>
+    <string name="text_thin_line_showing_the_international_space_station_s_path" formatted="false">"Linie subțire care arată traseul Stației Spațiale Internaționale"</string>
+    <string name="text_sun_moon_arrows" formatted="false">"Săgeți soare/lună"</string>
+    <string name="text_2d_overlay_arrows_pointing_toward_the_sun_and_moon" formatted="false">"Săgeți suprapuse 2D îndreptate către soare și lună"</string>
+    <string name="text_eclipse_alerts" formatted="false">"Alerte de eclipsă"</string>
+    <string name="text_notifies_when_sun_earth_moon_alignment_approaches_an_eclipse" formatted="false">"Notifică când alinierea soare-pământ-lună se apropie de o eclipsă"</string>
+    <string name="text_time_scrubber" formatted="false">"Epurator de timp"</string>
+    <string name="text_drag_the_slider_to_simulate_24_hours_releases_to_snap_back_to_now" formatted="false">"Trageți glisorul pentru a simula +/- 24 de ore; eliberări pentru a reveni la acum"</string>
+    <string name="text_legend" formatted="false">"Legendă"</string>
+    <string name="text_music_on" formatted="false">"♫ Muzică: activată"</string>
+    <string name="text_music_off" formatted="false">"♫ Muzică: oprită"</string>
+    <string name="text_read_to_me_is_on_i_ll_read_the_cards_out_loud" formatted="false">"Citiți pentru mine este pornit. Voi citi cărțile cu voce tare."</string>
+    <string name="text_read_on" formatted="false">"🔊 Citește: pe"</string>
+    <string name="text_read_off" formatted="false">"🔊 Citește: oprit"</string>
+    <string name="text_a_living_window_onto_earth" formatted="false">"O fereastră vie spre Pământ"</string>
+    <string name="text_drag_to_rotate" formatted="false">"Trage ca să rotești globul"</string>
+    <string name="text_pinch_to_zoom" formatted="false">"Ciupiți pentru a mări"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Atinge globul pentru a descoperi mai multe"</string>
+    <string name="text_explore_earth" formatted="false">"Explorează Pământul"</string>
+    <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"Previzualizare live · lumina solară curentă · fără sunet"</string>
+    <string name="text_preview_set_wallpaper" formatted="false">"Previzualizează și setează imaginea de fundal"</string>
+    <string name="text_choose_home_or_lock_screen_in_the_android_preview" formatted="false">"Alegeți ecranul de pornire sau de blocare în previzualizarea Android."</string>
+    <string name="text_view_from" formatted="false">"Vedere din"</string>
+    <string name="text_saved_places" formatted="false">"Locuri salvate"</string>
+    <string name="text_search_cities" formatted="false">"Căutați orașe"</string>
+    <string name="text_composition" formatted="false">"Compoziție"</string>
+    <string name="text_whole_earth" formatted="false">"Pământul întreg"</string>
+    <string name="text_night_lights" formatted="false">"Lumini de noapte"</string>
+    <string name="text_earth_s_horizon" formatted="false">"Orizontul Pământului"</string>
+    <string name="text_complete_globe_with_current_sunlight_and_quiet_stars" formatted="false">"Glob complet cu lumina solară actuală și stele liniștite."</string>
+    <string name="text_city_lights_on_the_dark_side_of_earth_with_current_sunlight" formatted="false">"Luminile orașului pe partea întunecată a Pământului, cu lumina solară actuală."</string>
+    <string name="text_a_close_cropped_view_of_earth_s_atmospheric_limb" formatted="false">"O vedere de aproape, decupată, a limbului atmosferic al Pământului."</string>
+    <string name="text_camera_motion" formatted="false">"Mișcarea camerei"</string>
+    <string name="text_fixed_viewpoint" formatted="false">"Punct de vedere fix"</string>
+    <string name="text_slow_orbit" formatted="false">"Orbită lentă"</string>
+    <string name="text_follow_the_night_side" formatted="false">"Urmăriți partea de noapte"</string>
+    <string name="text_keeps_your_chosen_place_in_view_as_daylight_changes" formatted="false">"Păstrează locul ales în vedere pe măsură ce lumina zilei se schimbă."</string>
+    <string name="text_starts_at_your_chosen_view_then_slowly_travels_around_earth" formatted="false">"Începe de la vederea aleasă, apoi călătorește încet în jurul Pământului."</string>
+    <string name="text_the_view_moves_with_the_night_side_instead_of_staying_over_a_plac" formatted="false">"Vederea se mișcă cu partea de noapte în loc să stea deasupra unui loc."</string>
+    <string name="text_turn_the_globe_when_i_swipe_between_home_screens" formatted="false">"Întoarceți globul când glisez între ecranele de pornire"</string>
+    <string name="text_generated_illustration" formatted="false">"Ilustrație generată"</string>
+    <string name="text_satellite_imagery_when_cached_or_available" formatted="false">"Imagini din satelit, când sunt stocate în cache sau sunt disponibile"</string>
+    <string name="text_globe_scale" formatted="false">"Scara globului"</string>
+    <string name="text_hide_framing_controls" formatted="false">"Ascunde comenzile de încadrare ▴"</string>
+    <string name="text_adjust_framing_angles" formatted="false">"Reglați încadrarea și unghiurile ▾"</string>
+    <string name="text_horizontal_framing" formatted="false">"Încadrare orizontală"</string>
+    <string name="text_vertical_framing" formatted="false">"Încadrare verticală"</string>
+    <string name="text_view_angle" formatted="false">"Unghiul de vedere"</string>
+    <string name="text_view_latitude" formatted="false">"Vedeți latitudinea"</string>
+    <string name="text_saved_view_1_s">" · vizualizare salvată: %1$s"</string>
+    <string name="text_following_the_night_side_1_s">"Urmărind partea de noapte%1$s"</string>
+    <string name="text_your_custom_view" formatted="false">"vizualizarea dvs. personalizată"</string>
+    <string name="text_orbit_starts_at_1_s">"Orbită începe la %1$s"</string>
+    <string name="text_choose_a_place_or_adjust_the_angles_below" formatted="false">"Alegeți un loc sau ajustați unghiurile de mai jos."</string>
+    <string name="text_no_saved_places_yet" formatted="false">"Nicio locație salvată încă"</string>
+    <string name="text_search_for_a_city_here_you_can_also_save_a_custom_point_in_explor" formatted="false">"Căutați un oraș aici. De asemenea, puteți salva un punct personalizat în Explorare → Locații → Adăugați un loc de pe glob."</string>
+    <string name="text_view_from_a_saved_place" formatted="false">"Vedere dintr-un loc salvat"</string>
+    <string name="text_city_or_country" formatted="false">"Oraș sau țară"</string>
+    <string name="text_search_city_or_country" formatted="false">"Căutați oraș sau țară"</string>
+    <string name="text_no_matching_city_try_a_country_or_another_name" formatted="false">"Niciun oraș care se potrivește. Încercați o țară sau alt nume."</string>
+    <string name="text_choose_a_city" formatted="false">"Alegeți un oraș"</string>
+    <string name="text_earth_today_widget" formatted="false">"Widget Earth Today"</string>
+    <string name="text_which_place_should_this_widget_show_other_widgets_can_show_differ" formatted="false">"Ce loc ar trebui să arate acest widget? Alte widget-uri pot afișa diferite locuri."</string>
+    <string name="text_no_place_yet" formatted="false">"Niciun loc încă"</string>
+    <string name="text_save_a_place_in_the_app_explore_places_to_see_its_day_and_night_h" formatted="false">"Salvați un loc în aplicație (Explorare &gt; Locuri) pentru a-i vedea ziua și noaptea aici."</string>
+    <string name="text_save_widget" formatted="false">"Salvare widget"</string>
+    <string name="text_1_s_2_s_3_s">"%1$s %2$s · %3$d%%"</string>
+    <string name="text_choose_a_place" formatted="false">"Alege un loc"</string>
+    <string name="text_set_your_local_view" formatted="false">"Setați vizualizarea locală"</string>
+    <string name="text_polar_day_2" formatted="false">"Zi polară"</string>
+    <string name="text_polar_night_2" formatted="false">"Noapte polară"</string>
+    <string name="text_nighttime_now" formatted="false">"Noaptea acum"</string>
+    <string name="text_updated_1_s">"Actualizat %1$s"</string>
+    <string name="text_illustration_1_s">"Ilustrație · %1$s"</string>
+    <string name="text_couldn_t_capture_the_view_try_again" formatted="false">"Nu s-a putut captura vizualizarea — încercați din nou."</string>
+    <string name="text_couldn_t_prepare_the_image" formatted="false">"Nu am putut pregăti imaginea."</string>
+    <string name="text_share_your_view" formatted="false">"Împărtășește-ți punctul de vedere"</string>
+    <string name="text_earth_1_s_made_with_pale_blue_dot_2_s">"🌍 Pământ — %1$s\nRealizat cu Pale Blue Dot → %2$s"</string>
+    <string name="text_ask_a_grown_up" formatted="false">"Întreabă un adult"</string>
+    <string name="text_what_is_1_s_2_s">"Ce este %1$d × %2$d?"</string>
+    <string name="text_maybe_later" formatted="false">"Poate mai târziu"</string>
+    <string name="text_earthquake" formatted="false">"Cutremur"</string>
+    <string name="text_you_found_where_the_ground_was_shaking" formatted="false">"Ai găsit unde tremura pământul!"</string>
+    <string name="text_volcano" formatted="false">"Vulcan"</string>
+    <string name="text_you_spotted_hot_lava_erupting_from_deep_inside_the_earth" formatted="false">"Ai văzut lavă fierbinte erupând din adâncul Pământului."</string>
+    <string name="text_wildfire" formatted="false">"Incendiu de vegetație"</string>
+    <string name="text_you_caught_a_fire_so_big_that_satellites_can_see_it_from_space" formatted="false">"Ai luat un foc atât de mare încât sateliții îl pot vedea din spațiu."</string>
+    <string name="text_storm" formatted="false">"Furtună"</string>
+    <string name="text_you_tracked_a_giant_swirling_storm" formatted="false">"Ai urmărit o furtună uriașă învolburată."</string>
+    <string name="text_daytime_2" formatted="false">"Zi"</string>
+    <string name="text_you_found_the_side_of_earth_facing_the_sun" formatted="false">"Ai găsit partea Pământului îndreptată spre Soare."</string>
+    <string name="text_city_lights_2" formatted="false">"Luminile orașului"</string>
+    <string name="text_you_found_the_night_side_sparkling_with_city_lights" formatted="false">"Ai găsit partea de noapte, strălucitoare de luminile orașului."</string>
+    <string name="text_star_gazer" formatted="false">"Star Gazer"</string>
+    <string name="text_you_looked_past_earth_into_the_stars_and_galaxies_beyond" formatted="false">"Ai privit dincolo de Pământ, spre stelele și galaxiile de dincolo."</string>
+    <string name="text_time_traveler" formatted="false">"Călător în timp"</string>
+    <string name="text_you_moved_time_to_turn_day_into_night" formatted="false">"Ai mutat timpul pentru a transforma ziua în noapte."</string>
+    <string name="text_tap_a_place_where_it_s_daytime" formatted="false">"Atingeți un loc unde este ZI ☀️"</string>
+    <string name="text_tap_a_place_where_it_s_night_time" formatted="false">"Atingeți un loc unde este NOAPTE 🌙"</string>
+    <string name="text_find_an_earthquake" formatted="false">"Găsește un cutremur 🔶"</string>
+    <string name="text_find_a_volcano" formatted="false">"Găsește un vulcan 🌋"</string>
+    <string name="text_find_a_wildfire" formatted="false">"Găsește un incendiu de vegetație 🔥"</string>
+    <string name="text_find_a_storm" formatted="false">"Găsește o furtună 🌀"</string>
+    <string name="text_the_sun_is_so_huge_that_about_1_3_million_earths_could_fit_inside" formatted="false">"Soarele este atât de mare încât aproximativ 1,3 milioane de Pământuri ar putea încăpea în el."</string>
+    <string name="text_a_day_on_venus_is_longer_than_a_whole_year_on_venus" formatted="false">"O zi pe Venus este mai lungă decât un an întreg pe Venus!"</string>
+    <string name="text_footprints_on_the_moon_can_last_millions_of_years_because_there_s" formatted="false">"Urmele de pe Lună pot dura milioane de ani, pentru că nu există vânt care să le sufle."</string>
+    <string name="text_jupiter_is_so_big_that_all_the_other_planets_could_fit_inside_it" formatted="false">"Jupiter este atât de mare încât toate celelalte planete ar putea încăpea în el."</string>
+    <string name="text_sunlight_takes_about_8_minutes_to_travel_all_the_way_to_earth" formatted="false">"Lumina soarelui durează aproximativ 8 minute pentru a călători până la Pământ."</string>
+    <string name="text_space_is_completely_silent_because_there_s_no_air_to_carry_sound" formatted="false">"Spațiul este complet tăcut, deoarece nu există aer pentru a transporta sunetul."</string>
+    <string name="text_earth_takes_365_and_a_quarter_days_to_orbit_the_sun_that_s_why_we" formatted="false">"Pământului are nevoie de 365 de zile și un sfert pentru a orbita Soarele - de aceea adăugăm o zi bisectă la fiecare 4 ani."</string>
+    <string name="text_the_tallest_volcano_we_know_of_olympus_mons_on_mars_is_about_thre" formatted="false">"Cel mai înalt vulcan despre care știm, Olympus Mons de pe Marte, este de aproximativ trei ori mai înalt decât Muntele Everest."</string>
+    <string name="text_earth_is_the_only_planet_not_named_after_a_greek_or_roman_god" formatted="false">"Pământul este singura planetă care nu poartă numele unui zeu grec sau roman."</string>
+    <string name="text_there_are_more_stars_in_the_universe_than_grains_of_sand_on_all_o" formatted="false">"Există mai multe stele în univers decât granule de nisip pe toate plajele Pământului."</string>
+    <string name="text_the_moon_drifts_about_3_8_cm_farther_from_earth_every_year" formatted="false">"Luna se deplasează cu aproximativ 3,8 cm mai departe de Pământ în fiecare an."</string>
+    <string name="text_saturn_is_so_light_for_its_size_that_it_would_float_in_a_giant_ba" formatted="false">"Saturn este atât de ușor pentru dimensiunea sa încât ar pluti într-o cadă uriașă de apă."</string>
+    <string name="text_lightning_strikes_somewhere_on_earth_about_100_times_every_second" formatted="false">"Fulgerul lovește undeva pe Pământ de aproximativ 100 de ori în fiecare secundă."</string>
+    <string name="text_the_space_station_zooms_around_the_whole_earth_about_once_every_9" formatted="false">"Stația Spațială zoomează în jurul întregului Pământ aproximativ o dată la 90 de minute."</string>
+    <string name="text_auroras_glow_near_the_poles_when_tiny_particles_from_the_sun_cras" formatted="false">"Aurorele strălucesc lângă poli atunci când particulele minuscule de la Soare se prăbușesc în aerul nostru."</string>
+    <string name="text_about_70_of_earth_s_surface_is_covered_by_ocean" formatted="false">"Aproximativ 70% din suprafața Pământului este acoperită de ocean."</string>
+    <string name="text_venus_is_the_hottest_planet_even_though_mercury_is_closer_to_the" formatted="false">"Venus este cea mai fierbinte planetă, chiar dacă Mercur este mai aproape de Soare."</string>
+    <string name="text_the_great_red_spot_on_jupiter_is_a_storm_bigger_than_the_whole_ea" formatted="false">"Marea Pată Roșie de pe Jupiter este o furtună mai mare decât întregul Pământ."</string>
+    <string name="text_earthquakes_happen_when_giant_pieces_of_earth_s_crust_slip_past_e" formatted="false">"Cutremurele au loc atunci când bucăți uriașe din scoarța Pământului alunecă unele pe lângă altele."</string>
+    <string name="text_the_sun_is_actually_white_our_air_is_what_makes_it_look_yellow" formatted="false">"Soarele este de fapt alb - aerul nostru este ceea ce îl face să arate galben."</string>
+    <string name="text_comets_are_giant_balls_of_ice_and_dust_that_grow_glowing_tails_ne" formatted="false">"Cometele sunt bile uriașe de gheață și praf care cresc cozi strălucitoare lângă Soare."</string>
+    <string name="text_if_you_could_drive_a_car_straight_up_you_d_reach_space_in_about_a" formatted="false">"Dacă ai putea conduce o mașină direct în sus, ai ajunge în spațiu în aproximativ o oră."</string>
+    <string name="text_the_moon_has_no_air_so_its_sky_is_always_black_even_in_the_daytim" formatted="false">"Luna nu are aer, așa că cerul ei este întotdeauna negru, chiar și în timpul zilei."</string>
+    <string name="text_earth_spins_at_about_1_600_km_h_at_the_equator_but_we_don_t_feel" formatted="false">"Pământul se învârte cu aproximativ 1.600 km/h la ecuator – dar nu simțim asta pentru că ne învârtim împreună cu el."</string>
+    <string name="text_new_moon" formatted="false">"Lună nouă"</string>
+    <string name="text_waxing_crescent" formatted="false">"Lună în creștere"</string>
+    <string name="text_first_quarter" formatted="false">"Primul pătrar"</string>
+    <string name="text_waxing_gibbous" formatted="false">"Lună gibboasă în creștere"</string>
+    <string name="text_full_moon" formatted="false">"Lună plină"</string>
+    <string name="text_waning_gibbous" formatted="false">"Lună gibboasă în descreștere"</string>
+    <string name="text_last_quarter" formatted="false">"Ultimul pătrar"</string>
+    <string name="text_waning_crescent" formatted="false">"Lună în descreștere"</string>
+    <string name="text_watch_where_sunrise_reaches_next" formatted="false">"Urmăriți unde ajunge răsăritul soarelui."</string>
+    <string name="text_compare_daylight_in_the_north_and_south" formatted="false">"Comparați lumina zilei din nord și din sud."</string>
+    <string name="text_trace_a_curve_of_earth_s_plate_boundaries" formatted="false">"Trasează o curbă a limitelor plăcilor Pământului."</string>
+    <string name="text_saved_observation_feed_update_unavailable" formatted="false">"Observație salvată; actualizare feed indisponibilă"</string>
+    <string name="text_recent_reported_observation" formatted="false">"Observație recentă raportată"</string>
+    <string name="text_observations_are_loading" formatted="false">"Se încarcă observațiile"</string>
+    <string name="text_no_recent_observations_available_the_moon_and_daylight_are_still" formatted="false">"Nu există observații recente disponibile; Luna și lumina zilei sunt încă aici"</string>
+    <string name="lesson_follow_sunrise" formatted="false">"Urmăriți răsăritul soarelui"</string>
+    <string name="lesson_a_turning_world" formatted="false">"O lume care se întoarce"</string>
+    <string name="lesson_sunrise_is_a_moving_boundary_between_darkness_and_daylight_we_ll" formatted="false">"Răsăritul este o graniță mișcătoare între întuneric și lumina zilei. O vom urmări dintr-un loc marcat."</string>
+    <string name="lesson_begin" formatted="false">"Începe"</string>
+    <string name="lesson_find_london" formatted="false">"Găsiți Londra"</string>
+    <string name="lesson_look_at_london_on_the_globe_notice_which_side_faces_the_sun_the_m" formatted="false">"Uită-te la Londra de pe glob. Observați care parte este orientată spre Soare. Markerul și calculul luminii naturale sunt indicii separate."</string>
+    <string name="lesson_i_found_london" formatted="false">"Am găsit Londra"</string>
+    <string name="lesson_predict_the_direction" formatted="false">"Prezice directia"</string>
+    <string name="lesson_as_earth_spins_eastward_which_way_does_the_dawn_boundary_move_acr" formatted="false">"Pe măsură ce Pământul se învârte spre est, în ce direcție se mișcă granița zorilor pe o hartă a longitudinilor?"</string>
+    <string name="lesson_yes_at_a_fixed_utc_time_the_dawn_line_moves_westward_over_longitu" formatted="false">"Da. La o oră UTC fixă, linia zorilor se deplasează spre vest peste longitudini pe măsură ce Pământul se rotește spre est."</string>
+    <string name="lesson_it_moves_westward_across_longitudes_earth_itself_turns_eastward_c" formatted="false">"Se deplasează spre vest prin longitudini. Pământul însuși se întoarce spre est, ducând fiecare loc în lumina zilei."</string>
+    <string name="lesson_westward" formatted="false">"spre vest"</string>
+    <string name="lesson_eastward" formatted="false">"Spre est"</string>
+    <string name="lesson_advance_the_scene" formatted="false">"Avansează scena"</string>
+    <string name="lesson_move_the_globe_s_lesson_clock_forward_two_hours_and_watch_the_lig" formatted="false">"Deplasați ceasul globului pentru lecție înainte cu două ore și urmăriți cum se schimbă lumina. Aceasta este o simulare, în timp ce Today rămâne în timp real."</string>
+    <string name="lesson_advance_two_hours" formatted="false">"Înainte cu două ore"</string>
+    <string name="lesson_what_changed" formatted="false">"Ce sa schimbat?"</string>
+    <string name="lesson_the_sunlight_direction_changed_with_time_did_the_saved_place_move" formatted="false">"Direcția luminii soarelui s-a schimbat cu timpul. S-a mutat locul salvat pe glob?"</string>
+    <string name="lesson_exactly_the_place_keeps_its_coordinates_while_earth_s_rotation_ch" formatted="false">"Exact. Locul își păstrează coordonatele în timp ce rotația Pământului își schimbă iluminarea."</string>
+    <string name="lesson_a_place_keeps_its_latitude_and_longitude_the_changing_angle_to_th" formatted="false">"Un loc își păstrează latitudinea și longitudinea. Unghiul în schimbare față de Soare creează ziua și noaptea."</string>
+    <string name="lesson_no_earth_rotated_relative_to_the_sun" formatted="false">"Nu; Pământul s-a rotit în raport cu Soarele"</string>
+    <string name="lesson_yes_its_latitude_changed" formatted="false">"Da; i s-a schimbat latitudinea"</string>
+    <string name="lesson_explore_the_ring_of_fire" formatted="false">"Explorează Inelul de Foc"</string>
+    <string name="lesson_a_pattern_around_the_pacific" formatted="false">"Un model în jurul Pacificului"</string>
+    <string name="lesson_visit_three_locations_predict_a_pattern_then_reveal_plate_boundar" formatted="false">"Vizitați trei locații, preziceți un model, apoi dezvăluie limitele plăcilor. Exemplele de rezervă istorice sunt etichetate cu date și surse."</string>
+    <string name="lesson_off_japan" formatted="false">"În largul Japoniei"</string>
+    <string name="lesson_historical_fallback_2011_03_11_tohoku_earthquake_usgs_a_recent_pa" formatted="false">"Rezervă istorică: 2011-03-11 Cutremur Tohoku, USGS. O observație recentă din Pacific este utilizată atunci când este disponibilă."</string>
+    <string name="lesson_visit_the_next_location" formatted="false">"Vizitați următoarea locație"</string>
+    <string name="lesson_the_cascades" formatted="false">"Cascadele"</string>
+    <string name="lesson_historical_fallback_1980_05_18_mount_st_helens_eruption_usgs_this" formatted="false">"Rezervă istorică: 1980-05-18 erupția Muntelui St. Helens, USGS. Acesta este un exemplu de lecție datat, nu un raport în direct."</string>
+    <string name="lesson_along_chile" formatted="false">"De-a lungul Chile"</string>
+    <string name="lesson_historical_fallback_1960_05_22_great_chilean_earthquake_usgs_this" formatted="false">"Rezervă istorică: 1960-05-22 Marele cutremur chilian, USGS. Acest exemplu rămâne în afara depozitului de evenimente live."</string>
+    <string name="lesson_predict_the_pattern" formatted="false">"Preziceți modelul"</string>
+    <string name="lesson_what_pattern_do_you_see" formatted="false">"Ce model vezi?"</string>
+    <string name="lesson_which_broad_pattern_links_many_earthquake_and_volcano_locations_a" formatted="false">"Care model larg leagă multe locații de cutremur și vulcani din jurul Pacificului?"</string>
+    <string name="lesson_yes_many_cluster_near_plate_edges_but_some_events_also_happen_awa" formatted="false">"Da. Multe se grupează lângă marginile plăcilor, dar unele evenimente au loc și departe de granițele cartografice."</string>
+    <string name="lesson_the_broad_pattern_is_a_belt_near_several_plate_edges_individual_e" formatted="false">"Modelul larg este o centură lângă mai multe margini ale plăcii. Evenimentele individuale au nevoie de propriile lor dovezi; distanța până la o linie nu este un diagnostic."</string>
+    <string name="lesson_a_belt_near_several_plate_edges" formatted="false">"O centură lângă mai multe margini ale plăcilor"</string>
+    <string name="lesson_one_straight_line_through_the_pacific_center" formatted="false">"O linie dreaptă prin centrul Pacificului"</string>
+    <string name="lesson_every_event_lies_exactly_on_one_boundary" formatted="false">"Fiecare eveniment se află exact pe o singură limită"</string>
+    <string name="lesson_reveal_the_boundaries" formatted="false">"Dezvăluie limitele"</string>
+    <string name="lesson_gold_lines_show_a_generalized_pb2002_plate_boundary_model_compare" formatted="false">"Liniile de aur arată un model generalizat PB2002-limită de plăci. Comparați marginea Pacificului; aceste rânduri nu explică fiecare eveniment individual."</string>
+    <string name="lesson_reveal_gold_lines" formatted="false">"Dezvăluie linii de aur"</string>
+    <string name="lesson_what_the_pattern_means" formatted="false">"Ce înseamnă modelul"</string>
+    <string name="lesson_plate_motions_concentrate_many_earthquakes_and_volcanoes_around_t" formatted="false">"Mișcările plăcilor concentrează multe cutremure și vulcani în jurul Pacificului. Punctele fierbinți și cutremurele din plăci arată de ce modelul are excepții."</string>
+    <string name="lesson_complete_journey" formatted="false">"Călătorie completă"</string>
+    <string name="lesson_understand_the_seasons" formatted="false">"Înțelege anotimpurile"</string>
+    <string name="lesson_two_hemispheres" formatted="false">"Două emisfere"</string>
+    <string name="lesson_compare_daylight_at_london_and_sydney_on_two_dates_earth_s_tilted" formatted="false">"Comparați lumina zilei la Londra și Sydney la două întâlniri. Axa înclinată a Pământului schimbă cât de mult rămâne Soarele deasupra orizontului."</string>
+    <string name="lesson_london_in_june" formatted="false">"Londra în iunie"</string>
+    <string name="lesson_observe_london_near_the_june_solstice_the_northern_hemisphere_has" formatted="false">"Observați Londra în apropierea solstițiului din iunie. Emisfera nordică are lumină naturală mai lungă."</string>
+    <string name="lesson_compare_sydney" formatted="false">"Compara Sydney"</string>
+    <string name="lesson_sydney_in_june" formatted="false">"Sydney în iunie"</string>
+    <string name="lesson_observe_sydney_on_the_same_date_its_winter_daylight_is_shorter_th" formatted="false">"Observați Sydney la aceeași dată. Lumina sa de iarnă este mai scurtă decât lumina de vară a Londrei."</string>
+    <string name="lesson_make_a_prediction" formatted="false">"Faceți o predicție"</string>
+    <string name="lesson_predict_december" formatted="false">"Prezice decembrie"</string>
+    <string name="lesson_near_the_december_solstice_which_marked_place_has_longer_daylight" formatted="false">"În apropierea solstițiului de decembrie, care loc marcat are lumină mai lungă?"</string>
+    <string name="lesson_yes_the_southern_hemisphere_tilts_toward_the_sun_in_december_so_s" formatted="false">"Da. Emisfera sudică se înclină spre Soare în decembrie, astfel încât Sydney are zile mai lungi."</string>
+    <string name="lesson_sydney_has_longer_daylight_near_the_december_solstice_the_souther" formatted="false">"Sydney are lumină mai lungă în apropierea solstițiului de decembrie. Atunci, emisfera sudică se înclină spre Soare."</string>
+    <string name="lesson_sydney" formatted="false">"Sydney"</string>
+    <string name="lesson_london" formatted="false">"Londra"</string>
+    <string name="lesson_they_must_be_equal" formatted="false">"Ele trebuie să fie egale"</string>
+    <string name="lesson_switch_to_december" formatted="false">"Treceți la decembrie"</string>
+    <string name="lesson_compare_the_daylight_readouts_after_changing_the_lesson_date_this" formatted="false">"Comparați citirile la lumina zilei după modificarea datei lecției. Acest lucru schimbă doar scena aplicației."</string>
+    <string name="lesson_show_the_axial_tilt_explanation" formatted="false">"Afișați explicația înclinării axiale"</string>
+    <string name="lesson_why_seasons_change" formatted="false">"De ce se schimbă anotimpurile"</string>
+    <string name="lesson_earth_s_axis_stays_tilted_about_23_4_as_it_orbits_the_sun_the_nor" formatted="false">"Axa Pământului rămâne înclinată cu aproximativ 23,4° în timp ce orbitează Soarele. Emisfera nordică și sudică alternează lumina zilei mai lungă. Ghidurile vizibile marchează ecuatorul, tropicele și cercurile polare."</string>
+    <string name="text_notebook" formatted="false">"Caiet de observații"</string>
+    <string name="text_guide" formatted="false">"Ghid"</string>
+    <string name="text_places" formatted="false">"Locuri"</string>
+    <string name="text_explore_time" formatted="false">"Explorează timpul"</string>
+    <string name="text_journeys" formatted="false">"Călătorii"</string>
+    <string name="text_journey" formatted="false">"Călătorie"</string>
+    <string name="text_language" formatted="false">"Limbă"</string>
+    <string name="text_use_device_language" formatted="false">"Folosește limba dispozitivului"</string>
+    <string name="text_a_voice_for_this_language_is_not_installed_on_this_device" formatted="false">"O voce pentru această limbă nu este instalată pe acest dispozitiv."</string>
+    <string name="text_great_job_challenges_solved_1_s">"🎉 Mare treaba! Provocări rezolvate: %1$d"</string>
+    <string name="text_earth_s_axis_is_tilted_about_23_4_degrees_relative_to_its_orbit_a" formatted="false">"Axa Pământului este înclinată cu aproximativ 23,4 grade față de orbita sa în jurul Soarelui."</string>
+    <string name="city_abidjan" formatted="false">"Abidjan, Coasta de Fildeș"</string>
+    <string name="city_abu_dhabi" formatted="false">"Abu Dhabi, Emiratele Arabe Unite"</string>
+    <string name="city_abuja" formatted="false">"Abuja, Nigeria"</string>
+    <string name="city_accra" formatted="false">"Accra, Ghana"</string>
+    <string name="city_adamstown" formatted="false">"Adamstown, Pitcairn"</string>
+    <string name="city_addis_ababa" formatted="false">"Addis Abeba, Etiopia"</string>
+    <string name="city_adelaide" formatted="false">"Adelaide, Australia"</string>
+    <string name="city_alexandria" formatted="false">"Alexandria, Egipt"</string>
+    <string name="city_algiers" formatted="false">"Alger, Algeria"</string>
+    <string name="city_alofi" formatted="false">"Alofi, Niue"</string>
+    <string name="city_amman" formatted="false">"Amman, Iordania"</string>
+    <string name="city_amsterdam" formatted="false">"Amsterdam, Olanda"</string>
+    <string name="city_andorra_la_vella" formatted="false">"Andorra la Vella, Andorra"</string>
+    <string name="city_ankara" formatted="false">"Ankara, Turcia"</string>
+    <string name="city_antananarivo" formatted="false">"Antananarivo, Madagascar"</string>
+    <string name="city_apia" formatted="false">"Apia, Samoa"</string>
+    <string name="city_ashgabat" formatted="false">"Ashgabat, Turkmenistan"</string>
+    <string name="city_asmara" formatted="false">"Asmara, Eritreea"</string>
+    <string name="city_astana" formatted="false">"Astana, Kazahstan"</string>
+    <string name="city_asuncion" formatted="false">"Asunción, Paraguay"</string>
+    <string name="city_athens" formatted="false">"Atena, Grecia"</string>
+    <string name="city_auckland" formatted="false">"Auckland, Noua Zeelandă"</string>
+    <string name="city_avarua" formatted="false">"Avarua, Insulele Cook"</string>
+    <string name="city_baghdad" formatted="false">"Bagdad, Irak"</string>
+    <string name="city_baku" formatted="false">"Baku, Azerbaidjan"</string>
+    <string name="city_bamako" formatted="false">"Bamako, Mali"</string>
+    <string name="city_bandar_seri_begawan" formatted="false">"Bandar Seri Begawan, Brunei"</string>
+    <string name="city_bangkok" formatted="false">"Bangkok, Thailanda"</string>
+    <string name="city_bangui" formatted="false">"Bangui, Republica Centrafricană"</string>
+    <string name="city_banjul" formatted="false">"Banjul, Gambia"</string>
+    <string name="city_barcelona" formatted="false">"Barcelona, Spania"</string>
+    <string name="city_basse_terre" formatted="false">"Basse-Terre, Guadelupa"</string>
+    <string name="city_basseterre" formatted="false">"Basseterre, Saint Kitts și Nevis"</string>
+    <string name="city_beijing" formatted="false">"Beijing, China"</string>
+    <string name="city_beirut" formatted="false">"Beirut, Liban"</string>
+    <string name="city_belgrade" formatted="false">"Belgrad, Serbia"</string>
+    <string name="city_belmopan" formatted="false">"Belmopan, Belize"</string>
+    <string name="city_belo_horizonte" formatted="false">"Belo Horizonte, Brazilia"</string>
+    <string name="city_berlin" formatted="false">"Berlin, Germania"</string>
+    <string name="city_bern" formatted="false">"Berna, Elveția"</string>
+    <string name="city_bishkek" formatted="false">"Bishkek, Kârgâzstan"</string>
+    <string name="city_bissau" formatted="false">"Bissau, Guineea-Bissau"</string>
+    <string name="city_bogota" formatted="false">"Bogotá, Columbia"</string>
+    <string name="city_brasilia" formatted="false">"Brasilia, Brazilia"</string>
+    <string name="city_bratislava" formatted="false">"Bratislava, Slovacia"</string>
+    <string name="city_brazzaville" formatted="false">"Brazzaville, Republica Congo"</string>
+    <string name="city_bridgetown" formatted="false">"Bridgetown, Barbados"</string>
+    <string name="city_brisbane" formatted="false">"Brisbane, Australia"</string>
+    <string name="city_brooklyn" formatted="false">"Brooklyn, Statele Unite"</string>
+    <string name="city_brussels" formatted="false">"Bruxelles, Belgia"</string>
+    <string name="city_bucharest" formatted="false">"București, România"</string>
+    <string name="city_budapest" formatted="false">"Budapesta, Ungaria"</string>
+    <string name="city_buenos_aires" formatted="false">"Buenos Aires, Argentina"</string>
+    <string name="city_cairo" formatted="false">"Cairo, Egipt"</string>
+    <string name="city_cali" formatted="false">"Cali, Columbia"</string>
+    <string name="city_canberra" formatted="false">"Canberra, Australia"</string>
+    <string name="city_cape_town" formatted="false">"Cape Town, Africa de Sud"</string>
+    <string name="city_caracas" formatted="false">"Caracas, Venezuela"</string>
+    <string name="city_casablanca" formatted="false">"Casablanca, Maroc"</string>
+    <string name="city_castries" formatted="false">"Castries, Sfânta Lucia"</string>
+    <string name="city_cayenne" formatted="false">"Cayenne, Guyana Franceză"</string>
+    <string name="city_central_coast" formatted="false">"Coasta Centrală, Australia"</string>
+    <string name="city_charlotte_amalie" formatted="false">"Charlotte Amalie, Insulele Virgine ale SUA"</string>
+    <string name="city_chengdu" formatted="false">"Chengdu, China"</string>
+    <string name="city_chicago" formatted="false">"Chicago, Statele Unite"</string>
+    <string name="city_chisinau" formatted="false">"Chișinău, Moldova"</string>
+    <string name="city_chongqing" formatted="false">"Chongqing, China"</string>
+    <string name="city_christchurch" formatted="false">"Christchurch, Noua Zeelandă"</string>
+    <string name="city_ciudad_de_la_paz" formatted="false">"Ciudad de la Paz, Guineea Ecuatorială"</string>
+    <string name="city_cockburn_town" formatted="false">"Cockburn Town, Insulele Turks și Caicos"</string>
+    <string name="city_colombo" formatted="false">"Colombo, Sri Lanka"</string>
+    <string name="city_conakry" formatted="false">"Conakry, Guineea"</string>
+    <string name="city_copenhagen" formatted="false">"Copenhaga, Danemarca"</string>
+    <string name="city_dakar" formatted="false">"Dakar, Senegal"</string>
+    <string name="city_damascus" formatted="false">"Damasc, Siria"</string>
+    <string name="city_dar_es_salaam" formatted="false">"Dar es Salaam, Tanzania"</string>
+    <string name="city_delhi" formatted="false">"Delhi, India"</string>
+    <string name="city_dhaka" formatted="false">"Dhaka, Bangladesh"</string>
+    <string name="city_dili" formatted="false">"Dili, Timorul Oriental"</string>
+    <string name="city_djibouti" formatted="false">"Djibouti, Djibouti"</string>
+    <string name="city_dodoma" formatted="false">"Dodoma, Tanzania"</string>
+    <string name="city_doha" formatted="false">"Doha, Qatar"</string>
+    <string name="city_douglas" formatted="false">"Douglas, Insula Man"</string>
+    <string name="city_dublin" formatted="false">"Dublin, Irlanda"</string>
+    <string name="city_dushanbe" formatted="false">"Dușanbe, Tadjikistan"</string>
+    <string name="city_flying_fish_cove" formatted="false">"Flying Fish Cove, Insula Crăciunului"</string>
+    <string name="city_fort_de_france" formatted="false">"Fort-de-France, Martinica"</string>
+    <string name="city_fortaleza" formatted="false">"Fortaleza, Brazilia"</string>
+    <string name="city_freetown" formatted="false">"Freetown, Sierra Leone"</string>
+    <string name="city_funafuti" formatted="false">"Funafuti, Tuvalu"</string>
+    <string name="city_gaborone" formatted="false">"Gaborone, Botswana"</string>
+    <string name="city_george_town" formatted="false">"George Town, Insulele Cayman"</string>
+    <string name="city_georgetown" formatted="false">"Georgetown, Guyana"</string>
+    <string name="city_gibraltar" formatted="false">"Gibraltar, Gibraltar"</string>
+    <string name="city_gitega" formatted="false">"Gitega, Burundi"</string>
+    <string name="city_giza" formatted="false">"Giza, Egipt"</string>
+    <string name="city_gold_coast" formatted="false">"Coasta de Aur, Australia"</string>
+    <string name="city_grytviken" formatted="false">"Grytviken, Georgia de Sud și Insulele Sandwich de Sud"</string>
+    <string name="city_guangzhou" formatted="false">"Guangzhou, China"</string>
+    <string name="city_guatemala_city" formatted="false">"Orașul Guatemala, Guatemala"</string>
+    <string name="city_guayaquil" formatted="false">"Guayaquil, Ecuador"</string>
+    <string name="city_gustavia" formatted="false">"Gustavia, Sfântul Bartolomeu"</string>
+    <string name="city_hagatna" formatted="false">"Hagåtña, Guam"</string>
+    <string name="city_hamburg" formatted="false">"Hamburg, Germania"</string>
+    <string name="city_hamilton" formatted="false">"Hamilton, Bermude"</string>
+    <string name="city_hangzhou" formatted="false">"Hangzhou, China"</string>
+    <string name="city_hanoi" formatted="false">"Hanoi, Vietnam"</string>
+    <string name="city_harare" formatted="false">"Harare, Zimbabwe"</string>
+    <string name="city_havana" formatted="false">"Havana, Cuba"</string>
+    <string name="city_helsinki" formatted="false">"Helsinki, Finlanda"</string>
+    <string name="city_ho_chi_minh_city" formatted="false">"Orașul Ho Chi Minh, Vietnam"</string>
+    <string name="city_hong_kong" formatted="false">"Hong Kong, Hong Kong"</string>
+    <string name="city_honiara" formatted="false">"Honiara, Insulele Solomon"</string>
+    <string name="city_houston" formatted="false">"Houston, Statele Unite ale Americii"</string>
+    <string name="city_ibadan" formatted="false">"Ibadan, Nigeria"</string>
+    <string name="city_islamabad" formatted="false">"Islamabad, Pakistan"</string>
+    <string name="city_istanbul" formatted="false">"Istanbul, Turcia"</string>
+    <string name="city_iztapalapa" formatted="false">"Iztapalapa, Mexic"</string>
+    <string name="city_jakarta" formatted="false">"Jakarta, Indonezia"</string>
+    <string name="city_jamestown" formatted="false">"Jamestown, Sfânta Elena"</string>
+    <string name="city_johannesburg" formatted="false">"Johannesburg, Africa de Sud"</string>
+    <string name="city_juba" formatted="false">"Juba, Sudanul de Sud"</string>
+    <string name="city_kabul" formatted="false">"Kabul, Afganistan"</string>
+    <string name="city_kampala" formatted="false">"Kampala, Uganda"</string>
+    <string name="city_kano" formatted="false">"Kano, Nigeria"</string>
+    <string name="city_karachi" formatted="false">"Karachi, Pakistan"</string>
+    <string name="city_kathmandu" formatted="false">"Kathmandu, Nepal"</string>
+    <string name="city_khartoum" formatted="false">"Khartoum, Sudan"</string>
+    <string name="city_kigali" formatted="false">"Kigali, Rwanda"</string>
+    <string name="city_kingston" formatted="false">"Kingston, Jamaica"</string>
+    <string name="city_kingston_nf" formatted="false">"Kingston, Insula Norfolk"</string>
+    <string name="city_kingstown" formatted="false">"Kingstown, Saint Vincent și Grenadinele"</string>
+    <string name="city_kinshasa" formatted="false">"Kinshasa, Republica Democratică Congo"</string>
+    <string name="city_kralendijk" formatted="false">"Kralendijk, Bonaire, Saint Eustatius și Saba "</string>
+    <string name="city_kuala_lumpur" formatted="false">"Kuala Lumpur, Malaezia"</string>
+    <string name="city_kuwait_city" formatted="false">"Kuweit City, Kuweit"</string>
+    <string name="city_kyiv" formatted="false">"Kiev, Ucraina"</string>
+    <string name="city_lagos" formatted="false">"Lagos, Nigeria"</string>
+    <string name="city_lahore" formatted="false">"Lahore, Pakistan"</string>
+    <string name="city_libreville" formatted="false">"Libreville, Gabon"</string>
+    <string name="city_lilongwe" formatted="false">"Lilongwe, Malawi"</string>
+    <string name="city_lima" formatted="false">"Lima, Peru"</string>
+    <string name="city_lisbon" formatted="false">"Lisabona, Portugalia"</string>
+    <string name="city_ljubljana" formatted="false">"Ljubljana, Slovenia"</string>
+    <string name="city_logan_city" formatted="false">"Logan City, Australia"</string>
+    <string name="city_lome" formatted="false">"Lomé, Togo"</string>
+    <string name="city_london" formatted="false">"Londra, Regatul Unit"</string>
+    <string name="city_longyearbyen" formatted="false">"Longyearbyen, Svalbard și Jan Mayen"</string>
+    <string name="city_los_angeles" formatted="false">"Los Angeles, Statele Unite"</string>
+    <string name="city_luanda" formatted="false">"Luanda, Angola"</string>
+    <string name="city_lusaka" formatted="false">"Lusaka, Zambia"</string>
+    <string name="city_luxembourg" formatted="false">"Luxemburg, Luxemburg"</string>
+    <string name="city_macau" formatted="false">"Macao, Macao"</string>
+    <string name="city_madrid" formatted="false">"Madrid, Spania"</string>
+    <string name="city_majuro" formatted="false">"Majuro, Insulele Marshall"</string>
+    <string name="city_male" formatted="false">"Male, Maldive"</string>
+    <string name="city_mamoudzou" formatted="false">"Mamoudzou, Mayotte"</string>
+    <string name="city_managua" formatted="false">"Managua, Nicaragua"</string>
+    <string name="city_manama" formatted="false">"Manama, Bahrain"</string>
+    <string name="city_manaus" formatted="false">"Manaus, Brazilia"</string>
+    <string name="city_manila" formatted="false">"Manila, Filipine"</string>
+    <string name="city_manukau_city" formatted="false">"Manukau City, Noua Zeelandă"</string>
+    <string name="city_maputo" formatted="false">"Maputo, Mozambic"</string>
+    <string name="city_mariehamn" formatted="false">"Mariehamn, Insulele Aland"</string>
+    <string name="city_marigot" formatted="false">"Marigot, Saint Martin"</string>
+    <string name="city_maseru" formatted="false">"Maseru, Lesotho"</string>
+    <string name="city_mata_utu" formatted="false">"Mata-Utu, Wallis și Futuna"</string>
+    <string name="city_mbabane" formatted="false">"Mbabane, Eswatini"</string>
+    <string name="city_melbourne" formatted="false">"Melbourne, Australia"</string>
+    <string name="city_mexico_city" formatted="false">"Mexico City, Mexic"</string>
+    <string name="city_minsk" formatted="false">"Minsk, Belarus"</string>
+    <string name="city_mogadishu" formatted="false">"Mogadiscio, Somalia"</string>
+    <string name="city_monaco" formatted="false">"Monaco, Monaco"</string>
+    <string name="city_monrovia" formatted="false">"Monrovia, Liberia"</string>
+    <string name="city_montevideo" formatted="false">"Montevideo, Uruguay"</string>
+    <string name="city_montreal" formatted="false">"Montréal, Canada"</string>
+    <string name="city_moroni" formatted="false">"Moroni, Comore"</string>
+    <string name="city_moscow" formatted="false">"Moscova, Rusia"</string>
+    <string name="city_mumbai" formatted="false">"Mumbai, India"</string>
+    <string name="city_muscat" formatted="false">"Muscat, Oman"</string>
+    <string name="city_n_djamena" formatted="false">"N\'Djamena, Ciad"</string>
+    <string name="city_nairobi" formatted="false">"Nairobi, Kenya"</string>
+    <string name="city_nassau" formatted="false">"Nassau, Bahamas"</string>
+    <string name="city_nay_pyi_taw" formatted="false">"Nay Pyi Taw, Myanmar"</string>
+    <string name="city_new_delhi" formatted="false">"New Delhi, India"</string>
+    <string name="city_new_york" formatted="false">"New York City, Statele Unite ale Americii"</string>
+    <string name="city_newcastle" formatted="false">"Newcastle, Australia"</string>
+    <string name="city_ngerulmud" formatted="false">"Ngerulmud, Palau"</string>
+    <string name="city_niamey" formatted="false">"Niamey, Niger"</string>
+    <string name="city_nicosia" formatted="false">"Nicosia, Cipru"</string>
+    <string name="city_nouakchott" formatted="false">"Nouakchott, Mauritania"</string>
+    <string name="city_noumea" formatted="false">"Nouméa, Noua Caledonie"</string>
+    <string name="city_nukualofa" formatted="false">"Nuku‘alofa, Tonga"</string>
+    <string name="city_nuuk" formatted="false">"Nuuk, Groenlanda"</string>
+    <string name="city_oranjestad" formatted="false">"Oranjestad, Aruba"</string>
+    <string name="city_oslo" formatted="false">"Oslo, Norvegia"</string>
+    <string name="city_ottawa" formatted="false">"Ottawa, Canada"</string>
+    <string name="city_ouagadougou" formatted="false">"Ouagadougou, Burkina Faso"</string>
+    <string name="city_pago_pago" formatted="false">"Pago Pago, Samoa Americană"</string>
+    <string name="city_palikir" formatted="false">"Palikir, Micronezia"</string>
+    <string name="city_panama_city" formatted="false">"Orașul Panama, Panama"</string>
+    <string name="city_papeete" formatted="false">"Papeete, Polinezia Franceză"</string>
+    <string name="city_paramaribo" formatted="false">"Paramaribo, Surinam"</string>
+    <string name="city_paris" formatted="false">"Paris, Franța"</string>
+    <string name="city_perth" formatted="false">"Perth, Australia"</string>
+    <string name="city_philipsburg" formatted="false">"Philipsburg, Sint Maarten"</string>
+    <string name="city_phnom_penh" formatted="false">"Phnom Penh, Cambodgia"</string>
+    <string name="city_phoenix" formatted="false">"Phoenix, Statele Unite ale Americii"</string>
+    <string name="city_plymouth" formatted="false">"Plymouth, Montserrat"</string>
+    <string name="city_podgorica" formatted="false">"Podgorica, Muntenegru"</string>
+    <string name="city_port_au_prince" formatted="false">"Port-au-Prince, Haiti"</string>
+    <string name="city_port_aux_francais" formatted="false">"Port-aux-Français, teritoriile de sud franceze"</string>
+    <string name="city_port_louis" formatted="false">"Port Louis, Mauritius"</string>
+    <string name="city_port_moresby" formatted="false">"Port Moresby, Papua Noua Guinee"</string>
+    <string name="city_port_of_spain" formatted="false">"Portul Spaniei, Trinidad și Tobago"</string>
+    <string name="city_port_vila" formatted="false">"Port-Vila, Vanuatu"</string>
+    <string name="city_porto_novo" formatted="false">"Porto-Novo, Benin"</string>
+    <string name="city_prague" formatted="false">"Praga, Cehia"</string>
+    <string name="city_praia" formatted="false">"Praia, Cabo Verde"</string>
+    <string name="city_pretoria" formatted="false">"Pretoria, Africa de Sud"</string>
+    <string name="city_pristina" formatted="false">"Pristina, Kosovo"</string>
+    <string name="city_puebla" formatted="false">"Puebla, Mexic"</string>
+    <string name="city_pyongyang" formatted="false">"Phenian, Coreea de Nord"</string>
+    <string name="city_queens" formatted="false">"Queens, Statele Unite"</string>
+    <string name="city_quito" formatted="false">"Quito, Ecuador"</string>
+    <string name="city_rabat" formatted="false">"Rabat, Maroc"</string>
+    <string name="city_reykjavik" formatted="false">"Reykjavík, Islanda"</string>
+    <string name="city_riga" formatted="false">"Riga, Letonia"</string>
+    <string name="city_rio" formatted="false">"Rio de Janeiro, Brazilia"</string>
+    <string name="city_riyadh" formatted="false">"Riad, Arabia Saudită"</string>
+    <string name="city_road_town" formatted="false">"Road Town, Insulele Virgine Britanice"</string>
+    <string name="city_rome" formatted="false">"Roma, Italia"</string>
+    <string name="city_roseau" formatted="false">"Roseau, Dominica"</string>
+    <string name="city_saint_denis" formatted="false">"Saint-Denis, Reunion"</string>
+    <string name="city_saint_george_s" formatted="false">"Saint George\'s, Grenada"</string>
+    <string name="city_saint_helier" formatted="false">"Saint Helier, Jersey"</string>
+    <string name="city_saint_johns" formatted="false">"Saint John’s, Antigua și Barbuda"</string>
+    <string name="city_saint_peter_port" formatted="false">"Portul Saint Peter, Guernsey"</string>
+    <string name="city_saint_petersburg" formatted="false">"Sankt Petersburg, Rusia"</string>
+    <string name="city_saint_pierre" formatted="false">"Saint-Pierre, Saint Pierre și Miquelon"</string>
+    <string name="city_saipan" formatted="false">"Saipan, Insulele Mariane de Nord"</string>
+    <string name="city_salvador" formatted="false">"Salvador, Brazilia"</string>
+    <string name="city_san_jose" formatted="false">"San José, Costa Rica"</string>
+    <string name="city_san_juan" formatted="false">"San Juan, Puerto Rico"</string>
+    <string name="city_san_marino" formatted="false">"San Marino, San Marino"</string>
+    <string name="city_san_salvador" formatted="false">"San Salvador, El Salvador"</string>
+    <string name="city_sanaa" formatted="false">"Sanaa, Yemen"</string>
+    <string name="city_santiago" formatted="false">"Santiago, Chile"</string>
+    <string name="city_santo_domingo" formatted="false">"Santo Domingo, Republica Dominicană"</string>
+    <string name="city_sao_paulo" formatted="false">"São Paulo, Brazilia"</string>
+    <string name="city_sao_tome" formatted="false">"São Tomé, Sao Tome și Principe"</string>
+    <string name="city_sarajevo" formatted="false">"Saraievo, Bosnia și Herțegovina"</string>
+    <string name="city_seoul" formatted="false">"Seul, Coreea de Sud"</string>
+    <string name="city_shanghai" formatted="false">"Shanghai, China"</string>
+    <string name="city_shenzhen" formatted="false">"Shenzhen, China"</string>
+    <string name="city_singapore" formatted="false">"Singapore, Singapore"</string>
+    <string name="city_skopje" formatted="false">"Skopje, Macedonia de Nord"</string>
+    <string name="city_sofia" formatted="false">"Sofia, Bulgaria"</string>
+    <string name="city_stanley" formatted="false">"Stanley, Insulele Falkland"</string>
+    <string name="city_stockholm" formatted="false">"Stockholm, Suedia"</string>
+    <string name="city_sucre" formatted="false">"Sucre, Bolivia"</string>
+    <string name="city_sunshine_coast" formatted="false">"Sunshine Coast, Australia"</string>
+    <string name="city_suva" formatted="false">"Suva, Fiji"</string>
+    <string name="city_sydney" formatted="false">"Sydney, Australia"</string>
+    <string name="city_taipei" formatted="false">"Taipei, Taiwan"</string>
+    <string name="city_tallinn" formatted="false">"Tallinn, Estonia"</string>
+    <string name="city_tarawa" formatted="false">"Tarawa, Kiribati"</string>
+    <string name="city_tashkent" formatted="false">"Tașkent, Uzbekistan"</string>
+    <string name="city_tbilisi" formatted="false">"Tbilisi, Georgia"</string>
+    <string name="city_tegucigalpa" formatted="false">"Tegucigalpa, Honduras"</string>
+    <string name="city_tehran" formatted="false">"Teheran, Iran"</string>
+    <string name="city_the_valley" formatted="false">"The Valley, Anguilla"</string>
+    <string name="city_thimphu" formatted="false">"Thimphu, Bhutan"</string>
+    <string name="city_tianjin" formatted="false">"Tianjin, China"</string>
+    <string name="city_tijuana" formatted="false">"Tijuana, Mexic"</string>
+    <string name="city_tirana" formatted="false">"Tirana, Albania"</string>
+    <string name="city_tokyo" formatted="false">"Tokyo, Japonia"</string>
+    <string name="city_toronto" formatted="false">"Toronto, Canada"</string>
+    <string name="city_torshavn" formatted="false">"Tórshavn, Insulele Feroe"</string>
+    <string name="city_tripoli" formatted="false">"Tripoli, Libia"</string>
+    <string name="city_tromso" formatted="false">"Tromsø, Norvegia"</string>
+    <string name="city_tunis" formatted="false">"Tunis, Tunisia"</string>
+    <string name="city_ulan_bator" formatted="false">"Ulan Bator, Mongolia"</string>
+    <string name="city_vaduz" formatted="false">"Vaduz, Liechtenstein"</string>
+    <string name="city_valletta" formatted="false">"Valletta, Malta"</string>
+    <string name="city_vatican_city" formatted="false">"Vatican, Vatican"</string>
+    <string name="city_victoria" formatted="false">"Victoria, Seychelles"</string>
+    <string name="city_vienna" formatted="false">"Viena, Austria"</string>
+    <string name="city_vientiane" formatted="false">"Vientiane, Laos"</string>
+    <string name="city_vilnius" formatted="false">"Vilnius, Lituania"</string>
+    <string name="city_warsaw" formatted="false">"Varșovia, Polonia"</string>
+    <string name="city_washington" formatted="false">"Washington, Statele Unite ale Americii"</string>
+    <string name="city_wellington" formatted="false">"Wellington, Noua Zeelandă"</string>
+    <string name="city_west_island" formatted="false">"West Island, Insulele Cocos"</string>
+    <string name="city_willemstad" formatted="false">"Willemstad, Curacao"</string>
+    <string name="city_windhoek" formatted="false">"Windhoek, Namibia"</string>
+    <string name="city_wuhan" formatted="false">"Wuhan, China"</string>
+    <string name="city_xian" formatted="false">"Xi’an, China"</string>
+    <string name="city_yamoussoukro" formatted="false">"Yamoussoukro, Coasta de Fildeș"</string>
+    <string name="city_yaounde" formatted="false">"Yaoundé, Camerun"</string>
+    <string name="city_yaren" formatted="false">"Yaren, Nauru"</string>
+    <string name="city_yerevan" formatted="false">"Erevan, Armenia"</string>
+    <string name="city_zagreb" formatted="false">"Zagreb, Croația"</string>
+    <string name="text_iss_day" formatted="false">"🛰 Stația Spațială Internațională\nAstronauții trăiesc și lucrează aici, la aproximativ 400 km deasupra Pământului — înconjurând întreaga planetă aproximativ la fiecare 90 de minute cu 28.000 km/h!\nÎn această ilustrație, este peste partea de zi a Pământului."</string>
+    <string name="text_iss_night" formatted="false">"🛰 Stația Spațială Internațională\nAstronauții trăiesc și lucrează aici, la aproximativ 400 km deasupra Pământului — înconjurând întreaga planetă aproximativ la fiecare 90 de minute cu 28.000 km/h!\nÎn această ilustrație, este peste partea de noapte a Pământului."</string>
+    <string name="text_elapsed_minutes">"Minute scurse: %1$d"</string>
+    <string name="text_elapsed_hours">"Orele scurse: %1$d"</string>
+    <string name="text_elapsed_days">"Zile scurse: %1$d"</string>
+    <string name="moon_guide_new_moon">"%1$s\nPartea neluminată · contur orientativ"</string>
+    <string name="moon_guide_crescent">"Seceră subțire · %1$s luminată\nContur orientativ"</string>
+</resources>

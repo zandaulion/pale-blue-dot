@@ -1,5 +1,6 @@
 package com.globe.app.kids
 
+import com.globe.app.R
 import android.content.Context
 
 /**
@@ -11,25 +12,27 @@ import android.content.Context
 enum class Discovery(
     val id: String,
     val emoji: String,
-    val title: String,
-    val fact: String
+    val titleRes: Int,
+    val factRes: Int
 ) {
-    EARTHQUAKE("earthquake", "🔶", "Earthquake",
-        "You found where the ground was shaking!"),
-    VOLCANO("volcano", "🌋", "Volcano",
-        "You spotted hot lava erupting from deep inside the Earth."),
-    WILDFIRE("wildfire", "🔥", "Wildfire",
-        "You caught a fire so big that satellites can see it from space."),
-    STORM("storm", "🌀", "Storm",
-        "You tracked a giant swirling storm."),
-    DAYTIME("daytime", "☀️", "Daytime",
-        "You found the side of Earth facing the Sun."),
-    NIGHT("night", "🌙", "City Lights",
-        "You found the night side, sparkling with city lights."),
-    STARGAZER("stargazer", "🌟", "Star Gazer",
-        "You looked past Earth into the stars and galaxies beyond."),
-    TIME_TRAVELER("time_traveler", "⏰", "Time Traveler",
-        "You moved time to turn day into night.");
+    EARTHQUAKE("earthquake", "🔶", R.string.text_earthquake,
+        R.string.text_you_found_where_the_ground_was_shaking),
+    VOLCANO("volcano", "🌋", R.string.text_volcano,
+        R.string.text_you_spotted_hot_lava_erupting_from_deep_inside_the_earth),
+    WILDFIRE("wildfire", "🔥", R.string.text_wildfire,
+        R.string.text_you_caught_a_fire_so_big_that_satellites_can_see_it_from_space),
+    STORM("storm", "🌀", R.string.text_storm,
+        R.string.text_you_tracked_a_giant_swirling_storm),
+    DAYTIME("daytime", "☀️", R.string.text_daytime_2,
+        R.string.text_you_found_the_side_of_earth_facing_the_sun),
+    NIGHT("night", "🌙", R.string.text_city_lights_2,
+        R.string.text_you_found_the_night_side_sparkling_with_city_lights),
+    STARGAZER("stargazer", "🌟", R.string.text_star_gazer,
+        R.string.text_you_looked_past_earth_into_the_stars_and_galaxies_beyond),
+    TIME_TRAVELER("time_traveler", "⏰", R.string.text_time_traveler,
+        R.string.text_you_moved_time_to_turn_day_into_night);
+    fun title(context: Context): String = context.getString(titleRes)
+    fun fact(context: Context): String = context.getString(factRes)
 }
 
 /** Persists which discoveries a child has unlocked, in its own prefs file. */

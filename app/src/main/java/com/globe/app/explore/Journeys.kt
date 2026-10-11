@@ -32,24 +32,29 @@ data class Journey(val id: String, val title: String, val minutes: String, val s
 
 /** Ordered local lesson content; no network fetch or live-feed insertion. */
 object JourneyContent {
-    @Volatile private var cached: List<Journey>? = null
+    @Volatile private var cached: Pair<String, List<Journey>>? = null
 
     @Synchronized fun all(context: Context): List<Journey> {
-        cached?.let { return it }
+        val locale = context.resources.configuration.locales.toLanguageTags()
+        cached?.takeIf { it.first == locale }?.let { return it.second }
         val root = JSONObject(context.assets.open("journeys_v1.json").bufferedReader().use { it.readText() })
         check(root.getInt("schema") == 1)
         val array = root.getJSONArray("journeys")
         val journeys = (0 until array.length()).map { i ->
             val j = array.getJSONObject(i)
             val steps = j.getJSONArray("steps")
-            Journey(j.getString("id"), j.getString("title"), j.getString("minutes"),
+            val id = j.getString("id")
+            fun text(field: String) = JourneyStrings.text(context, "$id/$field", j.getString(field))
+            Journey(id, text("title"), j.getString("minutes"),
                 (0 until steps.length()).map { k ->
                     val s = steps.getJSONObject(k)
                     val options = s.optJSONArray("options")
-                    JourneyStep(s.getString("id"), s.getString("title"), s.getString("instruction"),
-                        s.getString("kind"), s.optString("action").ifBlank { null },
-                        if (options == null) emptyList() else (0 until options.length()).map { options.getString(it) },
-                        s.optInt("correct", -1), s.optString("right"), s.optString("wrong"),
+                    val stepId = s.getString("id")
+                    fun text(field: String) = JourneyStrings.text(context, "$id/$stepId/$field", s.optString(field))
+                    JourneyStep(stepId, text("title"), text("instruction"),
+                        s.getString("kind"), text("action").ifBlank { null },
+                        if (options == null) emptyList() else (0 until options.length()).map { JourneyStrings.text(context, "$id/$stepId/option_$it", options.getString(it)) },
+                        s.optInt("correct", -1), text("right"), text("wrong"),
                         s.optDouble("lat").takeUnless { it.isNaN() },
                         s.optDouble("lon").takeUnless { it.isNaN() },
                         s.optInt("month", 0).takeIf { it != 0 },
@@ -59,7 +64,7 @@ object JourneyContent {
                         s.optString("recent").ifBlank { null }, s.optString("source").ifBlank { null })
                 })
         }
-        cached = journeys
+        cached = locale to journeys
         return journeys
     }
 }

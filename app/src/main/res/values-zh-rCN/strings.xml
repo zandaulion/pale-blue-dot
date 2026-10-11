@@ -1,0 +1,791 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="companion_today" formatted="false">"今天"</string>
+    <string name="companion_layers" formatted="false">"图层"</string>
+    <string name="companion_explore" formatted="false">"探索"</string>
+    <string name="companion_settings" formatted="false">"设置"</string>
+    <string name="companion_close" formatted="false">"关闭"</string>
+    <string name="companion_refresh" formatted="false">"刷新观察结果"</string>
+    <string name="companion_events" formatted="false">"最近的观察"</string>
+    <string name="companion_no_events" formatted="false">"此类别中没有报告事件"</string>
+    <string name="companion_why" formatted="false">"为什么会出现这种情况？"</string>
+    <string name="companion_reduce_motion" formatted="false">"减少运动"</string>
+    <string name="companion_clouds" formatted="false">"云"</string>
+    <string name="wallpaper_name" formatted="false">"Pale Blue Dot 地球"</string>
+    <string name="wallpaper_description" formatted="false">"为您的壁纸提供安静、生动的地球景观"</string>
+    <string name="wallpaper_settings_title" formatted="false">"地球壁纸"</string>
+    <string name="companion_generated" formatted="false">"生成"</string>
+    <string name="companion_satellite" formatted="false">"卫星"</string>
+    <string name="companion_off" formatted="false">"关闭"</string>
+    <string name="widget_title" formatted="false">"今日地球"</string>
+    <string name="widget_description" formatted="false">"月亮和白天；展开实时地球视图和最近发生的事件"</string>
+    <string name="widget_preview_moon" formatted="false">"🌔 盈凸月 · 82%"</string>
+    <string name="widget_preview_place" formatted="false">"罗马尼亚布加勒斯特"</string>
+    <string name="widget_event_label" formatted="false">"在地球上"</string>
+    <string name="widget_preview_daylight" formatted="false">"现在天亮了"</string>
+    <string name="widget_change_place" formatted="false">"更改小部件位置"</string>
+    <string name="widget_globe_description" formatted="false">"当前地球场景"</string>
+    <string name="widget_name" formatted="false">"今日地球"</string>
+    <string name="text_clouds_live_loading" formatted="false">"☁ 云：直播（正在加载...）"</string>
+    <string name="text_time_now" formatted="false">"时间·现在"</string>
+    <string name="text_time_controls" formatted="false">"时间控制"</string>
+    <string name="text_move_time_up_to_24_hours_before_or_after_now" formatted="false">"将时间移动至现在之前或之后 24 小时"</string>
+    <string name="text_share" formatted="false">"↑ 分享"</string>
+    <string name="text_today" formatted="false">"🗓 今天"</string>
+    <string name="text_save_this_place" formatted="false">"+ 保存这个地方"</string>
+    <string name="text_planetary_briefing_real_time" formatted="false">"行星简报·实时"</string>
+    <string name="text_1_s_2_s_3_s_estimated_illumination">"%1$s %2$s · %3$d%% 估计照度"</string>
+    <string name="text_choose_a_primary_place" formatted="false">"选择主要地点"</string>
+    <string name="text_fly_to_1_s">"飞往%1$s"</string>
+    <string name="text_satellite_imagery_1_s">"卫星图像 — %1$s"</string>
+    <string name="text_saved_copy" formatted="false">" · 已保存的副本"</string>
+    <string name="text_satellite_imagery_unavailable_or_still_loading" formatted="false">"卫星图像不可用或仍在加载"</string>
+    <string name="text_one_observation_1_s">"一项观察·%1$s"</string>
+    <string name="text_time_unavailable" formatted="false">"时间不可用"</string>
+    <string name="text_this_observation_is_no_longer_in_the_saved_feed" formatted="false">"此观察结果不再存在于保存的 feed 中。"</string>
+    <string name="text_current_events" formatted="false">"时事"</string>
+    <string name="text_choose_what_appears_on_the_globe_hidden_events_also_leave_the_eve" formatted="false">"选择地球仪上显示的内容。隐藏事件也会离开事件列表和挑战。"</string>
+    <string name="text_satellite_imagery_may_be_unavailable_offline_generated_clouds_sti" formatted="false">"卫星图像可能无法离线使用；生成的云仍然有效。"</string>
+    <string name="text_reported_by_usgs" formatted="false">"报道者：USGS"</string>
+    <string name="text_reported_by_nasa_eonet" formatted="false">"报道者：NASA EONET"</string>
+    <string name="text_constellations" formatted="false">"星座"</string>
+    <string name="text_catalog_lines_in_the_star_background" formatted="false">"星形背景中的目录线"</string>
+    <string name="text_iss_illustration" formatted="false">"国际空间站插图"</string>
+    <string name="text_approximate_orbit_not_live_tracking" formatted="false">"近似轨道，而非实时跟踪"</string>
+    <string name="text_aurora_illustration" formatted="false">"极光图"</string>
+    <string name="text_decorative_glow_not_a_forecast" formatted="false">"装饰性光芒，而非预测"</string>
+    <string name="text_day_night_boundary" formatted="false">"昼夜界限"</string>
+    <string name="text_calculated_terminator_line" formatted="false">"计算出的终止线"</string>
+    <string name="text_plate_boundaries" formatted="false">"板块边界"</string>
+    <string name="text_offline_pb2002_model_gold_lines" formatted="false">"离线PB2002模型·金线"</string>
+    <string name="text_plate_boundaries_gold_lines_mark_modelled_plate_edges_earthquakes" formatted="false">"板边界：金线标记模型板边缘。地震也可能发生在远离它们的地方。资料来源：Bird (2003)，PB2002； ODbL 1.0。"</string>
+    <string name="text_places_1_s_saved">"地点·%1$d 已保存"</string>
+    <string name="text_explore_time_and_seasons" formatted="false">"探索时间和季节"</string>
+    <string name="text_guided_journeys" formatted="false">"导游陪同之旅"</string>
+    <string name="text_field_notebook_1_s_2_s_discoveries">"野外笔记本·%1$d/%2$d 发现"</string>
+    <string name="text_try_a_quick_challenge" formatted="false">"尝试快速挑战"</string>
+    <string name="text_scene_guide_and_legend" formatted="false">"场景指南和图例"</string>
+    <string name="text_ambient_music" formatted="false">"氛围音乐"</string>
+    <string name="text_only_while_the_app_is_open" formatted="false">"仅当应用程序打开时"</string>
+    <string name="text_music_volume" formatted="false">"音乐音量"</string>
+    <string name="text_read_aloud" formatted="false">"朗读"</string>
+    <string name="text_speak_cards_when_narration_is_enabled" formatted="false">"启用旁白时朗读卡片"</string>
+    <string name="text_stops_idle_spin_and_decorative_marker_movement" formatted="false">"停止空转和装饰标记移动"</string>
+    <string name="text_share_globe_image" formatted="false">"分享地球图像"</string>
+    <string name="text_earth_live_wallpaper" formatted="false">"地球动态壁纸"</string>
+    <string name="text_explore" formatted="false">"← 探索"</string>
+    <string name="text_completed_journeys" formatted="false">"已完成的旅程"</string>
+    <string name="text_no_journeys_completed_yet" formatted="false">"尚未完成任何旅程。"</string>
+    <string name="text_saved_observations" formatted="false">"保存的观察结果"</string>
+    <string name="text_save_an_observation_from_its_card_to_keep_its_source_and_date" formatted="false">"从卡片中保存观察结果以保留其来源和日期。"</string>
+    <string name="text_earlier_discoveries_1_s_2_s">"早期发现·%1$d/%2$d"</string>
+    <string name="text_you_explored_a_reported_earthquake" formatted="false">"您探索了报道的地震。"</string>
+    <string name="text_you_explored_a_reported_volcanic_event" formatted="false">"您探索了报道的火山事件。"</string>
+    <string name="text_you_explored_a_reported_wildfire" formatted="false">"您探索了一场报告的野火。"</string>
+    <string name="text_you_explored_a_reported_storm" formatted="false">"您探索了一场据报道的风暴。"</string>
+    <string name="text_you_found_a_place_facing_the_sun" formatted="false">"你找到了一个面向太阳的地方。"</string>
+    <string name="text_you_found_earth_s_night_side" formatted="false">"你发现了地球的夜晚面。"</string>
+    <string name="text_you_looked_beyond_earth" formatted="false">"你的目光超越了地球。"</string>
+    <string name="text_you_changed_the_scene_time" formatted="false">"你改变了场景时间。"</string>
+    <string name="text_observed" formatted="false">"观察到： "</string>
+    <string name="text_time_not_reported" formatted="false">"时间未报告"</string>
+    <string name="text_source" formatted="false">"来源： "</string>
+    <string name="text_magnitude_1_s">"震级：%1$s\n"</string>
+    <string name="text_depth_1_s_km">"深度：%1$s 公里\n"</string>
+    <string name="text_source_link_1_s">"来源链接：%1$s"</string>
+    <string name="text_saved_observation" formatted="false">"保存的观察结果"</string>
+    <string name="text_fly_to" formatted="false">"飞往"</string>
+    <string name="text_sunlight_and_city_lights" formatted="false">"阳光和城市灯光"</string>
+    <string name="text_calculated_sunlight_shows_the_current_day_and_night_sides" formatted="false">"计算出的阳光显示当前的白天和黑夜。"</string>
+    <string name="text_generated_clouds_are_illustrative_satellite_mode_derives_opacity" formatted="false">"生成的云是说明性的。卫星模式从过时的 NASA VIIRS 图像中获取不透明度。"</string>
+    <string name="text_earthquakes" formatted="false">"地震"</string>
+    <string name="text_usgs_reports_magnitude_4_5_earthquakes_from_the_last_seven_days" formatted="false">"USGS 报告过去 7 天内发生了 4.5 级以上地震。"</string>
+    <string name="text_volcanoes_wildfires_and_storms" formatted="false">"火山、野火和风暴"</string>
+    <string name="text_nasa_eonet_open_reports_may_have_older_observation_dates" formatted="false">"NASA EONET 开放报告可能具有较旧的观察日期。"</string>
+    <string name="text_iss" formatted="false">"国际空间站"</string>
+    <string name="text_illustrated_orbit_not_live_tracking" formatted="false">"图解轨道，而非实时跟踪。"</string>
+    <string name="text_aurora" formatted="false">"极光"</string>
+    <string name="text_decorative_illustration_not_a_forecast" formatted="false">"装饰性插图，而非预测。"</string>
+    <string name="text_calculated_terminator_line_2" formatted="false">"计算出的终止线。"</string>
+    <string name="text_catalog_stars_joined_into_familiar_patterns" formatted="false">"目录明星加入熟悉的模式。"</string>
+    <string name="text_a_simplified_offline_pb2002_model_many_earthquakes_occur_near_bou" formatted="false">"简化的离线 PB2002 模型。许多地震发生在边界附近，但也有一些发生在其他地方。金线并不是任何事件的诊断。"</string>
+    <string name="text_saved_places_stay_on_this_device_cyan_rings_mark_them_on_the_glob" formatted="false">"已保存的地点保留在此设备上。青色环将它们标记在地球仪上。"</string>
+    <string name="text_search_bundled_cities" formatted="false">"搜索捆绑城市"</string>
+    <string name="text_city_or_country_blank_lists_all_1_s">"城市或国家（空白列出所有 %1$d）"</string>
+    <string name="text_find_a_city" formatted="false">"寻找城市"</string>
+    <string name="text_search" formatted="false">"搜索"</string>
+    <string name="text_no_bundled_city_matches_that_name" formatted="false">"没有一个捆绑城市与这个名字相匹配。"</string>
+    <string name="text_ok" formatted="false">"好的"</string>
+    <string name="text_bundled_cities" formatted="false">"捆绑城市"</string>
+    <string name="text_cancel" formatted="false">"取消"</string>
+    <string name="text_add_a_place_from_the_globe" formatted="false">"添加地球上的一个地点"</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"点击地球上的一个点，然后点击 + 将此地点保存在其卡片下。"</string>
+    <string name="text_time_zone_unset" formatted="false">"时区未设置"</string>
+    <string name="text_set_as_primary" formatted="false">"设置为主"</string>
+    <string name="text_rename" formatted="false">"重命名"</string>
+    <string name="text_set_time_zone" formatted="false">"设置时区"</string>
+    <string name="text_delete" formatted="false">"删除"</string>
+    <string name="text_1_s_removed">"%1$s 已移除"</string>
+    <string name="text_undo" formatted="false">"撤消"</string>
+    <string name="text_done" formatted="false">"完成"</string>
+    <string name="text_name_this_place" formatted="false">"为这个地方命名"</string>
+    <string name="text_save" formatted="false">"保存"</string>
+    <string name="text_iana_zone_e_g_europe_bucharest" formatted="false">"IANA 区域，例如欧洲/布加勒斯特"</string>
+    <string name="text_suggested_from_the_nearest_town_change_it_if_this_place_is_across" formatted="false">"从最近的城镇建议；如果这个地方跨越边境，请更改它。 "</string>
+    <string name="text_time_zone_for_1_s">"%1$s 的时区"</string>
+    <string name="text_enter_an_iana_time_zone_id_or_leave_blank_to_keep_local_clock_and" formatted="false">"输入 IANA 时区 ID，或留空以保持本地时钟和日出不变。"</string>
+    <string name="text_unknown_iana_time_zone_id_1_s">"未知 IANA 时区 ID：%1$s"</string>
+    <string name="text_try_again" formatted="false">"再试一次"</string>
+    <string name="text_time_zone_unset_choose_a_zone_for_local_clock_and_sunrise" formatted="false">"时区未设置 · 选择本地时钟和日出的区域"</string>
+    <string name="text_polar_day_sun_stays_above_the_horizon" formatted="false">"极地日 · 太阳位于地平线以上"</string>
+    <string name="text_polar_night_sun_stays_below_the_horizon" formatted="false">"极夜 · 太阳停留在地平线以下"</string>
+    <string name="text_not_available" formatted="false">"不可用"</string>
+    <string name="text_about_1_sh_2_sm_daylight">" · 大约 %1$d h %2$d 分钟日光"</string>
+    <string name="text_approx_sunrise_1_s_sunset_2_s_3_s">"大约。日出 %1$s · 日落 %2$s%3$s"</string>
+    <string name="text_day" formatted="false">"白天"</string>
+    <string name="text_night" formatted="false">"夜晚"</string>
+    <string name="text_choose_a_date_to_hold_the_globe_in_an_explicit_lesson_time_today" formatted="false">"选择一个日期，在明确的课程时间内握住地球仪。今天和壁纸仍然是实时的。"</string>
+    <string name="text_begin_at_current_time" formatted="false">"从当前时间开始"</string>
+    <string name="text_simulated_1_s">"模拟·%1$s"</string>
+    <string name="text_choose_date_and_time" formatted="false">"选择日期和时间"</string>
+    <string name="text_pause" formatted="false">"暂停"</string>
+    <string name="text_play_at_real_time_speed" formatted="false">"以实时速度播放"</string>
+    <string name="text_advance_one_hour" formatted="false">"提前一小时"</string>
+    <string name="text_advance_one_day" formatted="false">"提前一天"</string>
+    <string name="text_now_leave_time_exploration" formatted="false">"现在·离开时间探索"</string>
+    <string name="text_compare_latest_observations" formatted="false">"比较最新观察结果"</string>
+    <string name="text_these_reports_are_from_real_dates_not_the_simulated_date" formatted="false">"这些报告来自真实日期，而不是模拟日期。"</string>
+    <string name="text_year_timeline_1_s">"年份时间表·%1$d"</string>
+    <string name="text_choose_day_of_year" formatted="false">"选择一年中的某一天"</string>
+    <string name="text_seasons_earth_s_axis_stays_tilted_about_23_4_as_earth_orbits_the" formatted="false">"季节 · 当地球绕太阳公转时，地轴保持倾斜约 23.4°。阳光全年在半球之间移动；场景中的太阳已经解释了这种倾斜。"</string>
+    <string name="text_23_4_axis" formatted="false">"23.4°轴"</string>
+    <string name="text_sunlight" formatted="false">"阳光 →"</string>
+    <string name="text_polar_day" formatted="false">"极地日"</string>
+    <string name="text_polar_night" formatted="false">"极夜"</string>
+    <string name="text_about_1_sh_2_sm_daylight_2">"大约 %1$d 小时 %2$d 分钟日照"</string>
+    <string name="text_daylight_changing" formatted="false">"日光变化"</string>
+    <string name="text_guides_equator_tropics_23_4_and_polar_circles_66_6_compare_the_tw" formatted="false">"指南：赤道、热带（±23.4°）和极圈（±66.6°）。比较三月、六月、九月和十二月的两个半球。"</string>
+    <string name="text_short_local_lessons_each_restores_your_previous_globe_view_and_la" formatted="false">"简短的本地课程。当您离开时，每个都会恢复您之前的地球视图和图层。"</string>
+    <string name="text_completed" formatted="false">" · 已完成"</string>
+    <string name="text_1_s_2_s_min_3_s">"%1$s·%2$s min%3$s"</string>
+    <string name="text_resume" formatted="false">"简历"</string>
+    <string name="text_restart" formatted="false">"重新启动"</string>
+    <string name="text_choose_a_journey" formatted="false">"选择旅程"</string>
+    <string name="text_1_s_step_2_s_of_3_s">"%1$s·%3$d的步骤%2$d"</string>
+    <string name="text_historical_source_1_s">"历史来源：%1$s"</string>
+    <string name="text_recent_reported_example_1_s_2_s_3_s">"最近报告的示例：%1$s\n%2$s · %3$s"</string>
+    <string name="text_that_s_the_pattern" formatted="false">"这就是图案"</string>
+    <string name="text_look_again" formatted="false">"再看一遍"</string>
+    <string name="text_continue" formatted="false">"继续"</string>
+    <string name="text_advance" formatted="false">"提前"</string>
+    <string name="text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th">"场景提前了几个小时 %1$d。观察地球上不断变化的阳光。"</string>
+    <string name="text_reveal" formatted="false">"揭示"</string>
+    <string name="text_the_gold_pb2002_lines_show_a_broad_plate_edge_pattern_some_report" formatted="false">"金色 PB2002 线显示出宽阔的板边缘图案。一些报道的事件离他们很远。"</string>
+    <string name="text_view_globe" formatted="false">"查看地球仪"</string>
+    <string name="text_skip_this_step" formatted="false">"跳过此步骤"</string>
+    <string name="text_leave_journey_restore_my_view" formatted="false">"离开旅程·恢复我的视野"</string>
+    <string name="text_1_s_is_in_your_field_notebook">"%1$s 位于您的 Field 笔记本中。"</string>
+    <string name="text_not_loaded" formatted="false">"未加载"</string>
+    <string name="text_checking" formatted="false">"检查"</string>
+    <string name="text_recently" formatted="false">"最近"</string>
+    <string name="text_checked_1_s">"已检查 %1$s"</string>
+    <string name="text_saved_observations_offline_or_update_failed" formatted="false">"保存的观察结果 · 离线或更新失败"</string>
+    <string name="text_unavailable" formatted="false">"不可用"</string>
+    <string name="text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who" formatted="false">"🌟夜空！\n地球之外有成千上万的恒星、行星和整个星系。"</string>
+    <string name="text_earthquakes_happen_when_stress_makes_rock_slip_along_a_fault_some" formatted="false">"当应力使岩石沿着断层滑动时，就会发生地震。有些发生在远离板块边界的地方。"</string>
+    <string name="text_magma_can_rise_through_earth_s_crust_this_report_does_not_confirm" formatted="false">"岩浆可以穿过地壳上升。该报告目前并未证实火山喷发。"</string>
+    <string name="text_wildfire_can_begin_naturally_or_through_human_activity_and_may_sp" formatted="false">"野火可以自然发生，也可以通过人类活动发生，并可能在干燥、多风的条件下蔓延。这份报告可能比今天更早。"</string>
+    <string name="text_severe_storms_draw_energy_from_warm_moist_air_this_marker_shows_t" formatted="false">"猛烈的风暴从温暖潮湿的空气中汲取能量。该标记显示最新报告的点，而不是实时预测。"</string>
+    <string name="text_observed_1_s">"观察到：%1$s\n"</string>
+    <string name="text_source_updated_1_s">"来源更新：%1$s\n"</string>
+    <string name="text_source_1_s">"来源：%1$s\n"</string>
+    <string name="text_unavailable_2" formatted="false">"不可用"</string>
+    <string name="text_checking_showing_saved_copy" formatted="false">"检查；显示已保存的副本"</string>
+    <string name="text_saved_copy_refresh_unavailable" formatted="false">"保存的副本；刷新不可用"</string>
+    <string name="text_checked_1_s_2">"检查%1$s"</string>
+    <string name="text_feed_1_s">"饲料：%1$s"</string>
+    <string name="text_source_link_1_s_2">"\n来源链接：%1$s"</string>
+    <string name="text_saved" formatted="false">"已保存"</string>
+    <string name="text_place_name" formatted="false">"地名"</string>
+    <string name="text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now" formatted="false">"☀️这里现在是白天！\n地球的这一面现在面向太阳。拖动时间滑块观看夜晚的到来。"</string>
+    <string name="text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those" formatted="false">"🌙这里已经是晚上了。\n背向太阳的一面——那些微小的光就是城市。拖动时间滑块使太阳重新出现。"</string>
+    <string name="text_added_to_field_notebook_1_s">"添加到现场笔记本。\n\n%1$s"</string>
+    <string name="text_close_1_s">"× 关闭\n\n%1$s"</string>
+    <string name="text_1_s_2_s_tap_to_stop">"🎯 %1$s\n⭐ %2$d · 点击停止"</string>
+    <string name="text_challenge_stopped_play_again_anytime" formatted="false">"挑战已停止——随时可以再玩！"</string>
+    <string name="text_tap_on_the_earth_to_answer" formatted="false">"点击地球来回答！ 🌍"</string>
+    <string name="text_yes_that_s_right" formatted="false">"🎉 是的！这是正确的。"</string>
+    <string name="text_not_quite_take_another_look_and_try_again" formatted="false">"不完全是——再看一遍，然后再试一次！ 🔍"</string>
+    <string name="text_my_discoveries" formatted="false">"我的发现"</string>
+    <string name="text_1_s_of_2_s_found_keep_exploring">"找到 %1$d 或 %2$d — 继续探索！"</string>
+    <string name="text_not_found_yet" formatted="false">"尚未找到"</string>
+    <string name="text_tap_anywhere_to_close" formatted="false">"点击任意位置即可关闭"</string>
+    <string name="text_1_s_2_s_3_s_lit_up_tonight">"%1$s %2$s\n%3$d%% 今晚点亮"</string>
+    <string name="text_did_you_know" formatted="false">"你知道吗？"</string>
+    <string name="text_tap_a_glowing_dot_on_earth_to_explore_or_find_a_new_discovery_for" formatted="false">"点击地球上的发光点进行探索 - 或为您的日记找到新发现！"</string>
+    <string name="text_play_a_challenge" formatted="false">"🎯 挑战一下！"</string>
+    <string name="text_tap_outside_the_box_to_close" formatted="false">"点击框外即可关闭"</string>
+    <string name="text_ongoing" formatted="false">"正在进行的"</string>
+    <string name="text_just_now" formatted="false">"刚才"</string>
+    <string name="text_clouds_off" formatted="false">"☁ 云：关闭"</string>
+    <string name="text_clouds_generated" formatted="false">"☁ 云：生成"</string>
+    <string name="text_clouds_live_nasa_viirs_updated_1_s">"☁ 云：直播（NASA VIIRS）\n更新：%1$s"</string>
+    <string name="text_solar_eclipse" formatted="false">"☀ 日食！"</string>
+    <string name="text_lunar_eclipse" formatted="false">"🌙月食！"</string>
+    <string name="text_near_solar_eclipse" formatted="false">"近日食"</string>
+    <string name="text_near_lunar_eclipse" formatted="false">"近月食"</string>
+    <string name="text_explore_time_simulated_scene" formatted="false">"探索时间，模拟场景"</string>
+    <string name="text_earth" formatted="false">"地球"</string>
+    <string name="text_textured_globe_with_day_night_cycle_and_diffuse_sunlight" formatted="false">"具有昼夜循环和漫射阳光的纹理地球仪"</string>
+    <string name="text_city_lights" formatted="false">"城市之光"</string>
+    <string name="text_visible_on_the_night_side_of_the_earth" formatted="false">"在地球的夜晚一侧可见"</string>
+    <string name="text_procedural_or_live_satellite_imagery_nasa_viirs_tap_cloud_label_t" formatted="false">"程序或实时卫星图像 (NASA VIIRS)。点击云标签进行切换"</string>
+    <string name="text_sun" formatted="false">"太阳"</string>
+    <string name="text_billboard_glow_showing_the_sun_s_real_time_position" formatted="false">"显示太阳实时位置的广告牌发光"</string>
+    <string name="text_moon" formatted="false">"月亮"</string>
+    <string name="text_textured_sphere_at_its_real_orbital_position" formatted="false">"真实轨道位置的纹理球体"</string>
+    <string name="text_terminator_line" formatted="false">"终结线"</string>
+    <string name="text_amber_line_at_the_day_night_boundary" formatted="false">"昼/夜边界处的琥珀线"</string>
+    <string name="text_green_purple_glow_near_the_geomagnetic_poles_night_side_only" formatted="false">"地磁极附近发出绿色/紫色光芒（仅夜间）"</string>
+    <string name="text_atmosphere" formatted="false">"气氛"</string>
+    <string name="text_blue_fresnel_glow_around_the_earth_s_rim" formatted="false">"地球边缘的蓝色菲涅尔辉光"</string>
+    <string name="text_stars" formatted="false">"星星"</string>
+    <string name="text_background_star_field" formatted="false">"背景星空"</string>
+    <string name="text_pulsing_amber_dots_m4_5_from_usgs_past_7_days" formatted="false">"脉冲琥珀色点（来自 USGS 的 M4.5+，过去 7 天）"</string>
+    <string name="text_volcanoes" formatted="false">"火山"</string>
+    <string name="text_pulsing_magenta_dots_active_eruptions_from_nasa_eonet" formatted="false">"脉动的洋红色点（来自 NASA EONET 的活跃喷发）"</string>
+    <string name="text_wildfires" formatted="false">"野火"</string>
+    <string name="text_pulsing_red_dots_active_fires_from_nasa_eonet" formatted="false">"脉冲红点（来自 NASA EONET 的主动射击）"</string>
+    <string name="text_storms" formatted="false">"风暴"</string>
+    <string name="text_pulsing_blue_dots_severe_storms_from_nasa_eonet_tap_any_dot_for_d" formatted="false">"脉动的蓝点（来自 NASA EONET 的严重风暴）— 点击任意点了解详细信息"</string>
+    <string name="text_iss_orbit" formatted="false">"国际空间站轨道"</string>
+    <string name="text_thin_line_showing_the_international_space_station_s_path" formatted="false">"显示国际空间站路径的细线"</string>
+    <string name="text_sun_moon_arrows" formatted="false">"太阳/月亮箭头"</string>
+    <string name="text_2d_overlay_arrows_pointing_toward_the_sun_and_moon" formatted="false">"指向太阳和月亮的 2D 叠加箭头"</string>
+    <string name="text_eclipse_alerts" formatted="false">"日食警报"</string>
+    <string name="text_notifies_when_sun_earth_moon_alignment_approaches_an_eclipse" formatted="false">"当太阳-地球-月亮排列接近日食时发出通知"</string>
+    <string name="text_time_scrubber" formatted="false">"时间洗涤器"</string>
+    <string name="text_drag_the_slider_to_simulate_24_hours_releases_to_snap_back_to_now" formatted="false">"拖动滑块模拟+/-24小时；发布后可恢复到现在"</string>
+    <string name="text_legend" formatted="false">"传奇"</string>
+    <string name="text_music_on" formatted="false">"♫ 音乐：开"</string>
+    <string name="text_music_off" formatted="false">"♫ 音乐：关闭"</string>
+    <string name="text_read_to_me_is_on_i_ll_read_the_cards_out_loud" formatted="false">"读给我听已开启。我会大声朗读卡片。"</string>
+    <string name="text_read_on" formatted="false">"🔊 阅读：上"</string>
+    <string name="text_read_off" formatted="false">"🔊 阅读：关闭"</string>
+    <string name="text_a_living_window_onto_earth" formatted="false">"通向地球的活窗口"</string>
+    <string name="text_drag_to_rotate" formatted="false">"拖动旋转"</string>
+    <string name="text_pinch_to_zoom" formatted="false">"捏合缩放"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"点击地球以发现更多"</string>
+    <string name="text_explore_earth" formatted="false">"探索地球"</string>
+    <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"实时预览·当前阳光·无音频"</string>
+    <string name="text_preview_set_wallpaper" formatted="false">"预览并设置壁纸"</string>
+    <string name="text_choose_home_or_lock_screen_in_the_android_preview" formatted="false">"在 Android 预览中选择主屏幕或锁定屏幕。"</string>
+    <string name="text_view_from" formatted="false">"查看自"</string>
+    <string name="text_saved_places" formatted="false">"保存的地点"</string>
+    <string name="text_search_cities" formatted="false">"搜索城市"</string>
+    <string name="text_composition" formatted="false">"成分"</string>
+    <string name="text_whole_earth" formatted="false">"整个地球"</string>
+    <string name="text_night_lights" formatted="false">"夜灯"</string>
+    <string name="text_earth_s_horizon" formatted="false">"地球的地平线"</string>
+    <string name="text_complete_globe_with_current_sunlight_and_quiet_stars" formatted="false">"完整的地球仪包含当前的阳光和安静的星星。"</string>
+    <string name="text_city_lights_on_the_dark_side_of_earth_with_current_sunlight" formatted="false">"地球黑暗面的城市灯光，伴随着当前的阳光。"</string>
+    <string name="text_a_close_cropped_view_of_earth_s_atmospheric_limb" formatted="false">"地球大气边缘的近距离裁剪视图。"</string>
+    <string name="text_camera_motion" formatted="false">"相机运动"</string>
+    <string name="text_fixed_viewpoint" formatted="false">"固定视点"</string>
+    <string name="text_slow_orbit" formatted="false">"慢轨道"</string>
+    <string name="text_follow_the_night_side" formatted="false">"追随夜色的一边"</string>
+    <string name="text_keeps_your_chosen_place_in_view_as_daylight_changes" formatted="false">"随着日光变化，您选择的地点仍清晰可见。"</string>
+    <string name="text_starts_at_your_chosen_view_then_slowly_travels_around_earth" formatted="false">"从您选择的视图开始，然后慢慢绕地球行驶。"</string>
+    <string name="text_the_view_moves_with_the_night_side_instead_of_staying_over_a_plac" formatted="false">"视图随着夜晚的一侧移动，而不是停留在一个地方。"</string>
+    <string name="text_turn_the_globe_when_i_swipe_between_home_screens" formatted="false">"当我在主屏幕之间滑动时转动地球仪"</string>
+    <string name="text_generated_illustration" formatted="false">"生成的插图"</string>
+    <string name="text_satellite_imagery_when_cached_or_available" formatted="false">"卫星图像（已缓存或可用）"</string>
+    <string name="text_globe_scale" formatted="false">"全球规模"</string>
+    <string name="text_hide_framing_controls" formatted="false">"隐藏取景控件 ▴"</string>
+    <string name="text_adjust_framing_angles" formatted="false">"调整框架和角度 ▾"</string>
+    <string name="text_horizontal_framing" formatted="false">"水平取景"</string>
+    <string name="text_vertical_framing" formatted="false">"垂直取景"</string>
+    <string name="text_view_angle" formatted="false">"视角"</string>
+    <string name="text_view_latitude" formatted="false">"查看纬度"</string>
+    <string name="text_saved_view_1_s">" · 保存视图：%1$s"</string>
+    <string name="text_following_the_night_side_1_s">"继夜边%1$s"</string>
+    <string name="text_your_custom_view" formatted="false">"您的自定义视图"</string>
+    <string name="text_orbit_starts_at_1_s">"轨道起始于 %1$s"</string>
+    <string name="text_choose_a_place_or_adjust_the_angles_below" formatted="false">"选择一个位置，或调整下面的角度。"</string>
+    <string name="text_no_saved_places_yet" formatted="false">"尚未保存地点"</string>
+    <string name="text_search_for_a_city_here_you_can_also_save_a_custom_point_in_explor" formatted="false">"在这里搜索城市。您还可以在探索 → 地点 → 添加地球上的地点中保存自定义点。"</string>
+    <string name="text_view_from_a_saved_place" formatted="false">"从保存的位置查看"</string>
+    <string name="text_city_or_country" formatted="false">"城市或国家"</string>
+    <string name="text_search_city_or_country" formatted="false">"搜索城市或国家"</string>
+    <string name="text_no_matching_city_try_a_country_or_another_name" formatted="false">"没有匹配的城市。尝试一个国家或其他名称。"</string>
+    <string name="text_choose_a_city" formatted="false">"选择城市"</string>
+    <string name="text_earth_today_widget" formatted="false">"今日地球小部件"</string>
+    <string name="text_which_place_should_this_widget_show_other_widgets_can_show_differ" formatted="false">"这个小部件应该显示在哪个地方？其他小部件可以显示不同的位置。"</string>
+    <string name="text_no_place_yet" formatted="false">"还没有地方"</string>
+    <string name="text_save_a_place_in_the_app_explore_places_to_see_its_day_and_night_h" formatted="false">"在应用程序中保存一个地点（探索 &gt; 地点）以查看这里的白天和黑夜。"</string>
+    <string name="text_save_widget" formatted="false">"保存小部件"</string>
+    <string name="text_1_s_2_s_3_s">"%1$s %2$s · %3$d%%"</string>
+    <string name="text_choose_a_place" formatted="false">"选择一个地方"</string>
+    <string name="text_set_your_local_view" formatted="false">"设置您的本地视图"</string>
+    <string name="text_polar_day_2" formatted="false">"极地日"</string>
+    <string name="text_polar_night_2" formatted="false">"极夜"</string>
+    <string name="text_nighttime_now" formatted="false">"现在是晚上"</string>
+    <string name="text_updated_1_s">"更新%1$s"</string>
+    <string name="text_illustration_1_s">"图解·%1$s"</string>
+    <string name="text_couldn_t_capture_the_view_try_again" formatted="false">"无法捕捉视图 - 请重试。"</string>
+    <string name="text_couldn_t_prepare_the_image" formatted="false">"无法准备图像。"</string>
+    <string name="text_share_your_view" formatted="false">"分享您的观点"</string>
+    <string name="text_earth_1_s_made_with_pale_blue_dot_2_s">"🌍 地球 — %1$s\n用 Pale Blue Dot 制作 → %2$s"</string>
+    <string name="text_ask_a_grown_up" formatted="false">"问一个大人"</string>
+    <string name="text_what_is_1_s_2_s">"什么是 %1$d × %2$d ？"</string>
+    <string name="text_maybe_later" formatted="false">"也许稍后"</string>
+    <string name="text_earthquake" formatted="false">"地震"</string>
+    <string name="text_you_found_where_the_ground_was_shaking" formatted="false">"你发现地面在震动！"</string>
+    <string name="text_volcano" formatted="false">"火山"</string>
+    <string name="text_you_spotted_hot_lava_erupting_from_deep_inside_the_earth" formatted="false">"你发现炽热的熔岩从地球深处喷出。"</string>
+    <string name="text_wildfire" formatted="false">"野火"</string>
+    <string name="text_you_caught_a_fire_so_big_that_satellites_can_see_it_from_space" formatted="false">"你着了一场大火，卫星可以从太空看到它。"</string>
+    <string name="text_storm" formatted="false">"风暴"</string>
+    <string name="text_you_tracked_a_giant_swirling_storm" formatted="false">"你追踪到了一场巨大的旋转风暴。"</string>
+    <string name="text_daytime_2" formatted="false">"白天"</string>
+    <string name="text_you_found_the_side_of_earth_facing_the_sun" formatted="false">"你发现地球面向太阳的一面。"</string>
+    <string name="text_city_lights_2" formatted="false">"城市之光"</string>
+    <string name="text_you_found_the_night_side_sparkling_with_city_lights" formatted="false">"你发现了夜晚的一面，城市灯光闪闪发光。"</string>
+    <string name="text_star_gazer" formatted="false">"观星者"</string>
+    <string name="text_you_looked_past_earth_into_the_stars_and_galaxies_beyond" formatted="false">"你的目光越过了地球，看到了更远的恒星和星系。"</string>
+    <string name="text_time_traveler" formatted="false">"时间旅行者"</string>
+    <string name="text_you_moved_time_to_turn_day_into_night" formatted="false">"你移动了时间，把白天变成了黑夜。"</string>
+    <string name="text_tap_a_place_where_it_s_daytime" formatted="false">"点击白天的地方☀️"</string>
+    <string name="text_tap_a_place_where_it_s_night_time" formatted="false">"点击夜间的地方 🌙"</string>
+    <string name="text_find_an_earthquake" formatted="false">"寻找地震 🔶"</string>
+    <string name="text_find_a_volcano" formatted="false">"寻找火山 🌋"</string>
+    <string name="text_find_a_wildfire" formatted="false">"寻找野火 🔥"</string>
+    <string name="text_find_a_storm" formatted="false">"寻找风暴 🌀"</string>
+    <string name="text_the_sun_is_so_huge_that_about_1_3_million_earths_could_fit_inside" formatted="false">"太阳是如此之大，大约可以容纳 130 万个地球。"</string>
+    <string name="text_a_day_on_venus_is_longer_than_a_whole_year_on_venus" formatted="false">"金星上的一天比金星上的一整年还要长！"</string>
+    <string name="text_footprints_on_the_moon_can_last_millions_of_years_because_there_s" formatted="false">"月球上的脚印可以持续数百万年，因为没有风可以将它们吹走。"</string>
+    <string name="text_jupiter_is_so_big_that_all_the_other_planets_could_fit_inside_it" formatted="false">"木星是如此之大，以至于所有其他行星都可以容纳在其中。"</string>
+    <string name="text_sunlight_takes_about_8_minutes_to_travel_all_the_way_to_earth" formatted="false">"阳光到达地球大约需要 8 分钟。"</string>
+    <string name="text_space_is_completely_silent_because_there_s_no_air_to_carry_sound" formatted="false">"太空是完全寂静的，因为没有空气来传播声音。"</string>
+    <string name="text_earth_takes_365_and_a_quarter_days_to_orbit_the_sun_that_s_why_we" formatted="false">"地球绕太阳公转一周需要 365 又四分之一天——这就是我们每 4 年增加一个闰日的原因。"</string>
+    <string name="text_the_tallest_volcano_we_know_of_olympus_mons_on_mars_is_about_thre" formatted="false">"我们所知道的最高的火山是火星上的奥林匹斯山，大约比珠穆朗玛峰高三倍。"</string>
+    <string name="text_earth_is_the_only_planet_not_named_after_a_greek_or_roman_god" formatted="false">"地球是唯一一颗不以希腊或罗马神命名的行星。"</string>
+    <string name="text_there_are_more_stars_in_the_universe_than_grains_of_sand_on_all_o" formatted="false">"宇宙中的恒星数量比地球上所有海滩上的沙粒还要多。"</string>
+    <string name="text_the_moon_drifts_about_3_8_cm_farther_from_earth_every_year" formatted="false">"月球每年远离地球约 3.8 厘米。"</string>
+    <string name="text_saturn_is_so_light_for_its_size_that_it_would_float_in_a_giant_ba" formatted="false">"土星的体积如此之轻，以至于它可以漂浮在一个巨大的水浴缸中。"</string>
+    <string name="text_lightning_strikes_somewhere_on_earth_about_100_times_every_second" formatted="false">"闪电每秒大约击中地球某处 100 次。"</string>
+    <string name="text_the_space_station_zooms_around_the_whole_earth_about_once_every_9" formatted="false">"空间站大约每 90 分钟绕地球一周一圈。"</string>
+    <string name="text_auroras_glow_near_the_poles_when_tiny_particles_from_the_sun_cras" formatted="false">"当来自太阳的微小粒子撞击到我们的空气中时，极光会在两极附近发光。"</string>
+    <string name="text_about_70_of_earth_s_surface_is_covered_by_ocean" formatted="false">"地球表面约70%被海洋覆盖。"</string>
+    <string name="text_venus_is_the_hottest_planet_even_though_mercury_is_closer_to_the" formatted="false">"尽管水星距离太阳更近，但金星是最热的行星。"</string>
+    <string name="text_the_great_red_spot_on_jupiter_is_a_storm_bigger_than_the_whole_ea" formatted="false">"木星上的大红斑是一场比整个地球还要大的风暴。"</string>
+    <string name="text_earthquakes_happen_when_giant_pieces_of_earth_s_crust_slip_past_e" formatted="false">"当巨大的地壳碎片相互滑过时就会发生地震。"</string>
+    <string name="text_the_sun_is_actually_white_our_air_is_what_makes_it_look_yellow" formatted="false">"太阳实际上是白色的——我们的空气使它看起来是黄色的。"</string>
+    <string name="text_comets_are_giant_balls_of_ice_and_dust_that_grow_glowing_tails_ne" formatted="false">"彗星是由冰和尘埃组成的巨大球体，在太阳附近长出发光的尾巴。"</string>
+    <string name="text_if_you_could_drive_a_car_straight_up_you_d_reach_space_in_about_a" formatted="false">"如果你能直接开车，大约一个小时就能到达太空。"</string>
+    <string name="text_the_moon_has_no_air_so_its_sky_is_always_black_even_in_the_daytim" formatted="false">"月亮没有空气，所以它的天空总是黑色的，即使在白天也是如此。"</string>
+    <string name="text_earth_spins_at_about_1_600_km_h_at_the_equator_but_we_don_t_feel" formatted="false">"地球在赤道处以大约 1,600 公里/小时的速度自转，但我们感觉不到它，因为我们随着它一起旋转。"</string>
+    <string name="text_new_moon" formatted="false">"新月"</string>
+    <string name="text_waxing_crescent" formatted="false">"娥眉月"</string>
+    <string name="text_first_quarter" formatted="false">"上弦月"</string>
+    <string name="text_waxing_gibbous" formatted="false">"盈凸月"</string>
+    <string name="text_full_moon" formatted="false">"满月"</string>
+    <string name="text_waning_gibbous" formatted="false">"亏凸月"</string>
+    <string name="text_last_quarter" formatted="false">"下弦月"</string>
+    <string name="text_waning_crescent" formatted="false">"残月"</string>
+    <string name="text_watch_where_sunrise_reaches_next" formatted="false">"观察日出接下来到达的地方。"</string>
+    <string name="text_compare_daylight_in_the_north_and_south" formatted="false">"比较一下南北的日照情况。"</string>
+    <string name="text_trace_a_curve_of_earth_s_plate_boundaries" formatted="false">"描绘地球板块边界的曲线。"</string>
+    <string name="text_saved_observation_feed_update_unavailable" formatted="false">"保存观察结果； Feed 更新不可用"</string>
+    <string name="text_recent_reported_observation" formatted="false">"最近报告的观察结果"</string>
+    <string name="text_observations_are_loading" formatted="false">"观察数据正在加载"</string>
+    <string name="text_no_recent_observations_available_the_moon_and_daylight_are_still" formatted="false">"没有最近的观察结果；月亮和白天还在这里"</string>
+    <string name="lesson_follow_sunrise" formatted="false">"追随日出"</string>
+    <string name="lesson_a_turning_world" formatted="false">"一个转动的世界"</string>
+    <string name="lesson_sunrise_is_a_moving_boundary_between_darkness_and_daylight_we_ll" formatted="false">"日出是黑暗与白天之间的移动边界。我们将从一个标记的地方跟随它。"</string>
+    <string name="lesson_begin" formatted="false">"开始"</string>
+    <string name="lesson_find_london" formatted="false">"寻找伦敦"</string>
+    <string name="lesson_look_at_london_on_the_globe_notice_which_side_faces_the_sun_the_m" formatted="false">"看看地球上的伦敦。注意哪一面面向太阳。标记和日光计算是单独的线索。"</string>
+    <string name="lesson_i_found_london" formatted="false">"我找到了伦敦"</string>
+    <string name="lesson_predict_the_direction" formatted="false">"预测方向"</string>
+    <string name="lesson_as_earth_spins_eastward_which_way_does_the_dawn_boundary_move_acr" formatted="false">"当地球向东旋转时，黎明边界在经度地图上向哪个方向移动？"</string>
+    <string name="lesson_yes_at_a_fixed_utc_time_the_dawn_line_moves_westward_over_longitu" formatted="false">"是的。在固定的 UTC 时间，随着地球向东旋转，黎明线在经度上向西移动。"</string>
+    <string name="lesson_it_moves_westward_across_longitudes_earth_itself_turns_eastward_c" formatted="false">"它穿过经度向西移动。地球本身向东旋转，将每个地方带入白昼。"</string>
+    <string name="lesson_westward" formatted="false">"西行"</string>
+    <string name="lesson_eastward" formatted="false">"向东"</string>
+    <string name="lesson_advance_the_scene" formatted="false">"推进场景"</string>
+    <string name="lesson_move_the_globe_s_lesson_clock_forward_two_hours_and_watch_the_lig" formatted="false">"将地球仪的时钟拨快两个小时，观察光线的变化。这是模拟，而“今天”保持实时。"</string>
+    <string name="lesson_advance_two_hours" formatted="false">"提前两个小时"</string>
+    <string name="lesson_what_changed" formatted="false">"发生了什么变化？"</string>
+    <string name="lesson_the_sunlight_direction_changed_with_time_did_the_saved_place_move" formatted="false">"阳光的方向随着时间而变化。保存的地方在地球上移动了吗？"</string>
+    <string name="lesson_exactly_the_place_keeps_its_coordinates_while_earth_s_rotation_ch" formatted="false">"正是如此。当地球自转改变其照明时，该地方保持其坐标。"</string>
+    <string name="lesson_a_place_keeps_its_latitude_and_longitude_the_changing_angle_to_th" formatted="false">"一个地方保留其纬度和经度。与太阳的角度的变化创造了白天和黑夜。"</string>
+    <string name="lesson_no_earth_rotated_relative_to_the_sun" formatted="false">"不；地球相对于太阳旋转"</string>
+    <string name="lesson_yes_its_latitude_changed" formatted="false">"是的；它的纬度改变了"</string>
+    <string name="lesson_explore_the_ring_of_fire" formatted="false">"探索火环"</string>
+    <string name="lesson_a_pattern_around_the_pacific" formatted="false">"环太平洋的图案"</string>
+    <string name="lesson_visit_three_locations_predict_a_pattern_then_reveal_plate_boundar" formatted="false">"访问三个地点，预测模式，然后揭示板块边界。历史后备示例标有日期和来源。"</string>
+    <string name="lesson_off_japan" formatted="false">"日本以外"</string>
+    <string name="lesson_historical_fallback_2011_03_11_tohoku_earthquake_usgs_a_recent_pa" formatted="false">"历史回溯：2011年3月11日东北地震，USGS。如果有的话，将使用最近的太平洋观测数据。"</string>
+    <string name="lesson_visit_the_next_location" formatted="false">"访问下一个地点"</string>
+    <string name="lesson_the_cascades" formatted="false">"瀑布"</string>
+    <string name="lesson_historical_fallback_1980_05_18_mount_st_helens_eruption_usgs_this" formatted="false">"历史回退：1980年5月18日圣海伦斯火山喷发，USGS。这是一个过时的课程示例，而不是实时报告。"</string>
+    <string name="lesson_along_chile" formatted="false">"智利沿线"</string>
+    <string name="lesson_historical_fallback_1960_05_22_great_chilean_earthquake_usgs_this" formatted="false">"历史回退：1960年5月22日智利大地震，USGS。此示例位于实时事件存储库之外。"</string>
+    <string name="lesson_predict_the_pattern" formatted="false">"预测模式"</string>
+    <string name="lesson_what_pattern_do_you_see" formatted="false">"你看到什么模式？"</string>
+    <string name="lesson_which_broad_pattern_links_many_earthquake_and_volcano_locations_a" formatted="false">"哪种大致模式将太平洋周围的许多地震和火山地点联系起来？"</string>
+    <string name="lesson_yes_many_cluster_near_plate_edges_but_some_events_also_happen_awa" formatted="false">"是的。许多事件聚集在板块边缘附近，但有些事件也发生在远离映射边界的地方。"</string>
+    <string name="lesson_the_broad_pattern_is_a_belt_near_several_plate_edges_individual_e" formatted="false">"宽幅图案是靠近几个板边缘的带。个别事件需要有自己的证据；到一条线的距离并不是诊断。"</string>
+    <string name="lesson_a_belt_near_several_plate_edges" formatted="false">"靠近多个板边缘的传送带"</string>
+    <string name="lesson_one_straight_line_through_the_pacific_center" formatted="false">"穿过太平洋中心的一条直线"</string>
+    <string name="lesson_every_event_lies_exactly_on_one_boundary" formatted="false">"每个事件都恰好位于一个边界上"</string>
+    <string name="lesson_reveal_the_boundaries" formatted="false">"揭示界限"</string>
+    <string name="lesson_gold_lines_show_a_generalized_pb2002_plate_boundary_model_compare" formatted="false">"金线显示了广义的 PB2002 板边界模型。比较环太平洋地区；这些线条并不能解释每一个单独的事件。"</string>
+    <string name="lesson_reveal_gold_lines" formatted="false">"显露出金色线条"</string>
+    <string name="lesson_what_the_pattern_means" formatted="false">"图案的含义是什么"</string>
+    <string name="lesson_plate_motions_concentrate_many_earthquakes_and_volcanoes_around_t" formatted="false">"板块运动集中了太平洋周围的许多地震和火山。板块内的热点和地震表明了该模式为何存在例外。"</string>
+    <string name="lesson_complete_journey" formatted="false">"完成旅程"</string>
+    <string name="lesson_understand_the_seasons" formatted="false">"了解季节"</string>
+    <string name="lesson_two_hemispheres" formatted="false">"两个半球"</string>
+    <string name="lesson_compare_daylight_at_london_and_sydney_on_two_dates_earth_s_tilted" formatted="false">"比较伦敦和悉尼两个日期的日照。地球的倾斜轴改变了太阳在地平线上方停留的时间。"</string>
+    <string name="lesson_london_in_june" formatted="false">"六月的伦敦"</string>
+    <string name="lesson_observe_london_near_the_june_solstice_the_northern_hemisphere_has" formatted="false">"在六月至日附近观察伦敦。北半球的日照时间较长。"</string>
+    <string name="lesson_compare_sydney" formatted="false">"比较 悉尼"</string>
+    <string name="lesson_sydney_in_june" formatted="false">"六月的悉尼"</string>
+    <string name="lesson_observe_sydney_on_the_same_date_its_winter_daylight_is_shorter_th" formatted="false">"同一天观察悉尼。它的冬季日照比伦敦夏季的日照短。"</string>
+    <string name="lesson_make_a_prediction" formatted="false">"做出预测"</string>
+    <string name="lesson_predict_december" formatted="false">"预测十二月"</string>
+    <string name="lesson_near_the_december_solstice_which_marked_place_has_longer_daylight" formatted="false">"临近十二月夏至，哪个标记的地方日照时间较长？"</string>
+    <string name="lesson_yes_the_southern_hemisphere_tilts_toward_the_sun_in_december_so_s" formatted="false">"是的。十二月，南半球向太阳倾斜，因此悉尼的白天更长。"</string>
+    <string name="lesson_sydney_has_longer_daylight_near_the_december_solstice_the_souther" formatted="false">"悉尼临近十二月夏至时日照时间较长。那时南半球向太阳倾斜。"</string>
+    <string name="lesson_sydney" formatted="false">"悉尼"</string>
+    <string name="lesson_london" formatted="false">"伦敦"</string>
+    <string name="lesson_they_must_be_equal" formatted="false">"他们必须是平等的"</string>
+    <string name="lesson_switch_to_december" formatted="false">"切换到十二月"</string>
+    <string name="lesson_compare_the_daylight_readouts_after_changing_the_lesson_date_this" formatted="false">"更改课程日期后比较日光读数。这仅更改应用程序场景。"</string>
+    <string name="lesson_show_the_axial_tilt_explanation" formatted="false">"显示轴向倾斜说明"</string>
+    <string name="lesson_why_seasons_change" formatted="false">"季节为何变化"</string>
+    <string name="lesson_earth_s_axis_stays_tilted_about_23_4_as_it_orbits_the_sun_the_nor" formatted="false">"地轴绕太阳公转时保持约 23.4° 倾斜。北半球和南半球交替出现较长的日照。可见指南标记了赤道、热带和极圈。"</string>
+    <string name="text_notebook" formatted="false">"观察笔记"</string>
+    <string name="text_guide" formatted="false">"指南"</string>
+    <string name="text_places" formatted="false">"地点"</string>
+    <string name="text_explore_time" formatted="false">"探索时间"</string>
+    <string name="text_journeys" formatted="false">"旅程"</string>
+    <string name="text_journey" formatted="false">"旅程"</string>
+    <string name="text_language" formatted="false">"语言"</string>
+    <string name="text_use_device_language" formatted="false">"使用设备语言"</string>
+    <string name="text_a_voice_for_this_language_is_not_installed_on_this_device" formatted="false">"该设备上未安装该语言的语音。"</string>
+    <string name="text_great_job_challenges_solved_1_s">"🎉 干得好！解决的挑战：%1$d"</string>
+    <string name="text_earth_s_axis_is_tilted_about_23_4_degrees_relative_to_its_orbit_a" formatted="false">"地球的轴相对于其绕太阳的轨道倾斜约23.4度。"</string>
+    <string name="city_abidjan" formatted="false">"阿比让, 科特迪瓦"</string>
+    <string name="city_abu_dhabi" formatted="false">"阿布扎比, 阿拉伯联合酋长国"</string>
+    <string name="city_abuja" formatted="false">"尼日利亚阿布贾"</string>
+    <string name="city_accra" formatted="false">"加纳阿克拉"</string>
+    <string name="city_adamstown" formatted="false">"亚当斯敦, 皮特凯恩"</string>
+    <string name="city_addis_ababa" formatted="false">"埃塞俄比亚亚的斯亚贝巴"</string>
+    <string name="city_adelaide" formatted="false">"澳大利亚阿德莱德"</string>
+    <string name="city_alexandria" formatted="false">"埃及亚历山大"</string>
+    <string name="city_algiers" formatted="false">"阿尔及利亚阿尔及尔"</string>
+    <string name="city_alofi" formatted="false">"阿洛菲, 纽埃"</string>
+    <string name="city_amman" formatted="false">"约旦安曼"</string>
+    <string name="city_amsterdam" formatted="false">"荷兰阿姆斯特丹"</string>
+    <string name="city_andorra_la_vella" formatted="false">"安道尔城, 安道尔"</string>
+    <string name="city_ankara" formatted="false">"土耳其安卡拉"</string>
+    <string name="city_antananarivo" formatted="false">"马达加斯加塔那那利佛"</string>
+    <string name="city_apia" formatted="false">"阿皮亚, 萨摩亚"</string>
+    <string name="city_ashgabat" formatted="false">"土库曼斯坦阿什哈巴德"</string>
+    <string name="city_asmara" formatted="false">"厄立特里亚阿斯马拉"</string>
+    <string name="city_astana" formatted="false">"哈萨克斯坦阿斯塔纳"</string>
+    <string name="city_asuncion" formatted="false">"巴拉圭亚松森"</string>
+    <string name="city_athens" formatted="false">"希腊雅典"</string>
+    <string name="city_auckland" formatted="false">"新西兰奥克兰"</string>
+    <string name="city_avarua" formatted="false">"库克群岛阿瓦鲁阿"</string>
+    <string name="city_baghdad" formatted="false">"伊拉克巴格达"</string>
+    <string name="city_baku" formatted="false">"阿塞拜疆巴库"</string>
+    <string name="city_bamako" formatted="false">"马里巴马科"</string>
+    <string name="city_bandar_seri_begawan" formatted="false">"文莱斯里巴加湾市"</string>
+    <string name="city_bangkok" formatted="false">"泰国曼谷"</string>
+    <string name="city_bangui" formatted="false">"中非共和国班吉"</string>
+    <string name="city_banjul" formatted="false">"冈比亚班珠尔"</string>
+    <string name="city_barcelona" formatted="false">"西班牙巴塞罗那"</string>
+    <string name="city_basse_terre" formatted="false">"瓜德罗普岛巴斯特尔"</string>
+    <string name="city_basseterre" formatted="false">"圣基茨和尼维斯巴斯特尔"</string>
+    <string name="city_beijing" formatted="false">"中国北京"</string>
+    <string name="city_beirut" formatted="false">"黎巴嫩贝鲁特"</string>
+    <string name="city_belgrade" formatted="false">"塞尔维亚贝尔格莱德"</string>
+    <string name="city_belmopan" formatted="false">"贝尔莫潘, 伯利兹"</string>
+    <string name="city_belo_horizonte" formatted="false">"巴西贝洛奥里藏特"</string>
+    <string name="city_berlin" formatted="false">"德国柏林"</string>
+    <string name="city_bern" formatted="false">"瑞士伯尔尼"</string>
+    <string name="city_bishkek" formatted="false">"吉尔吉斯斯坦比什凯克"</string>
+    <string name="city_bissau" formatted="false">"几内亚比绍比绍"</string>
+    <string name="city_bogota" formatted="false">"哥伦比亚波哥大"</string>
+    <string name="city_brasilia" formatted="false">"巴西巴西利亚"</string>
+    <string name="city_bratislava" formatted="false">"斯洛伐克布拉迪斯拉发"</string>
+    <string name="city_brazzaville" formatted="false">"刚果共和国布拉柴维尔"</string>
+    <string name="city_bridgetown" formatted="false">"布里奇敦, 巴巴多斯"</string>
+    <string name="city_brisbane" formatted="false">"澳大利亚布里斯班"</string>
+    <string name="city_brooklyn" formatted="false">"美国布鲁克林"</string>
+    <string name="city_brussels" formatted="false">"比利时布鲁塞尔"</string>
+    <string name="city_bucharest" formatted="false">"罗马尼亚布加勒斯特"</string>
+    <string name="city_budapest" formatted="false">"匈牙利布达佩斯"</string>
+    <string name="city_buenos_aires" formatted="false">"阿根廷布宜诺斯艾利斯"</string>
+    <string name="city_cairo" formatted="false">"埃及开罗"</string>
+    <string name="city_cali" formatted="false">"哥伦比亚卡利"</string>
+    <string name="city_canberra" formatted="false">"澳大利亚堪培拉"</string>
+    <string name="city_cape_town" formatted="false">"南非开普敦"</string>
+    <string name="city_caracas" formatted="false">"委内瑞拉加拉加斯"</string>
+    <string name="city_casablanca" formatted="false">"摩洛哥卡萨布兰卡"</string>
+    <string name="city_castries" formatted="false">"卡斯特里, 圣卢西亚"</string>
+    <string name="city_cayenne" formatted="false">"卡宴, 法属圭亚那"</string>
+    <string name="city_central_coast" formatted="false">"澳大利亚中央海岸"</string>
+    <string name="city_charlotte_amalie" formatted="false">"夏洛特阿马利亚, 美属维尔京群岛"</string>
+    <string name="city_chengdu" formatted="false">"中国成都"</string>
+    <string name="city_chicago" formatted="false">"美国芝加哥"</string>
+    <string name="city_chisinau" formatted="false">"摩尔多瓦基希讷乌"</string>
+    <string name="city_chongqing" formatted="false">"中国重庆"</string>
+    <string name="city_christchurch" formatted="false">"新西兰基督城"</string>
+    <string name="city_ciudad_de_la_paz" formatted="false">"赤道几内亚拉巴斯城"</string>
+    <string name="city_cockburn_town" formatted="false">"特克斯和凯科斯群岛科伯恩镇"</string>
+    <string name="city_colombo" formatted="false">"斯里兰卡科伦坡"</string>
+    <string name="city_conakry" formatted="false">"几内亚科纳克里"</string>
+    <string name="city_copenhagen" formatted="false">"丹麦哥本哈根"</string>
+    <string name="city_dakar" formatted="false">"塞内加尔达喀尔"</string>
+    <string name="city_damascus" formatted="false">"叙利亚大马士革"</string>
+    <string name="city_dar_es_salaam" formatted="false">"坦桑尼亚达累斯萨拉姆"</string>
+    <string name="city_delhi" formatted="false">"印度德里"</string>
+    <string name="city_dhaka" formatted="false">"孟加拉国达卡"</string>
+    <string name="city_dili" formatted="false">"东帝汶帝力"</string>
+    <string name="city_djibouti" formatted="false">"吉布提, 吉布提"</string>
+    <string name="city_dodoma" formatted="false">"坦桑尼亚多多马"</string>
+    <string name="city_doha" formatted="false">"卡塔尔多哈"</string>
+    <string name="city_douglas" formatted="false">"道格拉斯 (马恩岛)"</string>
+    <string name="city_dublin" formatted="false">"爱尔兰都柏林"</string>
+    <string name="city_dushanbe" formatted="false">"塔吉克斯坦杜尚别"</string>
+    <string name="city_flying_fish_cove" formatted="false">"圣诞岛飞鱼湾"</string>
+    <string name="city_fort_de_france" formatted="false">"马提尼克岛法兰西堡"</string>
+    <string name="city_fortaleza" formatted="false">"巴西福塔莱萨"</string>
+    <string name="city_freetown" formatted="false">"塞拉利昂弗里敦"</string>
+    <string name="city_funafuti" formatted="false">"图瓦卢富纳富提"</string>
+    <string name="city_gaborone" formatted="false">"博茨瓦纳哈博罗内"</string>
+    <string name="city_george_town" formatted="false">"开曼群岛乔治城"</string>
+    <string name="city_georgetown" formatted="false">"圭亚那乔治敦"</string>
+    <string name="city_gibraltar" formatted="false">"直布罗陀, 直布罗陀"</string>
+    <string name="city_gitega" formatted="false">"布隆迪基特加"</string>
+    <string name="city_giza" formatted="false">"埃及吉萨"</string>
+    <string name="city_gold_coast" formatted="false">"澳大利亚黄金海岸"</string>
+    <string name="city_grytviken" formatted="false">"古利特维肯、南乔治亚岛和南桑威奇群岛"</string>
+    <string name="city_guangzhou" formatted="false">"中国广州"</string>
+    <string name="city_guatemala_city" formatted="false">"危地马拉危地马拉城"</string>
+    <string name="city_guayaquil" formatted="false">"厄瓜多尔瓜亚基尔"</string>
+    <string name="city_gustavia" formatted="false">"古斯塔维亚, 圣巴泰勒米"</string>
+    <string name="city_hagatna" formatted="false">"关岛阿加尼亚"</string>
+    <string name="city_hamburg" formatted="false">"德国汉堡"</string>
+    <string name="city_hamilton" formatted="false">"汉密尔顿, 百慕大"</string>
+    <string name="city_hangzhou" formatted="false">"中国杭州"</string>
+    <string name="city_hanoi" formatted="false">"越南河内"</string>
+    <string name="city_harare" formatted="false">"津巴布韦哈拉雷"</string>
+    <string name="city_havana" formatted="false">"古巴哈瓦那"</string>
+    <string name="city_helsinki" formatted="false">"芬兰赫尔辛基"</string>
+    <string name="city_ho_chi_minh_city" formatted="false">"越南胡志明市"</string>
+    <string name="city_hong_kong" formatted="false">"香港, 香港"</string>
+    <string name="city_honiara" formatted="false">"所罗门群岛霍尼亚拉"</string>
+    <string name="city_houston" formatted="false">"美国休斯顿"</string>
+    <string name="city_ibadan" formatted="false">"尼日利亚伊巴丹"</string>
+    <string name="city_islamabad" formatted="false">"巴基斯坦伊斯兰堡"</string>
+    <string name="city_istanbul" formatted="false">"土耳其伊斯坦布尔"</string>
+    <string name="city_iztapalapa" formatted="false">"墨西哥伊斯塔帕拉帕"</string>
+    <string name="city_jakarta" formatted="false">"印度尼西亚雅加达"</string>
+    <string name="city_jamestown" formatted="false">"圣赫勒拿詹姆斯敦"</string>
+    <string name="city_johannesburg" formatted="false">"南非约翰内斯堡"</string>
+    <string name="city_juba" formatted="false">"南苏丹朱巴"</string>
+    <string name="city_kabul" formatted="false">"阿富汗喀布尔"</string>
+    <string name="city_kampala" formatted="false">"乌干达坎帕拉"</string>
+    <string name="city_kano" formatted="false">"尼日利亚卡诺"</string>
+    <string name="city_karachi" formatted="false">"巴基斯坦卡拉奇"</string>
+    <string name="city_kathmandu" formatted="false">"尼泊尔加德满都"</string>
+    <string name="city_khartoum" formatted="false">"苏丹喀土穆"</string>
+    <string name="city_kigali" formatted="false">"卢旺达基加利"</string>
+    <string name="city_kingston" formatted="false">"牙买加金斯敦"</string>
+    <string name="city_kingston_nf" formatted="false">"诺福克岛金斯敦"</string>
+    <string name="city_kingstown" formatted="false">"圣文森特和格林纳丁斯金斯敦"</string>
+    <string name="city_kinshasa" formatted="false">"刚果民主共和国金沙萨"</string>
+    <string name="city_kralendijk" formatted="false">"克拉伦代克、博内尔岛、圣尤斯特歇斯和萨巴岛 "</string>
+    <string name="city_kuala_lumpur" formatted="false">"马来西亚吉隆坡"</string>
+    <string name="city_kuwait_city" formatted="false">"科威特科威特城"</string>
+    <string name="city_kyiv" formatted="false">"乌克兰基辅"</string>
+    <string name="city_lagos" formatted="false">"尼日利亚拉各斯"</string>
+    <string name="city_lahore" formatted="false">"巴基斯坦拉合尔"</string>
+    <string name="city_libreville" formatted="false">"加蓬利伯维尔"</string>
+    <string name="city_lilongwe" formatted="false">"马拉维利隆圭"</string>
+    <string name="city_lima" formatted="false">"秘鲁利马"</string>
+    <string name="city_lisbon" formatted="false">"葡萄牙里斯本"</string>
+    <string name="city_ljubljana" formatted="false">"斯洛文尼亚卢布尔雅那"</string>
+    <string name="city_logan_city" formatted="false">"澳大利亚洛根市"</string>
+    <string name="city_lome" formatted="false">"多哥洛美"</string>
+    <string name="city_london" formatted="false">"英国伦敦"</string>
+    <string name="city_longyearbyen" formatted="false">"朗伊尔城、斯瓦尔巴群岛和扬马延岛"</string>
+    <string name="city_los_angeles" formatted="false">"美国洛杉矶"</string>
+    <string name="city_luanda" formatted="false">"安哥拉罗安达"</string>
+    <string name="city_lusaka" formatted="false">"赞比亚卢萨卡"</string>
+    <string name="city_luxembourg" formatted="false">"卢森堡, 卢森堡"</string>
+    <string name="city_macau" formatted="false">"澳门, 澳门"</string>
+    <string name="city_madrid" formatted="false">"西班牙马德里"</string>
+    <string name="city_majuro" formatted="false">"马朱罗, 马绍尔群岛"</string>
+    <string name="city_male" formatted="false">"马累, 马尔代夫"</string>
+    <string name="city_mamoudzou" formatted="false">"马约特岛马穆祖"</string>
+    <string name="city_managua" formatted="false">"马那瓜, 尼加拉瓜"</string>
+    <string name="city_manama" formatted="false">"巴林麦纳麦"</string>
+    <string name="city_manaus" formatted="false">"巴西马瑙斯"</string>
+    <string name="city_manila" formatted="false">"菲律宾马尼拉"</string>
+    <string name="city_manukau_city" formatted="false">"新西兰曼努考市"</string>
+    <string name="city_maputo" formatted="false">"莫桑比克马普托"</string>
+    <string name="city_mariehamn" formatted="false">"玛丽港, 奥兰群岛"</string>
+    <string name="city_marigot" formatted="false">"马里戈特, 圣马丁岛"</string>
+    <string name="city_maseru" formatted="false">"莱索托马塞卢"</string>
+    <string name="city_mata_utu" formatted="false">"马塔乌图、瓦利斯和富图纳群岛"</string>
+    <string name="city_mbabane" formatted="false">"姆巴巴内, 斯威士兰"</string>
+    <string name="city_melbourne" formatted="false">"澳大利亚墨尔本"</string>
+    <string name="city_mexico_city" formatted="false">"墨西哥墨西哥城"</string>
+    <string name="city_minsk" formatted="false">"白俄罗斯明斯克"</string>
+    <string name="city_mogadishu" formatted="false">"索马里摩加迪沙"</string>
+    <string name="city_monaco" formatted="false">"摩纳哥, 摩纳哥"</string>
+    <string name="city_monrovia" formatted="false">"利比里亚蒙罗维亚"</string>
+    <string name="city_montevideo" formatted="false">"乌拉圭蒙得维的亚"</string>
+    <string name="city_montreal" formatted="false">"加拿大蒙特利尔"</string>
+    <string name="city_moroni" formatted="false">"科摩罗莫罗尼"</string>
+    <string name="city_moscow" formatted="false">"俄罗斯莫斯科"</string>
+    <string name="city_mumbai" formatted="false">"印度孟买"</string>
+    <string name="city_muscat" formatted="false">"阿曼马斯喀特"</string>
+    <string name="city_n_djamena" formatted="false">"乍得恩贾梅纳"</string>
+    <string name="city_nairobi" formatted="false">"肯尼亚内罗毕"</string>
+    <string name="city_nassau" formatted="false">"巴哈马拿骚"</string>
+    <string name="city_nay_pyi_taw" formatted="false">"缅甸内比都"</string>
+    <string name="city_new_delhi" formatted="false">"印度新德里"</string>
+    <string name="city_new_york" formatted="false">"美国纽约市"</string>
+    <string name="city_newcastle" formatted="false">"澳大利亚纽卡斯尔"</string>
+    <string name="city_ngerulmud" formatted="false">"帕劳恩吉鲁穆德"</string>
+    <string name="city_niamey" formatted="false">"尼亚美, 尼日尔"</string>
+    <string name="city_nicosia" formatted="false">"塞浦路斯尼科西亚"</string>
+    <string name="city_nouakchott" formatted="false">"毛里塔尼亚努瓦克肖特"</string>
+    <string name="city_noumea" formatted="false">"新喀里多尼亚努美阿"</string>
+    <string name="city_nukualofa" formatted="false">"汤加努库阿洛法"</string>
+    <string name="city_nuuk" formatted="false">"格陵兰岛努克"</string>
+    <string name="city_oranjestad" formatted="false">"奥拉涅斯塔德, 阿鲁巴岛"</string>
+    <string name="city_oslo" formatted="false">"挪威奥斯陆"</string>
+    <string name="city_ottawa" formatted="false">"加拿大渥太华"</string>
+    <string name="city_ouagadougou" formatted="false">"瓦加杜古, 布基纳法索"</string>
+    <string name="city_pago_pago" formatted="false">"美属萨摩亚帕果帕果"</string>
+    <string name="city_palikir" formatted="false">"密克罗尼西亚帕利基尔"</string>
+    <string name="city_panama_city" formatted="false">"巴拿马巴拿马城"</string>
+    <string name="city_papeete" formatted="false">"法属波利尼西亚帕皮提"</string>
+    <string name="city_paramaribo" formatted="false">"帕拉马里博, 苏里南"</string>
+    <string name="city_paris" formatted="false">"法国巴黎"</string>
+    <string name="city_perth" formatted="false">"澳大利亚珀斯"</string>
+    <string name="city_philipsburg" formatted="false">"菲利普斯堡, 圣马丁岛"</string>
+    <string name="city_phnom_penh" formatted="false">"柬埔寨金边"</string>
+    <string name="city_phoenix" formatted="false">"美国凤凰城"</string>
+    <string name="city_plymouth" formatted="false">"普利茅斯、蒙特塞拉特"</string>
+    <string name="city_podgorica" formatted="false">"黑山波德戈里察"</string>
+    <string name="city_port_au_prince" formatted="false">"海地太子港"</string>
+    <string name="city_port_aux_francais" formatted="false">"法国南部领土法兰西港"</string>
+    <string name="city_port_louis" formatted="false">"毛里求斯路易港"</string>
+    <string name="city_port_moresby" formatted="false">"巴布亚新几内亚莫尔兹比港"</string>
+    <string name="city_port_of_spain" formatted="false">"西班牙港, 特立尼达和多巴哥"</string>
+    <string name="city_port_vila" formatted="false">"瓦努阿图维拉港"</string>
+    <string name="city_porto_novo" formatted="false">"贝宁波多诺伏"</string>
+    <string name="city_prague" formatted="false">"捷克布拉格"</string>
+    <string name="city_praia" formatted="false">"佛得角普拉亚"</string>
+    <string name="city_pretoria" formatted="false">"南非比勒陀利亚"</string>
+    <string name="city_pristina" formatted="false">"科索沃普里什蒂纳"</string>
+    <string name="city_puebla" formatted="false">"墨西哥普埃布拉"</string>
+    <string name="city_pyongyang" formatted="false">"朝鲜平壤"</string>
+    <string name="city_queens" formatted="false">"美国皇后区"</string>
+    <string name="city_quito" formatted="false">"厄瓜多尔基多"</string>
+    <string name="city_rabat" formatted="false">"摩洛哥拉巴特"</string>
+    <string name="city_reykjavik" formatted="false">"冰岛雷克雅未克"</string>
+    <string name="city_riga" formatted="false">"拉脱维亚里加"</string>
+    <string name="city_rio" formatted="false">"巴西里约热内卢"</string>
+    <string name="city_riyadh" formatted="false">"沙特阿拉伯利雅得"</string>
+    <string name="city_road_town" formatted="false">"英属维尔京群岛罗德城"</string>
+    <string name="city_rome" formatted="false">"意大利罗马"</string>
+    <string name="city_roseau" formatted="false">"多米尼克罗索"</string>
+    <string name="city_saint_denis" formatted="false">"圣但尼, 留尼汪岛"</string>
+    <string name="city_saint_george_s" formatted="false">"圣乔治, 格林纳达"</string>
+    <string name="city_saint_helier" formatted="false">"泽西岛圣赫利尔"</string>
+    <string name="city_saint_johns" formatted="false">"圣约翰斯, 安提瓜和巴布达"</string>
+    <string name="city_saint_peter_port" formatted="false">"圣彼得港, 根西岛"</string>
+    <string name="city_saint_petersburg" formatted="false">"俄罗斯圣彼得堡"</string>
+    <string name="city_saint_pierre" formatted="false">"圣皮埃尔, 圣皮埃尔和密克隆群岛"</string>
+    <string name="city_saipan" formatted="false">"北马里亚纳群岛塞班岛"</string>
+    <string name="city_salvador" formatted="false">"巴西萨尔瓦多"</string>
+    <string name="city_san_jose" formatted="false">"哥斯达黎加圣何塞"</string>
+    <string name="city_san_juan" formatted="false">"波多黎各圣胡安"</string>
+    <string name="city_san_marino" formatted="false">"圣马力诺, 圣马力诺"</string>
+    <string name="city_san_salvador" formatted="false">"圣萨尔瓦多, 萨尔瓦多"</string>
+    <string name="city_sanaa" formatted="false">"也门萨那"</string>
+    <string name="city_santiago" formatted="false">"智利圣地亚哥"</string>
+    <string name="city_santo_domingo" formatted="false">"多米尼加共和国圣多明各"</string>
+    <string name="city_sao_paulo" formatted="false">"巴西圣保罗"</string>
+    <string name="city_sao_tome" formatted="false">"圣多美, 圣多美和普林西比"</string>
+    <string name="city_sarajevo" formatted="false">"波斯尼亚和黑塞哥维那萨拉热窝"</string>
+    <string name="city_seoul" formatted="false">"韩国首尔"</string>
+    <string name="city_shanghai" formatted="false">"中国上海"</string>
+    <string name="city_shenzhen" formatted="false">"中国深圳"</string>
+    <string name="city_singapore" formatted="false">"新加坡, 新加坡"</string>
+    <string name="city_skopje" formatted="false">"北马其顿斯科普里"</string>
+    <string name="city_sofia" formatted="false">"保加利亚索非亚"</string>
+    <string name="city_stanley" formatted="false">"福克兰群岛斯坦利"</string>
+    <string name="city_stockholm" formatted="false">"瑞典斯德哥尔摩"</string>
+    <string name="city_sucre" formatted="false">"玻利维亚苏克雷"</string>
+    <string name="city_sunshine_coast" formatted="false">"澳大利亚阳光海岸"</string>
+    <string name="city_suva" formatted="false">"斐济苏瓦"</string>
+    <string name="city_sydney" formatted="false">"澳大利亚悉尼"</string>
+    <string name="city_taipei" formatted="false">"台湾台北"</string>
+    <string name="city_tallinn" formatted="false">"爱沙尼亚塔林"</string>
+    <string name="city_tarawa" formatted="false">"塔拉瓦, 基里巴斯"</string>
+    <string name="city_tashkent" formatted="false">"乌兹别克斯坦塔什干"</string>
+    <string name="city_tbilisi" formatted="false">"格鲁吉亚第比利斯"</string>
+    <string name="city_tegucigalpa" formatted="false">"洪都拉斯特古西加尔巴"</string>
+    <string name="city_tehran" formatted="false">"伊朗德黑兰"</string>
+    <string name="city_the_valley" formatted="false">"安圭拉山谷"</string>
+    <string name="city_thimphu" formatted="false">"不丹廷布"</string>
+    <string name="city_tianjin" formatted="false">"中国天津"</string>
+    <string name="city_tijuana" formatted="false">"墨西哥蒂华纳"</string>
+    <string name="city_tirana" formatted="false">"阿尔巴尼亚 地拉那"</string>
+    <string name="city_tokyo" formatted="false">"日本东京"</string>
+    <string name="city_toronto" formatted="false">"加拿大多伦多"</string>
+    <string name="city_torshavn" formatted="false">"托尔斯港, 法罗群岛"</string>
+    <string name="city_tripoli" formatted="false">"利比亚的黎波里"</string>
+    <string name="city_tromso" formatted="false">"挪威特罗姆瑟"</string>
+    <string name="city_tunis" formatted="false">"突尼斯, 突尼斯"</string>
+    <string name="city_ulan_bator" formatted="false">"蒙古乌兰巴托"</string>
+    <string name="city_vaduz" formatted="false">"瓦杜兹, 列支敦士登"</string>
+    <string name="city_valletta" formatted="false">"瓦莱塔, 马耳他"</string>
+    <string name="city_vatican_city" formatted="false">"梵蒂冈城, 梵蒂冈"</string>
+    <string name="city_victoria" formatted="false">"维多利亚, 塞舌尔"</string>
+    <string name="city_vienna" formatted="false">"奥地利维也纳"</string>
+    <string name="city_vientiane" formatted="false">"老挝万象"</string>
+    <string name="city_vilnius" formatted="false">"立陶宛维尔纽斯"</string>
+    <string name="city_warsaw" formatted="false">"波兰华沙"</string>
+    <string name="city_washington" formatted="false">"美国华盛顿"</string>
+    <string name="city_wellington" formatted="false">"新西兰惠灵顿"</string>
+    <string name="city_west_island" formatted="false">"西岛, 科科斯群岛"</string>
+    <string name="city_willemstad" formatted="false">"威廉斯塔德, 库拉索岛"</string>
+    <string name="city_windhoek" formatted="false">"纳米比亚温得和克"</string>
+    <string name="city_wuhan" formatted="false">"中国武汉"</string>
+    <string name="city_xian" formatted="false">"中国西安"</string>
+    <string name="city_yamoussoukro" formatted="false">"亚穆苏克罗, 科特迪瓦"</string>
+    <string name="city_yaounde" formatted="false">"喀麦隆雅温得"</string>
+    <string name="city_yaren" formatted="false">"瑙鲁亚伦"</string>
+    <string name="city_yerevan" formatted="false">"亚美尼亚埃里温"</string>
+    <string name="city_zagreb" formatted="false">"克罗地亚萨格勒布"</string>
+    <string name="text_iss_day" formatted="false">"🛰 国际空间站\n宇航员在这里生活和工作，距离地球约 400 公里——大约每 90 分钟以 28,000 公里/小时绕地球一圈！\n在此图中，它位于地球的白天一侧。"</string>
+    <string name="text_iss_night" formatted="false">"🛰 国际空间站\n宇航员在这里生活和工作，距离地球约 400 公里——大约每 90 分钟以 28,000 公里/小时绕地球一圈！\n在此图中，它位于地球的夜晚一侧。"</string>
+    <string name="text_elapsed_minutes">"经过分钟：%1$d"</string>
+    <string name="text_elapsed_hours">"经过时间：%1$d"</string>
+    <string name="text_elapsed_days">"已过去天数：%1$d"</string>
+    <string name="moon_guide_new_moon">"%1$s\n未受光的一面 · 轮廓辅助线"</string>
+    <string name="moon_guide_crescent">"细月牙 · %1$s受阳光照射\n轮廓辅助线"</string>
+</resources>

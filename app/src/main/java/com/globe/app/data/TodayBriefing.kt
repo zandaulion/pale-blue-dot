@@ -1,5 +1,6 @@
 package com.globe.app.data
 
+import com.globe.app.R
 import com.globe.app.events.EarthEventsProvider
 import com.globe.app.kids.MoonPhase
 import com.globe.app.places.Daylight
@@ -15,15 +16,18 @@ object TodayBriefing {
         val daylight: Daylight.Summary?,
         val event: EarthEventsProvider.Event?,
         val eventIsStale: Boolean,
-        val eventMessage: String,
-        val prompt: String,
+        val eventMessageRes: Int,
+        val promptRes: Int,
         val generatedAtMs: Long
-    )
+    ) {
+        fun eventMessage(context: android.content.Context): String = context.getString(eventMessageRes)
+        fun prompt(context: android.content.Context): String = context.getString(promptRes)
+    }
 
     private val prompts = listOf(
-        "Watch where sunrise reaches next.",
-        "Compare daylight in the north and south.",
-        "Trace a curve of Earth's plate boundaries."
+        R.string.text_watch_where_sunrise_reaches_next,
+        R.string.text_compare_daylight_in_the_north_and_south,
+        R.string.text_trace_a_curve_of_earth_s_plate_boundaries
     )
 
     fun build(nowMs: Long, place: SavedPlace?, snapshot: EarthRepository.Snapshot): Briefing {
@@ -39,11 +43,11 @@ object TodayBriefing {
                 .firstOrNull() }.firstOrNull()
         val stale = chosen?.let { snapshot.feeds[it.type]?.state != EarthRepository.State.READY } ?: false
         val message = when {
-            chosen != null && stale -> "Saved observation; feed update unavailable"
-            chosen != null -> "Recent reported observation"
+            chosen != null && stale -> R.string.text_saved_observation_feed_update_unavailable
+            chosen != null -> R.string.text_recent_reported_observation
             snapshot.feeds.values.all { it.state == EarthRepository.State.NOT_LOADED || it.state == EarthRepository.State.LOADING } ->
-                "Observations are loading"
-            else -> "No recent observations available; the Moon and daylight are still here"
+                R.string.text_observations_are_loading
+            else -> R.string.text_no_recent_observations_available_the_moon_and_daylight_are_still
         }
         return Briefing(MoonPhase.current(nowMs), place, place?.let { Daylight.at(it, nowMs) },
             chosen, stale, message, prompts[day % prompts.size], nowMs)

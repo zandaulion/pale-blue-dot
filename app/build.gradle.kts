@@ -7,6 +7,13 @@ android {
     namespace = "com.globe.app"
     compileSdk = 36
 
+    // The in-app language picker works offline, including installations from an AAB.
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     defaultConfig {
         applicationId = "com.zandaulion.palebluedot"
         minSdk = 24

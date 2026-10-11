@@ -1,5 +1,7 @@
 package com.globe.app.widget
 
+import com.globe.app.AppLanguage
+import com.globe.app.R
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
@@ -17,6 +19,7 @@ import com.globe.app.places.PlaceStore
 /** Widget instance owns an explicit place choice; cancellation leaves it unconfigured. */
 class EarthWidgetConfigActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppLanguage.restore(this)
         super.onCreate(savedInstanceState)
         val id = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
         setResult(RESULT_CANCELED)
@@ -36,10 +39,10 @@ class EarthWidgetConfigActivity : AppCompatActivity() {
             }
         }
         root.addView(TextView(this).apply {
-            text = "Earth Today widget"; textSize = 22f; setTextColor(Color.WHITE)
+            text = getString(R.string.text_earth_today_widget); textSize = 22f; setTextColor(Color.WHITE)
         })
         root.addView(TextView(this).apply {
-            text = "Which place should this widget show? Other widgets can show different places."
+            text = getString(R.string.text_which_place_should_this_widget_show_other_widgets_can_show_differ)
             textSize = 15f; setTextColor(Color.rgb(190, 205, 219))
             setPadding(0, dp(8), 0, dp(12))
         })
@@ -48,7 +51,7 @@ class EarthWidgetConfigActivity : AppCompatActivity() {
         choices.forEachIndexed { index, place ->
             group.addView(RadioButton(this).apply {
                 this.id = index + 1
-                text = place?.name ?: "No place yet"
+                text = place?.name ?: getString(R.string.text_no_place_yet)
                 setTextColor(Color.WHITE)
                 textSize = 16f
                 minHeight = dp(48)
@@ -56,13 +59,13 @@ class EarthWidgetConfigActivity : AppCompatActivity() {
             })
         }
         if (places.isEmpty()) root.addView(TextView(this).apply {
-            text = "Save a place in the app (Explore > Places) to see its day and night here."
+            text = getString(R.string.text_save_a_place_in_the_app_explore_places_to_see_its_day_and_night_h)
             textSize = 14f; setTextColor(Color.rgb(190, 205, 219))
         })
         root.addView(ScrollView(this).apply { addView(group) },
             LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f))
         root.addView(Button(this).apply {
-            text = "Save widget"
+            text = getString(R.string.text_save_widget)
             minHeight = dp(52)
             setOnClickListener {
                 val place = choices.getOrNull(group.checkedRadioButtonId - 1)

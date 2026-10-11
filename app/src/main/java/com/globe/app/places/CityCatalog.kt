@@ -314,9 +314,14 @@ object CityCatalog {
     )
 
     /** Accent- and case-insensitive name match; a blank query lists every city. */
-    fun search(query: String): List<SavedPlace> {
+    fun search(query: String, context: android.content.Context? = null): List<SavedPlace> {
         val needle = fold(query.trim())
-        return cities.filter { needle.isEmpty() || fold(it.name).contains(needle) }.sortedBy { it.name }
+        return cities.map { place ->
+            val name = context?.let { CityNames.name(it, place) } ?: place.name
+            place to place.copy(name = name)
+        }.filter { (original, localized) ->
+            needle.isEmpty() || fold(original.name).contains(needle) || fold(localized.name).contains(needle)
+        }.map { it.second }.sortedWith(compareBy(java.text.Collator.getInstance(context?.resources?.configuration?.locales?.get(0) ?: java.util.Locale.getDefault())) { it.name })
     }
 
     private fun fold(text: String): String =

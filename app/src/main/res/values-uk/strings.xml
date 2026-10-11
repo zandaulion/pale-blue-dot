@@ -1,0 +1,791 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="companion_today" formatted="false">"Сьогодні"</string>
+    <string name="companion_layers" formatted="false">"Шари"</string>
+    <string name="companion_explore" formatted="false">"Дослідження"</string>
+    <string name="companion_settings" formatted="false">"Налаштування"</string>
+    <string name="companion_close" formatted="false">"Закрити"</string>
+    <string name="companion_refresh" formatted="false">"Оновити спостереження"</string>
+    <string name="companion_events" formatted="false">"Останні спостереження"</string>
+    <string name="companion_no_events" formatted="false">"Немає повідомлень про події в цій категорії"</string>
+    <string name="companion_why" formatted="false">"чому це відбувається"</string>
+    <string name="companion_reduce_motion" formatted="false">"Зменшити рух"</string>
+    <string name="companion_clouds" formatted="false">"Хмари"</string>
+    <string name="wallpaper_name" formatted="false">"Pale Blue Dot Земля"</string>
+    <string name="wallpaper_description" formatted="false">"Тихий живий вид на Землю для ваших шпалер"</string>
+    <string name="wallpaper_settings_title" formatted="false">"Земля шпалери"</string>
+    <string name="companion_generated" formatted="false">"Сформований"</string>
+    <string name="companion_satellite" formatted="false">"Супутник"</string>
+    <string name="companion_off" formatted="false">"Вимкнено"</string>
+    <string name="widget_title" formatted="false">"Земля сьогодні"</string>
+    <string name="widget_description" formatted="false">"Місяць і денне світло; розгорніть для прямого перегляду Землі та нещодавньої події"</string>
+    <string name="widget_preview_moon" formatted="false">"🌔 Зростаючий опуклий Місяць · 82%"</string>
+    <string name="widget_preview_place" formatted="false">"Бухарест, Румунія"</string>
+    <string name="widget_event_label" formatted="false">"На Землі"</string>
+    <string name="widget_preview_daylight" formatted="false">"Світло зараз"</string>
+    <string name="widget_change_place" formatted="false">"Змінити місце віджета"</string>
+    <string name="widget_globe_description" formatted="false">"Поточна сцена Землі"</string>
+    <string name="widget_name" formatted="false">"Земля сьогодні"</string>
+    <string name="text_clouds_live_loading" formatted="false">"☁ Хмари: наживо (завантаження…)"</string>
+    <string name="text_time_now" formatted="false">"Час · Зараз"</string>
+    <string name="text_time_controls" formatted="false">"Контроль часу"</string>
+    <string name="text_move_time_up_to_24_hours_before_or_after_now" formatted="false">"Перемістити час на 24 години до або після цього"</string>
+    <string name="text_share" formatted="false">"↑ Поділитися"</string>
+    <string name="text_today" formatted="false">"🗓 Сьогодні"</string>
+    <string name="text_save_this_place" formatted="false">"+ Зберегти це місце"</string>
+    <string name="text_planetary_briefing_real_time" formatted="false">"Планетарний брифінг · реальний час"</string>
+    <string name="text_1_s_2_s_3_s_estimated_illumination">"%1$s %2$s · %3$d%% розрахункова освітленість"</string>
+    <string name="text_choose_a_primary_place" formatted="false">"Виберіть основне місце"</string>
+    <string name="text_fly_to_1_s">"Летіть до %1$s"</string>
+    <string name="text_satellite_imagery_1_s">"Супутникові знімки — %1$s"</string>
+    <string name="text_saved_copy" formatted="false">" · збережена копія"</string>
+    <string name="text_satellite_imagery_unavailable_or_still_loading" formatted="false">"Супутникові зображення недоступні або ще завантажуються"</string>
+    <string name="text_one_observation_1_s">"Одне спостереження · %1$s"</string>
+    <string name="text_time_unavailable" formatted="false">"Час недоступний"</string>
+    <string name="text_this_observation_is_no_longer_in_the_saved_feed" formatted="false">"Цього спостереження більше немає в збереженій стрічці."</string>
+    <string name="text_current_events" formatted="false">"Актуальні події"</string>
+    <string name="text_choose_what_appears_on_the_globe_hidden_events_also_leave_the_eve" formatted="false">"Виберіть те, що зображено на глобусі. Приховані події також залишають список подій і викликів."</string>
+    <string name="text_satellite_imagery_may_be_unavailable_offline_generated_clouds_sti" formatted="false">"Супутникові зображення можуть бути недоступні офлайн; створені хмари все ще працюють."</string>
+    <string name="text_reported_by_usgs" formatted="false">"Повідомив USGS"</string>
+    <string name="text_reported_by_nasa_eonet" formatted="false">"Повідомив NASA EONET"</string>
+    <string name="text_constellations" formatted="false">"Сузір\'я"</string>
+    <string name="text_catalog_lines_in_the_star_background" formatted="false">"Рядки каталогу на тлі зірки"</string>
+    <string name="text_iss_illustration" formatted="false">"МКС ілюстрація"</string>
+    <string name="text_approximate_orbit_not_live_tracking" formatted="false">"Приблизна орбіта, а не стеження в реальному часі"</string>
+    <string name="text_aurora_illustration" formatted="false">"Аврора ілюстрації"</string>
+    <string name="text_decorative_glow_not_a_forecast" formatted="false">"Декоративне сяйво, а не прогноз"</string>
+    <string name="text_day_night_boundary" formatted="false">"Межа день/ніч"</string>
+    <string name="text_calculated_terminator_line" formatted="false">"Розрахована лінія термінатора"</string>
+    <string name="text_plate_boundaries" formatted="false">"Межі тектонічних плит"</string>
+    <string name="text_offline_pb2002_model_gold_lines" formatted="false">"Модель Offline PB2002 · золоті лінії"</string>
+    <string name="text_plate_boundaries_gold_lines_mark_modelled_plate_edges_earthquakes" formatted="false">"Межі тектонічних плити: золоті лінії позначають змодельовані краї пластини. Землетруси також можуть відбуватися далеко від них. Джерело: Bird (2003), PB2002; ODbL 1.0."</string>
+    <string name="text_places_1_s_saved">"Місця · %1$d збережено"</string>
+    <string name="text_explore_time_and_seasons" formatted="false">"Досліджуйте час і пори року"</string>
+    <string name="text_guided_journeys" formatted="false">"Подорожі з гідом"</string>
+    <string name="text_field_notebook_1_s_2_s_discoveries">"Польовий зошит · Відкриття %1$d/%2$d"</string>
+    <string name="text_try_a_quick_challenge" formatted="false">"Спробуйте швидкий виклик"</string>
+    <string name="text_scene_guide_and_legend" formatted="false">"Сюжет і легенда"</string>
+    <string name="text_ambient_music" formatted="false">"Ембіентна музика"</string>
+    <string name="text_only_while_the_app_is_open" formatted="false">"Лише коли програма відкрита"</string>
+    <string name="text_music_volume" formatted="false">"Гучність музики"</string>
+    <string name="text_read_aloud" formatted="false">"Читати вголос"</string>
+    <string name="text_speak_cards_when_narration_is_enabled" formatted="false">"Промовляйте картки, коли ввімкнено дикторський текст"</string>
+    <string name="text_stops_idle_spin_and_decorative_marker_movement" formatted="false">"Зупиняє холосте обертання та рух декоративного маркера"</string>
+    <string name="text_share_globe_image" formatted="false">"Поділіться зображенням глобуса"</string>
+    <string name="text_earth_live_wallpaper" formatted="false">"Земля живі шпалери"</string>
+    <string name="text_explore" formatted="false">"‹ Досліджуйте"</string>
+    <string name="text_completed_journeys" formatted="false">"Завершені подорожі"</string>
+    <string name="text_no_journeys_completed_yet" formatted="false">"Ще немає завершених подорожей."</string>
+    <string name="text_saved_observations" formatted="false">"Збережені спостереження"</string>
+    <string name="text_save_an_observation_from_its_card_to_keep_its_source_and_date" formatted="false">"Збережіть спостереження з його картки, щоб зберегти його джерело та дату."</string>
+    <string name="text_earlier_discoveries_1_s_2_s">"Більш ранні відкриття · %1$d/%2$d"</string>
+    <string name="text_you_explored_a_reported_earthquake" formatted="false">"Ви досліджували повідомлення про землетрус."</string>
+    <string name="text_you_explored_a_reported_volcanic_event" formatted="false">"Ви досліджували зареєстровану вулканічну подію."</string>
+    <string name="text_you_explored_a_reported_wildfire" formatted="false">"Ви досліджували повідомлення про лісову пожежу."</string>
+    <string name="text_you_explored_a_reported_storm" formatted="false">"Ви досліджували зареєстрований шторм."</string>
+    <string name="text_you_found_a_place_facing_the_sun" formatted="false">"Ви знайшли місце навпроти Сонця."</string>
+    <string name="text_you_found_earth_s_night_side" formatted="false">"Ви знайшли нічну сторону Землі."</string>
+    <string name="text_you_looked_beyond_earth" formatted="false">"Ти дивився за межі Землі."</string>
+    <string name="text_you_changed_the_scene_time" formatted="false">"Ви змінили час сцени."</string>
+    <string name="text_observed" formatted="false">"Спостерігається: "</string>
+    <string name="text_time_not_reported" formatted="false">"Час не повідомляється"</string>
+    <string name="text_source" formatted="false">"Джерело: "</string>
+    <string name="text_magnitude_1_s">"Величина: %1$s\n"</string>
+    <string name="text_depth_1_s_km">"Глибина: %1$s км\n"</string>
+    <string name="text_source_link_1_s">"Посилання на джерело: %1$s"</string>
+    <string name="text_saved_observation" formatted="false">"Збережене спостереження"</string>
+    <string name="text_fly_to" formatted="false">"Летіти до"</string>
+    <string name="text_sunlight_and_city_lights" formatted="false">"Сонячне світло і вогні міста"</string>
+    <string name="text_calculated_sunlight_shows_the_current_day_and_night_sides" formatted="false">"Розраховане сонячне світло показує поточний день і ніч."</string>
+    <string name="text_generated_clouds_are_illustrative_satellite_mode_derives_opacity" formatted="false">"Згенеровані хмари є ілюстративними. Супутниковий режим отримує непрозорість із датованого зображення NASA VIIRS."</string>
+    <string name="text_earthquakes" formatted="false">"землетруси"</string>
+    <string name="text_usgs_reports_magnitude_4_5_earthquakes_from_the_last_seven_days" formatted="false">"USGS повідомляє про землетруси магнітудою 4,5+ за останні сім днів."</string>
+    <string name="text_volcanoes_wildfires_and_storms" formatted="false">"Вулкани, лісові пожежі та шторми"</string>
+    <string name="text_nasa_eonet_open_reports_may_have_older_observation_dates" formatted="false">"Відкриті звіти NASA EONET можуть мати старіші дати спостереження."</string>
+    <string name="text_iss" formatted="false">"МКС"</string>
+    <string name="text_illustrated_orbit_not_live_tracking" formatted="false">"Ілюстрована орбіта, а не стеження в реальному часі."</string>
+    <string name="text_aurora" formatted="false">"Аврора"</string>
+    <string name="text_decorative_illustration_not_a_forecast" formatted="false">"Декоративна ілюстрація, а не прогноз."</string>
+    <string name="text_calculated_terminator_line_2" formatted="false">"Розрахована лінія термінатора."</string>
+    <string name="text_catalog_stars_joined_into_familiar_patterns" formatted="false">"Зірки каталогу поєдналися в знайомі візерунки."</string>
+    <string name="text_a_simplified_offline_pb2002_model_many_earthquakes_occur_near_bou" formatted="false">"Спрощена автономна модель PB2002. Багато землетрусів відбуваються поблизу кордонів, хоча деякі відбуваються в інших місцях. Золоті лінії не є діагнозом для будь-якої події."</string>
+    <string name="text_saved_places_stay_on_this_device_cyan_rings_mark_them_on_the_glob" formatted="false">"Збережені місця залишаються на цьому пристрої. Блакитні кільця позначають їх на глобусі."</string>
+    <string name="text_search_bundled_cities" formatted="false">"Пошук міст у групі"</string>
+    <string name="text_city_or_country_blank_lists_all_1_s">"Місто або країна (пустий список усіх %1$d)"</string>
+    <string name="text_find_a_city" formatted="false">"Знайдіть місто"</string>
+    <string name="text_search" formatted="false">"Пошук"</string>
+    <string name="text_no_bundled_city_matches_that_name" formatted="false">"Жодне згруповане місто не відповідає цій назві."</string>
+    <string name="text_ok" formatted="false">"добре"</string>
+    <string name="text_bundled_cities" formatted="false">"Збірні міста"</string>
+    <string name="text_cancel" formatted="false">"Скасувати"</string>
+    <string name="text_add_a_place_from_the_globe" formatted="false">"Додайте місце з глобуса"</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Торкніться точки на глобусі, а потім торкніть + Зберегти це місце під карткою."</string>
+    <string name="text_time_zone_unset" formatted="false">"Часовий пояс не встановлено"</string>
+    <string name="text_set_as_primary" formatted="false">"Встановити як основний"</string>
+    <string name="text_rename" formatted="false">"Перейменувати"</string>
+    <string name="text_set_time_zone" formatted="false">"Встановити часовий пояс"</string>
+    <string name="text_delete" formatted="false">"Видалити"</string>
+    <string name="text_1_s_removed">"%1$s видалено"</string>
+    <string name="text_undo" formatted="false">"Скасувати"</string>
+    <string name="text_done" formatted="false">"Готово"</string>
+    <string name="text_name_this_place" formatted="false">"Назвіть це місце"</string>
+    <string name="text_save" formatted="false">"Зберегти"</string>
+    <string name="text_iana_zone_e_g_europe_bucharest" formatted="false">"зона IANA, напр. Європа/Бухарест"</string>
+    <string name="text_suggested_from_the_nearest_town_change_it_if_this_place_is_across" formatted="false">"Рекомендується з найближчого міста; змінити його, якщо це місце знаходиться за кордоном. "</string>
+    <string name="text_time_zone_for_1_s">"Часовий пояс для %1$s"</string>
+    <string name="text_enter_an_iana_time_zone_id_or_leave_blank_to_keep_local_clock_and" formatted="false">"Введіть ідентифікатор часового поясу IANA або залиште поле пустим, щоб не встановлювати місцевий годинник і схід сонця."</string>
+    <string name="text_unknown_iana_time_zone_id_1_s">"Невідомий ідентифікатор часового поясу IANA: %1$s"</string>
+    <string name="text_try_again" formatted="false">"Спробуйте знову"</string>
+    <string name="text_time_zone_unset_choose_a_zone_for_local_clock_and_sunrise" formatted="false">"Часовий пояс не встановлено · виберіть пояс для місцевого годинника та світанку"</string>
+    <string name="text_polar_day_sun_stays_above_the_horizon" formatted="false">"Полярний день · Сонце стоїть над горизонтом"</string>
+    <string name="text_polar_night_sun_stays_below_the_horizon" formatted="false">"Полярна ніч · Сонце залишається за горизонтом"</string>
+    <string name="text_not_available" formatted="false">"недоступний"</string>
+    <string name="text_about_1_sh_2_sm_daylight">" · близько %1$d год %2$d хв світлового дня"</string>
+    <string name="text_approx_sunrise_1_s_sunset_2_s_3_s">"прибл. схід сонця %1$s · захід сонця %2$s%3$s"</string>
+    <string name="text_day" formatted="false">"день"</string>
+    <string name="text_night" formatted="false">"ніч"</string>
+    <string name="text_choose_a_date_to_hold_the_globe_in_an_explicit_lesson_time_today" formatted="false">"Виберіть дату, щоб тримати глобус під час явного уроку. Сьогодні та шпалери залишаються в реальному часі."</string>
+    <string name="text_begin_at_current_time" formatted="false">"Почати в поточний час"</string>
+    <string name="text_simulated_1_s">"СИМУЛЯЦІЯ · %1$s"</string>
+    <string name="text_choose_date_and_time" formatted="false">"Виберіть дату та час"</string>
+    <string name="text_pause" formatted="false">"Пауза"</string>
+    <string name="text_play_at_real_time_speed" formatted="false">"Грайте зі швидкістю реального часу"</string>
+    <string name="text_advance_one_hour" formatted="false">"На годину вперед"</string>
+    <string name="text_advance_one_day" formatted="false">"Аванс на один день"</string>
+    <string name="text_now_leave_time_exploration" formatted="false">"Тепер · залиште дослідження часу"</string>
+    <string name="text_compare_latest_observations" formatted="false">"Порівняйте останні спостереження"</string>
+    <string name="text_these_reports_are_from_real_dates_not_the_simulated_date" formatted="false">"Ці звіти створено за реальні дати, а не за імітаційну дату."</string>
+    <string name="text_year_timeline_1_s">"Хронологія року · %1$d"</string>
+    <string name="text_choose_day_of_year" formatted="false">"Виберіть день року"</string>
+    <string name="text_seasons_earth_s_axis_stays_tilted_about_23_4_as_earth_orbits_the" formatted="false">"Пори року · Вісь Землі залишається нахиленою приблизно на 23,4°, коли Земля обертається навколо Сонця. Сонячне світло рухається між півкулями протягом року; Сонце сцени вже враховує цей нахил."</string>
+    <string name="text_23_4_axis" formatted="false">"23,4° осі"</string>
+    <string name="text_sunlight" formatted="false">"Сонячне світло →"</string>
+    <string name="text_polar_day" formatted="false">"полярний день"</string>
+    <string name="text_polar_night" formatted="false">"полярна ніч"</string>
+    <string name="text_about_1_sh_2_sm_daylight_2">"близько %1$d год %2$d хв світлового дня"</string>
+    <string name="text_daylight_changing" formatted="false">"зміна світлового дня"</string>
+    <string name="text_guides_equator_tropics_23_4_and_polar_circles_66_6_compare_the_tw" formatted="false">"Орієнтири: екватор, тропіки (±23,4°), полярні кола (±66,6°). Порівняйте дві півкулі в березні, червні, вересні та грудні."</string>
+    <string name="text_short_local_lessons_each_restores_your_previous_globe_view_and_la" formatted="false">"Короткі, місцеві уроки. Кожен із них відновлює ваш попередній вигляд глобуса та шари, коли ви залишаєте."</string>
+    <string name="text_completed" formatted="false">" · завершено"</string>
+    <string name="text_1_s_2_s_min_3_s">"%1$s · %2$s min%3$s"</string>
+    <string name="text_resume" formatted="false">"Резюме"</string>
+    <string name="text_restart" formatted="false">"Перезапустіть"</string>
+    <string name="text_choose_a_journey" formatted="false">"Виберіть подорож"</string>
+    <string name="text_1_s_step_2_s_of_3_s">"%1$s · крок %2$d з %3$d"</string>
+    <string name="text_historical_source_1_s">"Історичне джерело: %1$s"</string>
+    <string name="text_recent_reported_example_1_s_2_s_3_s">"Останній приклад: %1$s\n%2$s · %3$s"</string>
+    <string name="text_that_s_the_pattern" formatted="false">"Ось така закономірність"</string>
+    <string name="text_look_again" formatted="false">"Подивіться ще раз"</string>
+    <string name="text_continue" formatted="false">"Продовжити"</string>
+    <string name="text_advance" formatted="false">"Аванс"</string>
+    <string name="text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th">"Сцена перемістилася на %1$d годин вперед. Спостерігайте за зміною сонячного світла на земній кулі."</string>
+    <string name="text_reveal" formatted="false">"Розкрити"</string>
+    <string name="text_the_gold_pb2002_lines_show_a_broad_plate_edge_pattern_some_report" formatted="false">"Золоті лінії PB2002 демонструють широкий візерунок на краю пластини. Деякі повідомлення про події лежать далеко від них."</string>
+    <string name="text_view_globe" formatted="false">"Переглянути глобус"</string>
+    <string name="text_skip_this_step" formatted="false">"Пропустіть цей крок"</string>
+    <string name="text_leave_journey_restore_my_view" formatted="false">"Залишити подорож · відновити мій перегляд"</string>
+    <string name="text_1_s_is_in_your_field_notebook">"%1$s у вашому блокноті Field."</string>
+    <string name="text_not_loaded" formatted="false">"Не завантажений"</string>
+    <string name="text_checking" formatted="false">"Перевірка"</string>
+    <string name="text_recently" formatted="false">"недавно"</string>
+    <string name="text_checked_1_s">"Перевірено %1$s"</string>
+    <string name="text_saved_observations_offline_or_update_failed" formatted="false">"Збережені спостереження · офлайн або оновлення не вдалося"</string>
+    <string name="text_unavailable" formatted="false">"Недоступний"</string>
+    <string name="text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who" formatted="false">"🌟 Нічне небо!\nЗа межами Землі знаходяться тисячі зірок, планет і цілі галактики."</string>
+    <string name="text_earthquakes_happen_when_stress_makes_rock_slip_along_a_fault_some" formatted="false">"Землетруси трапляються, коли напруга викликає ковзання породи вздовж розлому. Деякі трапляються далеко від кордонів плит."</string>
+    <string name="text_magma_can_rise_through_earth_s_crust_this_report_does_not_confirm" formatted="false">"Магма може підніматися через земну кору. Цей звіт на даний момент не підтверджує виверження."</string>
+    <string name="text_wildfire_can_begin_naturally_or_through_human_activity_and_may_sp" formatted="false">"Лісова пожежа може виникнути природним шляхом або через діяльність людини та може поширюватися в сухих і вітряних умовах. Цей звіт може бути старішим за сьогодні."</string>
+    <string name="text_severe_storms_draw_energy_from_warm_moist_air_this_marker_shows_t" formatted="false">"Сильні шторми черпають енергію з теплого вологого повітря. Цей маркер показує останню повідомлену точку, а не поточний прогноз."</string>
+    <string name="text_observed_1_s">"Спостерігається: %1$s\n"</string>
+    <string name="text_source_updated_1_s">"Джерело оновлено: %1$s\n"</string>
+    <string name="text_source_1_s">"Джерело: %1$s\n"</string>
+    <string name="text_unavailable_2" formatted="false">"недоступний"</string>
+    <string name="text_checking_showing_saved_copy" formatted="false">"перевірка; показ збереженої копії"</string>
+    <string name="text_saved_copy_refresh_unavailable" formatted="false">"збережена копія; оновлення недоступне"</string>
+    <string name="text_checked_1_s_2">"перевірено %1$s"</string>
+    <string name="text_feed_1_s">"Подача: %1$s"</string>
+    <string name="text_source_link_1_s_2">"\nПосилання на джерело: %1$s"</string>
+    <string name="text_saved" formatted="false">"Збережено"</string>
+    <string name="text_place_name" formatted="false">"Назва місця"</string>
+    <string name="text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now" formatted="false">"☀️ Тут уже день!\nЦя сторона Землі зараз звернена до Сонця. Перетягніть повзунок часу, щоб побачити настання ночі."</string>
+    <string name="text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those" formatted="false">"🌙 Тут ніч.\nЦя сторона повернута від Сонця — ці крихітні вогники — міста. Перетягніть повзунок часу, щоб повернути сонце."</string>
+    <string name="text_added_to_field_notebook_1_s">"Додано до блокнота Field.\n\n%1$s"</string>
+    <string name="text_close_1_s">"× Закрити\n\n%1$s"</string>
+    <string name="text_1_s_2_s_tap_to_stop">"🎯 %1$s\n⭐ %2$d · торкніться, щоб зупинити"</string>
+    <string name="text_challenge_stopped_play_again_anytime" formatted="false">"Завдання зупинено — грайте знову будь-коли!"</string>
+    <string name="text_tap_on_the_earth_to_answer" formatted="false">"Натисніть на Землю, щоб відповісти! 🌍"</string>
+    <string name="text_yes_that_s_right" formatted="false">"🎉 Так! Це вірно."</string>
+    <string name="text_not_quite_take_another_look_and_try_again" formatted="false">"Не зовсім — подивіться ще раз і спробуйте знову! 🔍"</string>
+    <string name="text_my_discoveries" formatted="false">"Мої відкриття"</string>
+    <string name="text_1_s_of_2_s_found_keep_exploring">"Знайдено %1$d з %2$d — продовжуйте досліджувати!"</string>
+    <string name="text_not_found_yet" formatted="false">"Ще не знайдено"</string>
+    <string name="text_tap_anywhere_to_close" formatted="false">"Торкніться будь-де, щоб закрити"</string>
+    <string name="text_1_s_2_s_3_s_lit_up_tonight">"%1$s %2$s\n%3$d%% освітлено сьогодні ввечері"</string>
+    <string name="text_did_you_know" formatted="false">"Ви знали?"</string>
+    <string name="text_tap_a_glowing_dot_on_earth_to_explore_or_find_a_new_discovery_for" formatted="false">"Торкніться крапки, що світиться на Землі, щоб дослідити — або знайдіть нове відкриття для свого щоденника!"</string>
+    <string name="text_play_a_challenge" formatted="false">"🎯 Грайте в виклик!"</string>
+    <string name="text_tap_outside_the_box_to_close" formatted="false">"Торкніться за межами рамки, щоб закрити"</string>
+    <string name="text_ongoing" formatted="false">"триває"</string>
+    <string name="text_just_now" formatted="false">"тільки зараз"</string>
+    <string name="text_clouds_off" formatted="false">"☁ Хмари: вимкнено"</string>
+    <string name="text_clouds_generated" formatted="false">"☁ Хмари: створено"</string>
+    <string name="text_clouds_live_nasa_viirs_updated_1_s">"☁ Хмари: наживо (NASA VIIRS)\nОновлено: %1$s"</string>
+    <string name="text_solar_eclipse" formatted="false">"☀ Сонячне затемнення!"</string>
+    <string name="text_lunar_eclipse" formatted="false">"🌙 Місячне затемнення!"</string>
+    <string name="text_near_solar_eclipse" formatted="false">"Поблизу сонячного затемнення"</string>
+    <string name="text_near_lunar_eclipse" formatted="false">"Близьке місячне затемнення"</string>
+    <string name="text_explore_time_simulated_scene" formatted="false">"Досліджуйте час, змодельована сцена"</string>
+    <string name="text_earth" formatted="false">"земля"</string>
+    <string name="text_textured_globe_with_day_night_cycle_and_diffuse_sunlight" formatted="false">"Текстурований глобус із циклом день/ніч і розсіяним сонячним світлом"</string>
+    <string name="text_city_lights" formatted="false">"Вогні міста"</string>
+    <string name="text_visible_on_the_night_side_of_the_earth" formatted="false">"Видно на нічній стороні Землі"</string>
+    <string name="text_procedural_or_live_satellite_imagery_nasa_viirs_tap_cloud_label_t" formatted="false">"Процедурні або живі супутникові зображення (NASA VIIRS). Торкніться мітки хмари, щоб перемкнути"</string>
+    <string name="text_sun" formatted="false">"сонце"</string>
+    <string name="text_billboard_glow_showing_the_sun_s_real_time_position" formatted="false">"Світіння рекламного щита, що показує положення сонця в реальному часі"</string>
+    <string name="text_moon" formatted="false">"Місяць"</string>
+    <string name="text_textured_sphere_at_its_real_orbital_position" formatted="false">"Текстурована сфера на своїй реальній орбітальній позиції"</string>
+    <string name="text_terminator_line" formatted="false">"Лінія термінатора"</string>
+    <string name="text_amber_line_at_the_day_night_boundary" formatted="false">"Бурштинова лінія на межі день/ніч"</string>
+    <string name="text_green_purple_glow_near_the_geomagnetic_poles_night_side_only" formatted="false">"Зелене/фіолетове світіння поблизу геомагнітних полюсів (лише нічна сторона)"</string>
+    <string name="text_atmosphere" formatted="false">"атмосфера"</string>
+    <string name="text_blue_fresnel_glow_around_the_earth_s_rim" formatted="false">"Блакитне світіння Френеля навколо краю Землі"</string>
+    <string name="text_stars" formatted="false">"Зірки"</string>
+    <string name="text_background_star_field" formatted="false">"Фон зоряне поле"</string>
+    <string name="text_pulsing_amber_dots_m4_5_from_usgs_past_7_days" formatted="false">"Пульсаційні жовті крапки (M4.5+ від USGS, останні 7 днів)"</string>
+    <string name="text_volcanoes" formatted="false">"Вулкани"</string>
+    <string name="text_pulsing_magenta_dots_active_eruptions_from_nasa_eonet" formatted="false">"Пульсуючи пурпурові точки (активні виверження з NASA EONET)"</string>
+    <string name="text_wildfires" formatted="false">"Лісові пожежі"</string>
+    <string name="text_pulsing_red_dots_active_fires_from_nasa_eonet" formatted="false">"Пульсуючи червоні крапки (активні пожежі з NASA EONET)"</string>
+    <string name="text_storms" formatted="false">"Бурі"</string>
+    <string name="text_pulsing_blue_dots_severe_storms_from_nasa_eonet_tap_any_dot_for_d" formatted="false">"Пульсуючи сині крапки (сильні шторми від NASA EONET) — торкніться будь-якої крапки, щоб переглянути деталі"</string>
+    <string name="text_iss_orbit" formatted="false">"орбіта МКС"</string>
+    <string name="text_thin_line_showing_the_international_space_station_s_path" formatted="false">"Тонка лінія показує шлях Міжнародної космічної станції"</string>
+    <string name="text_sun_moon_arrows" formatted="false">"Стрілки сонця/місяця"</string>
+    <string name="text_2d_overlay_arrows_pointing_toward_the_sun_and_moon" formatted="false">"2D-накладені стрілки, що вказують на сонце та місяць"</string>
+    <string name="text_eclipse_alerts" formatted="false">"Сповіщення Eclipse"</string>
+    <string name="text_notifies_when_sun_earth_moon_alignment_approaches_an_eclipse" formatted="false">"Повідомляє, коли сонце-земля-місяць наближається до затемнення"</string>
+    <string name="text_time_scrubber" formatted="false">"Скруббер часу"</string>
+    <string name="text_drag_the_slider_to_simulate_24_hours_releases_to_snap_back_to_now" formatted="false">"Перетягніть повзунок, щоб імітувати +/- 24 години; випусків, до яких можна повернутися"</string>
+    <string name="text_legend" formatted="false">"Легенда"</string>
+    <string name="text_music_on" formatted="false">"♫ Музика: увімк"</string>
+    <string name="text_music_off" formatted="false">"♫ Музика: вимкнено"</string>
+    <string name="text_read_to_me_is_on_i_ll_read_the_cards_out_loud" formatted="false">"Read to me включено. Я читатиму картки вголос."</string>
+    <string name="text_read_on" formatted="false">"🔊 Читати: далі"</string>
+    <string name="text_read_off" formatted="false">"🔊 Читайте: викл"</string>
+    <string name="text_a_living_window_onto_earth" formatted="false">"Живе вікно на Землю"</string>
+    <string name="text_drag_to_rotate" formatted="false">"Перетягніть, щоб повернути"</string>
+    <string name="text_pinch_to_zoom" formatted="false">"Стисніть, щоб збільшити"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Торкніться глобуса, щоб дізнатися більше"</string>
+    <string name="text_explore_earth" formatted="false">"Досліджуйте Землю"</string>
+    <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"Попередній перегляд · поточне сонячне світло · немає аудіо"</string>
+    <string name="text_preview_set_wallpaper" formatted="false">"Попередній перегляд і встановлення шпалер"</string>
+    <string name="text_choose_home_or_lock_screen_in_the_android_preview" formatted="false">"Виберіть головний екран або екран блокування в попередньому перегляді Android."</string>
+    <string name="text_view_from" formatted="false">"Вид з"</string>
+    <string name="text_saved_places" formatted="false">"Збережені місця"</string>
+    <string name="text_search_cities" formatted="false">"Пошук міст"</string>
+    <string name="text_composition" formatted="false">"Композиція"</string>
+    <string name="text_whole_earth" formatted="false">"Уся Земля"</string>
+    <string name="text_night_lights" formatted="false">"Нічні вогні"</string>
+    <string name="text_earth_s_horizon" formatted="false">"Земний горизонт"</string>
+    <string name="text_complete_globe_with_current_sunlight_and_quiet_stars" formatted="false">"Повний глобус із поточним сонячним світлом і тихими зірками."</string>
+    <string name="text_city_lights_on_the_dark_side_of_earth_with_current_sunlight" formatted="false">"Вогні міста на темній стороні Землі з поточним сонячним світлом."</string>
+    <string name="text_a_close_cropped_view_of_earth_s_atmospheric_limb" formatted="false">"Зблизька, кадроване зображення атмосферного лімба Землі."</string>
+    <string name="text_camera_motion" formatted="false">"Рух камери"</string>
+    <string name="text_fixed_viewpoint" formatted="false">"Фіксована точка зору"</string>
+    <string name="text_slow_orbit" formatted="false">"Повільна орбіта"</string>
+    <string name="text_follow_the_night_side" formatted="false">"Дотримуйтеся нічної сторони"</string>
+    <string name="text_keeps_your_chosen_place_in_view_as_daylight_changes" formatted="false">"Тримає вибране вами місце в полі зору при зміні світлового дня."</string>
+    <string name="text_starts_at_your_chosen_view_then_slowly_travels_around_earth" formatted="false">"Починає з вибраного ракурсу, а потім повільно подорожує навколо Землі."</string>
+    <string name="text_the_view_moves_with_the_night_side_instead_of_staying_over_a_plac" formatted="false">"Погляд рухається з нічної сторони замість того, щоб залишатися на місці."</string>
+    <string name="text_turn_the_globe_when_i_swipe_between_home_screens" formatted="false">"Повертайте глобус, коли я гортаю між головними екранами"</string>
+    <string name="text_generated_illustration" formatted="false">"Згенерована ілюстрація"</string>
+    <string name="text_satellite_imagery_when_cached_or_available" formatted="false">"Супутникові зображення, якщо вони збережені або доступні"</string>
+    <string name="text_globe_scale" formatted="false">"Масштаб глобуса"</string>
+    <string name="text_hide_framing_controls" formatted="false">"Сховати елементи керування рамкою ▴"</string>
+    <string name="text_adjust_framing_angles" formatted="false">"Налаштуйте рамку та кути ▾"</string>
+    <string name="text_horizontal_framing" formatted="false">"Горизонтальне обрамлення"</string>
+    <string name="text_vertical_framing" formatted="false">"Вертикальне обрамлення"</string>
+    <string name="text_view_angle" formatted="false">"Кут огляду"</string>
+    <string name="text_view_latitude" formatted="false">"Переглянути широту"</string>
+    <string name="text_saved_view_1_s">" · збережений вигляд: %1$s"</string>
+    <string name="text_following_the_night_side_1_s">"Дотримуючись нічної сторони%1$s"</string>
+    <string name="text_your_custom_view" formatted="false">"власний перегляд"</string>
+    <string name="text_orbit_starts_at_1_s">"Орбіта починається в %1$s"</string>
+    <string name="text_choose_a_place_or_adjust_the_angles_below" formatted="false">"Виберіть місце або відрегулюйте кути нижче."</string>
+    <string name="text_no_saved_places_yet" formatted="false">"Ще немає збережених місць"</string>
+    <string name="text_search_for_a_city_here_you_can_also_save_a_custom_point_in_explor" formatted="false">"Шукайте місто тут. Ви також можете зберегти спеціальну точку в Дослідження → Місця → Додати місце з глобуса."</string>
+    <string name="text_view_from_a_saved_place" formatted="false">"Вид із збереженого місця"</string>
+    <string name="text_city_or_country" formatted="false">"Місто чи країна"</string>
+    <string name="text_search_city_or_country" formatted="false">"Пошук міста чи країни"</string>
+    <string name="text_no_matching_city_try_a_country_or_another_name" formatted="false">"Немає відповідного міста. Спробуйте країну чи іншу назву."</string>
+    <string name="text_choose_a_city" formatted="false">"Виберіть місто"</string>
+    <string name="text_earth_today_widget" formatted="false">"Віджет Earth Today"</string>
+    <string name="text_which_place_should_this_widget_show_other_widgets_can_show_differ" formatted="false">"Яке місце повинен показувати цей віджет? Інші віджети можуть показувати різні місця."</string>
+    <string name="text_no_place_yet" formatted="false">"Ще немає місця"</string>
+    <string name="text_save_a_place_in_the_app_explore_places_to_see_its_day_and_night_h" formatted="false">"Збережіть місце в додатку (Дослідити &gt; Місця), щоб побачити тут день і ніч."</string>
+    <string name="text_save_widget" formatted="false">"Зберегти віджет"</string>
+    <string name="text_1_s_2_s_3_s">"%1$s %2$s · %3$d%%"</string>
+    <string name="text_choose_a_place" formatted="false">"Виберіть місце"</string>
+    <string name="text_set_your_local_view" formatted="false">"Налаштуйте свій локальний вигляд"</string>
+    <string name="text_polar_day_2" formatted="false">"Полярний день"</string>
+    <string name="text_polar_night_2" formatted="false">"Полярна ніч"</string>
+    <string name="text_nighttime_now" formatted="false">"Зараз ніч"</string>
+    <string name="text_updated_1_s">"Оновлено %1$s"</string>
+    <string name="text_illustration_1_s">"Ілюстрація · %1$s"</string>
+    <string name="text_couldn_t_capture_the_view_try_again" formatted="false">"Не вдалося зафіксувати зображення — спробуйте ще раз."</string>
+    <string name="text_couldn_t_prepare_the_image" formatted="false">"Не вдалося підготувати зображення."</string>
+    <string name="text_share_your_view" formatted="false">"Поділіться своїм поглядом"</string>
+    <string name="text_earth_1_s_made_with_pale_blue_dot_2_s">"🌍 Земля — %1$s\nЗроблено за допомогою Pale Blue Dot → %2$s"</string>
+    <string name="text_ask_a_grown_up" formatted="false">"Запитай у дорослого"</string>
+    <string name="text_what_is_1_s_2_s">"Що таке %1$d × %2$d?"</string>
+    <string name="text_maybe_later" formatted="false">"Можливо пізніше"</string>
+    <string name="text_earthquake" formatted="false">"Землетрус"</string>
+    <string name="text_you_found_where_the_ground_was_shaking" formatted="false">"Ви знайшли, де земля тремтить!"</string>
+    <string name="text_volcano" formatted="false">"Вулкан"</string>
+    <string name="text_you_spotted_hot_lava_erupting_from_deep_inside_the_earth" formatted="false">"Ви помітили розпечену лаву, що виривається з глибини Землі."</string>
+    <string name="text_wildfire" formatted="false">"Лісова пожежа"</string>
+    <string name="text_you_caught_a_fire_so_big_that_satellites_can_see_it_from_space" formatted="false">"Ви розгоріли такий великий вогонь, що супутники можуть побачити його з космосу."</string>
+    <string name="text_storm" formatted="false">"Шторм"</string>
+    <string name="text_you_tracked_a_giant_swirling_storm" formatted="false">"Ви відстежили гігантський буревій."</string>
+    <string name="text_daytime_2" formatted="false">"денний час"</string>
+    <string name="text_you_found_the_side_of_earth_facing_the_sun" formatted="false">"Ви знайшли сторону Землі, звернену до Сонця."</string>
+    <string name="text_city_lights_2" formatted="false">"Вогні міста"</string>
+    <string name="text_you_found_the_night_side_sparkling_with_city_lights" formatted="false">"Ви знайшли нічну сторону, що виблискує вогнями міста."</string>
+    <string name="text_star_gazer" formatted="false">"Зіркогляд"</string>
+    <string name="text_you_looked_past_earth_into_the_stars_and_galaxies_beyond" formatted="false">"Ви дивилися повз Землю на зірки та галактики поза нею."</string>
+    <string name="text_time_traveler" formatted="false">"Мандрівник у часі"</string>
+    <string name="text_you_moved_time_to_turn_day_into_night" formatted="false">"Ти пересунув час, щоб перетворити день на ніч."</string>
+    <string name="text_tap_a_place_where_it_s_daytime" formatted="false">"Торкніться місця, де ДЕНЬ ☀️"</string>
+    <string name="text_tap_a_place_where_it_s_night_time" formatted="false">"Торкніться місця, де НІЧ 🌙"</string>
+    <string name="text_find_an_earthquake" formatted="false">"Знайди землетрус 🔶"</string>
+    <string name="text_find_a_volcano" formatted="false">"Знайди вулкан 🌋"</string>
+    <string name="text_find_a_wildfire" formatted="false">"Знайди лісову пожежу 🔥"</string>
+    <string name="text_find_a_storm" formatted="false">"Знайди шторм 🌀"</string>
+    <string name="text_the_sun_is_so_huge_that_about_1_3_million_earths_could_fit_inside" formatted="false">"Сонце настільки величезне, що в ньому може поміститися близько 1,3 мільйона Земель."</string>
+    <string name="text_a_day_on_venus_is_longer_than_a_whole_year_on_venus" formatted="false">"День на Венері довший за цілий рік на Венері!"</string>
+    <string name="text_footprints_on_the_moon_can_last_millions_of_years_because_there_s" formatted="false">"Сліди на Місяці можуть зберігатися мільйони років, тому що немає вітру, який би їх здув."</string>
+    <string name="text_jupiter_is_so_big_that_all_the_other_planets_could_fit_inside_it" formatted="false">"Юпітер настільки великий, що в ньому могли б поміститися всі інші планети."</string>
+    <string name="text_sunlight_takes_about_8_minutes_to_travel_all_the_way_to_earth" formatted="false">"Сонячне світло займає близько 8 хвилин, щоб пройти весь шлях до Землі."</string>
+    <string name="text_space_is_completely_silent_because_there_s_no_air_to_carry_sound" formatted="false">"У космосі цілковита тиша, тому що немає повітря для передачі звуку."</string>
+    <string name="text_earth_takes_365_and_a_quarter_days_to_orbit_the_sun_that_s_why_we" formatted="false">"Землі потрібно 365 з чвертю днів, щоб обертатися навколо Сонця — тому ми додаємо високосний день кожні 4 роки."</string>
+    <string name="text_the_tallest_volcano_we_know_of_olympus_mons_on_mars_is_about_thre" formatted="false">"Найвищий відомий нам вулкан, гора Олімп на Марсі, приблизно в три рази вищий за гору Еверест."</string>
+    <string name="text_earth_is_the_only_planet_not_named_after_a_greek_or_roman_god" formatted="false">"Земля — єдина планета, названа не на честь грецького чи римського бога."</string>
+    <string name="text_there_are_more_stars_in_the_universe_than_grains_of_sand_on_all_o" formatted="false">"У Всесвіті зірок більше, ніж піщинок на всіх пляжах Землі."</string>
+    <string name="text_the_moon_drifts_about_3_8_cm_farther_from_earth_every_year" formatted="false">"Щороку Місяць віддаляється від Землі приблизно на 3,8 см."</string>
+    <string name="text_saturn_is_so_light_for_its_size_that_it_would_float_in_a_giant_ba" formatted="false">"Сатурн настільки легкий для своїх розмірів, що міг би плавати у гігантській ванні з водою."</string>
+    <string name="text_lightning_strikes_somewhere_on_earth_about_100_times_every_second" formatted="false">"Блискавка вдаряє десь на Землі приблизно 100 разів кожну секунду."</string>
+    <string name="text_the_space_station_zooms_around_the_whole_earth_about_once_every_9" formatted="false">"Космічна станція обертається навколо всієї Землі приблизно раз на 90 хвилин."</string>
+    <string name="text_auroras_glow_near_the_poles_when_tiny_particles_from_the_sun_cras" formatted="false">"Полярні сяйва світяться біля полюсів, коли крихітні частинки Сонця падають на наше повітря."</string>
+    <string name="text_about_70_of_earth_s_surface_is_covered_by_ocean" formatted="false">"Близько 70% поверхні Землі вкрито океаном."</string>
+    <string name="text_venus_is_the_hottest_planet_even_though_mercury_is_closer_to_the" formatted="false">"Венера — найгарячіша планета, хоча Меркурій знаходиться ближче до Сонця."</string>
+    <string name="text_the_great_red_spot_on_jupiter_is_a_storm_bigger_than_the_whole_ea" formatted="false">"Велика червона пляма на Юпітері - це шторм, більший за всю Землю."</string>
+    <string name="text_earthquakes_happen_when_giant_pieces_of_earth_s_crust_slip_past_e" formatted="false">"Землетруси відбуваються, коли гігантські шматки земної кори ковзають один повз одного."</string>
+    <string name="text_the_sun_is_actually_white_our_air_is_what_makes_it_look_yellow" formatted="false">"Сонце насправді біле — наше повітря робить його жовтим."</string>
+    <string name="text_comets_are_giant_balls_of_ice_and_dust_that_grow_glowing_tails_ne" formatted="false">"Комети — це гігантські кулі льоду та пилу, які ростуть хвостами, що світяться поблизу Сонця."</string>
+    <string name="text_if_you_could_drive_a_car_straight_up_you_d_reach_space_in_about_a" formatted="false">"Якби ви могли вести машину прямо вгору, ви б дісталися космосу приблизно за годину."</string>
+    <string name="text_the_moon_has_no_air_so_its_sky_is_always_black_even_in_the_daytim" formatted="false">"Місяць не має повітря, тому його небо завжди чорне, навіть удень."</string>
+    <string name="text_earth_spins_at_about_1_600_km_h_at_the_equator_but_we_don_t_feel" formatted="false">"Земля обертається зі швидкістю близько 1600 км/год на екваторі, але ми цього не відчуваємо, тому що обертаємося разом з нею."</string>
+    <string name="text_new_moon" formatted="false">"Молодик"</string>
+    <string name="text_waxing_crescent" formatted="false">"Зростаючий серп"</string>
+    <string name="text_first_quarter" formatted="false">"Перша чверть"</string>
+    <string name="text_waxing_gibbous" formatted="false">"Зростаючий опуклий Місяць"</string>
+    <string name="text_full_moon" formatted="false">"Повня"</string>
+    <string name="text_waning_gibbous" formatted="false">"Спадний опуклий Місяць"</string>
+    <string name="text_last_quarter" formatted="false">"Остання чверть"</string>
+    <string name="text_waning_crescent" formatted="false">"Спадний серп"</string>
+    <string name="text_watch_where_sunrise_reaches_next" formatted="false">"Подивіться, куди наступне схід сонця."</string>
+    <string name="text_compare_daylight_in_the_north_and_south" formatted="false">"Порівняйте денне світло на півночі та півдні."</string>
+    <string name="text_trace_a_curve_of_earth_s_plate_boundaries" formatted="false">"Проведіть криву межі земної плити."</string>
+    <string name="text_saved_observation_feed_update_unavailable" formatted="false">"Збережене спостереження; оновлення каналу недоступне"</string>
+    <string name="text_recent_reported_observation" formatted="false">"Недавнє повідомлення про спостереження"</string>
+    <string name="text_observations_are_loading" formatted="false">"Спостереження завантажуються"</string>
+    <string name="text_no_recent_observations_available_the_moon_and_daylight_are_still" formatted="false">"Немає останніх спостережень; Місяць і денне світло все ще тут"</string>
+    <string name="lesson_follow_sunrise" formatted="false">"Слідкуйте за сходом сонця"</string>
+    <string name="lesson_a_turning_world" formatted="false">"Світ, що обертається"</string>
+    <string name="lesson_sunrise_is_a_moving_boundary_between_darkness_and_daylight_we_ll" formatted="false">"Схід сонця - це рухлива межа між темрявою та денним світлом. Йдемо за ним із позначеного місця."</string>
+    <string name="lesson_begin" formatted="false">"Почніть"</string>
+    <string name="lesson_find_london" formatted="false">"Знайти Лондон"</string>
+    <string name="lesson_look_at_london_on_the_globe_notice_which_side_faces_the_sun_the_m" formatted="false">"Подивіться на Лондон на глобусі. Зверніть увагу, яка сторона звернена до Сонця. Маркер і розрахунок світлового дня є різними підказками."</string>
+    <string name="lesson_i_found_london" formatted="false">"Я знайшов Лондон"</string>
+    <string name="lesson_predict_the_direction" formatted="false">"Передбачте напрямок"</string>
+    <string name="lesson_as_earth_spins_eastward_which_way_does_the_dawn_boundary_move_acr" formatted="false">"Коли Земля обертається на схід, у який бік переміщується межа світанку на карті довгот?"</string>
+    <string name="lesson_yes_at_a_fixed_utc_time_the_dawn_line_moves_westward_over_longitu" formatted="false">"так У фіксований час UTC лінія світанку рухається на захід над довготою, оскільки Земля обертається на схід."</string>
+    <string name="lesson_it_moves_westward_across_longitudes_earth_itself_turns_eastward_c" formatted="false">"Він рухається на захід по довготах. Сама Земля повертається на схід, переносячи кожне місце на денне світло."</string>
+    <string name="lesson_westward" formatted="false">"На захід"</string>
+    <string name="lesson_eastward" formatted="false">"На схід"</string>
+    <string name="lesson_advance_the_scene" formatted="false">"Просуньте сцену вперед"</string>
+    <string name="lesson_move_the_globe_s_lesson_clock_forward_two_hours_and_watch_the_lig" formatted="false">"Переведіть урокний годинник на глобусі на дві години вперед і спостерігайте за зміною світла. Це симуляція, тоді як Today залишається в режимі реального часу."</string>
+    <string name="lesson_advance_two_hours" formatted="false">"Дві години вперед"</string>
+    <string name="lesson_what_changed" formatted="false">"Що змінилося?"</string>
+    <string name="lesson_the_sunlight_direction_changed_with_time_did_the_saved_place_move" formatted="false">"Напрямок сонячного світла змінювався з часом. Чи перемістилося збережене місце на глобусі?"</string>
+    <string name="lesson_exactly_the_place_keeps_its_coordinates_while_earth_s_rotation_ch" formatted="false">"точно. Місце зберігає свої координати, а обертання Землі змінює його освітлення."</string>
+    <string name="lesson_a_place_keeps_its_latitude_and_longitude_the_changing_angle_to_th" formatted="false">"Місце зберігає свою широту і довготу. Змінний кут до Сонця створює день і ніч."</string>
+    <string name="lesson_no_earth_rotated_relative_to_the_sun" formatted="false">"ні; Земля оберталася відносно Сонця"</string>
+    <string name="lesson_yes_its_latitude_changed" formatted="false">"так; її широта змінилася"</string>
+    <string name="lesson_explore_the_ring_of_fire" formatted="false">"Дослідіть Вогняне кільце"</string>
+    <string name="lesson_a_pattern_around_the_pacific" formatted="false">"Візерунок навколо Тихого океану"</string>
+    <string name="lesson_visit_three_locations_predict_a_pattern_then_reveal_plate_boundar" formatted="false">"Відвідайте три місця, передбачте візерунок, а потім розкрийте межі плит. Історичні резервні приклади позначені датами та джерелами."</string>
+    <string name="lesson_off_japan" formatted="false">"Біля Японії"</string>
+    <string name="lesson_historical_fallback_2011_03_11_tohoku_earthquake_usgs_a_recent_pa" formatted="false">"Історичний резерв: землетрус у Тохоку 2011-03-11, USGS. Використовується нещодавнє тихоокеанське спостереження, якщо воно є."</string>
+    <string name="lesson_visit_the_next_location" formatted="false">"Відвідайте наступне місце"</string>
+    <string name="lesson_the_cascades" formatted="false">"Каскади"</string>
+    <string name="lesson_historical_fallback_1980_05_18_mount_st_helens_eruption_usgs_this" formatted="false">"Історичний резерв: 1980-05-18 виверження вулкана Сент-Хеленс, USGS. Це застарілий приклад уроку, а не живий звіт."</string>
+    <string name="lesson_along_chile" formatted="false">"По Чилі"</string>
+    <string name="lesson_historical_fallback_1960_05_22_great_chilean_earthquake_usgs_this" formatted="false">"Історичний резерв: Великий чилійський землетрус 1960-05-22, USGS. Цей приклад залишається за межами репозиторію живих подій."</string>
+    <string name="lesson_predict_the_pattern" formatted="false">"Передбачте закономірність"</string>
+    <string name="lesson_what_pattern_do_you_see" formatted="false">"Яку закономірність ви бачите?"</string>
+    <string name="lesson_which_broad_pattern_links_many_earthquake_and_volcano_locations_a" formatted="false">"Яка широка схема пов’язує багато місць землетрусів і вулканів навколо Тихого океану?"</string>
+    <string name="lesson_yes_many_cluster_near_plate_edges_but_some_events_also_happen_awa" formatted="false">"так Багато групуються біля країв тектонічних плит, але деякі події також відбуваються далеко від картованих кордонів."</string>
+    <string name="lesson_the_broad_pattern_is_a_belt_near_several_plate_edges_individual_e" formatted="false">"Широкий візерунок являє собою пояс біля кількох країв тектонічних плити. Окремі події потребують своїх доказів; відстань до лінії - це не діагноз."</string>
+    <string name="lesson_a_belt_near_several_plate_edges" formatted="false">"Пояс біля кількох країв тектонічних плити"</string>
+    <string name="lesson_one_straight_line_through_the_pacific_center" formatted="false">"Одна пряма через центр Тихого океану"</string>
+    <string name="lesson_every_event_lies_exactly_on_one_boundary" formatted="false">"Кожна подія лежить точно на одній межі"</string>
+    <string name="lesson_reveal_the_boundaries" formatted="false">"Розкрийте межі"</string>
+    <string name="lesson_gold_lines_show_a_generalized_pb2002_plate_boundary_model_compare" formatted="false">"Золоті лінії показують узагальнену модель межі плити PB2002. Порівняйте Тихоокеанський пояс; ці рядки не пояснюють кожну окрему подію."</string>
+    <string name="lesson_reveal_gold_lines" formatted="false">"Виявіть золоті лінії"</string>
+    <string name="lesson_what_the_pattern_means" formatted="false">"Що означає візерунок"</string>
+    <string name="lesson_plate_motions_concentrate_many_earthquakes_and_volcanoes_around_t" formatted="false">"Рухи плит зосереджують багато землетрусів і вулканів навколо Тихого океану. Гарячі точки та землетруси всередині плит показують, чому у моделі є винятки."</string>
+    <string name="lesson_complete_journey" formatted="false">"Повна подорож"</string>
+    <string name="lesson_understand_the_seasons" formatted="false">"Розуміти пори року"</string>
+    <string name="lesson_two_hemispheres" formatted="false">"Дві півкулі"</string>
+    <string name="lesson_compare_daylight_at_london_and_sydney_on_two_dates_earth_s_tilted" formatted="false">"Порівняйте денне світло в Лондоні та Сіднеї на дві дати. Нахил осі Землі змінює тривалість перебування Сонця над горизонтом."</string>
+    <string name="lesson_london_in_june" formatted="false">"Лондон у червні"</string>
+    <string name="lesson_observe_london_near_the_june_solstice_the_northern_hemisphere_has" formatted="false">"Поспостерігайте за Лондоном біля червневого сонцестояння. У Північній півкулі світловий день довший."</string>
+    <string name="lesson_compare_sydney" formatted="false">"Порівняйте Сідней"</string>
+    <string name="lesson_sydney_in_june" formatted="false">"Сідней у червні"</string>
+    <string name="lesson_observe_sydney_on_the_same_date_its_winter_daylight_is_shorter_th" formatted="false">"Спостерігайте Сідней в ту ж дату. Його зимовий світловий день коротший, ніж літній у Лондоні."</string>
+    <string name="lesson_make_a_prediction" formatted="false">"Зробіть прогноз"</string>
+    <string name="lesson_predict_december" formatted="false">"Передбачте грудень"</string>
+    <string name="lesson_near_the_december_solstice_which_marked_place_has_longer_daylight" formatted="false">"У якому позначеному місці біля дня грудневого сонцестояння довший світловий день?"</string>
+    <string name="lesson_yes_the_southern_hemisphere_tilts_toward_the_sun_in_december_so_s" formatted="false">"так У грудні південна півкуля нахилена до Сонця, тому дні в Сіднеї довші."</string>
+    <string name="lesson_sydney_has_longer_daylight_near_the_december_solstice_the_souther" formatted="false">"Сідней має довший світловий день біля грудневого сонцестояння. Тоді південна півкуля нахиляється до Сонця."</string>
+    <string name="lesson_sydney" formatted="false">"Сідней"</string>
+    <string name="lesson_london" formatted="false">"Лондон"</string>
+    <string name="lesson_they_must_be_equal" formatted="false">"Вони повинні бути рівними"</string>
+    <string name="lesson_switch_to_december" formatted="false">"Перейти на грудень"</string>
+    <string name="lesson_compare_the_daylight_readouts_after_changing_the_lesson_date_this" formatted="false">"Порівняйте показання світлового дня після зміни дати уроку. Це змінює лише сцену програми."</string>
+    <string name="lesson_show_the_axial_tilt_explanation" formatted="false">"Показати пояснення осьового нахилу"</string>
+    <string name="lesson_why_seasons_change" formatted="false">"Чому змінюються пори року"</string>
+    <string name="lesson_earth_s_axis_stays_tilted_about_23_4_as_it_orbits_the_sun_the_nor" formatted="false">"Під час обертання навколо Сонця вісь Землі залишається нахиленою приблизно на 23,4°. У Північній і Південній півкулях чергується довший світловий день. Видимі напрямні позначають екватор, тропіки та полярні кола."</string>
+    <string name="text_notebook" formatted="false">"Польовий зошит"</string>
+    <string name="text_guide" formatted="false">"Довідник"</string>
+    <string name="text_places" formatted="false">"Місця"</string>
+    <string name="text_explore_time" formatted="false">"Дослідження часу"</string>
+    <string name="text_journeys" formatted="false">"Подорожі"</string>
+    <string name="text_journey" formatted="false">"Подорож"</string>
+    <string name="text_language" formatted="false">"Мова"</string>
+    <string name="text_use_device_language" formatted="false">"Мова пристрою"</string>
+    <string name="text_a_voice_for_this_language_is_not_installed_on_this_device" formatted="false">"Голос для цієї мови не встановлено на цьому пристрої."</string>
+    <string name="text_great_job_challenges_solved_1_s">"🎉 Чудова робота! Проблеми вирішено: %1$d"</string>
+    <string name="text_earth_s_axis_is_tilted_about_23_4_degrees_relative_to_its_orbit_a" formatted="false">"Вісь Землі нахилена приблизно на 23,4 градуса відносно її орбіти навколо Сонця."</string>
+    <string name="city_abidjan" formatted="false">"Абіджан, Кот д\'Івуар"</string>
+    <string name="city_abu_dhabi" formatted="false">"Абу-Дабі, Об\'єднані Арабські Емірати"</string>
+    <string name="city_abuja" formatted="false">"Абуджа, Нігерія"</string>
+    <string name="city_accra" formatted="false">"Аккра, Гана"</string>
+    <string name="city_adamstown" formatted="false">"Адамстаун, Піткерн"</string>
+    <string name="city_addis_ababa" formatted="false">"Аддіс-Абеба, Ефіопія"</string>
+    <string name="city_adelaide" formatted="false">"Аделаїда, Австралія"</string>
+    <string name="city_alexandria" formatted="false">"Александрія, Єгипет"</string>
+    <string name="city_algiers" formatted="false">"Алжир, Алжир"</string>
+    <string name="city_alofi" formatted="false">"Алофі, Ніуе"</string>
+    <string name="city_amman" formatted="false">"Амман, Йорданія"</string>
+    <string name="city_amsterdam" formatted="false">"Амстердам, Нідерланди"</string>
+    <string name="city_andorra_la_vella" formatted="false">"Андорра-ла-Велья, Андорра"</string>
+    <string name="city_ankara" formatted="false">"Анкара, Туреччина"</string>
+    <string name="city_antananarivo" formatted="false">"Антананаріву, Мадагаскар"</string>
+    <string name="city_apia" formatted="false">"Апіа, Самоа"</string>
+    <string name="city_ashgabat" formatted="false">"Ашхабад, Туркменістан"</string>
+    <string name="city_asmara" formatted="false">"Асмара, Еритрея"</string>
+    <string name="city_astana" formatted="false">"Астана, Казахстан"</string>
+    <string name="city_asuncion" formatted="false">"Асунсьйон, Парагвай"</string>
+    <string name="city_athens" formatted="false">"Афіни, Греція"</string>
+    <string name="city_auckland" formatted="false">"Окленд, Нова Зеландія"</string>
+    <string name="city_avarua" formatted="false">"Аваруа, Острови Кука"</string>
+    <string name="city_baghdad" formatted="false">"Багдад, Ірак"</string>
+    <string name="city_baku" formatted="false">"Баку, Азербайджан"</string>
+    <string name="city_bamako" formatted="false">"Бамако, Малі"</string>
+    <string name="city_bandar_seri_begawan" formatted="false">"Бандар Сері Бегаван, Бруней"</string>
+    <string name="city_bangkok" formatted="false">"Бангкок, Таїланд"</string>
+    <string name="city_bangui" formatted="false">"Бангі, Центральноафриканська Республіка"</string>
+    <string name="city_banjul" formatted="false">"Банджул, Гамбія"</string>
+    <string name="city_barcelona" formatted="false">"Барселона, Іспанія"</string>
+    <string name="city_basse_terre" formatted="false">"Бас-Тер, Гваделупа"</string>
+    <string name="city_basseterre" formatted="false">"Бастер, Сент-Кітс і Невіс"</string>
+    <string name="city_beijing" formatted="false">"Пекін, Китай"</string>
+    <string name="city_beirut" formatted="false">"Бейрут, Ліван"</string>
+    <string name="city_belgrade" formatted="false">"Белград, Сербія"</string>
+    <string name="city_belmopan" formatted="false">"Бельмопан, Беліз"</string>
+    <string name="city_belo_horizonte" formatted="false">"Белу-Орізонті, Бразилія"</string>
+    <string name="city_berlin" formatted="false">"Берлін, Німеччина"</string>
+    <string name="city_bern" formatted="false">"Берн, Швейцарія"</string>
+    <string name="city_bishkek" formatted="false">"Бішкек, Киргизстан"</string>
+    <string name="city_bissau" formatted="false">"Бісау, Гвінея-Бісау"</string>
+    <string name="city_bogota" formatted="false">"Богота, Колумбія"</string>
+    <string name="city_brasilia" formatted="false">"Бразиліа, Бразилія"</string>
+    <string name="city_bratislava" formatted="false">"Братислава, Словаччина"</string>
+    <string name="city_brazzaville" formatted="false">"Браззавіль, Республіка Конго"</string>
+    <string name="city_bridgetown" formatted="false">"Бріджтаун, Барбадос"</string>
+    <string name="city_brisbane" formatted="false">"Брісбен, Австралія"</string>
+    <string name="city_brooklyn" formatted="false">"Бруклін, США"</string>
+    <string name="city_brussels" formatted="false">"Брюссель, Бельгія"</string>
+    <string name="city_bucharest" formatted="false">"Бухарест, Румунія"</string>
+    <string name="city_budapest" formatted="false">"Будапешт, Угорщина"</string>
+    <string name="city_buenos_aires" formatted="false">"Буенос-Айрес, Аргентина"</string>
+    <string name="city_cairo" formatted="false">"Каїр, Єгипет"</string>
+    <string name="city_cali" formatted="false">"Калі, Колумбія"</string>
+    <string name="city_canberra" formatted="false">"Канберра, Австралія"</string>
+    <string name="city_cape_town" formatted="false">"Кейптаун, Південна Африка"</string>
+    <string name="city_caracas" formatted="false">"Каракас, Венесуела"</string>
+    <string name="city_casablanca" formatted="false">"Касабланка, Марокко"</string>
+    <string name="city_castries" formatted="false">"Кастрі, Сент-Люсія"</string>
+    <string name="city_cayenne" formatted="false">"Каєнна, Французька Гвіана"</string>
+    <string name="city_central_coast" formatted="false">"Центральне узбережжя, Австралія"</string>
+    <string name="city_charlotte_amalie" formatted="false">"Шарлотта Амалія, Віргінські острови США"</string>
+    <string name="city_chengdu" formatted="false">"Ченду, Китай"</string>
+    <string name="city_chicago" formatted="false">"Чикаго, США"</string>
+    <string name="city_chisinau" formatted="false">"Кишинів, Молдова"</string>
+    <string name="city_chongqing" formatted="false">"Чунцин, Китай"</string>
+    <string name="city_christchurch" formatted="false">"Крайстчерч, Нова Зеландія"</string>
+    <string name="city_ciudad_de_la_paz" formatted="false">"Сьюдад-де-ла-Пас, Екваторіальна Гвінея"</string>
+    <string name="city_cockburn_town" formatted="false">"Кокберн Таун, острови Теркс і Кайкос"</string>
+    <string name="city_colombo" formatted="false">"Коломбо, Шрі-Ланка"</string>
+    <string name="city_conakry" formatted="false">"Конакрі, Гвінея"</string>
+    <string name="city_copenhagen" formatted="false">"Копенгаген, Данія"</string>
+    <string name="city_dakar" formatted="false">"Дакар, Сенегал"</string>
+    <string name="city_damascus" formatted="false">"Дамаск, Сирія"</string>
+    <string name="city_dar_es_salaam" formatted="false">"Дар-ес-Салам, Танзанія"</string>
+    <string name="city_delhi" formatted="false">"Делі, Індія"</string>
+    <string name="city_dhaka" formatted="false">"Дакка, Бангладеш"</string>
+    <string name="city_dili" formatted="false">"Ділі, Східний Тимор"</string>
+    <string name="city_djibouti" formatted="false">"Джібуті, Джібуті"</string>
+    <string name="city_dodoma" formatted="false">"Додома, Танзанія"</string>
+    <string name="city_doha" formatted="false">"Доха, Катар"</string>
+    <string name="city_douglas" formatted="false">"Дуглас, острів Мен"</string>
+    <string name="city_dublin" formatted="false">"Дублін, Ірландія"</string>
+    <string name="city_dushanbe" formatted="false">"Душанбе, Таджикистан"</string>
+    <string name="city_flying_fish_cove" formatted="false">"Flying Fish Cove, острів Різдва"</string>
+    <string name="city_fort_de_france" formatted="false">"Фор-де-Франс, Мартініка"</string>
+    <string name="city_fortaleza" formatted="false">"Форталеза, Бразилія"</string>
+    <string name="city_freetown" formatted="false">"Фрітаун, Сьєрра-Леоне"</string>
+    <string name="city_funafuti" formatted="false">"Фунафуті, Тувалу"</string>
+    <string name="city_gaborone" formatted="false">"Габороне, Ботсвана"</string>
+    <string name="city_george_town" formatted="false">"Джорджтаун, Кайманові острови"</string>
+    <string name="city_georgetown" formatted="false">"Джорджтаун, Гайана"</string>
+    <string name="city_gibraltar" formatted="false">"Гібралтар, Гібралтар"</string>
+    <string name="city_gitega" formatted="false">"Гітега, Бурунді"</string>
+    <string name="city_giza" formatted="false">"Гіза, Єгипет"</string>
+    <string name="city_gold_coast" formatted="false">"Голд-Кост, Австралія"</string>
+    <string name="city_grytviken" formatted="false">"Гритвікен, Південна Джорджія та Південні Сандвічеві острови"</string>
+    <string name="city_guangzhou" formatted="false">"Гуанчжоу, Китай"</string>
+    <string name="city_guatemala_city" formatted="false">"Гватемала-Сіті, Гватемала"</string>
+    <string name="city_guayaquil" formatted="false">"Гуаякіль, Еквадор"</string>
+    <string name="city_gustavia" formatted="false">"Густавія, Сен-Бартелемі"</string>
+    <string name="city_hagatna" formatted="false">"Хагатна, Гуам"</string>
+    <string name="city_hamburg" formatted="false">"Гамбург, Німеччина"</string>
+    <string name="city_hamilton" formatted="false">"Гамільтон, Бермудські острови"</string>
+    <string name="city_hangzhou" formatted="false">"Ханчжоу, Китай"</string>
+    <string name="city_hanoi" formatted="false">"Ханой, В\'єтнам"</string>
+    <string name="city_harare" formatted="false">"Хараре, Зімбабве"</string>
+    <string name="city_havana" formatted="false">"Гавана, Куба"</string>
+    <string name="city_helsinki" formatted="false">"Гельсінкі, Фінляндія"</string>
+    <string name="city_ho_chi_minh_city" formatted="false">"Хошимін, В\'єтнам"</string>
+    <string name="city_hong_kong" formatted="false">"Гонконг, Гонконг"</string>
+    <string name="city_honiara" formatted="false">"Хоніара, Соломонові острови"</string>
+    <string name="city_houston" formatted="false">"Х\'юстон, США"</string>
+    <string name="city_ibadan" formatted="false">"Ібадан, Нігерія"</string>
+    <string name="city_islamabad" formatted="false">"Ісламабад, Пакистан"</string>
+    <string name="city_istanbul" formatted="false">"Стамбул, Туреччина"</string>
+    <string name="city_iztapalapa" formatted="false">"Ізтапалапа, Мексика"</string>
+    <string name="city_jakarta" formatted="false">"Джакарта, Індонезія"</string>
+    <string name="city_jamestown" formatted="false">"Джеймстаун, Свята Єлена"</string>
+    <string name="city_johannesburg" formatted="false">"Йоганнесбург, Південна Африка"</string>
+    <string name="city_juba" formatted="false">"Джуба, Південний Судан"</string>
+    <string name="city_kabul" formatted="false">"Кабул, Афганістан"</string>
+    <string name="city_kampala" formatted="false">"Кампала, Уганда"</string>
+    <string name="city_kano" formatted="false">"Кано, Нігерія"</string>
+    <string name="city_karachi" formatted="false">"Карачі, Пакистан"</string>
+    <string name="city_kathmandu" formatted="false">"Катманду, Непал"</string>
+    <string name="city_khartoum" formatted="false">"Хартум, Судан"</string>
+    <string name="city_kigali" formatted="false">"Кігалі, Руанда"</string>
+    <string name="city_kingston" formatted="false">"Кінгстон, Ямайка"</string>
+    <string name="city_kingston_nf" formatted="false">"Кінгстон, острів Норфолк"</string>
+    <string name="city_kingstown" formatted="false">"Кінгстаун, Сент-Вінсент і Гренадини"</string>
+    <string name="city_kinshasa" formatted="false">"Кіншаса, Демократична Республіка Конго"</string>
+    <string name="city_kralendijk" formatted="false">"Кралендейк, Бонайре, Святий Єстатій і Саба "</string>
+    <string name="city_kuala_lumpur" formatted="false">"Куала-Лумпур, Малайзія"</string>
+    <string name="city_kuwait_city" formatted="false">"Кувейт-Сіті, Кувейт"</string>
+    <string name="city_kyiv" formatted="false">"Київ, Україна"</string>
+    <string name="city_lagos" formatted="false">"Лагос, Нігерія"</string>
+    <string name="city_lahore" formatted="false">"Лахор, Пакистан"</string>
+    <string name="city_libreville" formatted="false">"Лібревіль, Габон"</string>
+    <string name="city_lilongwe" formatted="false">"Лілонгве, Малаві"</string>
+    <string name="city_lima" formatted="false">"Ліма, Перу"</string>
+    <string name="city_lisbon" formatted="false">"Лісабон, Португалія"</string>
+    <string name="city_ljubljana" formatted="false">"Любляна, Словенія"</string>
+    <string name="city_logan_city" formatted="false">"Логан Сіті, Австралія"</string>
+    <string name="city_lome" formatted="false">"Ломе, Того"</string>
+    <string name="city_london" formatted="false">"Лондон, Велика Британія"</string>
+    <string name="city_longyearbyen" formatted="false">"Лонг\'їр, Шпіцберген і Ян-Маєн"</string>
+    <string name="city_los_angeles" formatted="false">"Лос-Анджелес, США"</string>
+    <string name="city_luanda" formatted="false">"Луанда, Ангола"</string>
+    <string name="city_lusaka" formatted="false">"Лусака, Замбія"</string>
+    <string name="city_luxembourg" formatted="false">"Люксембург, Люксембург"</string>
+    <string name="city_macau" formatted="false">"Макао, Макао"</string>
+    <string name="city_madrid" formatted="false">"Мадрид, Іспанія"</string>
+    <string name="city_majuro" formatted="false">"Маджуро, Маршаллові острови"</string>
+    <string name="city_male" formatted="false">"Мале, Мальдіви"</string>
+    <string name="city_mamoudzou" formatted="false">"Мамудзу, Майотта"</string>
+    <string name="city_managua" formatted="false">"Манагуа, Нікарагуа"</string>
+    <string name="city_manama" formatted="false">"Манама, Бахрейн"</string>
+    <string name="city_manaus" formatted="false">"Манаус, Бразилія"</string>
+    <string name="city_manila" formatted="false">"Маніла, Філіппіни"</string>
+    <string name="city_manukau_city" formatted="false">"Манукау, Нова Зеландія"</string>
+    <string name="city_maputo" formatted="false">"Мапуту, Мозамбік"</string>
+    <string name="city_mariehamn" formatted="false">"Марієхамн, Аландські острови"</string>
+    <string name="city_marigot" formatted="false">"Маріго, Сен-Мартен"</string>
+    <string name="city_maseru" formatted="false">"Масеру, Лесото"</string>
+    <string name="city_mata_utu" formatted="false">"Мата-Уту, Уолліс і Футуна"</string>
+    <string name="city_mbabane" formatted="false">"Мбабане, Есватіні"</string>
+    <string name="city_melbourne" formatted="false">"Мельбурн, Австралія"</string>
+    <string name="city_mexico_city" formatted="false">"Мехіко, Мексика"</string>
+    <string name="city_minsk" formatted="false">"Мінськ, Білорусь"</string>
+    <string name="city_mogadishu" formatted="false">"Могадішо, Сомалі"</string>
+    <string name="city_monaco" formatted="false">"Монако, Монако"</string>
+    <string name="city_monrovia" formatted="false">"Монровія, Ліберія"</string>
+    <string name="city_montevideo" formatted="false">"Монтевідео, Уругвай"</string>
+    <string name="city_montreal" formatted="false">"Монреаль, Канада"</string>
+    <string name="city_moroni" formatted="false">"Мороній, Коморські острови"</string>
+    <string name="city_moscow" formatted="false">"Москва, Росія"</string>
+    <string name="city_mumbai" formatted="false">"Мумбаї, Індія"</string>
+    <string name="city_muscat" formatted="false">"Маскат, Оман"</string>
+    <string name="city_n_djamena" formatted="false">"Нджамена, Чад"</string>
+    <string name="city_nairobi" formatted="false">"Найробі, Кенія"</string>
+    <string name="city_nassau" formatted="false">"Нассау, Багами"</string>
+    <string name="city_nay_pyi_taw" formatted="false">"Найп\'їдо, М\'янма"</string>
+    <string name="city_new_delhi" formatted="false">"Нью-Делі, Індія"</string>
+    <string name="city_new_york" formatted="false">"Нью-Йорк, США"</string>
+    <string name="city_newcastle" formatted="false">"Ньюкасл, Австралія"</string>
+    <string name="city_ngerulmud" formatted="false">"Нгерулмуд, Палау"</string>
+    <string name="city_niamey" formatted="false">"Ніамей, Нігер"</string>
+    <string name="city_nicosia" formatted="false">"Нікосія, Кіпр"</string>
+    <string name="city_nouakchott" formatted="false">"Нуакшот, Мавританія"</string>
+    <string name="city_noumea" formatted="false">"Нумеа, Нова Каледонія"</string>
+    <string name="city_nukualofa" formatted="false">"Нукуалофа, Тонга"</string>
+    <string name="city_nuuk" formatted="false">"Нуук, Гренландія"</string>
+    <string name="city_oranjestad" formatted="false">"Ораньестад, Аруба"</string>
+    <string name="city_oslo" formatted="false">"Осло, Норвегія"</string>
+    <string name="city_ottawa" formatted="false">"Оттава, Канада"</string>
+    <string name="city_ouagadougou" formatted="false">"Уагадугу, Буркіна-Фасо"</string>
+    <string name="city_pago_pago" formatted="false">"Паго-Паго, Американське Самоа"</string>
+    <string name="city_palikir" formatted="false">"Палікір, Мікронезія"</string>
+    <string name="city_panama_city" formatted="false">"Панама-Сіті, Панама"</string>
+    <string name="city_papeete" formatted="false">"Папеете, Французька Полінезія"</string>
+    <string name="city_paramaribo" formatted="false">"Парамарибо, Сурінам"</string>
+    <string name="city_paris" formatted="false">"Париж, Франція"</string>
+    <string name="city_perth" formatted="false">"Перт, Австралія"</string>
+    <string name="city_philipsburg" formatted="false">"Філіпсбург, Сінт-Мартен"</string>
+    <string name="city_phnom_penh" formatted="false">"Пномпень, Камбоджа"</string>
+    <string name="city_phoenix" formatted="false">"Фінікс, США"</string>
+    <string name="city_plymouth" formatted="false">"Плімут, Монтсеррат"</string>
+    <string name="city_podgorica" formatted="false">"Подгориця, Чорногорія"</string>
+    <string name="city_port_au_prince" formatted="false">"Порт-о-Пренс, Гаїті"</string>
+    <string name="city_port_aux_francais" formatted="false">"Порт-о-Франсе, Південні території Франції"</string>
+    <string name="city_port_louis" formatted="false">"Порт-Луї, Маврикій"</string>
+    <string name="city_port_moresby" formatted="false">"Порт-Морсбі, Папуа-Нова Гвінея"</string>
+    <string name="city_port_of_spain" formatted="false">"Порт-оф-Спейн, Тринідад і Тобаго"</string>
+    <string name="city_port_vila" formatted="false">"Порт-Віла, Вануату"</string>
+    <string name="city_porto_novo" formatted="false">"Порто-Ново, Бенін"</string>
+    <string name="city_prague" formatted="false">"Прага, Чехія"</string>
+    <string name="city_praia" formatted="false">"Прая, Кабо-Верде"</string>
+    <string name="city_pretoria" formatted="false">"Преторія, Південна Африка"</string>
+    <string name="city_pristina" formatted="false">"Приштина, Косово"</string>
+    <string name="city_puebla" formatted="false">"Пуебла, Мексика"</string>
+    <string name="city_pyongyang" formatted="false">"Пхеньян, Північна Корея"</string>
+    <string name="city_queens" formatted="false">"Квінс, США"</string>
+    <string name="city_quito" formatted="false">"Кіто, Еквадор"</string>
+    <string name="city_rabat" formatted="false">"Рабат, Марокко"</string>
+    <string name="city_reykjavik" formatted="false">"Рейк\'явік, Ісландія"</string>
+    <string name="city_riga" formatted="false">"Рига, Латвія"</string>
+    <string name="city_rio" formatted="false">"Ріо-де-Жанейро, Бразилія"</string>
+    <string name="city_riyadh" formatted="false">"Ер-Ріяд, Саудівська Аравія"</string>
+    <string name="city_road_town" formatted="false">"Роуд Таун, Британські Віргінські острови"</string>
+    <string name="city_rome" formatted="false">"Рим, Італія"</string>
+    <string name="city_roseau" formatted="false">"Розо, Домініка"</string>
+    <string name="city_saint_denis" formatted="false">"Сен-Дені, Реюньйон"</string>
+    <string name="city_saint_george_s" formatted="false">"Сент-Джордж, Гренада"</string>
+    <string name="city_saint_helier" formatted="false">"Сент-Гелієр, Джерсі"</string>
+    <string name="city_saint_johns" formatted="false">"Сент-Джонс, Антигуа і Барбуда"</string>
+    <string name="city_saint_peter_port" formatted="false">"Порт Сент-Пітер, Гернсі"</string>
+    <string name="city_saint_petersburg" formatted="false">"Санкт-Петербург, Росія"</string>
+    <string name="city_saint_pierre" formatted="false">"Сен-П\'єр, Сен-П\'єр і Мікелон"</string>
+    <string name="city_saipan" formatted="false">"Сайпан, Північні Маріанські острови"</string>
+    <string name="city_salvador" formatted="false">"Сальвадор, Бразилія"</string>
+    <string name="city_san_jose" formatted="false">"Сан-Хосе, Коста-Ріка"</string>
+    <string name="city_san_juan" formatted="false">"Сан-Хуан, Пуерто-Ріко"</string>
+    <string name="city_san_marino" formatted="false">"Сан-Марино, Сан-Марино"</string>
+    <string name="city_san_salvador" formatted="false">"Сан-Сальвадор, Сальвадор"</string>
+    <string name="city_sanaa" formatted="false">"Сана, Ємен"</string>
+    <string name="city_santiago" formatted="false">"Сантьяго, Чилі"</string>
+    <string name="city_santo_domingo" formatted="false">"Санто-Домінго, Домініканська Республіка"</string>
+    <string name="city_sao_paulo" formatted="false">"Сан-Паулу, Бразилія"</string>
+    <string name="city_sao_tome" formatted="false">"Сан-Томе, Сан-Томе і Принсіпі"</string>
+    <string name="city_sarajevo" formatted="false">"Сараєво, Боснія і Герцеговина"</string>
+    <string name="city_seoul" formatted="false">"Сеул, Південна Корея"</string>
+    <string name="city_shanghai" formatted="false">"Шанхай, Китай"</string>
+    <string name="city_shenzhen" formatted="false">"Шеньчжень, Китай"</string>
+    <string name="city_singapore" formatted="false">"Сінгапур, Сінгапур"</string>
+    <string name="city_skopje" formatted="false">"Скоп\'є, Північна Македонія"</string>
+    <string name="city_sofia" formatted="false">"Софія, Болгарія"</string>
+    <string name="city_stanley" formatted="false">"Стенлі, Фолклендські острови"</string>
+    <string name="city_stockholm" formatted="false">"Стокгольм, Швеція"</string>
+    <string name="city_sucre" formatted="false">"Сукре, Болівія"</string>
+    <string name="city_sunshine_coast" formatted="false">"Саншайн-Кост, Австралія"</string>
+    <string name="city_suva" formatted="false">"Сува, Фіджі"</string>
+    <string name="city_sydney" formatted="false">"Сідней, Австралія"</string>
+    <string name="city_taipei" formatted="false">"Тайбей, Тайвань"</string>
+    <string name="city_tallinn" formatted="false">"Таллінн, Естонія"</string>
+    <string name="city_tarawa" formatted="false">"Тарава, Кірібаті"</string>
+    <string name="city_tashkent" formatted="false">"Ташкент, Узбекистан"</string>
+    <string name="city_tbilisi" formatted="false">"Тбілісі, Грузія"</string>
+    <string name="city_tegucigalpa" formatted="false">"Тегусігальпа, Гондурас"</string>
+    <string name="city_tehran" formatted="false">"Тегеран, Іран"</string>
+    <string name="city_the_valley" formatted="false">"Долина, Ангілья"</string>
+    <string name="city_thimphu" formatted="false">"Тхімпху, Бутан"</string>
+    <string name="city_tianjin" formatted="false">"Тяньцзінь, Китай"</string>
+    <string name="city_tijuana" formatted="false">"Тіхуана, Мексика"</string>
+    <string name="city_tirana" formatted="false">"Тирана, Албанія"</string>
+    <string name="city_tokyo" formatted="false">"Токіо, Японія"</string>
+    <string name="city_toronto" formatted="false">"Торонто, Канада"</string>
+    <string name="city_torshavn" formatted="false">"Торсхавн, Фарерські острови"</string>
+    <string name="city_tripoli" formatted="false">"Тріполі, Лівія"</string>
+    <string name="city_tromso" formatted="false">"Тромсе, Норвегія"</string>
+    <string name="city_tunis" formatted="false">"Туніс, Туніс"</string>
+    <string name="city_ulan_bator" formatted="false">"Улан-Батор, Монголія"</string>
+    <string name="city_vaduz" formatted="false">"Вадуц, Ліхтенштейн"</string>
+    <string name="city_valletta" formatted="false">"Валетта, Мальта"</string>
+    <string name="city_vatican_city" formatted="false">"Ватикан, Ватикан"</string>
+    <string name="city_victoria" formatted="false">"Вікторія, Сейшельські острови"</string>
+    <string name="city_vienna" formatted="false">"Відень, Австрія"</string>
+    <string name="city_vientiane" formatted="false">"В\'єнтьян, Лаос"</string>
+    <string name="city_vilnius" formatted="false">"Вільнюс, Литва"</string>
+    <string name="city_warsaw" formatted="false">"Варшава, Польща"</string>
+    <string name="city_washington" formatted="false">"Вашингтон, США"</string>
+    <string name="city_wellington" formatted="false">"Веллінгтон, Нова Зеландія"</string>
+    <string name="city_west_island" formatted="false">"Вест-Айленд, Кокосові острови"</string>
+    <string name="city_willemstad" formatted="false">"Віллемстад, Кюрасао"</string>
+    <string name="city_windhoek" formatted="false">"Віндгук, Намібія"</string>
+    <string name="city_wuhan" formatted="false">"Ухань, Китай"</string>
+    <string name="city_xian" formatted="false">"Сіань, Китай"</string>
+    <string name="city_yamoussoukro" formatted="false">"Ямусукро, Кот-д\'Івуар"</string>
+    <string name="city_yaounde" formatted="false">"Яунде, Камерун"</string>
+    <string name="city_yaren" formatted="false">"Ярен, Науру"</string>
+    <string name="city_yerevan" formatted="false">"Єреван, Вірменія"</string>
+    <string name="city_zagreb" formatted="false">"Загреб, Хорватія"</string>
+    <string name="text_iss_day" formatted="false">"🛰 Міжнародна космічна станція\nАстронавти живуть і працюють тут, приблизно в 400 км над Землею, обертаючи всю планету приблизно кожні 90 хвилин зі швидкістю 28 000 км/год!\nНа цій ілюстрації він знаходиться над денною стороною Землі."</string>
+    <string name="text_iss_night" formatted="false">"🛰 Міжнародна космічна станція\nАстронавти живуть і працюють тут, приблизно в 400 км над Землею, обертаючи всю планету приблизно кожні 90 хвилин зі швидкістю 28 000 км/год!\nНа цій ілюстрації він знаходиться над нічною стороною Землі."</string>
+    <string name="text_elapsed_minutes">"Минуло хвилин: %1$d"</string>
+    <string name="text_elapsed_hours">"Час, що минув: %1$d"</string>
+    <string name="text_elapsed_days">"Дні, що минули: %1$d"</string>
+    <string name="moon_guide_new_moon">"%1$s\nНеосвітлений бік · допоміжний контур"</string>
+    <string name="moon_guide_crescent">"Тонкий серп · %1$s освітлено\nДопоміжний контур"</string>
+</resources>

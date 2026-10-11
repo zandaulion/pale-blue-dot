@@ -8,6 +8,9 @@ import com.globe.app.camera.OrbitCamera
 import com.globe.app.data.EarthRepository
 import com.globe.app.earth.EarthRenderer
 import com.globe.app.moon.MoonRenderer
+import com.globe.app.moon.MoonGuide
+import com.globe.app.moon.MoonPosition
+import com.globe.app.earth.SunPosition
 import com.globe.app.stars.ConstellationRenderer
 import com.globe.app.stars.StarsRenderer
 import com.globe.app.indicators.IndicatorRenderer
@@ -75,6 +78,8 @@ class GlobeRenderer(
     private var surfaceHeight = 0
     @Volatile var lastFrameTimeMs = 0L
         private set
+    @Volatile var moonGuideFrame: MoonGuide.Frame? = null
+        private set
 
     private val projectionMatrix = FloatArray(16)
     @Volatile private var pickViewMatrix = FloatArray(16)
@@ -110,6 +115,7 @@ class GlobeRenderer(
         surfaceHeight = height
         updateProjection()
         indicatorRenderer.onSurfaceChanged(width, height)
+        moonRenderer.onSurfaceChanged(width, height)
     }
 
     private fun updateProjection() {
@@ -140,6 +146,10 @@ class GlobeRenderer(
         val viewMatrix = camera.getViewMatrix()
         pickViewMatrix = viewMatrix
         val camPos = camera.getPosition()
+        moonGuideFrame = MoonGuide.project(
+            MoonPosition.calculate(timeMs), SunPosition.calculate(timeMs), camPos,
+            viewMatrix, projectionMatrix, surfaceWidth, surfaceHeight
+        )
 
         // 1. Stars — drawn first as background (handles its own GL state)
         if (showStars) starsRenderer.draw(viewMatrix, projectionMatrix)

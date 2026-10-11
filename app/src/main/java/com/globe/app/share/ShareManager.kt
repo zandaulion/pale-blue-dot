@@ -1,5 +1,7 @@
 package com.globe.app.share
 
+import com.globe.app.R
+import com.globe.app.AppLanguage
 import android.app.Activity
 import android.content.ClipData
 import android.content.Intent
@@ -12,7 +14,6 @@ import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 import java.util.TimeZone
 
 /**
@@ -39,7 +40,7 @@ object ShareManager {
         FrameCapturer.captureStill(surface) { captured ->
             // Runs on the FrameCapturer background thread.
             if (captured == null) {
-                toast(activity, "Couldn't capture the view — try again.")
+                toast(activity, activity.getString(R.string.text_couldn_t_capture_the_view_try_again))
                 return@captureStill
             }
 
@@ -48,7 +49,7 @@ object ShareManager {
             branded.recycle()
 
             if (uri == null) {
-                toast(activity, "Couldn't prepare the image.")
+                toast(activity, activity.getString(R.string.text_couldn_t_prepare_the_image))
             } else {
                 activity.runOnUiThread { launchShareSheet(activity, uri, sceneTimeMs) }
             }
@@ -70,20 +71,20 @@ object ShareManager {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "image/jpeg"
             putExtra(Intent.EXTRA_STREAM, uri)
-            putExtra(Intent.EXTRA_TEXT, buildCaption(sceneTimeMs))
+            putExtra(Intent.EXTRA_TEXT, buildCaption(activity, sceneTimeMs))
             clipData = ClipData.newRawUri("", uri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
-        activity.startActivity(Intent.createChooser(intent, "Share your view"))
+        activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.text_share_your_view)))
     }
 
     /** Uses the simulated time so a scrubbed view reports the time it actually shows. */
-    private fun buildCaption(sceneTimeMs: Long): String {
-        val fmt = SimpleDateFormat("MMM d, yyyy HH:mm 'UTC'", Locale.US).apply {
+    private fun buildCaption(activity: Activity, sceneTimeMs: Long): String {
+        val fmt = SimpleDateFormat(android.text.format.DateFormat.getBestDateTimePattern(AppLanguage.locale(activity), "yMMMdHm") + " 'UTC'", AppLanguage.locale(activity)).apply {
             timeZone = TimeZone.getTimeZone("UTC")
         }
         val time = fmt.format(Date(sceneTimeMs))
-        return "🌍 Earth — $time\nMade with Pale Blue Dot → $PLAY_URL"
+        return activity.getString(R.string.text_earth_1_s_made_with_pale_blue_dot_2_s, time, PLAY_URL)
     }
 
     private fun toast(activity: Activity, message: String) {

@@ -154,10 +154,10 @@ class OrbitCamera {
     /**
      * Rotate so a sky body (given as a world-space direction, e.g. the Sun or
      * Moon) becomes visible. The camera always looks at Earth's centre, so we
-     * position the eye nearly opposite the body and offset by ~12° horizontally
-     * — enough to clear Earth's disk yet keep the body inside the view frustum.
+     * position the eye nearly opposite the body. The Moon is lifted above Earth
+     * by a fixed angular offset; the Sun keeps its horizontal framing.
      */
-    fun faceSky(dirX: Float, dirY: Float, dirZ: Float) {
+    fun faceSky(dirX: Float, dirY: Float, dirZ: Float, aboveGlobe: Boolean = false) {
         val len = Math.sqrt((dirX * dirX + dirY * dirY + dirZ * dirZ).toDouble())
         if (len < 1e-6) return
         val sx = dirX / len
@@ -168,15 +168,19 @@ class OrbitCamera {
         // enough to clear that disk (plus a small margin). A large offset would
         // fling the body toward the frame edge; this keeps it near centre.
         val viewDist = 12.0
-        val phi = Math.asin(1.0 / viewDist) + Math.toRadians(2.5)
+        val phi = if (aboveGlobe) Math.toRadians(10.0)
+            else Math.asin(1.0 / viewDist) + Math.toRadians(2.5)
         val cp = Math.cos(phi)
         val sp = Math.sin(phi)
         val ax = -sx
         val ay = -sy
         val az0 = -sz
-        val ex = ax * cp + az0 * sp
-        val ey = ay
-        val ez = -ax * sp + az0 * cp
+        // A Moon framed beside Earth could have half its disk hidden. Lift it
+        // above the globe with a true angular offset, independent of latitude.
+        val northLength = Math.sqrt(1.0 - ay * ay).coerceAtLeast(1e-6)
+        val ex = if (aboveGlobe) ax * cp - ay * ax / northLength * sp else ax * cp + az0 * sp
+        val ey = if (aboveGlobe) ay * cp + northLength * sp else ay
+        val ez = if (aboveGlobe) az0 * cp - ay * az0 / northLength * sp else -ax * sp + az0 * cp
 
         targetEl = Math.toDegrees(Math.asin(ey.coerceIn(-1.0, 1.0))).toFloat()
             .coerceIn(-MAX_ELEVATION, MAX_ELEVATION)

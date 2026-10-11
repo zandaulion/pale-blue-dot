@@ -1,0 +1,791 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="companion_today" formatted="false">"오늘"</string>
+    <string name="companion_layers" formatted="false">"레이어"</string>
+    <string name="companion_explore" formatted="false">"탐색"</string>
+    <string name="companion_settings" formatted="false">"설정"</string>
+    <string name="companion_close" formatted="false">"닫기"</string>
+    <string name="companion_refresh" formatted="false">"관찰 새로 고침"</string>
+    <string name="companion_events" formatted="false">"최근 관찰"</string>
+    <string name="companion_no_events" formatted="false">"이 카테고리에는 보고된 이벤트가 없습니다."</string>
+    <string name="companion_why" formatted="false">"왜 이런 일이 발생합니까?"</string>
+    <string name="companion_reduce_motion" formatted="false">"움직임 줄이기"</string>
+    <string name="companion_clouds" formatted="false">"구름"</string>
+    <string name="wallpaper_name" formatted="false">"Pale Blue Dot 지구"</string>
+    <string name="wallpaper_description" formatted="false">"배경화면으로 사용할 조용하고 살아있는 지구의 모습"</string>
+    <string name="wallpaper_settings_title" formatted="false">"지구 벽지"</string>
+    <string name="companion_generated" formatted="false">"생성됨"</string>
+    <string name="companion_satellite" formatted="false">"위성"</string>
+    <string name="companion_off" formatted="false">"끄기"</string>
+    <string name="widget_title" formatted="false">"지구의 오늘"</string>
+    <string name="widget_description" formatted="false">"달과 일광; 실시간 지구 보기 및 최근 이벤트를 보려면 확장하세요."</string>
+    <string name="widget_preview_moon" formatted="false">"🌔 차오르는 볼록달 · 82%"</string>
+    <string name="widget_preview_place" formatted="false">"부쿠레슈티, 루마니아"</string>
+    <string name="widget_event_label" formatted="false">"지구상에서"</string>
+    <string name="widget_preview_daylight" formatted="false">"현재 일광"</string>
+    <string name="widget_change_place" formatted="false">"위젯 위치 변경"</string>
+    <string name="widget_globe_description" formatted="false">"현재 지구 장면"</string>
+    <string name="widget_name" formatted="false">"지구의 오늘"</string>
+    <string name="text_clouds_live_loading" formatted="false">"☁ 구름: 라이브 (로드 중…)"</string>
+    <string name="text_time_now" formatted="false">"시간 · 지금"</string>
+    <string name="text_time_controls" formatted="false">"시간 제어"</string>
+    <string name="text_move_time_up_to_24_hours_before_or_after_now" formatted="false">"지금으로부터 최대 24시간 전후로 시간 이동"</string>
+    <string name="text_share" formatted="false">"↑ 공유"</string>
+    <string name="text_today" formatted="false">"🗓 오늘"</string>
+    <string name="text_save_this_place" formatted="false">"+ 이 장소를 저장하세요"</string>
+    <string name="text_planetary_briefing_real_time" formatted="false">"행성 브리핑 · 실시간"</string>
+    <string name="text_1_s_2_s_3_s_estimated_illumination">"%1$s %2$s · %3$d%% 예상 조도"</string>
+    <string name="text_choose_a_primary_place" formatted="false">"기본 장소 선택"</string>
+    <string name="text_fly_to_1_s">"%1$s로 비행"</string>
+    <string name="text_satellite_imagery_1_s">"위성 이미지 — %1$s"</string>
+    <string name="text_saved_copy" formatted="false">" · 저장된 사본"</string>
+    <string name="text_satellite_imagery_unavailable_or_still_loading" formatted="false">"위성 이미지를 사용할 수 없거나 아직 로드 중입니다."</string>
+    <string name="text_one_observation_1_s">"하나의 관찰 · %1$s"</string>
+    <string name="text_time_unavailable" formatted="false">"이용 불가 시간"</string>
+    <string name="text_this_observation_is_no_longer_in_the_saved_feed" formatted="false">"이 관찰 내용은 더 이상 저장된 피드에 없습니다."</string>
+    <string name="text_current_events" formatted="false">"시사"</string>
+    <string name="text_choose_what_appears_on_the_globe_hidden_events_also_leave_the_eve" formatted="false">"지구본에 나타나는 것을 선택하세요. 숨겨진 이벤트도 이벤트 목록과 챌린지를 남깁니다."</string>
+    <string name="text_satellite_imagery_may_be_unavailable_offline_generated_clouds_sti" formatted="false">"위성 이미지는 오프라인에서 사용하지 못할 수 있습니다. 생성된 클라우드는 여전히 작동합니다."</string>
+    <string name="text_reported_by_usgs" formatted="false">"USGS가 보고함"</string>
+    <string name="text_reported_by_nasa_eonet" formatted="false">"보고자: NASA EONET"</string>
+    <string name="text_constellations" formatted="false">"별자리"</string>
+    <string name="text_catalog_lines_in_the_star_background" formatted="false">"별 배경의 카탈로그 라인"</string>
+    <string name="text_iss_illustration" formatted="false">"ISS 그림"</string>
+    <string name="text_approximate_orbit_not_live_tracking" formatted="false">"실시간 추적이 아닌 대략적인 궤도"</string>
+    <string name="text_aurora_illustration" formatted="false">"오로라 일러스트"</string>
+    <string name="text_decorative_glow_not_a_forecast" formatted="false">"예측이 아닌 장식적인 빛"</string>
+    <string name="text_day_night_boundary" formatted="false">"주야간 경계"</string>
+    <string name="text_calculated_terminator_line" formatted="false">"계산된 종료선"</string>
+    <string name="text_plate_boundaries" formatted="false">"지각판 경계"</string>
+    <string name="text_offline_pb2002_model_gold_lines" formatted="false">"오프라인 PB2002 모델 · 골드 라인"</string>
+    <string name="text_plate_boundaries_gold_lines_mark_modelled_plate_edges_earthquakes" formatted="false">"플레이트 경계: 금색 선은 모델링된 플레이트 가장자리를 표시합니다. 지진은 멀리 떨어진 곳에서도 발생할 수 있습니다. 출처: Bird(2003), PB2002; ODbL 1.0."</string>
+    <string name="text_places_1_s_saved">"장소 · %1$d가 저장되었습니다."</string>
+    <string name="text_explore_time_and_seasons" formatted="false">"시간과 계절 탐색"</string>
+    <string name="text_guided_journeys" formatted="false">"가이드 여행"</string>
+    <string name="text_field_notebook_1_s_2_s_discoveries">"현장 노트 · %1$d/%2$d 발견"</string>
+    <string name="text_try_a_quick_challenge" formatted="false">"빠르게 도전해 보세요"</string>
+    <string name="text_scene_guide_and_legend" formatted="false">"장면 가이드 및 범례"</string>
+    <string name="text_ambient_music" formatted="false">"주변 음악"</string>
+    <string name="text_only_while_the_app_is_open" formatted="false">"앱이 열려 있는 동안에만"</string>
+    <string name="text_music_volume" formatted="false">"음악 볼륨"</string>
+    <string name="text_read_aloud" formatted="false">"소리 내어 읽기"</string>
+    <string name="text_speak_cards_when_narration_is_enabled" formatted="false">"내레이션이 활성화된 경우 카드 말하기"</string>
+    <string name="text_stops_idle_spin_and_decorative_marker_movement" formatted="false">"유휴 회전 및 장식 마커 이동을 중지합니다."</string>
+    <string name="text_share_globe_image" formatted="false">"지구본 이미지 공유"</string>
+    <string name="text_earth_live_wallpaper" formatted="false">"지구 라이브 배경화면"</string>
+    <string name="text_explore" formatted="false">"`` 탐색"</string>
+    <string name="text_completed_journeys" formatted="false">"완료된 여정"</string>
+    <string name="text_no_journeys_completed_yet" formatted="false">"아직 완료된 여행이 없습니다."</string>
+    <string name="text_saved_observations" formatted="false">"저장된 관측치"</string>
+    <string name="text_save_an_observation_from_its_card_to_keep_its_source_and_date" formatted="false">"소스와 날짜를 유지하려면 카드에서 관찰 내용을 저장하세요."</string>
+    <string name="text_earlier_discoveries_1_s_2_s">"이전 발견 · %1$d/%2$d"</string>
+    <string name="text_you_explored_a_reported_earthquake" formatted="false">"보고된 지진을 탐색했습니다."</string>
+    <string name="text_you_explored_a_reported_volcanic_event" formatted="false">"보고된 화산 사건을 탐험하셨습니다."</string>
+    <string name="text_you_explored_a_reported_wildfire" formatted="false">"보고된 산불을 조사했습니다."</string>
+    <string name="text_you_explored_a_reported_storm" formatted="false">"보고된 폭풍을 탐색했습니다."</string>
+    <string name="text_you_found_a_place_facing_the_sun" formatted="false">"당신은 태양을 향한 장소를 찾았습니다."</string>
+    <string name="text_you_found_earth_s_night_side" formatted="false">"당신은 지구의 밤 쪽을 발견했습니다."</string>
+    <string name="text_you_looked_beyond_earth" formatted="false">"당신은 지구 너머를 보았습니다."</string>
+    <string name="text_you_changed_the_scene_time" formatted="false">"장면 시간을 변경했습니다."</string>
+    <string name="text_observed" formatted="false">"관찰됨: "</string>
+    <string name="text_time_not_reported" formatted="false">"보고되지 않은 시간"</string>
+    <string name="text_source" formatted="false">"출처: "</string>
+    <string name="text_magnitude_1_s">"크기: %1$s\n"</string>
+    <string name="text_depth_1_s_km">"깊이: %1$skm\n"</string>
+    <string name="text_source_link_1_s">"소스 링크: %1$s"</string>
+    <string name="text_saved_observation" formatted="false">"저장된 관찰"</string>
+    <string name="text_fly_to" formatted="false">"장소로 이동"</string>
+    <string name="text_sunlight_and_city_lights" formatted="false">"햇빛과 도시의 불빛"</string>
+    <string name="text_calculated_sunlight_shows_the_current_day_and_night_sides" formatted="false">"계산된 햇빛은 현재의 낮과 밤의 측면을 보여줍니다."</string>
+    <string name="text_generated_clouds_are_illustrative_satellite_mode_derives_opacity" formatted="false">"생성된 구름은 예시입니다. 위성 모드는 날짜가 지정된 NASA VIIRS 이미지에서 불투명도를 가져옵니다."</string>
+    <string name="text_earthquakes" formatted="false">"지진"</string>
+    <string name="text_usgs_reports_magnitude_4_5_earthquakes_from_the_last_seven_days" formatted="false">"USGS는 지난 7일 동안 규모 4.5 이상의 지진을 보고했습니다."</string>
+    <string name="text_volcanoes_wildfires_and_storms" formatted="false">"화산, 산불, 폭풍"</string>
+    <string name="text_nasa_eonet_open_reports_may_have_older_observation_dates" formatted="false">"NASA EONET 공개 보고서에는 더 오래된 관찰 날짜가 있을 수 있습니다."</string>
+    <string name="text_iss" formatted="false">"ISS"</string>
+    <string name="text_illustrated_orbit_not_live_tracking" formatted="false">"실시간 추적이 아닌 궤도 그림입니다."</string>
+    <string name="text_aurora" formatted="false">"오로라"</string>
+    <string name="text_decorative_illustration_not_a_forecast" formatted="false">"예측이 아닌 장식적인 그림입니다."</string>
+    <string name="text_calculated_terminator_line_2" formatted="false">"계산된 종료자 라인."</string>
+    <string name="text_catalog_stars_joined_into_familiar_patterns" formatted="false">"카탈로그 별은 익숙한 패턴으로 결합되었습니다."</string>
+    <string name="text_a_simplified_offline_pb2002_model_many_earthquakes_occur_near_bou" formatted="false">"단순화된 오프라인 PB2002 모델. 많은 지진이 경계 근처에서 발생하지만 일부는 다른 곳에서도 발생합니다. 골드 라인은 어떤 사건에 대한 진단이 아닙니다."</string>
+    <string name="text_saved_places_stay_on_this_device_cyan_rings_mark_them_on_the_glob" formatted="false">"저장된 장소는 이 기기에 유지됩니다. 청록색 고리는 지구본에 표시됩니다."</string>
+    <string name="text_search_bundled_cities" formatted="false">"묶음 도시 검색"</string>
+    <string name="text_city_or_country_blank_lists_all_1_s">"도시 또는 국가(공백으로 모두 %1$d 나열)"</string>
+    <string name="text_find_a_city" formatted="false">"도시 찾기"</string>
+    <string name="text_search" formatted="false">"검색"</string>
+    <string name="text_no_bundled_city_matches_that_name" formatted="false">"해당 이름과 일치하는 묶음 도시가 없습니다."</string>
+    <string name="text_ok" formatted="false">"알았어"</string>
+    <string name="text_bundled_cities" formatted="false">"묶음 도시"</string>
+    <string name="text_cancel" formatted="false">"취소"</string>
+    <string name="text_add_a_place_from_the_globe" formatted="false">"지구본에서 장소 추가"</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"지구본의 한 지점을 탭한 다음 + 카드 아래에 이 장소 저장을 탭합니다."</string>
+    <string name="text_time_zone_unset" formatted="false">"시간대가 설정되지 않았습니다."</string>
+    <string name="text_set_as_primary" formatted="false">"기본으로 설정"</string>
+    <string name="text_rename" formatted="false">"이름 바꾸기"</string>
+    <string name="text_set_time_zone" formatted="false">"시간대 설정"</string>
+    <string name="text_delete" formatted="false">"삭제"</string>
+    <string name="text_1_s_removed">"%1$s가 제거되었습니다."</string>
+    <string name="text_undo" formatted="false">"실행 취소"</string>
+    <string name="text_done" formatted="false">"완료"</string>
+    <string name="text_name_this_place" formatted="false">"이 장소의 이름을 지정하세요."</string>
+    <string name="text_save" formatted="false">"저장"</string>
+    <string name="text_iana_zone_e_g_europe_bucharest" formatted="false">"IANA 구역, 예: 유럽/부쿠레슈티"</string>
+    <string name="text_suggested_from_the_nearest_town_change_it_if_this_place_is_across" formatted="false">"가장 가까운 마을에서 추천; 이곳이 국경 너머에 있다면 바꿔보세요. "</string>
+    <string name="text_time_zone_for_1_s">"%1$s의 시간대"</string>
+    <string name="text_enter_an_iana_time_zone_id_or_leave_blank_to_keep_local_clock_and" formatted="false">"IANA 시간대 ID를 입력하거나, 현지 시계와 일출을 설정하지 않으려면 비워 두세요."</string>
+    <string name="text_unknown_iana_time_zone_id_1_s">"알 수 없는 IANA 시간대 ID: %1$s"</string>
+    <string name="text_try_again" formatted="false">"다시 시도하세요"</string>
+    <string name="text_time_zone_unset_choose_a_zone_for_local_clock_and_sunrise" formatted="false">"시간대가 설정되지 않음 · 현지 시계 및 일출 시간대를 선택하세요."</string>
+    <string name="text_polar_day_sun_stays_above_the_horizon" formatted="false">"극지방의 날 · 태양이 지평선 위에 머물다"</string>
+    <string name="text_polar_night_sun_stays_below_the_horizon" formatted="false">"극지방의 밤 · 태양은 지평선 아래에 머물러 있습니다."</string>
+    <string name="text_not_available" formatted="false">"이용할 수 없음"</string>
+    <string name="text_about_1_sh_2_sm_daylight">" · %1$d h %2$d 분 일광 정보"</string>
+    <string name="text_approx_sunrise_1_s_sunset_2_s_3_s">"대략. 일출 %1$s · 일몰 %2$s%3$s"</string>
+    <string name="text_day" formatted="false">"낮"</string>
+    <string name="text_night" formatted="false">"밤"</string>
+    <string name="text_choose_a_date_to_hold_the_globe_in_an_explicit_lesson_time_today" formatted="false">"명시적인 수업 시간에 지구본을 개최할 날짜를 선택하세요. 오늘과 배경화면은 실시간으로 유지됩니다."</string>
+    <string name="text_begin_at_current_time" formatted="false">"현재 시간에 시작"</string>
+    <string name="text_simulated_1_s">"시뮬레이션 · %1$s"</string>
+    <string name="text_choose_date_and_time" formatted="false">"날짜와 시간을 선택하세요"</string>
+    <string name="text_pause" formatted="false">"일시중지"</string>
+    <string name="text_play_at_real_time_speed" formatted="false">"실시간 속도로 플레이"</string>
+    <string name="text_advance_one_hour" formatted="false">"한 시간 전진"</string>
+    <string name="text_advance_one_day" formatted="false">"하루 앞당겨"</string>
+    <string name="text_now_leave_time_exploration" formatted="false">"지금 · 떠나는 시간 탐험"</string>
+    <string name="text_compare_latest_observations" formatted="false">"최신 관측치 비교"</string>
+    <string name="text_these_reports_are_from_real_dates_not_the_simulated_date" formatted="false">"이 보고서는 시뮬레이션 날짜가 아닌 실제 날짜에서 나온 것입니다."</string>
+    <string name="text_year_timeline_1_s">"연도 타임라인 · %1$d"</string>
+    <string name="text_choose_day_of_year" formatted="false">"올해의 날짜를 선택하세요"</string>
+    <string name="text_seasons_earth_s_axis_stays_tilted_about_23_4_as_earth_orbits_the" formatted="false">"계절 · 지구가 태양을 공전할 때 지구의 축은 약 23.4° 기울어져 있습니다. 햇빛은 일년 내내 반구 사이를 이동합니다. 장면의 태양은 이미 이러한 기울기를 설명합니다."</string>
+    <string name="text_23_4_axis" formatted="false">"23.4° 축"</string>
+    <string name="text_sunlight" formatted="false">"햇빛 →"</string>
+    <string name="text_polar_day" formatted="false">"극지방의 날"</string>
+    <string name="text_polar_night" formatted="false">"극지방의 밤"</string>
+    <string name="text_about_1_sh_2_sm_daylight_2">"약 %1$d h %2$d 분 일광"</string>
+    <string name="text_daylight_changing" formatted="false">"일광 변화"</string>
+    <string name="text_guides_equator_tropics_23_4_and_polar_circles_66_6_compare_the_tw" formatted="false">"가이드: 적도, 열대(±23.4°), 극권(±66.6°). 3월, 6월, 9월, 12월의 두 반구를 비교해 보세요."</string>
+    <string name="text_short_local_lessons_each_restores_your_previous_globe_view_and_la" formatted="false">"짧은 현지 수업. 각각은 떠날 때 이전 지구본 보기와 레이어를 복원합니다."</string>
+    <string name="text_completed" formatted="false">" · 완료"</string>
+    <string name="text_1_s_2_s_min_3_s">"%1$s · %2$s min%3$s"</string>
+    <string name="text_resume" formatted="false">"이력서"</string>
+    <string name="text_restart" formatted="false">"다시 시작"</string>
+    <string name="text_choose_a_journey" formatted="false">"여행을 선택하세요"</string>
+    <string name="text_1_s_step_2_s_of_3_s">"%1$s · %3$d의 %2$d 단계"</string>
+    <string name="text_historical_source_1_s">"역사적 출처: %1$s"</string>
+    <string name="text_recent_reported_example_1_s_2_s_3_s">"최근 보고된 사례: %1$s\n%2$s · %3$s"</string>
+    <string name="text_that_s_the_pattern" formatted="false">"그게 패턴이야"</string>
+    <string name="text_look_again" formatted="false">"다시 봐"</string>
+    <string name="text_continue" formatted="false">"계속"</string>
+    <string name="text_advance" formatted="false">"사전"</string>
+    <string name="text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th">"장면이 %1$d 시간 앞으로 이동했습니다. 지구의 햇빛이 변화하는 것을 지켜보세요."</string>
+    <string name="text_reveal" formatted="false">"공개"</string>
+    <string name="text_the_gold_pb2002_lines_show_a_broad_plate_edge_pattern_some_report" formatted="false">"금색 PB2002 라인은 넓은 플레이트 가장자리 패턴을 보여줍니다. 보고된 일부 사건은 그와는 거리가 멀습니다."</string>
+    <string name="text_view_globe" formatted="false">"지구본 보기"</string>
+    <string name="text_skip_this_step" formatted="false">"이 단계를 건너뛰세요"</string>
+    <string name="text_leave_journey_restore_my_view" formatted="false">"여행 떠나기 · 내 시야 복원"</string>
+    <string name="text_1_s_is_in_your_field_notebook">"%1$s는 필드 노트북에 있습니다."</string>
+    <string name="text_not_loaded" formatted="false">"로드되지 않음"</string>
+    <string name="text_checking" formatted="false">"확인 중"</string>
+    <string name="text_recently" formatted="false">"최근에"</string>
+    <string name="text_checked_1_s">"%1$s를 확인했습니다."</string>
+    <string name="text_saved_observations_offline_or_update_failed" formatted="false">"저장된 관찰 · 오프라인 또는 업데이트 실패"</string>
+    <string name="text_unavailable" formatted="false">"이용 불가"</string>
+    <string name="text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who" formatted="false">"🌟 밤하늘!\n지구 너머에는 수천 개의 별, 행성 및 전체 은하계가 있습니다."</string>
+    <string name="text_earthquakes_happen_when_stress_makes_rock_slip_along_a_fault_some" formatted="false">"지진은 스트레스로 인해 암석이 단층을 따라 미끄러질 때 발생합니다. 일부는 판 경계에서 멀리 떨어져 발생합니다."</string>
+    <string name="text_magma_can_rise_through_earth_s_crust_this_report_does_not_confirm" formatted="false">"마그마는 지구의 지각을 통해 상승할 수 있습니다. 이 보고서는 현재 폭발을 확인하지 않습니다."</string>
+    <string name="text_wildfire_can_begin_naturally_or_through_human_activity_and_may_sp" formatted="false">"산불은 자연적으로 또는 인간 활동을 통해 시작될 수 있으며 건조하고 바람이 많이 부는 환경에서 확산될 수 있습니다. 이 보고서는 현재보다 오래되었을 수 있습니다."</string>
+    <string name="text_severe_storms_draw_energy_from_warm_moist_air_this_marker_shows_t" formatted="false">"심한 폭풍은 따뜻하고 습한 공기로부터 에너지를 끌어옵니다. 이 마커는 실시간 예측이 아닌 최근 보고된 지점을 표시합니다."</string>
+    <string name="text_observed_1_s">"관찰됨: %1$s\n"</string>
+    <string name="text_source_updated_1_s">"업데이트된 소스: %1$s\n"</string>
+    <string name="text_source_1_s">"출처: %1$s\n"</string>
+    <string name="text_unavailable_2" formatted="false">"이용할 수 없음"</string>
+    <string name="text_checking_showing_saved_copy" formatted="false">"확인; 저장된 사본 표시 중"</string>
+    <string name="text_saved_copy_refresh_unavailable" formatted="false">"저장된 사본; 새로 고침을 사용할 수 없습니다"</string>
+    <string name="text_checked_1_s_2">"%1$s를 확인했습니다."</string>
+    <string name="text_feed_1_s">"피드: %1$s"</string>
+    <string name="text_source_link_1_s_2">"\n소스 링크: %1$s"</string>
+    <string name="text_saved" formatted="false">"저장됨"</string>
+    <string name="text_place_name" formatted="false">"지명"</string>
+    <string name="text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now" formatted="false">"☀️ 여기는 낮이에요!\n지구의 이쪽은 지금 태양을 향하고 있습니다. 시간 슬라이더를 드래그하여 밤이 오는 것을 지켜보세요."</string>
+    <string name="text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those" formatted="false">"🌙 여기는 밤이에요.\n이쪽은 태양으로부터 멀어져 있습니다. 저 작은 빛은 도시입니다. 시간 슬라이더를 드래그하여 태양을 다시 가져옵니다."</string>
+    <string name="text_added_to_field_notebook_1_s">"필드노트에 추가되었습니다.\n\n%1$s"</string>
+    <string name="text_close_1_s">"× 닫기\n\n%1$s"</string>
+    <string name="text_1_s_2_s_tap_to_stop">"🎯 %1$s\n⭐ %2$d · 중지하려면 탭하세요."</string>
+    <string name="text_challenge_stopped_play_again_anytime" formatted="false">"챌린지가 중단되었습니다. 언제든지 다시 플레이하세요!"</string>
+    <string name="text_tap_on_the_earth_to_answer" formatted="false">"대답하려면 지구를 탭하세요! 🌍"</string>
+    <string name="text_yes_that_s_right" formatted="false">"🎉 네! 좋아요."</string>
+    <string name="text_not_quite_take_another_look_and_try_again" formatted="false">"아직은 아닙니다. 다시 한 번 살펴보고 다시 시도해 보세요! 🔍"</string>
+    <string name="text_my_discoveries" formatted="false">"나의 발견"</string>
+    <string name="text_1_s_of_2_s_found_keep_exploring">"%2$d 중 %1$d를 찾았습니다. 계속 탐색하세요!"</string>
+    <string name="text_not_found_yet" formatted="false">"아직 찾을 수 없음"</string>
+    <string name="text_tap_anywhere_to_close" formatted="false">"닫으려면 아무 곳이나 탭하세요."</string>
+    <string name="text_1_s_2_s_3_s_lit_up_tonight">"%1$s %2$s\n%3$d%% 오늘 밤에 불이 켜졌습니다"</string>
+    <string name="text_did_you_know" formatted="false">"알고 계셨나요?"</string>
+    <string name="text_tap_a_glowing_dot_on_earth_to_explore_or_find_a_new_discovery_for" formatted="false">"지구상의 빛나는 점을 탭하여 탐색하거나 일기에 대한 새로운 발견을 찾아보세요!"</string>
+    <string name="text_play_a_challenge" formatted="false">"🎯 도전해보세요!"</string>
+    <string name="text_tap_outside_the_box_to_close" formatted="false">"닫으려면 상자 바깥쪽을 탭하세요."</string>
+    <string name="text_ongoing" formatted="false">"진행중인"</string>
+    <string name="text_just_now" formatted="false">"지금 막"</string>
+    <string name="text_clouds_off" formatted="false">"☁ 구름: 꺼짐"</string>
+    <string name="text_clouds_generated" formatted="false">"☁ 구름: 생성됨"</string>
+    <string name="text_clouds_live_nasa_viirs_updated_1_s">"☁ 구름: 라이브(NASA VIIRS)\n업데이트됨: %1$s"</string>
+    <string name="text_solar_eclipse" formatted="false">"☀ 일식!"</string>
+    <string name="text_lunar_eclipse" formatted="false">"🌙 월식!"</string>
+    <string name="text_near_solar_eclipse" formatted="false">"일식 근처"</string>
+    <string name="text_near_lunar_eclipse" formatted="false">"월식 근처"</string>
+    <string name="text_explore_time_simulated_scene" formatted="false">"시간 탐색, 시뮬레이션 장면"</string>
+    <string name="text_earth" formatted="false">"지구"</string>
+    <string name="text_textured_globe_with_day_night_cycle_and_diffuse_sunlight" formatted="false">"낮/밤 주기와 햇빛 확산이 있는 질감 있는 지구본"</string>
+    <string name="text_city_lights" formatted="false">"도시의 불빛"</string>
+    <string name="text_visible_on_the_night_side_of_the_earth" formatted="false">"지구의 밤 쪽에서 볼 수 있음"</string>
+    <string name="text_procedural_or_live_satellite_imagery_nasa_viirs_tap_cloud_label_t" formatted="false">"절차적 또는 실시간 위성 이미지(NASA VIIRS). 전환하려면 클라우드 라벨을 탭하세요."</string>
+    <string name="text_sun" formatted="false">"태양"</string>
+    <string name="text_billboard_glow_showing_the_sun_s_real_time_position" formatted="false">"태양의 실시간 위치를 보여주는 빌보드 글로우"</string>
+    <string name="text_moon" formatted="false">"달"</string>
+    <string name="text_textured_sphere_at_its_real_orbital_position" formatted="false">"실제 궤도 위치의 질감 있는 구"</string>
+    <string name="text_terminator_line" formatted="false">"터미네이터 라인"</string>
+    <string name="text_amber_line_at_the_day_night_boundary" formatted="false">"낮/밤 경계의 황색 선"</string>
+    <string name="text_green_purple_glow_near_the_geomagnetic_poles_night_side_only" formatted="false">"지자기극 근처에서 녹색/보라색 빛이 납니다(밤에만 해당)."</string>
+    <string name="text_atmosphere" formatted="false">"분위기"</string>
+    <string name="text_blue_fresnel_glow_around_the_earth_s_rim" formatted="false">"지구 가장자리 주변의 푸른 프레넬 빛"</string>
+    <string name="text_stars" formatted="false">"별"</string>
+    <string name="text_background_star_field" formatted="false">"배경 별 필드"</string>
+    <string name="text_pulsing_amber_dots_m4_5_from_usgs_past_7_days" formatted="false">"깜박이는 황색 점(USGS의 M4.5+, 지난 7일)"</string>
+    <string name="text_volcanoes" formatted="false">"화산"</string>
+    <string name="text_pulsing_magenta_dots_active_eruptions_from_nasa_eonet" formatted="false">"펄스하는 자홍색 점(NASA EONET에서 활성 분출)"</string>
+    <string name="text_wildfires" formatted="false">"산불"</string>
+    <string name="text_pulsing_red_dots_active_fires_from_nasa_eonet" formatted="false">"깜박이는 빨간색 점(NASA EONET의 활성 화재)"</string>
+    <string name="text_storms" formatted="false">"폭풍"</string>
+    <string name="text_pulsing_blue_dots_severe_storms_from_nasa_eonet_tap_any_dot_for_d" formatted="false">"깜박이는 파란색 점(NASA EONET의 심한 폭풍) — 자세한 내용을 보려면 점을 탭하세요."</string>
+    <string name="text_iss_orbit" formatted="false">"ISS 궤도"</string>
+    <string name="text_thin_line_showing_the_international_space_station_s_path" formatted="false">"국제 우주 정거장의 경로를 보여주는 얇은 선"</string>
+    <string name="text_sun_moon_arrows" formatted="false">"태양/달 화살"</string>
+    <string name="text_2d_overlay_arrows_pointing_toward_the_sun_and_moon" formatted="false">"태양과 달을 가리키는 2D 오버레이 화살표"</string>
+    <string name="text_eclipse_alerts" formatted="false">"Eclipse 경고"</string>
+    <string name="text_notifies_when_sun_earth_moon_alignment_approaches_an_eclipse" formatted="false">"태양-지구-달 정렬이 일식에 가까워지면 알립니다."</string>
+    <string name="text_time_scrubber" formatted="false">"시간 스크러버"</string>
+    <string name="text_drag_the_slider_to_simulate_24_hours_releases_to_snap_back_to_now" formatted="false">"+/- 24시간을 시뮬레이션하려면 슬라이더를 드래그하세요. 지금으로 돌아가는 릴리스"</string>
+    <string name="text_legend" formatted="false">"범례"</string>
+    <string name="text_music_on" formatted="false">"♫ 음악: 켜짐"</string>
+    <string name="text_music_off" formatted="false">"♫ 음악: 꺼짐"</string>
+    <string name="text_read_to_me_is_on_i_ll_read_the_cards_out_loud" formatted="false">"나에게 읽어주기가 켜져 있습니다. 카드를 큰 소리로 읽어볼게요."</string>
+    <string name="text_read_on" formatted="false">"🔊 읽기: 켜짐"</string>
+    <string name="text_read_off" formatted="false">"🔊 읽기: 꺼짐"</string>
+    <string name="text_a_living_window_onto_earth" formatted="false">"지구를 바라보는 살아있는 창문"</string>
+    <string name="text_drag_to_rotate" formatted="false">"드래그하여 회전"</string>
+    <string name="text_pinch_to_zoom" formatted="false">"핀치하여 확대/축소"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"더 알아보려면 지구본을 탭하세요."</string>
+    <string name="text_explore_earth" formatted="false">"지구 탐험"</string>
+    <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"실시간 미리보기 · 현재 햇빛 · 오디오 없음"</string>
+    <string name="text_preview_set_wallpaper" formatted="false">"미리보기 및 배경화면 설정"</string>
+    <string name="text_choose_home_or_lock_screen_in_the_android_preview" formatted="false">"Android 미리보기에서 홈 또는 잠금 화면을 선택하세요."</string>
+    <string name="text_view_from" formatted="false">"보기에서"</string>
+    <string name="text_saved_places" formatted="false">"저장된 장소"</string>
+    <string name="text_search_cities" formatted="false">"도시 검색"</string>
+    <string name="text_composition" formatted="false">"구성"</string>
+    <string name="text_whole_earth" formatted="false">"지구 전체"</string>
+    <string name="text_night_lights" formatted="false">"야간 조명"</string>
+    <string name="text_earth_s_horizon" formatted="false">"지구의 지평선"</string>
+    <string name="text_complete_globe_with_current_sunlight_and_quiet_stars" formatted="false">"현재 햇빛과 조용한 별들로 구성된 완전한 지구입니다."</string>
+    <string name="text_city_lights_on_the_dark_side_of_earth_with_current_sunlight" formatted="false">"현재 햇빛이 비치는 지구의 어두운 면에 있는 도시의 불빛."</string>
+    <string name="text_a_close_cropped_view_of_earth_s_atmospheric_limb" formatted="false">"지구의 대기권을 가까이서 자른 모습."</string>
+    <string name="text_camera_motion" formatted="false">"카메라 모션"</string>
+    <string name="text_fixed_viewpoint" formatted="false">"고정된 시점"</string>
+    <string name="text_slow_orbit" formatted="false">"느린 궤도"</string>
+    <string name="text_follow_the_night_side" formatted="false">"밤 편을 따라가"</string>
+    <string name="text_keeps_your_chosen_place_in_view_as_daylight_changes" formatted="false">"일광 변화에 따라 선택한 장소를 계속 볼 수 있습니다."</string>
+    <string name="text_starts_at_your_chosen_view_then_slowly_travels_around_earth" formatted="false">"선택한 보기에서 시작한 다음 천천히 지구 주위를 여행합니다."</string>
+    <string name="text_the_view_moves_with_the_night_side_instead_of_staying_over_a_plac" formatted="false">"풍경은 한 장소에 머무는 것이 아니라 밤 쪽으로 움직인다."</string>
+    <string name="text_turn_the_globe_when_i_swipe_between_home_screens" formatted="false">"홈 화면 사이를 스와이프하면 지구본을 돌립니다."</string>
+    <string name="text_generated_illustration" formatted="false">"생성된 일러스트레이션"</string>
+    <string name="text_satellite_imagery_when_cached_or_available" formatted="false">"위성 이미지(캐시되었거나 사용 가능한 경우)"</string>
+    <string name="text_globe_scale" formatted="false">"지구 규모"</string>
+    <string name="text_hide_framing_controls" formatted="false">"프레임 컨트롤 숨기기 ▴"</string>
+    <string name="text_adjust_framing_angles" formatted="false">"프레임 및 각도 조정 ▾"</string>
+    <string name="text_horizontal_framing" formatted="false">"수평 프레임"</string>
+    <string name="text_vertical_framing" formatted="false">"수직 프레임"</string>
+    <string name="text_view_angle" formatted="false">"시야각"</string>
+    <string name="text_view_latitude" formatted="false">"위도 보기"</string>
+    <string name="text_saved_view_1_s">" · 저장된 보기: %1$s"</string>
+    <string name="text_following_the_night_side_1_s">"밤의 편을 따라%1$s"</string>
+    <string name="text_your_custom_view" formatted="false">"귀하의 맞춤보기"</string>
+    <string name="text_orbit_starts_at_1_s">"궤도는 %1$s에서 시작됩니다."</string>
+    <string name="text_choose_a_place_or_adjust_the_angles_below" formatted="false">"장소를 선택하거나 아래에서 각도를 조정하세요."</string>
+    <string name="text_no_saved_places_yet" formatted="false">"아직 저장된 장소가 없습니다."</string>
+    <string name="text_search_for_a_city_here_you_can_also_save_a_custom_point_in_explor" formatted="false">"여기에서 도시를 검색하세요. 탐색 → 장소 → 지구본에서 장소 추가에서 사용자 지정 지점을 저장할 수도 있습니다."</string>
+    <string name="text_view_from_a_saved_place" formatted="false">"저장된 장소에서 보기"</string>
+    <string name="text_city_or_country" formatted="false">"도시 또는 국가"</string>
+    <string name="text_search_city_or_country" formatted="false">"도시 또는 국가 검색"</string>
+    <string name="text_no_matching_city_try_a_country_or_another_name" formatted="false">"일치하는 도시가 없습니다. 국가 또는 다른 이름을 사용해 보세요."</string>
+    <string name="text_choose_a_city" formatted="false">"도시를 선택하세요"</string>
+    <string name="text_earth_today_widget" formatted="false">"지구의 오늘 위젯"</string>
+    <string name="text_which_place_should_this_widget_show_other_widgets_can_show_differ" formatted="false">"이 위젯은 어느 위치에 표시되어야 합니까? 다른 위젯은 다른 위치를 표시할 수 있습니다."</string>
+    <string name="text_no_place_yet" formatted="false">"아직 장소가 없습니다"</string>
+    <string name="text_save_a_place_in_the_app_explore_places_to_see_its_day_and_night_h" formatted="false">"여기에서 해당 장소의 낮과 밤을 확인하려면 앱(탐색 &gt; 장소)에 장소를 저장하세요."</string>
+    <string name="text_save_widget" formatted="false">"위젯 저장"</string>
+    <string name="text_1_s_2_s_3_s">"%1$s %2$s · %3$d%%"</string>
+    <string name="text_choose_a_place" formatted="false">"장소를 선택하세요"</string>
+    <string name="text_set_your_local_view" formatted="false">"로컬 보기 설정"</string>
+    <string name="text_polar_day_2" formatted="false">"극지의 날"</string>
+    <string name="text_polar_night_2" formatted="false">"극지방의 밤"</string>
+    <string name="text_nighttime_now" formatted="false">"지금은 야간"</string>
+    <string name="text_updated_1_s">"업데이트된 %1$s"</string>
+    <string name="text_illustration_1_s">"일러스트 · %1$s"</string>
+    <string name="text_couldn_t_capture_the_view_try_again" formatted="false">"보기를 캡처할 수 없습니다. 다시 시도하세요."</string>
+    <string name="text_couldn_t_prepare_the_image" formatted="false">"이미지를 준비하지 못했습니다."</string>
+    <string name="text_share_your_view" formatted="false">"당신의 견해를 공유하세요"</string>
+    <string name="text_earth_1_s_made_with_pale_blue_dot_2_s">"🌍 지구 — %1$s\nPale Blue Dot로 제작 → %2$s"</string>
+    <string name="text_ask_a_grown_up" formatted="false">"어른에게 물어보세요"</string>
+    <string name="text_what_is_1_s_2_s">"%1$d × %2$d 란 무엇입니까?"</string>
+    <string name="text_maybe_later" formatted="false">"어쩌면 나중에"</string>
+    <string name="text_earthquake" formatted="false">"지진"</string>
+    <string name="text_you_found_where_the_ground_was_shaking" formatted="false">"땅이 흔들리는 곳을 발견했습니다!"</string>
+    <string name="text_volcano" formatted="false">"화산"</string>
+    <string name="text_you_spotted_hot_lava_erupting_from_deep_inside_the_earth" formatted="false">"지구 깊은 곳에서 뜨거운 용암이 분출되는 것을 목격하셨습니다."</string>
+    <string name="text_wildfire" formatted="false">"산불"</string>
+    <string name="text_you_caught_a_fire_so_big_that_satellites_can_see_it_from_space" formatted="false">"위성이 우주에서도 볼 수 있을 만큼 큰 화재가 발생했습니다."</string>
+    <string name="text_storm" formatted="false">"폭풍"</string>
+    <string name="text_you_tracked_a_giant_swirling_storm" formatted="false">"당신은 거대한 소용돌이 폭풍을 추적했습니다."</string>
+    <string name="text_daytime_2" formatted="false">"낮"</string>
+    <string name="text_you_found_the_side_of_earth_facing_the_sun" formatted="false">"당신은 태양을 향하고 있는 지구의 면을 발견했습니다."</string>
+    <string name="text_city_lights_2" formatted="false">"도시의 불빛"</string>
+    <string name="text_you_found_the_night_side_sparkling_with_city_lights" formatted="false">"당신은 도시의 불빛으로 반짝이는 밤의 모습을 발견했습니다."</string>
+    <string name="text_star_gazer" formatted="false">"스타 게이저"</string>
+    <string name="text_you_looked_past_earth_into_the_stars_and_galaxies_beyond" formatted="false">"당신은 지구 너머의 별과 은하계를 바라보았습니다."</string>
+    <string name="text_time_traveler" formatted="false">"시간 여행자"</string>
+    <string name="text_you_moved_time_to_turn_day_into_night" formatted="false">"당신은 낮을 밤으로 바꾸도록 시간을 옮겼습니다."</string>
+    <string name="text_tap_a_place_where_it_s_daytime" formatted="false">"DAYTIME☀️인 장소를 탭하세요."</string>
+    <string name="text_tap_a_place_where_it_s_night_time" formatted="false">"NIGHT-TIME인 장소를 탭하세요 🌙"</string>
+    <string name="text_find_an_earthquake" formatted="false">"지진을 찾아보세요 🔶"</string>
+    <string name="text_find_a_volcano" formatted="false">"화산을 찾아보세요 🌋"</string>
+    <string name="text_find_a_wildfire" formatted="false">"산불을 찾아보세요 🔥"</string>
+    <string name="text_find_a_storm" formatted="false">"폭풍을 찾아보세요 🌀"</string>
+    <string name="text_the_sun_is_so_huge_that_about_1_3_million_earths_could_fit_inside" formatted="false">"태양은 너무 커서 약 130만 개의 지구가 그 안에 들어갈 수 있습니다."</string>
+    <string name="text_a_day_on_venus_is_longer_than_a_whole_year_on_venus" formatted="false">"금성의 하루는 금성의 1년보다 길어요!"</string>
+    <string name="text_footprints_on_the_moon_can_last_millions_of_years_because_there_s" formatted="false">"달의 발자국은 수백만 년 동안 지속될 수 있습니다. 왜냐하면 그것을 날려버릴 바람이 없기 때문입니다."</string>
+    <string name="text_jupiter_is_so_big_that_all_the_other_planets_could_fit_inside_it" formatted="false">"목성은 너무 커서 다른 모든 행성이 그 안에 들어갈 수 있습니다."</string>
+    <string name="text_sunlight_takes_about_8_minutes_to_travel_all_the_way_to_earth" formatted="false">"햇빛이 지구까지 도달하는 데는 약 8분이 걸립니다."</string>
+    <string name="text_space_is_completely_silent_because_there_s_no_air_to_carry_sound" formatted="false">"소리를 전달할 공기가 없기 때문에 공간은 완전히 조용합니다."</string>
+    <string name="text_earth_takes_365_and_a_quarter_days_to_orbit_the_sun_that_s_why_we" formatted="false">"지구가 태양을 공전하는 데 365일과 1/4일이 걸립니다. 이것이 바로 4년마다 윤일을 추가하는 이유입니다."</string>
+    <string name="text_the_tallest_volcano_we_know_of_olympus_mons_on_mars_is_about_thre" formatted="false">"우리가 알고 있는 가장 높은 화산인 화성의 올림푸스 몬스는 에베레스트 산보다 약 3배 더 높습니다."</string>
+    <string name="text_earth_is_the_only_planet_not_named_after_a_greek_or_roman_god" formatted="false">"지구는 그리스나 로마 신의 이름을 따서 명명되지 않은 유일한 행성입니다."</string>
+    <string name="text_there_are_more_stars_in_the_universe_than_grains_of_sand_on_all_o" formatted="false">"우주에는 지구의 모든 해변에 있는 모래알보다 더 많은 별이 있습니다."</string>
+    <string name="text_the_moon_drifts_about_3_8_cm_farther_from_earth_every_year" formatted="false">"달은 매년 지구에서 약 3.8cm씩 멀어진다."</string>
+    <string name="text_saturn_is_so_light_for_its_size_that_it_would_float_in_a_giant_ba" formatted="false">"토성은 크기에 비해 너무 가볍기 때문에 거대한 물 욕조에 떠 있을 수 있습니다."</string>
+    <string name="text_lightning_strikes_somewhere_on_earth_about_100_times_every_second" formatted="false">"번개는 지구 어딘가에서 매초 약 100번씩 칩니다."</string>
+    <string name="text_the_space_station_zooms_around_the_whole_earth_about_once_every_9" formatted="false">"우주 정거장은 약 90분에 한 번씩 지구 전체를 돌고 있습니다."</string>
+    <string name="text_auroras_glow_near_the_poles_when_tiny_particles_from_the_sun_cras" formatted="false">"오로라는 태양의 작은 입자가 우리 공기에 충돌할 때 극 근처에서 빛납니다."</string>
+    <string name="text_about_70_of_earth_s_surface_is_covered_by_ocean" formatted="false">"지구 표면의 약 70%는 바다로 덮여 있습니다."</string>
+    <string name="text_venus_is_the_hottest_planet_even_though_mercury_is_closer_to_the" formatted="false">"금성은 수성이 태양에 더 가깝지만 가장 뜨거운 행성입니다."</string>
+    <string name="text_the_great_red_spot_on_jupiter_is_a_storm_bigger_than_the_whole_ea" formatted="false">"목성의 대적점은 지구 전체보다 더 큰 폭풍입니다."</string>
+    <string name="text_earthquakes_happen_when_giant_pieces_of_earth_s_crust_slip_past_e" formatted="false">"지진은 지구의 지각의 거대한 조각이 서로 지나갈 때 발생합니다."</string>
+    <string name="text_the_sun_is_actually_white_our_air_is_what_makes_it_look_yellow" formatted="false">"태양은 실제로 흰색입니다. 공기가 태양을 노란색으로 보이게 만드는 것입니다."</string>
+    <string name="text_comets_are_giant_balls_of_ice_and_dust_that_grow_glowing_tails_ne" formatted="false">"혜성은 태양 근처에서 빛나는 꼬리가 자라는 거대한 얼음과 먼지 공입니다."</string>
+    <string name="text_if_you_could_drive_a_car_straight_up_you_d_reach_space_in_about_a" formatted="false">"차를 똑바로 운전할 수 있다면 약 한 시간 안에 우주에 도착할 수 있습니다."</string>
+    <string name="text_the_moon_has_no_air_so_its_sky_is_always_black_even_in_the_daytim" formatted="false">"달에는 공기가 없기 때문에 낮에도 하늘은 항상 검은색입니다."</string>
+    <string name="text_earth_spins_at_about_1_600_km_h_at_the_equator_but_we_don_t_feel" formatted="false">"지구는 적도에서 약 1,600km/h의 속도로 회전하지만 우리는 그에 맞춰 회전하기 때문에 지구를 느끼지 못합니다."</string>
+    <string name="text_new_moon" formatted="false">"삭"</string>
+    <string name="text_waxing_crescent" formatted="false">"차오르는 초승달"</string>
+    <string name="text_first_quarter" formatted="false">"상현달"</string>
+    <string name="text_waxing_gibbous" formatted="false">"차오르는 볼록달"</string>
+    <string name="text_full_moon" formatted="false">"보름달"</string>
+    <string name="text_waning_gibbous" formatted="false">"기우는 볼록달"</string>
+    <string name="text_last_quarter" formatted="false">"하현달"</string>
+    <string name="text_waning_crescent" formatted="false">"기우는 그믐달"</string>
+    <string name="text_watch_where_sunrise_reaches_next" formatted="false">"다음으로 일출이 어디까지 오는지 지켜보세요."</string>
+    <string name="text_compare_daylight_in_the_north_and_south" formatted="false">"북쪽과 남쪽의 일광을 비교해 보세요."</string>
+    <string name="text_trace_a_curve_of_earth_s_plate_boundaries" formatted="false">"지구 판 경계의 곡선을 추적합니다."</string>
+    <string name="text_saved_observation_feed_update_unavailable" formatted="false">"저장된 관찰; 피드 업데이트를 사용할 수 없습니다."</string>
+    <string name="text_recent_reported_observation" formatted="false">"최근 보고된 관찰"</string>
+    <string name="text_observations_are_loading" formatted="false">"관측값 로드 중"</string>
+    <string name="text_no_recent_observations_available_the_moon_and_daylight_are_still" formatted="false">"최근 관찰 결과가 없습니다. 달과 일광은 아직 여기에 있어요"</string>
+    <string name="lesson_follow_sunrise" formatted="false">"일출을 따라가세요"</string>
+    <string name="lesson_a_turning_world" formatted="false">"변화하는 세상"</string>
+    <string name="lesson_sunrise_is_a_moving_boundary_between_darkness_and_daylight_we_ll" formatted="false">"일출은 어둠과 일광 사이의 움직이는 경계입니다. 표시된 곳에서 따라가겠습니다."</string>
+    <string name="lesson_begin" formatted="false">"시작"</string>
+    <string name="lesson_find_london" formatted="false">"런던 찾기"</string>
+    <string name="lesson_look_at_london_on_the_globe_notice_which_side_faces_the_sun_the_m" formatted="false">"지구상의 런던을 보세요. 어느 쪽이 태양을 향하고 있는지 확인하세요. 마커와 일광 계산은 별도의 단서입니다."</string>
+    <string name="lesson_i_found_london" formatted="false">"런던을 찾았어요"</string>
+    <string name="lesson_predict_the_direction" formatted="false">"방향을 예측해 보세요"</string>
+    <string name="lesson_as_earth_spins_eastward_which_way_does_the_dawn_boundary_move_acr" formatted="false">"지구가 동쪽으로 회전할 때 새벽 경계는 경도 지도를 가로질러 어느 방향으로 이동합니까?"</string>
+    <string name="lesson_yes_at_a_fixed_utc_time_the_dawn_line_moves_westward_over_longitu" formatted="false">"그렇습니다. 고정된 UTC 시간에 지구가 동쪽으로 회전함에 따라 새벽 선은 경도를 넘어 서쪽으로 이동합니다."</string>
+    <string name="lesson_it_moves_westward_across_longitudes_earth_itself_turns_eastward_c" formatted="false">"경도를 넘어 서쪽으로 이동합니다. 지구 자체는 동쪽으로 회전하여 각 장소를 일광으로 가져옵니다."</string>
+    <string name="lesson_westward" formatted="false">"서쪽으로"</string>
+    <string name="lesson_eastward" formatted="false">"동쪽으로"</string>
+    <string name="lesson_advance_the_scene" formatted="false">"장면을 발전시키세요"</string>
+    <string name="lesson_move_the_globe_s_lesson_clock_forward_two_hours_and_watch_the_lig" formatted="false">"지구의 수업 시계를 두 시간 앞으로 이동하고 빛의 이동을 관찰하세요. 이것은 시뮬레이션이며 오늘은 실시간으로 유지됩니다."</string>
+    <string name="lesson_advance_two_hours" formatted="false">"두 시간 전"</string>
+    <string name="lesson_what_changed" formatted="false">"무엇이 바뀌었나요?"</string>
+    <string name="lesson_the_sunlight_direction_changed_with_time_did_the_saved_place_move" formatted="false">"시간이 지남에 따라 햇빛의 방향이 바뀌었습니다. 저장된 장소가 지구본에서 이동했나요?"</string>
+    <string name="lesson_exactly_the_place_keeps_its_coordinates_while_earth_s_rotation_ch" formatted="false">"정확합니다. 지구의 자전이 조명을 바꾸는 동안 그 장소는 좌표를 유지합니다."</string>
+    <string name="lesson_a_place_keeps_its_latitude_and_longitude_the_changing_angle_to_th" formatted="false">"장소는 위도와 경도를 유지합니다. 태양에 대한 각도의 변화는 낮과 밤을 만듭니다."</string>
+    <string name="lesson_no_earth_rotated_relative_to_the_sun" formatted="false">"아니요. 태양을 기준으로 지구가 회전함"</string>
+    <string name="lesson_yes_its_latitude_changed" formatted="false">"예; 위도가 바뀌었어요"</string>
+    <string name="lesson_explore_the_ring_of_fire" formatted="false">"불의 고리 탐험"</string>
+    <string name="lesson_a_pattern_around_the_pacific" formatted="false">"태평양 주변의 패턴"</string>
+    <string name="lesson_visit_three_locations_predict_a_pattern_then_reveal_plate_boundar" formatted="false">"세 곳을 방문하여 패턴을 예측하고 판 경계를 밝혀보세요. 기록 대체 예시에는 날짜와 소스가 라벨로 지정되어 있습니다."</string>
+    <string name="lesson_off_japan" formatted="false">"오프 재팬"</string>
+    <string name="lesson_historical_fallback_2011_03_11_tohoku_earthquake_usgs_a_recent_pa" formatted="false">"역사적 대체: 2011-03-11 도호쿠 지진, USGS. 가능한 경우 최근 태평양 관측이 사용됩니다."</string>
+    <string name="lesson_visit_the_next_location" formatted="false">"다음 장소를 방문해보세요"</string>
+    <string name="lesson_the_cascades" formatted="false">"캐스케이드"</string>
+    <string name="lesson_historical_fallback_1980_05_18_mount_st_helens_eruption_usgs_this" formatted="false">"역사적 대체: 1980-05-18 세인트 헬렌 산 폭발, USGS. 이것은 실시간 보고서가 아닌 날짜가 지정된 강의 예입니다."</string>
+    <string name="lesson_along_chile" formatted="false">"칠레를 따라"</string>
+    <string name="lesson_historical_fallback_1960_05_22_great_chilean_earthquake_usgs_this" formatted="false">"역사적 대체: 1960-05-22 칠레 대지진, USGS. 이 예는 라이브 이벤트 저장소 외부에 있습니다."</string>
+    <string name="lesson_predict_the_pattern" formatted="false">"패턴 예측"</string>
+    <string name="lesson_what_pattern_do_you_see" formatted="false">"어떤 패턴이 보이나요?"</string>
+    <string name="lesson_which_broad_pattern_links_many_earthquake_and_volcano_locations_a" formatted="false">"태평양 주변의 많은 지진 및 화산 위치를 연결하는 광범위한 패턴은 무엇입니까?"</string>
+    <string name="lesson_yes_many_cluster_near_plate_edges_but_some_events_also_happen_awa" formatted="false">"그렇습니다. 많은 경우 판 가장자리 근처에 클러스터되지만 일부 이벤트는 매핑된 경계에서 멀리 떨어져 발생하기도 합니다."</string>
+    <string name="lesson_the_broad_pattern_is_a_belt_near_several_plate_edges_individual_e" formatted="false">"넓은 패턴은 여러 판 가장자리 근처의 벨트입니다. 개별 사건에는 자체 증거가 필요합니다. 선까지의 거리는 진단이 아닙니다."</string>
+    <string name="lesson_a_belt_near_several_plate_edges" formatted="false">"여러 플레이트 가장자리 근처의 벨트"</string>
+    <string name="lesson_one_straight_line_through_the_pacific_center" formatted="false">"태평양 중심을 통과하는 하나의 직선"</string>
+    <string name="lesson_every_event_lies_exactly_on_one_boundary" formatted="false">"모든 사건은 정확히 하나의 경계에 위치"</string>
+    <string name="lesson_reveal_the_boundaries" formatted="false">"경계를 드러내다"</string>
+    <string name="lesson_gold_lines_show_a_generalized_pb2002_plate_boundary_model_compare" formatted="false">"금색 선은 일반화된 PB2002 판 경계 모델을 보여줍니다. 환태평양 지역을 비교해 보세요. 이 줄은 모든 개별 사건을 설명하지 않습니다."</string>
+    <string name="lesson_reveal_gold_lines" formatted="false">"금색 라인을 드러내다"</string>
+    <string name="lesson_what_the_pattern_means" formatted="false">"패턴의 의미"</string>
+    <string name="lesson_plate_motions_concentrate_many_earthquakes_and_volcanoes_around_t" formatted="false">"판 운동은 태평양 주변의 많은 지진과 화산을 집중시킵니다. 판 내의 핫스팟과 지진은 패턴에 예외가 있는 이유를 보여줍니다."</string>
+    <string name="lesson_complete_journey" formatted="false">"완전한 여행"</string>
+    <string name="lesson_understand_the_seasons" formatted="false">"계절을 이해하라"</string>
+    <string name="lesson_two_hemispheres" formatted="false">"두 개의 반구"</string>
+    <string name="lesson_compare_daylight_at_london_and_sydney_on_two_dates_earth_s_tilted" formatted="false">"두 날짜의 런던과 시드니의 일광을 비교해보세요. 지구의 기울어진 축은 태양이 수평선 위에 머무는 시간을 변경합니다."</string>
+    <string name="lesson_london_in_june" formatted="false">"6월의 런던"</string>
+    <string name="lesson_observe_london_near_the_june_solstice_the_northern_hemisphere_has" formatted="false">"6월 동지 근처의 런던을 관찰해보세요. 북반구는 일광이 더 길다."</string>
+    <string name="lesson_compare_sydney" formatted="false">"시드니 비교"</string>
+    <string name="lesson_sydney_in_june" formatted="false">"6월의 시드니"</string>
+    <string name="lesson_observe_sydney_on_the_same_date_its_winter_daylight_is_shorter_th" formatted="false">"같은 날짜에 시드니를 관찰하세요. 겨울 일광은 런던의 여름 일광보다 짧습니다."</string>
+    <string name="lesson_make_a_prediction" formatted="false">"예측하기"</string>
+    <string name="lesson_predict_december" formatted="false">"12월 예측"</string>
+    <string name="lesson_near_the_december_solstice_which_marked_place_has_longer_daylight" formatted="false">"12월 동지 근처, 표시된 장소 중 일광이 더 긴 곳은 어디입니까?"</string>
+    <string name="lesson_yes_the_southern_hemisphere_tilts_toward_the_sun_in_december_so_s" formatted="false">"그렇습니다. 12월에는 남반구가 태양쪽으로 기울어지기 때문에 시드니의 낮이 더 길어집니다."</string>
+    <string name="lesson_sydney_has_longer_daylight_near_the_december_solstice_the_souther" formatted="false">"시드니는 12월 동지 근처에 낮 시간이 더 길어집니다. 그러면 남반구는 태양쪽으로 기울어집니다."</string>
+    <string name="lesson_sydney" formatted="false">"시드니"</string>
+    <string name="lesson_london" formatted="false">"런던"</string>
+    <string name="lesson_they_must_be_equal" formatted="false">"그들은 동등해야합니다"</string>
+    <string name="lesson_switch_to_december" formatted="false">"12월로 전환"</string>
+    <string name="lesson_compare_the_daylight_readouts_after_changing_the_lesson_date_this" formatted="false">"수업 날짜를 변경한 후 일광 판독값을 비교하세요. 이렇게 하면 앱 장면만 변경됩니다."</string>
+    <string name="lesson_show_the_axial_tilt_explanation" formatted="false">"축 기울기 설명 표시"</string>
+    <string name="lesson_why_seasons_change" formatted="false">"계절이 바뀌는 이유"</string>
+    <string name="lesson_earth_s_axis_stays_tilted_about_23_4_as_it_orbits_the_sun_the_nor" formatted="false">"지구의 축은 태양을 공전하면서 약 23.4° 기울어져 있습니다. 북반구와 남반구는 더 긴 일광을 번갈아 가며 나타냅니다. 눈에 보이는 안내선은 적도, 열대 및 극지방을 표시합니다."</string>
+    <string name="text_notebook" formatted="false">"관찰 노트"</string>
+    <string name="text_guide" formatted="false">"안내"</string>
+    <string name="text_places" formatted="false">"장소"</string>
+    <string name="text_explore_time" formatted="false">"시간 탐색"</string>
+    <string name="text_journeys" formatted="false">"여행"</string>
+    <string name="text_journey" formatted="false">"여행"</string>
+    <string name="text_language" formatted="false">"언어"</string>
+    <string name="text_use_device_language" formatted="false">"장치 언어 사용"</string>
+    <string name="text_a_voice_for_this_language_is_not_installed_on_this_device" formatted="false">"이 언어에 대한 음성이 이 기기에 설치되어 있지 않습니다."</string>
+    <string name="text_great_job_challenges_solved_1_s">"🎉 잘했어요! 해결된 과제: %1$d"</string>
+    <string name="text_earth_s_axis_is_tilted_about_23_4_degrees_relative_to_its_orbit_a" formatted="false">"지구의 축은 태양 주위의 궤도에 대해 약 23.4도 기울어져 있습니다."</string>
+    <string name="city_abidjan" formatted="false">"코트디부아르 아비장"</string>
+    <string name="city_abu_dhabi" formatted="false">"아부다비, 아랍에미리트"</string>
+    <string name="city_abuja" formatted="false">"나이지리아 아부자"</string>
+    <string name="city_accra" formatted="false">"아크라, 가나"</string>
+    <string name="city_adamstown" formatted="false">"아담스타운, 핏케언"</string>
+    <string name="city_addis_ababa" formatted="false">"아디스아바바, 에티오피아"</string>
+    <string name="city_adelaide" formatted="false">"호주 애들레이드"</string>
+    <string name="city_alexandria" formatted="false">"이집트 알렉산드리아"</string>
+    <string name="city_algiers" formatted="false">"알제, 알제리"</string>
+    <string name="city_alofi" formatted="false">"알로피, 니우에"</string>
+    <string name="city_amman" formatted="false">"암만, 요르단"</string>
+    <string name="city_amsterdam" formatted="false">"암스테르담, 네덜란드"</string>
+    <string name="city_andorra_la_vella" formatted="false">"안도라라베야, 안도라"</string>
+    <string name="city_ankara" formatted="false">"앙카라, 터키"</string>
+    <string name="city_antananarivo" formatted="false">"마다가스카르 안타나나리보"</string>
+    <string name="city_apia" formatted="false">"아피아, 사모아"</string>
+    <string name="city_ashgabat" formatted="false">"아시가바트, 투르크메니스탄"</string>
+    <string name="city_asmara" formatted="false">"아스마라, 에리트레아"</string>
+    <string name="city_astana" formatted="false">"아스타나, 카자흐스탄"</string>
+    <string name="city_asuncion" formatted="false">"아순시온, 파라과이"</string>
+    <string name="city_athens" formatted="false">"아테네, 그리스"</string>
+    <string name="city_auckland" formatted="false">"오클랜드, 뉴질랜드"</string>
+    <string name="city_avarua" formatted="false">"아바루아, 쿡 제도"</string>
+    <string name="city_baghdad" formatted="false">"이라크 바그다드"</string>
+    <string name="city_baku" formatted="false">"바쿠, 아제르바이잔"</string>
+    <string name="city_bamako" formatted="false">"바마코, 말리"</string>
+    <string name="city_bandar_seri_begawan" formatted="false">"반다르 세리 베가완, 브루나이"</string>
+    <string name="city_bangkok" formatted="false">"방콕, 태국"</string>
+    <string name="city_bangui" formatted="false">"방기, 중앙아프리카 공화국"</string>
+    <string name="city_banjul" formatted="false">"반줄, 감비아"</string>
+    <string name="city_barcelona" formatted="false">"바르셀로나, 스페인"</string>
+    <string name="city_basse_terre" formatted="false">"바스테르, 과들루프"</string>
+    <string name="city_basseterre" formatted="false">"바스테르, 세인트키츠 네비스"</string>
+    <string name="city_beijing" formatted="false">"베이징, 중국"</string>
+    <string name="city_beirut" formatted="false">"베이루트, 레바논"</string>
+    <string name="city_belgrade" formatted="false">"베오그라드, 세르비아"</string>
+    <string name="city_belmopan" formatted="false">"벨모판, 벨리즈"</string>
+    <string name="city_belo_horizonte" formatted="false">"브라질 벨루오리존치"</string>
+    <string name="city_berlin" formatted="false">"베를린, 독일"</string>
+    <string name="city_bern" formatted="false">"베른, 스위스"</string>
+    <string name="city_bishkek" formatted="false">"비슈케크, 키르기스스탄"</string>
+    <string name="city_bissau" formatted="false">"비사우, 기니비사우"</string>
+    <string name="city_bogota" formatted="false">"콜롬비아 보고타"</string>
+    <string name="city_brasilia" formatted="false">"브라질 브라질리아"</string>
+    <string name="city_bratislava" formatted="false">"브라티슬라바, 슬로바키아"</string>
+    <string name="city_brazzaville" formatted="false">"콩고 공화국 브라자빌"</string>
+    <string name="city_bridgetown" formatted="false">"브리지타운, 바베이도스"</string>
+    <string name="city_brisbane" formatted="false">"호주 브리즈번"</string>
+    <string name="city_brooklyn" formatted="false">"미국 브루클린"</string>
+    <string name="city_brussels" formatted="false">"브뤼셀, 벨기에"</string>
+    <string name="city_bucharest" formatted="false">"부쿠레슈티, 루마니아"</string>
+    <string name="city_budapest" formatted="false">"부다페스트, 헝가리"</string>
+    <string name="city_buenos_aires" formatted="false">"아르헨티나 부에노스아이레스"</string>
+    <string name="city_cairo" formatted="false">"카이로, 이집트"</string>
+    <string name="city_cali" formatted="false">"칼리, 콜롬비아"</string>
+    <string name="city_canberra" formatted="false">"호주 캔버라"</string>
+    <string name="city_cape_town" formatted="false">"케이프타운, 남아프리카공화국"</string>
+    <string name="city_caracas" formatted="false">"카라카스, 베네수엘라"</string>
+    <string name="city_casablanca" formatted="false">"카사블랑카, 모로코"</string>
+    <string name="city_castries" formatted="false">"캐스트리스, 세인트 루시아"</string>
+    <string name="city_cayenne" formatted="false">"카이엔, 프랑스령 기아나"</string>
+    <string name="city_central_coast" formatted="false">"호주 센트럴 코스트"</string>
+    <string name="city_charlotte_amalie" formatted="false">"미국령 버진 아일랜드, 샬럿 아말리에"</string>
+    <string name="city_chengdu" formatted="false">"중국 청두"</string>
+    <string name="city_chicago" formatted="false">"미국 시카고"</string>
+    <string name="city_chisinau" formatted="false">"키시나우, 몰도바"</string>
+    <string name="city_chongqing" formatted="false">"충칭, 중국"</string>
+    <string name="city_christchurch" formatted="false">"크라이스트처치, 뉴질랜드"</string>
+    <string name="city_ciudad_de_la_paz" formatted="false">"적도 기니 시우다드 데 라 파스"</string>
+    <string name="city_cockburn_town" formatted="false">"콕번 타운, 터크스 케이커스 제도"</string>
+    <string name="city_colombo" formatted="false">"콜롬보, 스리랑카"</string>
+    <string name="city_conakry" formatted="false">"코나크리, 기니"</string>
+    <string name="city_copenhagen" formatted="false">"코펜하겐, 덴마크"</string>
+    <string name="city_dakar" formatted="false">"다카르, 세네갈"</string>
+    <string name="city_damascus" formatted="false">"다마스쿠스, 시리아"</string>
+    <string name="city_dar_es_salaam" formatted="false">"다르에스살람, 탄자니아"</string>
+    <string name="city_delhi" formatted="false">"인도 델리"</string>
+    <string name="city_dhaka" formatted="false">"다카, 방글라데시"</string>
+    <string name="city_dili" formatted="false">"딜리, 동티모르"</string>
+    <string name="city_djibouti" formatted="false">"지부티, 지부티"</string>
+    <string name="city_dodoma" formatted="false">"도도마, 탄자니아"</string>
+    <string name="city_doha" formatted="false">"도하, 카타르"</string>
+    <string name="city_douglas" formatted="false">"더글러스, 맨 섬"</string>
+    <string name="city_dublin" formatted="false">"더블린, 아일랜드"</string>
+    <string name="city_dushanbe" formatted="false">"두샨베, 타지키스탄"</string>
+    <string name="city_flying_fish_cove" formatted="false">"플라잉 피시 코브, 크리스마스 섬"</string>
+    <string name="city_fort_de_france" formatted="false">"포르드프랑스, 마르티니크"</string>
+    <string name="city_fortaleza" formatted="false">"브라질 포르탈레자"</string>
+    <string name="city_freetown" formatted="false">"프리타운, 시에라리온"</string>
+    <string name="city_funafuti" formatted="false">"푸나푸티, 투발루"</string>
+    <string name="city_gaborone" formatted="false">"가보로네, 보츠와나"</string>
+    <string name="city_george_town" formatted="false">"조지 타운, 케이맨 제도"</string>
+    <string name="city_georgetown" formatted="false">"조지타운, 가이아나"</string>
+    <string name="city_gibraltar" formatted="false">"지브롤터, 지브롤터"</string>
+    <string name="city_gitega" formatted="false">"기테가, 부룬디"</string>
+    <string name="city_giza" formatted="false">"기자, 이집트"</string>
+    <string name="city_gold_coast" formatted="false">"골드코스트, 호주"</string>
+    <string name="city_grytviken" formatted="false">"그리트비켄, 사우스조지아, 사우스샌드위치 제도"</string>
+    <string name="city_guangzhou" formatted="false">"광저우, 중국"</string>
+    <string name="city_guatemala_city" formatted="false">"과테말라시티, 과테말라"</string>
+    <string name="city_guayaquil" formatted="false">"과야킬, 에콰도르"</string>
+    <string name="city_gustavia" formatted="false">"구스타비아, 생바르텔레미"</string>
+    <string name="city_hagatna" formatted="false">"하갓냐, 괌"</string>
+    <string name="city_hamburg" formatted="false">"함부르크, 독일"</string>
+    <string name="city_hamilton" formatted="false">"해밀턴, 버뮤다"</string>
+    <string name="city_hangzhou" formatted="false">"항저우, 중국"</string>
+    <string name="city_hanoi" formatted="false">"베트남 하노이"</string>
+    <string name="city_harare" formatted="false">"하라레, 짐바브웨"</string>
+    <string name="city_havana" formatted="false">"쿠바, 하바나"</string>
+    <string name="city_helsinki" formatted="false">"헬싱키, 핀란드"</string>
+    <string name="city_ho_chi_minh_city" formatted="false">"호치민시, 베트남"</string>
+    <string name="city_hong_kong" formatted="false">"홍콩, 홍콩"</string>
+    <string name="city_honiara" formatted="false">"호니아라, 솔로몬 제도"</string>
+    <string name="city_houston" formatted="false">"미국 휴스턴"</string>
+    <string name="city_ibadan" formatted="false">"나이지리아 이바단"</string>
+    <string name="city_islamabad" formatted="false">"이슬라마바드, 파키스탄"</string>
+    <string name="city_istanbul" formatted="false">"이스탄불, 터키"</string>
+    <string name="city_iztapalapa" formatted="false">"멕시코 이즈타팔라파"</string>
+    <string name="city_jakarta" formatted="false">"자카르타, 인도네시아"</string>
+    <string name="city_jamestown" formatted="false">"제임스타운, 세인트헬레나"</string>
+    <string name="city_johannesburg" formatted="false">"남아프리카공화국 요하네스버그"</string>
+    <string name="city_juba" formatted="false">"남수단 주바"</string>
+    <string name="city_kabul" formatted="false">"아프가니스탄 카불"</string>
+    <string name="city_kampala" formatted="false">"우간다 캄팔라"</string>
+    <string name="city_kano" formatted="false">"카노, 나이지리아"</string>
+    <string name="city_karachi" formatted="false">"파키스탄 카라치"</string>
+    <string name="city_kathmandu" formatted="false">"카트만두, 네팔"</string>
+    <string name="city_khartoum" formatted="false">"하르툼, 수단"</string>
+    <string name="city_kigali" formatted="false">"키갈리, 르완다"</string>
+    <string name="city_kingston" formatted="false">"킹스턴, 자메이카"</string>
+    <string name="city_kingston_nf" formatted="false">"킹스턴, 노퍽 섬"</string>
+    <string name="city_kingstown" formatted="false">"킹스타운, 세인트빈센트 그레나딘"</string>
+    <string name="city_kinshasa" formatted="false">"콩고민주공화국 킨샤사"</string>
+    <string name="city_kralendijk" formatted="false">"크랄렌데이크, 보네르, 세인트 유스타티우스 및 사바 "</string>
+    <string name="city_kuala_lumpur" formatted="false">"쿠알라룸푸르, 말레이시아"</string>
+    <string name="city_kuwait_city" formatted="false">"쿠웨이트 시티, 쿠웨이트"</string>
+    <string name="city_kyiv" formatted="false">"키예프, 우크라이나"</string>
+    <string name="city_lagos" formatted="false">"라고스, 나이지리아"</string>
+    <string name="city_lahore" formatted="false">"라호르, 파키스탄"</string>
+    <string name="city_libreville" formatted="false">"리브르빌, 가봉"</string>
+    <string name="city_lilongwe" formatted="false">"말라위 릴롱웨"</string>
+    <string name="city_lima" formatted="false">"페루 리마"</string>
+    <string name="city_lisbon" formatted="false">"리스본, 포르투갈"</string>
+    <string name="city_ljubljana" formatted="false">"슬로베니아 류블랴나"</string>
+    <string name="city_logan_city" formatted="false">"호주 로건 시티"</string>
+    <string name="city_lome" formatted="false">"로메, 토고"</string>
+    <string name="city_london" formatted="false">"런던, 영국"</string>
+    <string name="city_longyearbyen" formatted="false">"롱위에아르뷔엔, 스발바르, 얀마옌"</string>
+    <string name="city_los_angeles" formatted="false">"미국 로스앤젤레스"</string>
+    <string name="city_luanda" formatted="false">"루안다, 앙골라"</string>
+    <string name="city_lusaka" formatted="false">"루사카, 잠비아"</string>
+    <string name="city_luxembourg" formatted="false">"룩셈부르크, 룩셈부르크"</string>
+    <string name="city_macau" formatted="false">"마카오, 마카오"</string>
+    <string name="city_madrid" formatted="false">"마드리드, 스페인"</string>
+    <string name="city_majuro" formatted="false">"마주로, 마셜 제도"</string>
+    <string name="city_male" formatted="false">"말레, 몰디브"</string>
+    <string name="city_mamoudzou" formatted="false">"마무주, 마요트"</string>
+    <string name="city_managua" formatted="false">"마나과, 니카라과"</string>
+    <string name="city_manama" formatted="false">"마나마, 바레인"</string>
+    <string name="city_manaus" formatted="false">"마나우스, 브라질"</string>
+    <string name="city_manila" formatted="false">"마닐라, 필리핀"</string>
+    <string name="city_manukau_city" formatted="false">"마누카우시티, 뉴질랜드"</string>
+    <string name="city_maputo" formatted="false">"마푸토, 모잠비크"</string>
+    <string name="city_mariehamn" formatted="false">"마리에함, 올란드 제도"</string>
+    <string name="city_marigot" formatted="false">"마리고, 세인트 마틴"</string>
+    <string name="city_maseru" formatted="false">"마세루, 레소토"</string>
+    <string name="city_mata_utu" formatted="false">"마타우투, 왈리스푸투나"</string>
+    <string name="city_mbabane" formatted="false">"음바바네, 에스와티니"</string>
+    <string name="city_melbourne" formatted="false">"멜버른, 호주"</string>
+    <string name="city_mexico_city" formatted="false">"멕시코시티, 멕시코"</string>
+    <string name="city_minsk" formatted="false">"민스크, 벨로루시"</string>
+    <string name="city_mogadishu" formatted="false">"모가디슈, 소말리아"</string>
+    <string name="city_monaco" formatted="false">"모나코, 모나코"</string>
+    <string name="city_monrovia" formatted="false">"몬로비아, 라이베리아"</string>
+    <string name="city_montevideo" formatted="false">"몬테비데오, 우루과이"</string>
+    <string name="city_montreal" formatted="false">"캐나다 몬트리올"</string>
+    <string name="city_moroni" formatted="false">"모로니, 코모로"</string>
+    <string name="city_moscow" formatted="false">"모스크바, 러시아"</string>
+    <string name="city_mumbai" formatted="false">"인도 뭄바이"</string>
+    <string name="city_muscat" formatted="false">"무스카트, 오만"</string>
+    <string name="city_n_djamena" formatted="false">"은자메나, 차드"</string>
+    <string name="city_nairobi" formatted="false">"나이로비, 케냐"</string>
+    <string name="city_nassau" formatted="false">"나소, 바하마"</string>
+    <string name="city_nay_pyi_taw" formatted="false">"네피도, 미얀마"</string>
+    <string name="city_new_delhi" formatted="false">"뉴델리, 인도"</string>
+    <string name="city_new_york" formatted="false">"미국 뉴욕"</string>
+    <string name="city_newcastle" formatted="false">"뉴캐슬, 호주"</string>
+    <string name="city_ngerulmud" formatted="false">"팔라우 응게룰무드"</string>
+    <string name="city_niamey" formatted="false">"니제르 니아메"</string>
+    <string name="city_nicosia" formatted="false">"니코시아, 키프로스"</string>
+    <string name="city_nouakchott" formatted="false">"누악쇼트, 모리타니"</string>
+    <string name="city_noumea" formatted="false">"누메아, 뉴칼레도니아"</string>
+    <string name="city_nukualofa" formatted="false">"누쿠알로파, 통가"</string>
+    <string name="city_nuuk" formatted="false">"누크, 그린란드"</string>
+    <string name="city_oranjestad" formatted="false">"오라녜스타트, 아루바"</string>
+    <string name="city_oslo" formatted="false">"오슬로, 노르웨이"</string>
+    <string name="city_ottawa" formatted="false">"오타와, 캐나다"</string>
+    <string name="city_ouagadougou" formatted="false">"와가두구, 부르키나파소"</string>
+    <string name="city_pago_pago" formatted="false">"파고파고, 아메리칸사모아"</string>
+    <string name="city_palikir" formatted="false">"미크로네시아 팔리키르"</string>
+    <string name="city_panama_city" formatted="false">"파나마시티, 파나마"</string>
+    <string name="city_papeete" formatted="false">"프랑스령 폴리네시아 파페에테"</string>
+    <string name="city_paramaribo" formatted="false">"파라마리보, 수리남"</string>
+    <string name="city_paris" formatted="false">"파리, 프랑스"</string>
+    <string name="city_perth" formatted="false">"호주 퍼스"</string>
+    <string name="city_philipsburg" formatted="false">"필립스버그, 신트마르턴"</string>
+    <string name="city_phnom_penh" formatted="false">"프놈펜, 캄보디아"</string>
+    <string name="city_phoenix" formatted="false">"미국 피닉스"</string>
+    <string name="city_plymouth" formatted="false">"플리머스, 몬세라트"</string>
+    <string name="city_podgorica" formatted="false">"포드고리차, 몬테네그로"</string>
+    <string name="city_port_au_prince" formatted="false">"포르토프랭스, 아이티"</string>
+    <string name="city_port_aux_francais" formatted="false">"포르토프랑세(Port-aux-Français), 프랑스 남부 지역"</string>
+    <string name="city_port_louis" formatted="false">"포트 루이스, 모리셔스"</string>
+    <string name="city_port_moresby" formatted="false">"포트모르즈비, 파푸아뉴기니"</string>
+    <string name="city_port_of_spain" formatted="false">"포트 오브 스페인, 트리니다드 토바고"</string>
+    <string name="city_port_vila" formatted="false">"포트빌라, 바누아투"</string>
+    <string name="city_porto_novo" formatted="false">"포르토노보, 베냉"</string>
+    <string name="city_prague" formatted="false">"프라하, 체코"</string>
+    <string name="city_praia" formatted="false">"프라이아, 카보베르데"</string>
+    <string name="city_pretoria" formatted="false">"프리토리아, 남아프리카공화국"</string>
+    <string name="city_pristina" formatted="false">"프리스티나, 코소보"</string>
+    <string name="city_puebla" formatted="false">"멕시코 푸에블라"</string>
+    <string name="city_pyongyang" formatted="false">"평양, 북한"</string>
+    <string name="city_queens" formatted="false">"미국 퀸즈"</string>
+    <string name="city_quito" formatted="false">"키토, 에콰도르"</string>
+    <string name="city_rabat" formatted="false">"라바트, 모로코"</string>
+    <string name="city_reykjavik" formatted="false">"레이캬비크, 아이슬란드"</string>
+    <string name="city_riga" formatted="false">"리가, 라트비아"</string>
+    <string name="city_rio" formatted="false">"브라질 리우데자네이루"</string>
+    <string name="city_riyadh" formatted="false">"리야드, 사우디아라비아"</string>
+    <string name="city_road_town" formatted="false">"로드 타운, 영국령 버진 아일랜드"</string>
+    <string name="city_rome" formatted="false">"로마, 이탈리아"</string>
+    <string name="city_roseau" formatted="false">"로조, 도미니카"</string>
+    <string name="city_saint_denis" formatted="false">"생드니, 레위니옹"</string>
+    <string name="city_saint_george_s" formatted="false">"세인트조지스, 그레나다"</string>
+    <string name="city_saint_helier" formatted="false">"세인트헬리어, 저지"</string>
+    <string name="city_saint_johns" formatted="false">"세인트 존스, 앤티가 바부다"</string>
+    <string name="city_saint_peter_port" formatted="false">"세인트 피터 포트, 건지"</string>
+    <string name="city_saint_petersburg" formatted="false">"러시아 상트페테르부르크"</string>
+    <string name="city_saint_pierre" formatted="false">"생피에르, 생피에르 앤드 미클롱"</string>
+    <string name="city_saipan" formatted="false">"사이판, 북마리아나 제도"</string>
+    <string name="city_salvador" formatted="false">"브라질 살바도르"</string>
+    <string name="city_san_jose" formatted="false">"산호세, 코스타리카"</string>
+    <string name="city_san_juan" formatted="false">"푸에르토리코 산후안"</string>
+    <string name="city_san_marino" formatted="false">"산마리노, 산마리노"</string>
+    <string name="city_san_salvador" formatted="false">"산살바도르, 엘살바도르"</string>
+    <string name="city_sanaa" formatted="false">"사나, 예멘"</string>
+    <string name="city_santiago" formatted="false">"칠레 산티아고"</string>
+    <string name="city_santo_domingo" formatted="false">"도미니카공화국 산토도밍고"</string>
+    <string name="city_sao_paulo" formatted="false">"브라질 상파울루"</string>
+    <string name="city_sao_tome" formatted="false">"상투메, 상투메 프린시페"</string>
+    <string name="city_sarajevo" formatted="false">"사라예보, 보스니아 헤르체고비나"</string>
+    <string name="city_seoul" formatted="false">"서울, 대한민국"</string>
+    <string name="city_shanghai" formatted="false">"중국 상하이"</string>
+    <string name="city_shenzhen" formatted="false">"중국 선전"</string>
+    <string name="city_singapore" formatted="false">"싱가포르, 싱가포르"</string>
+    <string name="city_skopje" formatted="false">"북마케도니아 스코페"</string>
+    <string name="city_sofia" formatted="false">"소피아, 불가리아"</string>
+    <string name="city_stanley" formatted="false">"스탠리, 포클랜드 제도"</string>
+    <string name="city_stockholm" formatted="false">"스톡홀름, 스웨덴"</string>
+    <string name="city_sucre" formatted="false">"수크레, 볼리비아"</string>
+    <string name="city_sunshine_coast" formatted="false">"호주 선샤인코스트"</string>
+    <string name="city_suva" formatted="false">"수바, 피지"</string>
+    <string name="city_sydney" formatted="false">"시드니, 호주"</string>
+    <string name="city_taipei" formatted="false">"타이페이, 대만"</string>
+    <string name="city_tallinn" formatted="false">"탈린, 에스토니아"</string>
+    <string name="city_tarawa" formatted="false">"타라와, 키리바시"</string>
+    <string name="city_tashkent" formatted="false">"타슈켄트, 우즈베키스탄"</string>
+    <string name="city_tbilisi" formatted="false">"조지아 트빌리시"</string>
+    <string name="city_tegucigalpa" formatted="false">"테구시갈파, 온두라스"</string>
+    <string name="city_tehran" formatted="false">"테헤란, 이란"</string>
+    <string name="city_the_valley" formatted="false">"더 밸리, 앵귈라"</string>
+    <string name="city_thimphu" formatted="false">"팀푸, 부탄"</string>
+    <string name="city_tianjin" formatted="false">"중국 텐진"</string>
+    <string name="city_tijuana" formatted="false">"멕시코 티후아나"</string>
+    <string name="city_tirana" formatted="false">"티라나, 알바니아"</string>
+    <string name="city_tokyo" formatted="false">"일본 도쿄"</string>
+    <string name="city_toronto" formatted="false">"토론토, 캐나다"</string>
+    <string name="city_torshavn" formatted="false">"토르스하운, 페로 제도"</string>
+    <string name="city_tripoli" formatted="false">"트리폴리, 리비아"</string>
+    <string name="city_tromso" formatted="false">"트롬쇠, 노르웨이"</string>
+    <string name="city_tunis" formatted="false">"튀니스, 튀니지"</string>
+    <string name="city_ulan_bator" formatted="false">"울란바토르, 몽골"</string>
+    <string name="city_vaduz" formatted="false">"파두츠, 리히텐슈타인"</string>
+    <string name="city_valletta" formatted="false">"발레타, 몰타"</string>
+    <string name="city_vatican_city" formatted="false">"바티칸 시국, 바티칸"</string>
+    <string name="city_victoria" formatted="false">"빅토리아, 세이셸"</string>
+    <string name="city_vienna" formatted="false">"비엔나, 오스트리아"</string>
+    <string name="city_vientiane" formatted="false">"비엔티안, 라오스"</string>
+    <string name="city_vilnius" formatted="false">"빌니우스, 리투아니아"</string>
+    <string name="city_warsaw" formatted="false">"바르샤바, 폴란드"</string>
+    <string name="city_washington" formatted="false">"미국 워싱턴"</string>
+    <string name="city_wellington" formatted="false">"웰링턴, 뉴질랜드"</string>
+    <string name="city_west_island" formatted="false">"웨스트 아일랜드, 코코스 제도"</string>
+    <string name="city_willemstad" formatted="false">"빌렘스타트, 퀴라소"</string>
+    <string name="city_windhoek" formatted="false">"빈트후크, 나미비아"</string>
+    <string name="city_wuhan" formatted="false">"우한, 중국"</string>
+    <string name="city_xian" formatted="false">"중국 시안"</string>
+    <string name="city_yamoussoukro" formatted="false">"코트디부아르 야무수크로"</string>
+    <string name="city_yaounde" formatted="false">"야운데, 카메룬"</string>
+    <string name="city_yaren" formatted="false">"야렌, 나우루"</string>
+    <string name="city_yerevan" formatted="false">"예레반, 아르메니아"</string>
+    <string name="city_zagreb" formatted="false">"자그레브, 크로아티아"</string>
+    <string name="text_iss_day" formatted="false">"🛰 국제 우주 정거장\n우주비행사들은 지구에서 약 400km 떨어진 이곳에서 거주하며 일하고 있습니다. 시속 28,000km의 속도로 약 90분마다 지구 전체를 돌고 있습니다!\n이 그림에서는 지구의 낮 쪽 위에 있습니다."</string>
+    <string name="text_iss_night" formatted="false">"🛰 국제 우주 정거장\n우주비행사들은 지구에서 약 400km 떨어진 이곳에서 거주하며 일하고 있습니다. 시속 28,000km의 속도로 약 90분마다 지구 전체를 돌고 있습니다!\n이 그림에서 그것은 지구의 밤 쪽 위에 있습니다."</string>
+    <string name="text_elapsed_minutes">"경과 시간(분): %1$d"</string>
+    <string name="text_elapsed_hours">"경과 시간: %1$d"</string>
+    <string name="text_elapsed_days">"경과 일수: %1$d"</string>
+    <string name="moon_guide_new_moon">"%1$s\n빛이 닿지 않는 면 · 윤곽 안내"</string>
+    <string name="moon_guide_crescent">"가는 달 · %1$s에 햇빛이 비침\n윤곽 안내"</string>
+</resources>

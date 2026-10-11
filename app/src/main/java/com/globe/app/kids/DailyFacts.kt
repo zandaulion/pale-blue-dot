@@ -1,5 +1,6 @@
 package com.globe.app.kids
 
+import com.globe.app.R
 /**
  * A rotating "Did you know?" fact for the Today panel. The fact is chosen by the
  * calendar day so it stays the same all day and changes each day, giving kids a
@@ -8,34 +9,34 @@ package com.globe.app.kids
 object DailyFacts {
 
     private val facts = listOf(
-        "The Sun is so huge that about 1.3 million Earths could fit inside it.",
-        "A day on Venus is longer than a whole year on Venus!",
-        "Footprints on the Moon can last millions of years, because there's no wind to blow them away.",
-        "Jupiter is so big that all the other planets could fit inside it.",
-        "Sunlight takes about 8 minutes to travel all the way to Earth.",
-        "Space is completely silent, because there's no air to carry sound.",
-        "Earth takes 365 and a quarter days to orbit the Sun — that's why we add a leap day every 4 years.",
-        "The tallest volcano we know of, Olympus Mons on Mars, is about three times taller than Mount Everest.",
-        "Earth is the only planet not named after a Greek or Roman god.",
-        "There are more stars in the universe than grains of sand on all of Earth's beaches.",
-        "The Moon drifts about 3.8 cm farther from Earth every year.",
-        "Saturn is so light for its size that it would float in a giant bathtub of water.",
-        "Lightning strikes somewhere on Earth about 100 times every second.",
-        "The Space Station zooms around the whole Earth about once every 90 minutes.",
-        "Auroras glow near the poles when tiny particles from the Sun crash into our air.",
-        "About 70% of Earth's surface is covered by ocean.",
-        "Venus is the hottest planet, even though Mercury is closer to the Sun.",
-        "The Great Red Spot on Jupiter is a storm bigger than the whole Earth.",
-        "Earthquakes happen when giant pieces of Earth's crust slip past each other.",
-        "The Sun is actually white — our air is what makes it look yellow.",
-        "Comets are giant balls of ice and dust that grow glowing tails near the Sun.",
-        "If you could drive a car straight up, you'd reach space in about an hour.",
-        "The Moon has no air, so its sky is always black, even in the daytime.",
-        "Earth spins at about 1,600 km/h at the equator — but we don't feel it because we spin along with it."
+        R.string.text_the_sun_is_so_huge_that_about_1_3_million_earths_could_fit_inside,
+        R.string.text_a_day_on_venus_is_longer_than_a_whole_year_on_venus,
+        R.string.text_footprints_on_the_moon_can_last_millions_of_years_because_there_s,
+        R.string.text_jupiter_is_so_big_that_all_the_other_planets_could_fit_inside_it,
+        R.string.text_sunlight_takes_about_8_minutes_to_travel_all_the_way_to_earth,
+        R.string.text_space_is_completely_silent_because_there_s_no_air_to_carry_sound,
+        R.string.text_earth_takes_365_and_a_quarter_days_to_orbit_the_sun_that_s_why_we,
+        R.string.text_the_tallest_volcano_we_know_of_olympus_mons_on_mars_is_about_thre,
+        R.string.text_earth_is_the_only_planet_not_named_after_a_greek_or_roman_god,
+        R.string.text_there_are_more_stars_in_the_universe_than_grains_of_sand_on_all_o,
+        R.string.text_the_moon_drifts_about_3_8_cm_farther_from_earth_every_year,
+        R.string.text_saturn_is_so_light_for_its_size_that_it_would_float_in_a_giant_ba,
+        R.string.text_lightning_strikes_somewhere_on_earth_about_100_times_every_second,
+        R.string.text_the_space_station_zooms_around_the_whole_earth_about_once_every_9,
+        R.string.text_auroras_glow_near_the_poles_when_tiny_particles_from_the_sun_cras,
+        R.string.text_about_70_of_earth_s_surface_is_covered_by_ocean,
+        R.string.text_venus_is_the_hottest_planet_even_though_mercury_is_closer_to_the,
+        R.string.text_the_great_red_spot_on_jupiter_is_a_storm_bigger_than_the_whole_ea,
+        R.string.text_earthquakes_happen_when_giant_pieces_of_earth_s_crust_slip_past_e,
+        R.string.text_the_sun_is_actually_white_our_air_is_what_makes_it_look_yellow,
+        R.string.text_comets_are_giant_balls_of_ice_and_dust_that_grow_glowing_tails_ne,
+        R.string.text_if_you_could_drive_a_car_straight_up_you_d_reach_space_in_about_a,
+        R.string.text_the_moon_has_no_air_so_its_sky_is_always_black_even_in_the_daytim,
+        R.string.text_earth_spins_at_about_1_600_km_h_at_the_equator_but_we_don_t_feel
     )
 
-    fun today(nowMs: Long = System.currentTimeMillis()): String {
+    fun today(context: android.content.Context, nowMs: Long = System.currentTimeMillis()): String {
         val epochDay = nowMs / 86_400_000L
-        return facts[(epochDay % facts.size).toInt()]
+        return context.getString(facts[Math.floorMod(epochDay, facts.size.toLong()).toInt()])
     }
 }

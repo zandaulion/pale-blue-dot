@@ -1,0 +1,791 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="companion_today" formatted="false">"Hoy"</string>
+    <string name="companion_layers" formatted="false">"Capas"</string>
+    <string name="companion_explore" formatted="false">"Explorar"</string>
+    <string name="companion_settings" formatted="false">"Ajustes"</string>
+    <string name="companion_close" formatted="false">"Cerrar"</string>
+    <string name="companion_refresh" formatted="false">"Actualizar observaciones"</string>
+    <string name="companion_events" formatted="false">"Observaciones recientes"</string>
+    <string name="companion_no_events" formatted="false">"No hay eventos reportados en esta categoría"</string>
+    <string name="companion_why" formatted="false">"¿Por qué sucede esto?"</string>
+    <string name="companion_reduce_motion" formatted="false">"Reducir el movimiento"</string>
+    <string name="companion_clouds" formatted="false">"Nubes"</string>
+    <string name="wallpaper_name" formatted="false">"Pale Blue Dot Tierra"</string>
+    <string name="wallpaper_description" formatted="false">"Una vista tranquila y viva de la Tierra para tu fondo de pantalla"</string>
+    <string name="wallpaper_settings_title" formatted="false">"Fondo de pantalla de la Tierra"</string>
+    <string name="companion_generated" formatted="false">"generado"</string>
+    <string name="companion_satellite" formatted="false">"Satélite"</string>
+    <string name="companion_off" formatted="false">"Apagado"</string>
+    <string name="widget_title" formatted="false">"La Tierra hoy"</string>
+    <string name="widget_description" formatted="false">"Luna y luz del día; ampliar para ver la Tierra en vivo y un evento reciente"</string>
+    <string name="widget_preview_moon" formatted="false">"🌔 Luna gibosa creciente · 82%"</string>
+    <string name="widget_preview_place" formatted="false">"Bucarest, Rumania"</string>
+    <string name="widget_event_label" formatted="false">"en la tierra"</string>
+    <string name="widget_preview_daylight" formatted="false">"Luz del día ahora"</string>
+    <string name="widget_change_place" formatted="false">"Cambiar lugar del widget"</string>
+    <string name="widget_globe_description" formatted="false">"Escena actual de la Tierra"</string>
+    <string name="widget_name" formatted="false">"La Tierra hoy"</string>
+    <string name="text_clouds_live_loading" formatted="false">"☁ Nubes: en vivo (cargando…)"</string>
+    <string name="text_time_now" formatted="false">"Tiempo · Ahora"</string>
+    <string name="text_time_controls" formatted="false">"Controles de tiempo"</string>
+    <string name="text_move_time_up_to_24_hours_before_or_after_now" formatted="false">"Mover el tiempo hasta 24 horas antes o después de ahora"</string>
+    <string name="text_share" formatted="false">"↑ Compartir"</string>
+    <string name="text_today" formatted="false">"🗓 Hoy"</string>
+    <string name="text_save_this_place" formatted="false">"+ Guarda este lugar"</string>
+    <string name="text_planetary_briefing_real_time" formatted="false">"Briefing planetario · tiempo real"</string>
+    <string name="text_1_s_2_s_3_s_estimated_illumination">"%1$s %2$s · %3$d%% iluminación estimada"</string>
+    <string name="text_choose_a_primary_place" formatted="false">"Elige un lugar principal"</string>
+    <string name="text_fly_to_1_s">"Vuela a %1$s"</string>
+    <string name="text_satellite_imagery_1_s">"Imágenes de satélite — %1$s"</string>
+    <string name="text_saved_copy" formatted="false">" · copia guardada"</string>
+    <string name="text_satellite_imagery_unavailable_or_still_loading" formatted="false">"Imágenes satelitales no disponibles o aún cargándose"</string>
+    <string name="text_one_observation_1_s">"Una observación · %1$s"</string>
+    <string name="text_time_unavailable" formatted="false">"Hora no disponible"</string>
+    <string name="text_this_observation_is_no_longer_in_the_saved_feed" formatted="false">"Esta observación ya no está en el feed guardado."</string>
+    <string name="text_current_events" formatted="false">"Eventos actuales"</string>
+    <string name="text_choose_what_appears_on_the_globe_hidden_events_also_leave_the_eve" formatted="false">"Elige lo que aparece en el globo. Los eventos ocultos también salen de la lista de eventos y desafíos."</string>
+    <string name="text_satellite_imagery_may_be_unavailable_offline_generated_clouds_sti" formatted="false">"Es posible que las imágenes satelitales no estén disponibles sin conexión; Las nubes generadas todavía funcionan."</string>
+    <string name="text_reported_by_usgs" formatted="false">"Reportado por USGS"</string>
+    <string name="text_reported_by_nasa_eonet" formatted="false">"Reportado por NASA EONET"</string>
+    <string name="text_constellations" formatted="false">"Constelaciones"</string>
+    <string name="text_catalog_lines_in_the_star_background" formatted="false">"Líneas de catálogo en el fondo de estrella."</string>
+    <string name="text_iss_illustration" formatted="false">"Ilustración de la EEI"</string>
+    <string name="text_approximate_orbit_not_live_tracking" formatted="false">"Órbita aproximada, no seguimiento en vivo."</string>
+    <string name="text_aurora_illustration" formatted="false">"Ilustración de aurora"</string>
+    <string name="text_decorative_glow_not_a_forecast" formatted="false">"Resplandor decorativo, no un pronóstico."</string>
+    <string name="text_day_night_boundary" formatted="false">"Límite día/noche"</string>
+    <string name="text_calculated_terminator_line" formatted="false">"Línea terminadora calculada"</string>
+    <string name="text_plate_boundaries" formatted="false">"Límites de placas"</string>
+    <string name="text_offline_pb2002_model_gold_lines" formatted="false">"Modelo PB2002 sin conexión · líneas doradas"</string>
+    <string name="text_plate_boundaries_gold_lines_mark_modelled_plate_edges_earthquakes" formatted="false">"Límites de la placa: las líneas doradas marcan los bordes de la placa modelados. También pueden ocurrir terremotos lejos de ellos. Fuente: Bird (2003), PB2002; ODbL 1.0."</string>
+    <string name="text_places_1_s_saved">"Lugares · %1$d guardados"</string>
+    <string name="text_explore_time_and_seasons" formatted="false">"Explora el tiempo y las estaciones"</string>
+    <string name="text_guided_journeys" formatted="false">"Viajes guiados"</string>
+    <string name="text_field_notebook_1_s_2_s_discoveries">"Cuaderno de campo · Descubrimientos %1$d/%2$d"</string>
+    <string name="text_try_a_quick_challenge" formatted="false">"Prueba un desafío rápido"</string>
+    <string name="text_scene_guide_and_legend" formatted="false">"Guía de escenas y leyenda."</string>
+    <string name="text_ambient_music" formatted="false">"musica ambiental"</string>
+    <string name="text_only_while_the_app_is_open" formatted="false">"Solo mientras la aplicación esté abierta"</string>
+    <string name="text_music_volume" formatted="false">"Volumen de música"</string>
+    <string name="text_read_aloud" formatted="false">"Leer en voz alta"</string>
+    <string name="text_speak_cards_when_narration_is_enabled" formatted="false">"Hablar tarjetas cuando la narración esté habilitada."</string>
+    <string name="text_stops_idle_spin_and_decorative_marker_movement" formatted="false">"Detiene el giro inactivo y el movimiento del marcador decorativo"</string>
+    <string name="text_share_globe_image" formatted="false">"Compartir imagen del globo"</string>
+    <string name="text_earth_live_wallpaper" formatted="false">"Fondo de pantalla en vivo de la Tierra"</string>
+    <string name="text_explore" formatted="false">"‹ Explorar"</string>
+    <string name="text_completed_journeys" formatted="false">"Viajes completados"</string>
+    <string name="text_no_journeys_completed_yet" formatted="false">"Aún no se han completado viajes."</string>
+    <string name="text_saved_observations" formatted="false">"Observaciones guardadas"</string>
+    <string name="text_save_an_observation_from_its_card_to_keep_its_source_and_date" formatted="false">"Guarde una observación de su tarjeta para conservar su fuente y fecha."</string>
+    <string name="text_earlier_discoveries_1_s_2_s">"Descubrimientos anteriores · %1$d/%2$d"</string>
+    <string name="text_you_explored_a_reported_earthquake" formatted="false">"Exploraste un terremoto reportado."</string>
+    <string name="text_you_explored_a_reported_volcanic_event" formatted="false">"Exploró un evento volcánico reportado."</string>
+    <string name="text_you_explored_a_reported_wildfire" formatted="false">"Exploró un incendio forestal reportado."</string>
+    <string name="text_you_explored_a_reported_storm" formatted="false">"Exploraste una tormenta reportada."</string>
+    <string name="text_you_found_a_place_facing_the_sun" formatted="false">"Encontraste un lugar frente al sol."</string>
+    <string name="text_you_found_earth_s_night_side" formatted="false">"Encontraste el lado nocturno de la Tierra."</string>
+    <string name="text_you_looked_beyond_earth" formatted="false">"Miraste más allá de la Tierra."</string>
+    <string name="text_you_changed_the_scene_time" formatted="false">"Cambiaste la hora de la escena."</string>
+    <string name="text_observed" formatted="false">"Observado: "</string>
+    <string name="text_time_not_reported" formatted="false">"Hora no reportada"</string>
+    <string name="text_source" formatted="false">"Fuente: "</string>
+    <string name="text_magnitude_1_s">"Magnitud: %1$s\n"</string>
+    <string name="text_depth_1_s_km">"Profundidad: %1$s km\n"</string>
+    <string name="text_source_link_1_s">"Enlace fuente: %1$s"</string>
+    <string name="text_saved_observation" formatted="false">"Observación guardada"</string>
+    <string name="text_fly_to" formatted="false">"volar a"</string>
+    <string name="text_sunlight_and_city_lights" formatted="false">"La luz del sol y las luces de la ciudad."</string>
+    <string name="text_calculated_sunlight_shows_the_current_day_and_night_sides" formatted="false">"La luz solar calculada muestra los lados actuales del día y de la noche."</string>
+    <string name="text_generated_clouds_are_illustrative_satellite_mode_derives_opacity" formatted="false">"Las nubes generadas son ilustrativas. El modo satélite obtiene la opacidad de una imagen NASA VIIRS fechada."</string>
+    <string name="text_earthquakes" formatted="false">"Terremotos"</string>
+    <string name="text_usgs_reports_magnitude_4_5_earthquakes_from_the_last_seven_days" formatted="false">"USGS informa terremotos de magnitud 4,5+ en los últimos siete días."</string>
+    <string name="text_volcanoes_wildfires_and_storms" formatted="false">"Volcanes, incendios forestales y tormentas"</string>
+    <string name="text_nasa_eonet_open_reports_may_have_older_observation_dates" formatted="false">"Los informes abiertos NASA EONET pueden tener fechas de observación más antiguas."</string>
+    <string name="text_iss" formatted="false">"ISS"</string>
+    <string name="text_illustrated_orbit_not_live_tracking" formatted="false">"Órbita ilustrada, no seguimiento en vivo."</string>
+    <string name="text_aurora" formatted="false">"aurora"</string>
+    <string name="text_decorative_illustration_not_a_forecast" formatted="false">"Ilustración decorativa, no previsión."</string>
+    <string name="text_calculated_terminator_line_2" formatted="false">"Línea de terminación calculada."</string>
+    <string name="text_catalog_stars_joined_into_familiar_patterns" formatted="false">"Las estrellas del catálogo se unieron en patrones familiares."</string>
+    <string name="text_a_simplified_offline_pb2002_model_many_earthquakes_occur_near_bou" formatted="false">"Un modelo PB2002 fuera de línea simplificado. Muchos terremotos ocurren cerca de los límites, aunque algunos ocurren en otros lugares. Las líneas doradas no son un diagnóstico para ningún evento."</string>
+    <string name="text_saved_places_stay_on_this_device_cyan_rings_mark_them_on_the_glob" formatted="false">"Los lugares guardados permanecen en este dispositivo. Los anillos cian los marcan en el globo."</string>
+    <string name="text_search_bundled_cities" formatted="false">"Buscar ciudades agrupadas"</string>
+    <string name="text_city_or_country_blank_lists_all_1_s">"Ciudad o país (en blanco se enumeran todos los %1$d)"</string>
+    <string name="text_find_a_city" formatted="false">"encontrar una ciudad"</string>
+    <string name="text_search" formatted="false">"Buscar"</string>
+    <string name="text_no_bundled_city_matches_that_name" formatted="false">"Ninguna ciudad incluida coincide con ese nombre."</string>
+    <string name="text_ok" formatted="false">"bien"</string>
+    <string name="text_bundled_cities" formatted="false">"Ciudades agrupadas"</string>
+    <string name="text_cancel" formatted="false">"Cancelar"</string>
+    <string name="text_add_a_place_from_the_globe" formatted="false">"Agregar un lugar del mundo"</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Toca un punto del globo y luego toca + Guardar este lugar debajo de su tarjeta."</string>
+    <string name="text_time_zone_unset" formatted="false">"Zona horaria no configurada"</string>
+    <string name="text_set_as_primary" formatted="false">"Establecer como principal"</string>
+    <string name="text_rename" formatted="false">"Cambiar nombre"</string>
+    <string name="text_set_time_zone" formatted="false">"Establecer zona horaria"</string>
+    <string name="text_delete" formatted="false">"Eliminar"</string>
+    <string name="text_1_s_removed">"%1$s eliminado"</string>
+    <string name="text_undo" formatted="false">"Deshacer"</string>
+    <string name="text_done" formatted="false">"hecho"</string>
+    <string name="text_name_this_place" formatted="false">"Nombra este lugar"</string>
+    <string name="text_save" formatted="false">"Guardar"</string>
+    <string name="text_iana_zone_e_g_europe_bucharest" formatted="false">"Zona IANA, p.e. Europa/Bucarest"</string>
+    <string name="text_suggested_from_the_nearest_town_change_it_if_this_place_is_across" formatted="false">"Sugerido desde el pueblo más cercano; cámbielo si este lugar está al otro lado de una frontera. "</string>
+    <string name="text_time_zone_for_1_s">"Huso horario de %1$s"</string>
+    <string name="text_enter_an_iana_time_zone_id_or_leave_blank_to_keep_local_clock_and" formatted="false">"Ingrese un ID de zona horaria IANA o déjelo en blanco para mantener el reloj local y el amanecer sin configurar."</string>
+    <string name="text_unknown_iana_time_zone_id_1_s">"ID de zona horaria desconocida IANA: %1$s"</string>
+    <string name="text_try_again" formatted="false">"Inténtalo de nuevo"</string>
+    <string name="text_time_zone_unset_choose_a_zone_for_local_clock_and_sunrise" formatted="false">"Zona horaria no configurada · elija una zona para el reloj local y el amanecer"</string>
+    <string name="text_polar_day_sun_stays_above_the_horizon" formatted="false">"Día polar · El sol permanece sobre el horizonte"</string>
+    <string name="text_polar_night_sun_stays_below_the_horizon" formatted="false">"Noche polar · El sol permanece debajo del horizonte"</string>
+    <string name="text_not_available" formatted="false">"no disponible"</string>
+    <string name="text_about_1_sh_2_sm_daylight">" · aproximadamente %1$d h %2$d luz diurna mínima"</string>
+    <string name="text_approx_sunrise_1_s_sunset_2_s_3_s">"Aprox. amanecer %1$s · atardecer %2$s%3$s"</string>
+    <string name="text_day" formatted="false">"dia"</string>
+    <string name="text_night" formatted="false">"noche"</string>
+    <string name="text_choose_a_date_to_hold_the_globe_in_an_explicit_lesson_time_today" formatted="false">"Elija una fecha para sostener el globo en un horario de lección explícito. Hoy y el fondo de pantalla permanecen en tiempo real."</string>
+    <string name="text_begin_at_current_time" formatted="false">"Comenzar en el momento actual"</string>
+    <string name="text_simulated_1_s">"SIMULADO · %1$s"</string>
+    <string name="text_choose_date_and_time" formatted="false">"Elige fecha y hora"</string>
+    <string name="text_pause" formatted="false">"Pausa"</string>
+    <string name="text_play_at_real_time_speed" formatted="false">"Juega a velocidad en tiempo real"</string>
+    <string name="text_advance_one_hour" formatted="false">"Avanzar una hora"</string>
+    <string name="text_advance_one_day" formatted="false">"avanzar un dia"</string>
+    <string name="text_now_leave_time_exploration" formatted="false">"Ahora · deja la exploración del tiempo."</string>
+    <string name="text_compare_latest_observations" formatted="false">"Comparar las últimas observaciones"</string>
+    <string name="text_these_reports_are_from_real_dates_not_the_simulated_date" formatted="false">"Estos informes son de fechas reales, no de fechas simuladas."</string>
+    <string name="text_year_timeline_1_s">"Cronología del año · %1$d"</string>
+    <string name="text_choose_day_of_year" formatted="false">"Elige día del año"</string>
+    <string name="text_seasons_earth_s_axis_stays_tilted_about_23_4_as_earth_orbits_the" formatted="false">"Estaciones · El eje de la Tierra permanece inclinado aproximadamente 23,4° mientras la Tierra orbita alrededor del Sol. La luz del sol se mueve entre hemisferios a lo largo del año; El Sol de la escena ya explica esta inclinación."</string>
+    <string name="text_23_4_axis" formatted="false">"Eje de 23,4°"</string>
+    <string name="text_sunlight" formatted="false">"Luz del sol →"</string>
+    <string name="text_polar_day" formatted="false">"dia polar"</string>
+    <string name="text_polar_night" formatted="false">"noche polar"</string>
+    <string name="text_about_1_sh_2_sm_daylight_2">"aproximadamente %1$d h %2$d luz diurna mínima"</string>
+    <string name="text_daylight_changing" formatted="false">"cambio de luz del día"</string>
+    <string name="text_guides_equator_tropics_23_4_and_polar_circles_66_6_compare_the_tw" formatted="false">"Guías: ecuador, trópico (±23,4°) y círculos polares (±66,6°). Compare los dos hemisferios en marzo, junio, septiembre y diciembre."</string>
+    <string name="text_short_local_lessons_each_restores_your_previous_globe_view_and_la" formatted="false">"Lecciones breves y locales. Cada uno restaura tu vista anterior del globo y las capas cuando te vas."</string>
+    <string name="text_completed" formatted="false">" · completado"</string>
+    <string name="text_1_s_2_s_min_3_s">"%1$s · %2$s min%3$s"</string>
+    <string name="text_resume" formatted="false">"Currículum"</string>
+    <string name="text_restart" formatted="false">"Reiniciar"</string>
+    <string name="text_choose_a_journey" formatted="false">"Elige un viaje"</string>
+    <string name="text_1_s_step_2_s_of_3_s">"%1$s · paso %2$d de %3$d"</string>
+    <string name="text_historical_source_1_s">"Fuente histórica: %1$s"</string>
+    <string name="text_recent_reported_example_1_s_2_s_3_s">"Ejemplo reportado recientemente: %1$s\n%2$s · %3$s"</string>
+    <string name="text_that_s_the_pattern" formatted="false">"ese es el patrón"</string>
+    <string name="text_look_again" formatted="false">"Mira de nuevo"</string>
+    <string name="text_continue" formatted="false">"Continuar"</string>
+    <string name="text_advance" formatted="false">"avance"</string>
+    <string name="text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th">"La escena se adelantó horas %1$d. Observe la luz solar cambiante en el globo."</string>
+    <string name="text_reveal" formatted="false">"revelar"</string>
+    <string name="text_the_gold_pb2002_lines_show_a_broad_plate_edge_pattern_some_report" formatted="false">"Las líneas doradas PB2002 muestran un patrón de borde de placa amplio. Algunos hechos relatados se alejan de ellos."</string>
+    <string name="text_view_globe" formatted="false">"Ver globo terráqueo"</string>
+    <string name="text_skip_this_step" formatted="false">"Salta este paso"</string>
+    <string name="text_leave_journey_restore_my_view" formatted="false">"Salir del viaje · restaurar mi vista"</string>
+    <string name="text_1_s_is_in_your_field_notebook">"%1$s está en su cuaderno de campo."</string>
+    <string name="text_not_loaded" formatted="false">"No cargado"</string>
+    <string name="text_checking" formatted="false">"comprobando"</string>
+    <string name="text_recently" formatted="false">"recientemente"</string>
+    <string name="text_checked_1_s">"Comprobado %1$s"</string>
+    <string name="text_saved_observations_offline_or_update_failed" formatted="false">"Observaciones guardadas · sin conexión o con error de actualización"</string>
+    <string name="text_unavailable" formatted="false">"No disponible"</string>
+    <string name="text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who" formatted="false">"🌟 ¡El cielo nocturno!\nMás allá de la Tierra hay miles de estrellas, planetas y galaxias enteras."</string>
+    <string name="text_earthquakes_happen_when_stress_makes_rock_slip_along_a_fault_some" formatted="false">"Los terremotos ocurren cuando la tensión hace que las rocas se deslicen a lo largo de una falla. Algunas se encuentran lejos de los límites de las placas."</string>
+    <string name="text_magma_can_rise_through_earth_s_crust_this_report_does_not_confirm" formatted="false">"El magma puede ascender a través de la corteza terrestre. Este informe no confirma una erupción en este momento."</string>
+    <string name="text_wildfire_can_begin_naturally_or_through_human_activity_and_may_sp" formatted="false">"Los incendios forestales pueden comenzar de forma natural o mediante la actividad humana y pueden propagarse en condiciones secas y ventosas. Este informe puede ser más antiguo que el actual."</string>
+    <string name="text_severe_storms_draw_energy_from_warm_moist_air_this_marker_shows_t" formatted="false">"Las tormentas severas extraen energía del aire cálido y húmedo. Este marcador muestra el último punto informado, no un pronóstico en vivo."</string>
+    <string name="text_observed_1_s">"Observado: %1$s\n"</string>
+    <string name="text_source_updated_1_s">"Fuente actualizada: %1$s\n"</string>
+    <string name="text_source_1_s">"Fuente: %1$s\n"</string>
+    <string name="text_unavailable_2" formatted="false">"no disponible"</string>
+    <string name="text_checking_showing_saved_copy" formatted="false">"comprobar; mostrando copia guardada"</string>
+    <string name="text_saved_copy_refresh_unavailable" formatted="false">"copia guardada; actualizar no disponible"</string>
+    <string name="text_checked_1_s_2">"marcado %1$s"</string>
+    <string name="text_feed_1_s">"Alimentación: %1$s"</string>
+    <string name="text_source_link_1_s_2">"\nEnlace fuente: %1$s"</string>
+    <string name="text_saved" formatted="false">"Guardado"</string>
+    <string name="text_place_name" formatted="false">"Nombre del lugar"</string>
+    <string name="text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now" formatted="false">"☀️ ¡Aquí es de día!\nEste lado de la Tierra está frente al Sol en este momento. Arrastre el control deslizante de tiempo para ver cómo llega la noche."</string>
+    <string name="text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those" formatted="false">"🌙 Aquí es de noche.\nEste lado está alejado del Sol: esas pequeñas luces son ciudades. Arrastra el control deslizante de tiempo para que el Sol regrese."</string>
+    <string name="text_added_to_field_notebook_1_s">"Agregado al cuaderno de campo.\n\n%1$s"</string>
+    <string name="text_close_1_s">"× Cerrar\n\n%1$s"</string>
+    <string name="text_1_s_2_s_tap_to_stop">"🎯 %1$s\n⭐ %2$d · toca para detener"</string>
+    <string name="text_challenge_stopped_play_again_anytime" formatted="false">"El desafío se detuvo: ¡juega de nuevo en cualquier momento!"</string>
+    <string name="text_tap_on_the_earth_to_answer" formatted="false">"¡Toca la Tierra para responder! 🌍"</string>
+    <string name="text_yes_that_s_right" formatted="false">"🎉 ¡Sí! Así es."</string>
+    <string name="text_not_quite_take_another_look_and_try_again" formatted="false">"No del todo: ¡eche otro vistazo e inténtelo de nuevo! 🔍"</string>
+    <string name="text_my_discoveries" formatted="false">"Mis descubrimientos"</string>
+    <string name="text_1_s_of_2_s_found_keep_exploring">"Se encontró %1$d de %2$d: ¡sigue explorando!"</string>
+    <string name="text_not_found_yet" formatted="false">"Aún no encontrado"</string>
+    <string name="text_tap_anywhere_to_close" formatted="false">"Toca en cualquier lugar para cerrar"</string>
+    <string name="text_1_s_2_s_3_s_lit_up_tonight">"%1$s %2$s\n%3$d%% iluminado esta noche"</string>
+    <string name="text_did_you_know" formatted="false">"¿Lo sabías?"</string>
+    <string name="text_tap_a_glowing_dot_on_earth_to_explore_or_find_a_new_discovery_for" formatted="false">"Toca un punto brillante en la Tierra para explorar o encuentra un nuevo descubrimiento para tu diario."</string>
+    <string name="text_play_a_challenge" formatted="false">"🎯 ¡Juega un desafío!"</string>
+    <string name="text_tap_outside_the_box_to_close" formatted="false">"Toque fuera del cuadro para cerrar"</string>
+    <string name="text_ongoing" formatted="false">"en curso"</string>
+    <string name="text_just_now" formatted="false">"justo ahora"</string>
+    <string name="text_clouds_off" formatted="false">"☁ Nubes: apagadas"</string>
+    <string name="text_clouds_generated" formatted="false">"☁ Nubes: generadas"</string>
+    <string name="text_clouds_live_nasa_viirs_updated_1_s">"☁ Nubes: en vivo (NASA VIIRS)\nActualizado: %1$s"</string>
+    <string name="text_solar_eclipse" formatted="false">"☀ ¡Eclipse solar!"</string>
+    <string name="text_lunar_eclipse" formatted="false">"🌙 ¡Eclipse lunar!"</string>
+    <string name="text_near_solar_eclipse" formatted="false">"Cerca del eclipse solar"</string>
+    <string name="text_near_lunar_eclipse" formatted="false">"Cerca del eclipse lunar"</string>
+    <string name="text_explore_time_simulated_scene" formatted="false">"Explora el tiempo, escena simulada."</string>
+    <string name="text_earth" formatted="false">"tierra"</string>
+    <string name="text_textured_globe_with_day_night_cycle_and_diffuse_sunlight" formatted="false">"Globo terráqueo texturizado con ciclo día/noche y luz solar difusa"</string>
+    <string name="text_city_lights" formatted="false">"luces de la ciudad"</string>
+    <string name="text_visible_on_the_night_side_of_the_earth" formatted="false">"Visible en el lado nocturno de la Tierra."</string>
+    <string name="text_procedural_or_live_satellite_imagery_nasa_viirs_tap_cloud_label_t" formatted="false">"Imágenes de procedimiento o satélite en vivo (NASA VIIRS). Toca la etiqueta de la nube para alternar"</string>
+    <string name="text_sun" formatted="false">"sol"</string>
+    <string name="text_billboard_glow_showing_the_sun_s_real_time_position" formatted="false">"Resplandor de vallas publicitarias que muestra la posición del sol en tiempo real"</string>
+    <string name="text_moon" formatted="false">"luna"</string>
+    <string name="text_textured_sphere_at_its_real_orbital_position" formatted="false">"Esfera texturizada en su posición orbital real."</string>
+    <string name="text_terminator_line" formatted="false">"Línea terminadora"</string>
+    <string name="text_amber_line_at_the_day_night_boundary" formatted="false">"Línea ámbar en el límite día/noche"</string>
+    <string name="text_green_purple_glow_near_the_geomagnetic_poles_night_side_only" formatted="false">"Resplandor verde/púrpura cerca de los polos geomagnéticos (solo en el lado nocturno)"</string>
+    <string name="text_atmosphere" formatted="false">"atmósfera"</string>
+    <string name="text_blue_fresnel_glow_around_the_earth_s_rim" formatted="false">"Brillo azul de Fresnel alrededor del borde de la Tierra"</string>
+    <string name="text_stars" formatted="false">"estrellas"</string>
+    <string name="text_background_star_field" formatted="false">"Campo de estrellas de fondo"</string>
+    <string name="text_pulsing_amber_dots_m4_5_from_usgs_past_7_days" formatted="false">"Puntos ámbar intermitentes (M4.5+ de USGS, últimos 7 días)"</string>
+    <string name="text_volcanoes" formatted="false">"Volcanes"</string>
+    <string name="text_pulsing_magenta_dots_active_eruptions_from_nasa_eonet" formatted="false">"Puntos magenta pulsantes (erupciones activas de NASA EONET)"</string>
+    <string name="text_wildfires" formatted="false">"Incendios forestales"</string>
+    <string name="text_pulsing_red_dots_active_fires_from_nasa_eonet" formatted="false">"Puntos rojos pulsantes (disparos activos de NASA EONET)"</string>
+    <string name="text_storms" formatted="false">"Tormentas"</string>
+    <string name="text_pulsing_blue_dots_severe_storms_from_nasa_eonet_tap_any_dot_for_d" formatted="false">"Puntos azules pulsantes (tormentas severas de NASA EONET): toque cualquier punto para obtener más detalles"</string>
+    <string name="text_iss_orbit" formatted="false">"órbita de la ISS"</string>
+    <string name="text_thin_line_showing_the_international_space_station_s_path" formatted="false">"Línea delgada que muestra el camino de la Estación Espacial Internacional"</string>
+    <string name="text_sun_moon_arrows" formatted="false">"Flechas Sol/Luna"</string>
+    <string name="text_2d_overlay_arrows_pointing_toward_the_sun_and_moon" formatted="false">"Flechas superpuestas 2D que apuntan hacia el sol y la luna."</string>
+    <string name="text_eclipse_alerts" formatted="false">"Alertas de eclipse"</string>
+    <string name="text_notifies_when_sun_earth_moon_alignment_approaches_an_eclipse" formatted="false">"Notifica cuando la alineación del Sol, la Tierra y la Luna se acerca a un eclipse."</string>
+    <string name="text_time_scrubber" formatted="false">"Depurador de tiempo"</string>
+    <string name="text_drag_the_slider_to_simulate_24_hours_releases_to_snap_back_to_now" formatted="false">"Arrastre el control deslizante para simular +/- 24 horas; lanzamientos para regresar al ahora"</string>
+    <string name="text_legend" formatted="false">"Leyenda"</string>
+    <string name="text_music_on" formatted="false">"♫ Música: encendida"</string>
+    <string name="text_music_off" formatted="false">"♫ Música: apagada"</string>
+    <string name="text_read_to_me_is_on_i_ll_read_the_cards_out_loud" formatted="false">"Leerme está activado. Leeré las cartas en voz alta."</string>
+    <string name="text_read_on" formatted="false">"🔊 Leer: en"</string>
+    <string name="text_read_off" formatted="false">"🔊 Leer: apagado"</string>
+    <string name="text_a_living_window_onto_earth" formatted="false">"Una ventana viva a la Tierra"</string>
+    <string name="text_drag_to_rotate" formatted="false">"Arrastrar para rotar"</string>
+    <string name="text_pinch_to_zoom" formatted="false">"Pellizcar para hacer zoom"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Toca el globo para descubrir más"</string>
+    <string name="text_explore_earth" formatted="false">"Explorar la Tierra"</string>
+    <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"Vista previa en vivo · luz solar actual · sin audio"</string>
+    <string name="text_preview_set_wallpaper" formatted="false">"Vista previa y configuración de fondo de pantalla"</string>
+    <string name="text_choose_home_or_lock_screen_in_the_android_preview" formatted="false">"Elija la pantalla de inicio o de bloqueo en la vista previa de Android."</string>
+    <string name="text_view_from" formatted="false">"Vista desde"</string>
+    <string name="text_saved_places" formatted="false">"Lugares guardados"</string>
+    <string name="text_search_cities" formatted="false">"Buscar ciudades"</string>
+    <string name="text_composition" formatted="false">"Composición"</string>
+    <string name="text_whole_earth" formatted="false">"La Tierra entera"</string>
+    <string name="text_night_lights" formatted="false">"Luces nocturnas"</string>
+    <string name="text_earth_s_horizon" formatted="false">"El horizonte de la Tierra"</string>
+    <string name="text_complete_globe_with_current_sunlight_and_quiet_stars" formatted="false">"Globo terráqueo completo con luz solar actual y estrellas tranquilas."</string>
+    <string name="text_city_lights_on_the_dark_side_of_earth_with_current_sunlight" formatted="false">"Luces de la ciudad en el lado oscuro de la Tierra, con luz solar actual."</string>
+    <string name="text_a_close_cropped_view_of_earth_s_atmospheric_limb" formatted="false">"Una vista cercana y recortada del limbo atmosférico de la Tierra."</string>
+    <string name="text_camera_motion" formatted="false">"Movimiento de cámara"</string>
+    <string name="text_fixed_viewpoint" formatted="false">"Punto de vista fijo"</string>
+    <string name="text_slow_orbit" formatted="false">"órbita lenta"</string>
+    <string name="text_follow_the_night_side" formatted="false">"Sigue el lado nocturno"</string>
+    <string name="text_keeps_your_chosen_place_in_view_as_daylight_changes" formatted="false">"Mantiene el lugar elegido a la vista a medida que cambia la luz del día."</string>
+    <string name="text_starts_at_your_chosen_view_then_slowly_travels_around_earth" formatted="false">"Comienza en la vista elegida y luego viaja lentamente alrededor de la Tierra."</string>
+    <string name="text_the_view_moves_with_the_night_side_instead_of_staying_over_a_plac" formatted="false">"La vista se mueve con el lado nocturno en lugar de quedarse en un lugar."</string>
+    <string name="text_turn_the_globe_when_i_swipe_between_home_screens" formatted="false">"Gira el globo cuando me deslizo entre las pantallas de inicio"</string>
+    <string name="text_generated_illustration" formatted="false">"Ilustración generada"</string>
+    <string name="text_satellite_imagery_when_cached_or_available" formatted="false">"Imágenes satelitales, cuando están almacenadas en caché o disponibles"</string>
+    <string name="text_globe_scale" formatted="false">"escala de globo"</string>
+    <string name="text_hide_framing_controls" formatted="false">"Ocultar controles de marco ▴"</string>
+    <string name="text_adjust_framing_angles" formatted="false">"Ajustar marcos y ángulos ▾"</string>
+    <string name="text_horizontal_framing" formatted="false">"encuadre horizontal"</string>
+    <string name="text_vertical_framing" formatted="false">"encuadre vertical"</string>
+    <string name="text_view_angle" formatted="false">"ángulo de visión"</string>
+    <string name="text_view_latitude" formatted="false">"Ver latitud"</string>
+    <string name="text_saved_view_1_s">" · vista guardada: %1$s"</string>
+    <string name="text_following_the_night_side_1_s">"Siguiendo el lado nocturno%1$s"</string>
+    <string name="text_your_custom_view" formatted="false">"tu vista personalizada"</string>
+    <string name="text_orbit_starts_at_1_s">"La órbita comienza en %1$s"</string>
+    <string name="text_choose_a_place_or_adjust_the_angles_below" formatted="false">"Elija un lugar o ajuste los ángulos a continuación."</string>
+    <string name="text_no_saved_places_yet" formatted="false">"Aún no hay lugares guardados"</string>
+    <string name="text_search_for_a_city_here_you_can_also_save_a_custom_point_in_explor" formatted="false">"Busque una ciudad aquí. También puede guardar un punto personalizado en Explorar → Lugares → Agregar un lugar del mundo."</string>
+    <string name="text_view_from_a_saved_place" formatted="false">"Ver desde un lugar guardado"</string>
+    <string name="text_city_or_country" formatted="false">"ciudad o pais"</string>
+    <string name="text_search_city_or_country" formatted="false">"Buscar ciudad o país"</string>
+    <string name="text_no_matching_city_try_a_country_or_another_name" formatted="false">"No hay ciudad coincidente. Pruebe con un país u otro nombre."</string>
+    <string name="text_choose_a_city" formatted="false">"Elige una ciudad"</string>
+    <string name="text_earth_today_widget" formatted="false">"Widget de la Tierra Hoy"</string>
+    <string name="text_which_place_should_this_widget_show_other_widgets_can_show_differ" formatted="false">"¿Qué lugar debería mostrar este widget? Otros widgets pueden mostrar diferentes lugares."</string>
+    <string name="text_no_place_yet" formatted="false">"Aún no hay lugar"</string>
+    <string name="text_save_a_place_in_the_app_explore_places_to_see_its_day_and_night_h" formatted="false">"Guarde un lugar en la aplicación (Explorar &gt; Lugares) para ver su día y su noche aquí."</string>
+    <string name="text_save_widget" formatted="false">"Guardar widget"</string>
+    <string name="text_1_s_2_s_3_s">"%1$s %2$s · %3$d%%"</string>
+    <string name="text_choose_a_place" formatted="false">"Elige un lugar"</string>
+    <string name="text_set_your_local_view" formatted="false">"Configura tu vista local"</string>
+    <string name="text_polar_day_2" formatted="false">"dia polar"</string>
+    <string name="text_polar_night_2" formatted="false">"noche polar"</string>
+    <string name="text_nighttime_now" formatted="false">"De noche ahora"</string>
+    <string name="text_updated_1_s">"Actualizado %1$s"</string>
+    <string name="text_illustration_1_s">"Ilustración · %1$s"</string>
+    <string name="text_couldn_t_capture_the_view_try_again" formatted="false">"No se pudo capturar la vista. Inténtalo de nuevo."</string>
+    <string name="text_couldn_t_prepare_the_image" formatted="false">"No se pudo preparar la imagen."</string>
+    <string name="text_share_your_view" formatted="false">"Comparte tu opinión"</string>
+    <string name="text_earth_1_s_made_with_pale_blue_dot_2_s">"🌍 Tierra — %1$s\nHecho con Pale Blue Dot → %2$s"</string>
+    <string name="text_ask_a_grown_up" formatted="false">"Pregúntale a un adulto"</string>
+    <string name="text_what_is_1_s_2_s">"¿Qué es %1$d × %2$d?"</string>
+    <string name="text_maybe_later" formatted="false">"tal vez más tarde"</string>
+    <string name="text_earthquake" formatted="false">"Terremoto"</string>
+    <string name="text_you_found_where_the_ground_was_shaking" formatted="false">"¡Encontraste dónde temblaba el suelo!"</string>
+    <string name="text_volcano" formatted="false">"volcán"</string>
+    <string name="text_you_spotted_hot_lava_erupting_from_deep_inside_the_earth" formatted="false">"Viste lava caliente en erupción desde las profundidades de la Tierra."</string>
+    <string name="text_wildfire" formatted="false">"incendio forestal"</string>
+    <string name="text_you_caught_a_fire_so_big_that_satellites_can_see_it_from_space" formatted="false">"Cogiste un incendio tan grande que los satélites pueden verlo desde el espacio."</string>
+    <string name="text_storm" formatted="false">"tormenta"</string>
+    <string name="text_you_tracked_a_giant_swirling_storm" formatted="false">"Seguiste una tormenta gigante."</string>
+    <string name="text_daytime_2" formatted="false">"diurno"</string>
+    <string name="text_you_found_the_side_of_earth_facing_the_sun" formatted="false">"Encontraste el lado de la Tierra que mira al Sol."</string>
+    <string name="text_city_lights_2" formatted="false">"Luces de la ciudad"</string>
+    <string name="text_you_found_the_night_side_sparkling_with_city_lights" formatted="false">"Encontraste el lado nocturno, brillando con las luces de la ciudad."</string>
+    <string name="text_star_gazer" formatted="false">"Observador de estrellas"</string>
+    <string name="text_you_looked_past_earth_into_the_stars_and_galaxies_beyond" formatted="false">"Miraste más allá de la Tierra hacia las estrellas y galaxias más allá."</string>
+    <string name="text_time_traveler" formatted="false">"Viajero del tiempo"</string>
+    <string name="text_you_moved_time_to_turn_day_into_night" formatted="false">"Moviste el tiempo para convertir el día en noche."</string>
+    <string name="text_tap_a_place_where_it_s_daytime" formatted="false">"Toca un lugar donde sea DE DÍA ☀️"</string>
+    <string name="text_tap_a_place_where_it_s_night_time" formatted="false">"Toca un lugar donde sea DE NOCHE 🌙"</string>
+    <string name="text_find_an_earthquake" formatted="false">"Encuentra un terremoto 🔶"</string>
+    <string name="text_find_a_volcano" formatted="false">"Encuentra un volcán 🌋"</string>
+    <string name="text_find_a_wildfire" formatted="false">"Encuentra un incendio forestal 🔥"</string>
+    <string name="text_find_a_storm" formatted="false">"Encuentra una tormenta 🌀"</string>
+    <string name="text_the_sun_is_so_huge_that_about_1_3_million_earths_could_fit_inside" formatted="false">"El Sol es tan grande que en su interior cabrían alrededor de 1,3 millones de Tierras."</string>
+    <string name="text_a_day_on_venus_is_longer_than_a_whole_year_on_venus" formatted="false">"¡Un día en Venus es más largo que un año entero en Venus!"</string>
+    <string name="text_footprints_on_the_moon_can_last_millions_of_years_because_there_s" formatted="false">"Las huellas en la Luna pueden durar millones de años porque no hay viento que las borre."</string>
+    <string name="text_jupiter_is_so_big_that_all_the_other_planets_could_fit_inside_it" formatted="false">"Júpiter es tan grande que todos los demás planetas podrían caber en su interior."</string>
+    <string name="text_sunlight_takes_about_8_minutes_to_travel_all_the_way_to_earth" formatted="false">"La luz del sol tarda unos 8 minutos en viajar hasta la Tierra."</string>
+    <string name="text_space_is_completely_silent_because_there_s_no_air_to_carry_sound" formatted="false">"El espacio está completamente en silencio porque no hay aire para transportar el sonido."</string>
+    <string name="text_earth_takes_365_and_a_quarter_days_to_orbit_the_sun_that_s_why_we" formatted="false">"La Tierra tarda 365 días y cuarto en orbitar alrededor del Sol; por eso añadimos un día bisiesto cada 4 años."</string>
+    <string name="text_the_tallest_volcano_we_know_of_olympus_mons_on_mars_is_about_thre" formatted="false">"El volcán más alto que conocemos, Olympus Mons en Marte, es aproximadamente tres veces más alto que el Monte Everest."</string>
+    <string name="text_earth_is_the_only_planet_not_named_after_a_greek_or_roman_god" formatted="false">"La Tierra es el único planeta que no lleva el nombre de un dios griego o romano."</string>
+    <string name="text_there_are_more_stars_in_the_universe_than_grains_of_sand_on_all_o" formatted="false">"Hay más estrellas en el universo que granos de arena en todas las playas de la Tierra."</string>
+    <string name="text_the_moon_drifts_about_3_8_cm_farther_from_earth_every_year" formatted="false">"La Luna se aleja unos 3,8 cm de la Tierra cada año."</string>
+    <string name="text_saturn_is_so_light_for_its_size_that_it_would_float_in_a_giant_ba" formatted="false">"Saturno es tan liviano para su tamaño que flotaría en una bañera gigante de agua."</string>
+    <string name="text_lightning_strikes_somewhere_on_earth_about_100_times_every_second" formatted="false">"Los rayos caen en algún lugar de la Tierra unas 100 veces por segundo."</string>
+    <string name="text_the_space_station_zooms_around_the_whole_earth_about_once_every_9" formatted="false">"La Estación Espacial gira alrededor de toda la Tierra aproximadamente una vez cada 90 minutos."</string>
+    <string name="text_auroras_glow_near_the_poles_when_tiny_particles_from_the_sun_cras" formatted="false">"Las auroras brillan cerca de los polos cuando pequeñas partículas del Sol chocan contra nuestro aire."</string>
+    <string name="text_about_70_of_earth_s_surface_is_covered_by_ocean" formatted="false">"Aproximadamente el 70% de la superficie de la Tierra está cubierta por océanos."</string>
+    <string name="text_venus_is_the_hottest_planet_even_though_mercury_is_closer_to_the" formatted="false">"Venus es el planeta más caliente, aunque Mercurio está más cerca del Sol."</string>
+    <string name="text_the_great_red_spot_on_jupiter_is_a_storm_bigger_than_the_whole_ea" formatted="false">"La Gran Mancha Roja de Júpiter es una tormenta más grande que toda la Tierra."</string>
+    <string name="text_earthquakes_happen_when_giant_pieces_of_earth_s_crust_slip_past_e" formatted="false">"Los terremotos ocurren cuando pedazos gigantes de la corteza terrestre se deslizan entre sí."</string>
+    <string name="text_the_sun_is_actually_white_our_air_is_what_makes_it_look_yellow" formatted="false">"En realidad, el Sol es blanco; nuestro aire es lo que lo hace parecer amarillo."</string>
+    <string name="text_comets_are_giant_balls_of_ice_and_dust_that_grow_glowing_tails_ne" formatted="false">"Los cometas son bolas gigantes de hielo y polvo a las que les crecen colas brillantes cerca del Sol."</string>
+    <string name="text_if_you_could_drive_a_car_straight_up_you_d_reach_space_in_about_a" formatted="false">"Si pudieras conducir un coche en línea recta, llegarías al espacio en aproximadamente una hora."</string>
+    <string name="text_the_moon_has_no_air_so_its_sky_is_always_black_even_in_the_daytim" formatted="false">"La Luna no tiene aire, por lo que su cielo siempre está negro, incluso durante el día."</string>
+    <string name="text_earth_spins_at_about_1_600_km_h_at_the_equator_but_we_don_t_feel" formatted="false">"La Tierra gira a unos 1.600 km/h en el ecuador, pero no lo sentimos porque giramos con ella."</string>
+    <string name="text_new_moon" formatted="false">"Luna nueva"</string>
+    <string name="text_waxing_crescent" formatted="false">"Luna creciente"</string>
+    <string name="text_first_quarter" formatted="false">"Cuarto creciente"</string>
+    <string name="text_waxing_gibbous" formatted="false">"Luna gibosa creciente"</string>
+    <string name="text_full_moon" formatted="false">"Luna llena"</string>
+    <string name="text_waning_gibbous" formatted="false">"Luna gibosa menguante"</string>
+    <string name="text_last_quarter" formatted="false">"Cuarto menguante"</string>
+    <string name="text_waning_crescent" formatted="false">"Luna menguante"</string>
+    <string name="text_watch_where_sunrise_reaches_next" formatted="false">"Observe dónde llega el próximo amanecer."</string>
+    <string name="text_compare_daylight_in_the_north_and_south" formatted="false">"Compare la luz del día en el norte y el sur."</string>
+    <string name="text_trace_a_curve_of_earth_s_plate_boundaries" formatted="false">"Traza una curva de los límites de las placas de la Tierra."</string>
+    <string name="text_saved_observation_feed_update_unavailable" formatted="false">"Observación guardada; actualización del feed no disponible"</string>
+    <string name="text_recent_reported_observation" formatted="false">"Observación reportada recientemente"</string>
+    <string name="text_observations_are_loading" formatted="false">"Se están cargando las observaciones."</string>
+    <string name="text_no_recent_observations_available_the_moon_and_daylight_are_still" formatted="false">"No hay observaciones recientes disponibles; la luna y la luz del día todavía están aquí"</string>
+    <string name="lesson_follow_sunrise" formatted="false">"Seguir el amanecer"</string>
+    <string name="lesson_a_turning_world" formatted="false">"Un mundo que gira"</string>
+    <string name="lesson_sunrise_is_a_moving_boundary_between_darkness_and_daylight_we_ll" formatted="false">"El amanecer es un límite móvil entre la oscuridad y la luz del día. Lo seguiremos desde un lugar marcado."</string>
+    <string name="lesson_begin" formatted="false">"comenzar"</string>
+    <string name="lesson_find_london" formatted="false">"Encuentra Londres"</string>
+    <string name="lesson_look_at_london_on_the_globe_notice_which_side_faces_the_sun_the_m" formatted="false">"Mire Londres en el mundo. Observe qué lado mira al Sol. El marcador y el cálculo de la luz del día son pistas separadas."</string>
+    <string name="lesson_i_found_london" formatted="false">"Encontré Londres"</string>
+    <string name="lesson_predict_the_direction" formatted="false">"Predecir la dirección"</string>
+    <string name="lesson_as_earth_spins_eastward_which_way_does_the_dawn_boundary_move_acr" formatted="false">"A medida que la Tierra gira hacia el este, ¿en qué dirección se mueve el límite del amanecer en un mapa de longitudes?"</string>
+    <string name="lesson_yes_at_a_fixed_utc_time_the_dawn_line_moves_westward_over_longitu" formatted="false">"Sí. En una hora UTC fija, la línea del amanecer se mueve hacia el oeste a lo largo de las longitudes a medida que la Tierra gira hacia el este."</string>
+    <string name="lesson_it_moves_westward_across_longitudes_earth_itself_turns_eastward_c" formatted="false">"Se mueve hacia el oeste a lo largo de longitudes. La Tierra misma gira hacia el este, llevando cada lugar a la luz del día."</string>
+    <string name="lesson_westward" formatted="false">"Hacia el oeste"</string>
+    <string name="lesson_eastward" formatted="false">"Hacia el este"</string>
+    <string name="lesson_advance_the_scene" formatted="false">"avanzar la escena"</string>
+    <string name="lesson_move_the_globe_s_lesson_clock_forward_two_hours_and_watch_the_lig" formatted="false">"Adelanta dos horas el reloj de las lecciones del mundo y observa cómo cambia la luz. Esta es una simulación, mientras que Today permanece en tiempo real."</string>
+    <string name="lesson_advance_two_hours" formatted="false">"Avanzar dos horas"</string>
+    <string name="lesson_what_changed" formatted="false">"¿Qué cambió?"</string>
+    <string name="lesson_the_sunlight_direction_changed_with_time_did_the_saved_place_move" formatted="false">"La dirección de la luz del sol cambió con el tiempo. ¿Se movió el lugar salvo en el mundo?"</string>
+    <string name="lesson_exactly_the_place_keeps_its_coordinates_while_earth_s_rotation_ch" formatted="false">"Exacto. El lugar mantiene sus coordenadas mientras la rotación de la Tierra cambia su iluminación."</string>
+    <string name="lesson_a_place_keeps_its_latitude_and_longitude_the_changing_angle_to_th" formatted="false">"Un lugar mantiene su latitud y longitud. El ángulo cambiante con respecto al Sol crea el día y la noche."</string>
+    <string name="lesson_no_earth_rotated_relative_to_the_sun" formatted="false">"No; La Tierra gira respecto al Sol."</string>
+    <string name="lesson_yes_its_latitude_changed" formatted="false">"Sí; su latitud cambió"</string>
+    <string name="lesson_explore_the_ring_of_fire" formatted="false">"Explora el Anillo de Fuego"</string>
+    <string name="lesson_a_pattern_around_the_pacific" formatted="false">"Un patrón alrededor del Pacífico"</string>
+    <string name="lesson_visit_three_locations_predict_a_pattern_then_reveal_plate_boundar" formatted="false">"Visite tres ubicaciones, prediga un patrón y luego revele los límites de las placas. Los ejemplos históricos de respaldo están etiquetados con fechas y fuentes."</string>
+    <string name="lesson_off_japan" formatted="false">"Fuera de Japón"</string>
+    <string name="lesson_historical_fallback_2011_03_11_tohoku_earthquake_usgs_a_recent_pa" formatted="false">"Retroceso histórico: 2011-03-11 Terremoto de Tohoku, USGS. Cuando está disponible, se utiliza una observación reciente del Pacífico."</string>
+    <string name="lesson_visit_the_next_location" formatted="false">"Visita la siguiente ubicación"</string>
+    <string name="lesson_the_cascades" formatted="false">"Las cascadas"</string>
+    <string name="lesson_historical_fallback_1980_05_18_mount_st_helens_eruption_usgs_this" formatted="false">"Retroceso histórico: 1980-05-18 Erupción del Monte Santa Helena, USGS. Este es un ejemplo de lección anticuado, no un informe en vivo."</string>
+    <string name="lesson_along_chile" formatted="false">"A lo largo de Chile"</string>
+    <string name="lesson_historical_fallback_1960_05_22_great_chilean_earthquake_usgs_this" formatted="false">"Retroceso histórico: 1960-05-22 Gran terremoto de Chile, USGS. Este ejemplo permanece fuera del repositorio de eventos en vivo."</string>
+    <string name="lesson_predict_the_pattern" formatted="false">"Predecir el patrón"</string>
+    <string name="lesson_what_pattern_do_you_see" formatted="false">"¿Qué patrón ves?"</string>
+    <string name="lesson_which_broad_pattern_links_many_earthquake_and_volcano_locations_a" formatted="false">"¿Qué patrón general vincula muchos lugares de terremotos y volcanes alrededor del Pacífico?"</string>
+    <string name="lesson_yes_many_cluster_near_plate_edges_but_some_events_also_happen_awa" formatted="false">"Sí. Muchos se agrupan cerca de los bordes de las placas, pero algunos eventos también ocurren fuera de los límites cartografiados."</string>
+    <string name="lesson_the_broad_pattern_is_a_belt_near_several_plate_edges_individual_e" formatted="false">"El patrón amplio es un cinturón cerca de varios bordes de placas. Los acontecimientos individuales necesitan su propia evidencia; La distancia a una línea no es un diagnóstico."</string>
+    <string name="lesson_a_belt_near_several_plate_edges" formatted="false">"Un cinturón cerca de varios bordes de placas."</string>
+    <string name="lesson_one_straight_line_through_the_pacific_center" formatted="false">"Una línea recta que pasa por el centro del Pacífico."</string>
+    <string name="lesson_every_event_lies_exactly_on_one_boundary" formatted="false">"Cada evento se encuentra exactamente en un límite."</string>
+    <string name="lesson_reveal_the_boundaries" formatted="false">"Revelar los límites"</string>
+    <string name="lesson_gold_lines_show_a_generalized_pb2002_plate_boundary_model_compare" formatted="false">"Las líneas doradas muestran un modelo generalizado de límites de placas PB2002. Compárese con la cuenca del Pacífico; Estas líneas no explican cada evento individual."</string>
+    <string name="lesson_reveal_gold_lines" formatted="false">"Revelar líneas doradas"</string>
+    <string name="lesson_what_the_pattern_means" formatted="false">"¿Qué significa el patrón?"</string>
+    <string name="lesson_plate_motions_concentrate_many_earthquakes_and_volcanoes_around_t" formatted="false">"Los movimientos de las placas concentran muchos terremotos y volcanes alrededor del Pacífico. Los puntos calientes y los terremotos dentro de las placas muestran por qué el patrón tiene excepciones."</string>
+    <string name="lesson_complete_journey" formatted="false">"viaje completo"</string>
+    <string name="lesson_understand_the_seasons" formatted="false">"entender las estaciones"</string>
+    <string name="lesson_two_hemispheres" formatted="false">"Dos hemisferios"</string>
+    <string name="lesson_compare_daylight_at_london_and_sydney_on_two_dates_earth_s_tilted" formatted="false">"Compare la luz del día en Londres y Sydney en dos fechas. El eje inclinado de la Tierra cambia el tiempo que el Sol permanece sobre el horizonte."</string>
+    <string name="lesson_london_in_june" formatted="false">"Londres en junio"</string>
+    <string name="lesson_observe_london_near_the_june_solstice_the_northern_hemisphere_has" formatted="false">"Observe Londres cerca del solsticio de junio. El hemisferio norte tiene horas de luz más largas."</string>
+    <string name="lesson_compare_sydney" formatted="false">"Comparar Sídney"</string>
+    <string name="lesson_sydney_in_june" formatted="false">"Sídney en junio"</string>
+    <string name="lesson_observe_sydney_on_the_same_date_its_winter_daylight_is_shorter_th" formatted="false">"Observe Sydney en la misma fecha. Su luz diurna en invierno es más corta que la luz diurna de verano en Londres."</string>
+    <string name="lesson_make_a_prediction" formatted="false">"hacer una predicción"</string>
+    <string name="lesson_predict_december" formatted="false">"Predecir diciembre"</string>
+    <string name="lesson_near_the_december_solstice_which_marked_place_has_longer_daylight" formatted="false">"Cerca del solsticio de diciembre, ¿qué lugar marcado tiene más horas de luz?"</string>
+    <string name="lesson_yes_the_southern_hemisphere_tilts_toward_the_sun_in_december_so_s" formatted="false">"Sí. El hemisferio sur se inclina hacia el Sol en diciembre, por lo que Sydney tiene días más largos."</string>
+    <string name="lesson_sydney_has_longer_daylight_near_the_december_solstice_the_souther" formatted="false">"Sydney tiene luz diurna más larga cerca del solsticio de diciembre. Entonces el hemisferio sur se inclina hacia el Sol."</string>
+    <string name="lesson_sydney" formatted="false">"Sídney"</string>
+    <string name="lesson_london" formatted="false">"Londres"</string>
+    <string name="lesson_they_must_be_equal" formatted="false">"deben ser iguales"</string>
+    <string name="lesson_switch_to_december" formatted="false">"Cambiar a diciembre"</string>
+    <string name="lesson_compare_the_daylight_readouts_after_changing_the_lesson_date_this" formatted="false">"Compare las lecturas de luz diurna después de cambiar la fecha de la lección. Esto solo cambia la escena de la aplicación."</string>
+    <string name="lesson_show_the_axial_tilt_explanation" formatted="false">"Mostrar la explicación de la inclinación axial."</string>
+    <string name="lesson_why_seasons_change" formatted="false">"¿Por qué cambian las estaciones?"</string>
+    <string name="lesson_earth_s_axis_stays_tilted_about_23_4_as_it_orbits_the_sun_the_nor" formatted="false">"El eje de la Tierra permanece inclinado unos 23,4° mientras orbita alrededor del Sol. Los hemisferios norte y sur alternan horas de luz más largas. Las guías visibles marcan el ecuador, los trópicos y los círculos polares."</string>
+    <string name="text_notebook" formatted="false">"Cuaderno"</string>
+    <string name="text_guide" formatted="false">"Guía"</string>
+    <string name="text_places" formatted="false">"Lugares"</string>
+    <string name="text_explore_time" formatted="false">"Explorar el tiempo"</string>
+    <string name="text_journeys" formatted="false">"Viajes"</string>
+    <string name="text_journey" formatted="false">"viaje"</string>
+    <string name="text_language" formatted="false">"Idioma"</string>
+    <string name="text_use_device_language" formatted="false">"Usar el idioma del dispositivo"</string>
+    <string name="text_a_voice_for_this_language_is_not_installed_on_this_device" formatted="false">"No hay voz para este idioma instalada en este dispositivo."</string>
+    <string name="text_great_job_challenges_solved_1_s">"🎉 ¡Buen trabajo! Desafíos resueltos: %1$d"</string>
+    <string name="text_earth_s_axis_is_tilted_about_23_4_degrees_relative_to_its_orbit_a" formatted="false">"El eje de la Tierra está inclinado unos 23,4 grados con respecto a su órbita alrededor del Sol."</string>
+    <string name="city_abidjan" formatted="false">"Abiyán, Costa de Marfil"</string>
+    <string name="city_abu_dhabi" formatted="false">"Abu Dabi, Emiratos Árabes Unidos"</string>
+    <string name="city_abuja" formatted="false">"Abuya, Nigeria"</string>
+    <string name="city_accra" formatted="false">"Acra, Ghana"</string>
+    <string name="city_adamstown" formatted="false">"Adamstown, Pitcairn"</string>
+    <string name="city_addis_ababa" formatted="false">"Addis Abeba, Etiopía"</string>
+    <string name="city_adelaide" formatted="false">"Adelaida, Australia"</string>
+    <string name="city_alexandria" formatted="false">"Alejandría, Egipto"</string>
+    <string name="city_algiers" formatted="false">"Argel, Argelia"</string>
+    <string name="city_alofi" formatted="false">"Alofi, Niue"</string>
+    <string name="city_amman" formatted="false">"Ammán, Jordania"</string>
+    <string name="city_amsterdam" formatted="false">"Ámsterdam, Países Bajos"</string>
+    <string name="city_andorra_la_vella" formatted="false">"Andorra la Vieja, Andorra"</string>
+    <string name="city_ankara" formatted="false">"Ankara, Turquía"</string>
+    <string name="city_antananarivo" formatted="false">"Antananarivo, Madagascar"</string>
+    <string name="city_apia" formatted="false">"Apia, Samoa"</string>
+    <string name="city_ashgabat" formatted="false">"Asjabad, Turkmenistán"</string>
+    <string name="city_asmara" formatted="false">"Asmara, Eritrea"</string>
+    <string name="city_astana" formatted="false">"Astaná, Kazajstán"</string>
+    <string name="city_asuncion" formatted="false">"Asunción, Paraguay"</string>
+    <string name="city_athens" formatted="false">"Atenas, Grecia"</string>
+    <string name="city_auckland" formatted="false">"Auckland, Nueva Zelanda"</string>
+    <string name="city_avarua" formatted="false">"Avarua, Islas Cook"</string>
+    <string name="city_baghdad" formatted="false">"Bagdad, Irak"</string>
+    <string name="city_baku" formatted="false">"Bakú, Azerbaiyán"</string>
+    <string name="city_bamako" formatted="false">"Bamako, Malí"</string>
+    <string name="city_bandar_seri_begawan" formatted="false">"Bandar Seri Begawan, Brunéi"</string>
+    <string name="city_bangkok" formatted="false">"Bangkok, Tailandia"</string>
+    <string name="city_bangui" formatted="false">"Bangui, República Centroafricana"</string>
+    <string name="city_banjul" formatted="false">"Banjul, Gambia"</string>
+    <string name="city_barcelona" formatted="false">"Barcelona, España"</string>
+    <string name="city_basse_terre" formatted="false">"Basse-Terre, Guadalupe"</string>
+    <string name="city_basseterre" formatted="false">"Basseterre, San Cristóbal y Nieves"</string>
+    <string name="city_beijing" formatted="false">"Pekín, China"</string>
+    <string name="city_beirut" formatted="false">"Beirut, Líbano"</string>
+    <string name="city_belgrade" formatted="false">"Belgrado, Serbia"</string>
+    <string name="city_belmopan" formatted="false">"Belmopán, Belice"</string>
+    <string name="city_belo_horizonte" formatted="false">"Belo Horizonte, Brasil"</string>
+    <string name="city_berlin" formatted="false">"Berlín, Alemania"</string>
+    <string name="city_bern" formatted="false">"Berna, Suiza"</string>
+    <string name="city_bishkek" formatted="false">"Bishkek, Kirguistán"</string>
+    <string name="city_bissau" formatted="false">"Bisáu, Guinea-Bisáu"</string>
+    <string name="city_bogota" formatted="false">"Bogotá, Colombia"</string>
+    <string name="city_brasilia" formatted="false">"Brasilia, Brasil"</string>
+    <string name="city_bratislava" formatted="false">"Bratislava, Eslovaquia"</string>
+    <string name="city_brazzaville" formatted="false">"Brazzaville, República del Congo"</string>
+    <string name="city_bridgetown" formatted="false">"Bridgetown, Barbados"</string>
+    <string name="city_brisbane" formatted="false">"Bandera de Australia"</string>
+    <string name="city_brooklyn" formatted="false">"Brooklyn, Estados Unidos"</string>
+    <string name="city_brussels" formatted="false">"Bruselas, Bélgica"</string>
+    <string name="city_bucharest" formatted="false">"Bucarest, Rumania"</string>
+    <string name="city_budapest" formatted="false">"Budapest, Hungría"</string>
+    <string name="city_buenos_aires" formatted="false">"buenos aires, argentina"</string>
+    <string name="city_cairo" formatted="false">"El Cairo, Egipto"</string>
+    <string name="city_cali" formatted="false">"Cali, Colombia"</string>
+    <string name="city_canberra" formatted="false">"Canberra, Australia"</string>
+    <string name="city_cape_town" formatted="false">"Ciudad del Cabo, Sudáfrica"</string>
+    <string name="city_caracas" formatted="false">"Caracas, Venezuela"</string>
+    <string name="city_casablanca" formatted="false">"Casablanca, Marruecos"</string>
+    <string name="city_castries" formatted="false">"Castries, Santa Lucía"</string>
+    <string name="city_cayenne" formatted="false">"Cayena, Guayana Francesa"</string>
+    <string name="city_central_coast" formatted="false">"Costa Central, Australia"</string>
+    <string name="city_charlotte_amalie" formatted="false">"Charlotte Amalie, Islas Vírgenes de los Estados Unidos"</string>
+    <string name="city_chengdu" formatted="false">"Chengdú, China"</string>
+    <string name="city_chicago" formatted="false">"Chicago, Estados Unidos"</string>
+    <string name="city_chisinau" formatted="false">"Chisinau, Moldavia"</string>
+    <string name="city_chongqing" formatted="false">"Chongqing, China"</string>
+    <string name="city_christchurch" formatted="false">"Christchurch, Nueva Zelanda"</string>
+    <string name="city_ciudad_de_la_paz" formatted="false">"Ciudad de la Paz, Guinea Ecuatorial"</string>
+    <string name="city_cockburn_town" formatted="false">"Cockburn Town, Islas Turcas y Caicos"</string>
+    <string name="city_colombo" formatted="false">"Colombo, Sri Lanka"</string>
+    <string name="city_conakry" formatted="false">"Conakri, Guinea"</string>
+    <string name="city_copenhagen" formatted="false">"Copenhague, Dinamarca"</string>
+    <string name="city_dakar" formatted="false">"Dakar, Senegal"</string>
+    <string name="city_damascus" formatted="false">"Damasco, Siria"</string>
+    <string name="city_dar_es_salaam" formatted="false">"Dar es-Salam, Tanzania"</string>
+    <string name="city_delhi" formatted="false">"Delhi, India"</string>
+    <string name="city_dhaka" formatted="false">"Daca, Bangladesh"</string>
+    <string name="city_dili" formatted="false">"Dili, Timor Oriental"</string>
+    <string name="city_djibouti" formatted="false">"Yibuti, Yibuti"</string>
+    <string name="city_dodoma" formatted="false">"Dodoma, Tanzania"</string>
+    <string name="city_doha" formatted="false">"Doha, Catar"</string>
+    <string name="city_douglas" formatted="false">"Douglas, Isla de Man"</string>
+    <string name="city_dublin" formatted="false">"Dublín, Irlanda"</string>
+    <string name="city_dushanbe" formatted="false">"Dushanbe, Tayikistán"</string>
+    <string name="city_flying_fish_cove" formatted="false">"Cala Pez Volador, Isla de Navidad"</string>
+    <string name="city_fort_de_france" formatted="false">"Fort-de-France, Martinica"</string>
+    <string name="city_fortaleza" formatted="false">"Fortaleza, Brasil"</string>
+    <string name="city_freetown" formatted="false">"Freetown, Sierra Leona"</string>
+    <string name="city_funafuti" formatted="false">"Funafuti, Tuvalu"</string>
+    <string name="city_gaborone" formatted="false">"Gaborone, Botsuana"</string>
+    <string name="city_george_town" formatted="false">"George Town, Islas Caimán"</string>
+    <string name="city_georgetown" formatted="false">"Georgetown, Guyana"</string>
+    <string name="city_gibraltar" formatted="false">"gibraltar, gibraltar"</string>
+    <string name="city_gitega" formatted="false">"Gitega, Burundi"</string>
+    <string name="city_giza" formatted="false">"Guiza, Egipto"</string>
+    <string name="city_gold_coast" formatted="false">"Costa Dorada, Australia"</string>
+    <string name="city_grytviken" formatted="false">"Grytviken, Islas Georgias del Sur y Sandwich del Sur"</string>
+    <string name="city_guangzhou" formatted="false">"Cantón, China"</string>
+    <string name="city_guatemala_city" formatted="false">"Ciudad de Guatemala, Guatemala"</string>
+    <string name="city_guayaquil" formatted="false">"Guayaquil, Ecuador"</string>
+    <string name="city_gustavia" formatted="false">"Gustavia, San Bartolomé"</string>
+    <string name="city_hagatna" formatted="false">"Agaña, Guam"</string>
+    <string name="city_hamburg" formatted="false">"Hamburgo, Alemania"</string>
+    <string name="city_hamilton" formatted="false">"Hamilton (Bermudas)"</string>
+    <string name="city_hangzhou" formatted="false">"Hangzhou, China"</string>
+    <string name="city_hanoi" formatted="false">"Hanói, Vietnam"</string>
+    <string name="city_harare" formatted="false">"Harare, Zimbabue"</string>
+    <string name="city_havana" formatted="false">"La Habana, Cuba"</string>
+    <string name="city_helsinki" formatted="false">"Helsinki, Finlandia"</string>
+    <string name="city_ho_chi_minh_city" formatted="false">"Ciudad Ho Chi Minh, Vietnam"</string>
+    <string name="city_hong_kong" formatted="false">"Hong Kong, Hong Kong"</string>
+    <string name="city_honiara" formatted="false">"Honiara, Islas Salomón"</string>
+    <string name="city_houston" formatted="false">"Houston, Estados Unidos"</string>
+    <string name="city_ibadan" formatted="false">"Ibadán, Nigeria"</string>
+    <string name="city_islamabad" formatted="false">"Islamabad, Pakistán"</string>
+    <string name="city_istanbul" formatted="false">"Estambul, Turquía"</string>
+    <string name="city_iztapalapa" formatted="false">"Iztapalapa, México"</string>
+    <string name="city_jakarta" formatted="false">"Yakarta, Indonesia"</string>
+    <string name="city_jamestown" formatted="false">"Jamestown, Santa Elena"</string>
+    <string name="city_johannesburg" formatted="false">"Johannesburgo, Sudáfrica"</string>
+    <string name="city_juba" formatted="false">"Yuba, Sudán del Sur"</string>
+    <string name="city_kabul" formatted="false">"Kabul, Afganistán"</string>
+    <string name="city_kampala" formatted="false">"Kampala, Uganda"</string>
+    <string name="city_kano" formatted="false">"Bandera de Nigeria"</string>
+    <string name="city_karachi" formatted="false">"Karachi, Pakistán"</string>
+    <string name="city_kathmandu" formatted="false">"Katmandú, Nepal"</string>
+    <string name="city_khartoum" formatted="false">"Jartum, Sudán"</string>
+    <string name="city_kigali" formatted="false">"Kigali, Ruanda"</string>
+    <string name="city_kingston" formatted="false">"Kingston, Jamaica"</string>
+    <string name="city_kingston_nf" formatted="false">"Kingston, Isla Norfolk"</string>
+    <string name="city_kingstown" formatted="false">"Kingstown, San Vicente y las Granadinas"</string>
+    <string name="city_kinshasa" formatted="false">"Kinshasa, República Democrática del Congo"</string>
+    <string name="city_kralendijk" formatted="false">"Kralendijk, Bonaire, San Eustaquio y Saba "</string>
+    <string name="city_kuala_lumpur" formatted="false">"Kuala Lumpur, Malasia"</string>
+    <string name="city_kuwait_city" formatted="false">"Ciudad de Kuwait, Kuwait"</string>
+    <string name="city_kyiv" formatted="false">"Kyiv, Ucrania"</string>
+    <string name="city_lagos" formatted="false">"Lagos, Nigeria"</string>
+    <string name="city_lahore" formatted="false">"Lahore, Pakistán"</string>
+    <string name="city_libreville" formatted="false">"Libreville, Gabón"</string>
+    <string name="city_lilongwe" formatted="false">"Lilongüe, Malawi"</string>
+    <string name="city_lima" formatted="false">"Lima, Perú"</string>
+    <string name="city_lisbon" formatted="false">"Lisboa, Portugal"</string>
+    <string name="city_ljubljana" formatted="false">"Liubliana, Eslovenia"</string>
+    <string name="city_logan_city" formatted="false">"Ciudad de Logan, Australia"</string>
+    <string name="city_lome" formatted="false">"Lomé, Togo"</string>
+    <string name="city_london" formatted="false">"Londres, Reino Unido"</string>
+    <string name="city_longyearbyen" formatted="false">"Longyearbyen, Svalbard y Jan Mayen"</string>
+    <string name="city_los_angeles" formatted="false">"Los Ángeles, Estados Unidos"</string>
+    <string name="city_luanda" formatted="false">"Luanda, Angola"</string>
+    <string name="city_lusaka" formatted="false">"Lusaka, Zambia"</string>
+    <string name="city_luxembourg" formatted="false">"Luxemburgo, Luxemburgo"</string>
+    <string name="city_macau" formatted="false">"Macao, Macao"</string>
+    <string name="city_madrid" formatted="false">"Madrid, España"</string>
+    <string name="city_majuro" formatted="false">"Majuro, Islas Marshall"</string>
+    <string name="city_male" formatted="false">"Malé, Maldivas"</string>
+    <string name="city_mamoudzou" formatted="false">"Mamoudzou, Mayotte"</string>
+    <string name="city_managua" formatted="false">"Nicaragua"</string>
+    <string name="city_manama" formatted="false">"Manama, Baréin"</string>
+    <string name="city_manaus" formatted="false">"Manaos, Brasil"</string>
+    <string name="city_manila" formatted="false">"Manila, Filipinas"</string>
+    <string name="city_manukau_city" formatted="false">"Ciudad de Manukau, Nueva Zelanda"</string>
+    <string name="city_maputo" formatted="false">"Maputo, Mozambique"</string>
+    <string name="city_mariehamn" formatted="false">"Mariehamn, Islas de Åland"</string>
+    <string name="city_marigot" formatted="false">"Marigot, San Martín"</string>
+    <string name="city_maseru" formatted="false">"Maseru, Lesoto"</string>
+    <string name="city_mata_utu" formatted="false">"Mata-Utu, Wallis y Futuna"</string>
+    <string name="city_mbabane" formatted="false">"Mbabane, Esuatini"</string>
+    <string name="city_melbourne" formatted="false">"Melbourne, Australia"</string>
+    <string name="city_mexico_city" formatted="false">"Ciudad de México, México"</string>
+    <string name="city_minsk" formatted="false">"Minsk, Bielorrusia"</string>
+    <string name="city_mogadishu" formatted="false">"Mogadiscio, Somalia"</string>
+    <string name="city_monaco" formatted="false">"Mónaco, Mónaco"</string>
+    <string name="city_monrovia" formatted="false">"Monrovia, Liberia"</string>
+    <string name="city_montevideo" formatted="false">"montevideo, uruguay"</string>
+    <string name="city_montreal" formatted="false">"Montreal, Canadá"</string>
+    <string name="city_moroni" formatted="false">"Moroni, Comoras"</string>
+    <string name="city_moscow" formatted="false">"Moscú, Rusia"</string>
+    <string name="city_mumbai" formatted="false">"Bombay, India"</string>
+    <string name="city_muscat" formatted="false">"Mascate, Omán"</string>
+    <string name="city_n_djamena" formatted="false">"Yamena, Chad"</string>
+    <string name="city_nairobi" formatted="false">"Nairobi, Kenia"</string>
+    <string name="city_nassau" formatted="false">"Nasáu, Bahamas"</string>
+    <string name="city_nay_pyi_taw" formatted="false">"Nay Pyi Taw, Birmania"</string>
+    <string name="city_new_delhi" formatted="false">"Nueva Delhi, India"</string>
+    <string name="city_new_york" formatted="false">"Nueva York, Estados Unidos"</string>
+    <string name="city_newcastle" formatted="false">"Newcastle, Australia"</string>
+    <string name="city_ngerulmud" formatted="false">"Ngerulmud, Palaos"</string>
+    <string name="city_niamey" formatted="false">"Niamey, Níger"</string>
+    <string name="city_nicosia" formatted="false">"Nicosia, Chipre"</string>
+    <string name="city_nouakchott" formatted="false">"Nuakchot, Mauritania"</string>
+    <string name="city_noumea" formatted="false">"Numea, Nueva Caledonia"</string>
+    <string name="city_nukualofa" formatted="false">"Nukualofa, Tonga"</string>
+    <string name="city_nuuk" formatted="false">"Nuuk, Groenlandia"</string>
+    <string name="city_oranjestad" formatted="false">"Oranjestad, Aruba"</string>
+    <string name="city_oslo" formatted="false">"Oslo, Noruega"</string>
+    <string name="city_ottawa" formatted="false">"Ottawa, Canadá"</string>
+    <string name="city_ouagadougou" formatted="false">"Uagadugú, Burkina Faso"</string>
+    <string name="city_pago_pago" formatted="false">"Pago Pago, Samoa Americana"</string>
+    <string name="city_palikir" formatted="false">"Palikir, Micronesia"</string>
+    <string name="city_panama_city" formatted="false">"Ciudad de Panamá, Panamá"</string>
+    <string name="city_papeete" formatted="false">"Papeete, Polinesia Francesa"</string>
+    <string name="city_paramaribo" formatted="false">"Paramaribo, Surinam"</string>
+    <string name="city_paris" formatted="false">"París, Francia"</string>
+    <string name="city_perth" formatted="false">"Perth, Australia"</string>
+    <string name="city_philipsburg" formatted="false">"Philipsburg, San Martín"</string>
+    <string name="city_phnom_penh" formatted="false">"Phnom Penh, Camboya"</string>
+    <string name="city_phoenix" formatted="false">"Phoenix, Estados Unidos"</string>
+    <string name="city_plymouth" formatted="false">"Plymouth, Montserrat"</string>
+    <string name="city_podgorica" formatted="false">"Podgorica, Montenegro"</string>
+    <string name="city_port_au_prince" formatted="false">"Puerto Príncipe, Haití"</string>
+    <string name="city_port_aux_francais" formatted="false">"Port-aux-Français, Territorios Australes Franceses"</string>
+    <string name="city_port_louis" formatted="false">"Puerto Louis, Mauricio"</string>
+    <string name="city_port_moresby" formatted="false">"Puerto Moresby, Papúa Nueva Guinea"</string>
+    <string name="city_port_of_spain" formatted="false">"Puerto España, Trinidad y Tobago"</string>
+    <string name="city_port_vila" formatted="false">"Port Vila, Vanuatu"</string>
+    <string name="city_porto_novo" formatted="false">"Porto Novo, Benín"</string>
+    <string name="city_prague" formatted="false">"Praga, Chequia"</string>
+    <string name="city_praia" formatted="false">"Playa, Cabo Verde"</string>
+    <string name="city_pretoria" formatted="false">"Pretoria, Sudáfrica"</string>
+    <string name="city_pristina" formatted="false">"Pristina, Kosovo"</string>
+    <string name="city_puebla" formatted="false">"Puebla, México"</string>
+    <string name="city_pyongyang" formatted="false">"Pyongyang, Corea del Norte"</string>
+    <string name="city_queens" formatted="false">"Queens, Estados Unidos"</string>
+    <string name="city_quito" formatted="false">"Quito, Ecuador"</string>
+    <string name="city_rabat" formatted="false">"Rabat, Marruecos"</string>
+    <string name="city_reykjavik" formatted="false">"Reikiavik, Islandia"</string>
+    <string name="city_riga" formatted="false">"Riga, Letonia"</string>
+    <string name="city_rio" formatted="false">"Río de Janeiro, Brasil"</string>
+    <string name="city_riyadh" formatted="false">"Riad, Arabia Saudita"</string>
+    <string name="city_road_town" formatted="false">"Road Town, Islas Vírgenes Británicas"</string>
+    <string name="city_rome" formatted="false">"Roma, Italia"</string>
+    <string name="city_roseau" formatted="false">"Roseau, República Dominicana"</string>
+    <string name="city_saint_denis" formatted="false">"Saint-Denis, Reunión"</string>
+    <string name="city_saint_george_s" formatted="false">"Saint George\'s, Granada"</string>
+    <string name="city_saint_helier" formatted="false">"Saint-Helier (Jersey)"</string>
+    <string name="city_saint_johns" formatted="false">"San Juan, Antigua y Barbuda"</string>
+    <string name="city_saint_peter_port" formatted="false">"Puerto de San Pedro, Guernsey"</string>
+    <string name="city_saint_petersburg" formatted="false">"San Petersburgo, Rusia"</string>
+    <string name="city_saint_pierre" formatted="false">"San Pedro, San Pedro y Miquelón"</string>
+    <string name="city_saipan" formatted="false">"Saipán, Islas Marianas del Norte"</string>
+    <string name="city_salvador" formatted="false">"Salvador, Brasil"</string>
+    <string name="city_san_jose" formatted="false">"San José, Costa Rica"</string>
+    <string name="city_san_juan" formatted="false">"San Juan, Puerto Rico"</string>
+    <string name="city_san_marino" formatted="false">"San Marino, San Marino"</string>
+    <string name="city_san_salvador" formatted="false">"San Salvador, El Salvador"</string>
+    <string name="city_sanaa" formatted="false">"Saná, Yemen"</string>
+    <string name="city_santiago" formatted="false">"Santiago, Chile"</string>
+    <string name="city_santo_domingo" formatted="false">"Santo Domingo, República Dominicana"</string>
+    <string name="city_sao_paulo" formatted="false">"São Paulo, Brasil"</string>
+    <string name="city_sao_tome" formatted="false">"Santo Tomé, Santo Tomé y Príncipe"</string>
+    <string name="city_sarajevo" formatted="false">"Sarajevo, Bosnia y Herzegovina"</string>
+    <string name="city_seoul" formatted="false">"Seúl, Corea del Sur"</string>
+    <string name="city_shanghai" formatted="false">"Shanghái, China"</string>
+    <string name="city_shenzhen" formatted="false">"Shénzhen, China"</string>
+    <string name="city_singapore" formatted="false">"Singapur, Singapur"</string>
+    <string name="city_skopje" formatted="false">"Skopje, Macedonia del Norte"</string>
+    <string name="city_sofia" formatted="false">"Sofía, Bulgaria"</string>
+    <string name="city_stanley" formatted="false">"Stanley, Islas Malvinas"</string>
+    <string name="city_stockholm" formatted="false">"Estocolmo, Suecia"</string>
+    <string name="city_sucre" formatted="false">"Sucre, Bolivia"</string>
+    <string name="city_sunshine_coast" formatted="false">"Costa del Sol, Australia"</string>
+    <string name="city_suva" formatted="false">"Suva, Fiyi"</string>
+    <string name="city_sydney" formatted="false">"Sídney, Australia"</string>
+    <string name="city_taipei" formatted="false">"Taipéi, Taiwán"</string>
+    <string name="city_tallinn" formatted="false">"Tallin, Estonia"</string>
+    <string name="city_tarawa" formatted="false">"Tarawa, Kiribati"</string>
+    <string name="city_tashkent" formatted="false">"Taskent, Uzbekistán"</string>
+    <string name="city_tbilisi" formatted="false">"Tiflis, Georgia"</string>
+    <string name="city_tegucigalpa" formatted="false">"Tegucigalpa, Honduras"</string>
+    <string name="city_tehran" formatted="false">"Teherán, Irán"</string>
+    <string name="city_the_valley" formatted="false">"El Valle, Anguila"</string>
+    <string name="city_thimphu" formatted="false">"Timbu, Bután"</string>
+    <string name="city_tianjin" formatted="false">"Tianjín, China"</string>
+    <string name="city_tijuana" formatted="false">"Tijuana, México"</string>
+    <string name="city_tirana" formatted="false">"Tirana, Albania"</string>
+    <string name="city_tokyo" formatted="false">"Tokio, Japón"</string>
+    <string name="city_toronto" formatted="false">"Toronto, Canadá"</string>
+    <string name="city_torshavn" formatted="false">"Tórshavn, Islas Feroe"</string>
+    <string name="city_tripoli" formatted="false">"Trípoli, Libia"</string>
+    <string name="city_tromso" formatted="false">"Tromso, Noruega"</string>
+    <string name="city_tunis" formatted="false">"Túnez, Túnez"</string>
+    <string name="city_ulan_bator" formatted="false">"Ulán Bator, Mongolia"</string>
+    <string name="city_vaduz" formatted="false">"Vaduz, Liechtenstein"</string>
+    <string name="city_valletta" formatted="false">"La Valeta, Malta"</string>
+    <string name="city_vatican_city" formatted="false">"Ciudad del Vaticano, Vaticano"</string>
+    <string name="city_victoria" formatted="false">"Victoria, Seychelles"</string>
+    <string name="city_vienna" formatted="false">"Viena, Austria"</string>
+    <string name="city_vientiane" formatted="false">"Vientián, Laos"</string>
+    <string name="city_vilnius" formatted="false">"Vilna, Lituania"</string>
+    <string name="city_warsaw" formatted="false">"Varsovia, Polonia"</string>
+    <string name="city_washington" formatted="false">"Washington, Estados Unidos"</string>
+    <string name="city_wellington" formatted="false">"Wellington, Nueva Zelanda"</string>
+    <string name="city_west_island" formatted="false">"Isla Oeste, Islas Cocos"</string>
+    <string name="city_willemstad" formatted="false">"Willemstad, Curazao"</string>
+    <string name="city_windhoek" formatted="false">"Windhoek, Namibia"</string>
+    <string name="city_wuhan" formatted="false">"Wuhan, China"</string>
+    <string name="city_xian" formatted="false">"Xi\'an, China"</string>
+    <string name="city_yamoussoukro" formatted="false">"Yamusukro, Costa de Marfil"</string>
+    <string name="city_yaounde" formatted="false">"Yaundé, Camerún"</string>
+    <string name="city_yaren" formatted="false">"Yaren, Nauru"</string>
+    <string name="city_yerevan" formatted="false">"Ereván, Armenia"</string>
+    <string name="city_zagreb" formatted="false">"Zagreb, Croacia"</string>
+    <string name="text_iss_day" formatted="false">"🛰 Estación Espacial Internacional\nLos astronautas viven y trabajan aquí, a unos 400 km sobre la Tierra, ¡dando vueltas alrededor del planeta cada 90 minutos a 28.000 km/h!\nEn esta ilustración, está sobre el lado diurno de la Tierra."</string>
+    <string name="text_iss_night" formatted="false">"🛰 Estación Espacial Internacional\nLos astronautas viven y trabajan aquí, a unos 400 km sobre la Tierra, ¡dando vueltas alrededor del planeta cada 90 minutos a 28.000 km/h!\nEn esta ilustración, está sobre el lado nocturno de la Tierra."</string>
+    <string name="text_elapsed_minutes">"Minutos transcurridos: %1$d"</string>
+    <string name="text_elapsed_hours">"Horas transcurridas: %1$d"</string>
+    <string name="text_elapsed_days">"Días transcurridos: %1$d"</string>
+    <string name="moon_guide_new_moon">"%1$s\nLado sin iluminar · contorno de referencia"</string>
+    <string name="moon_guide_crescent">"Fino arco lunar · %1$s iluminado\nContorno de referencia"</string>
+</resources>

@@ -1,5 +1,6 @@
 package com.globe.app.kids
 
+import com.globe.app.R
 import android.app.Activity
 import android.graphics.Color
 import android.graphics.Typeface
@@ -46,7 +47,7 @@ object ParentalGate {
         }
 
         card.addView(TextView(activity).apply {
-            text = "Ask a grown-up"
+            text = activity.getString(R.string.text_ask_a_grown_up)
             setTextColor(Color.rgb(150, 200, 255))
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
             typeface = Typeface.MONOSPACE
@@ -54,7 +55,7 @@ object ParentalGate {
         })
 
         card.addView(TextView(activity).apply {
-            text = "What is  $a × $b ?"
+            text = activity.getString(R.string.text_what_is_1_s_2_s, a, b)
             setTextColor(Color.WHITE)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
             typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
@@ -75,7 +76,7 @@ object ParentalGate {
         }
         for (opt in options.shuffled()) {
             card.addView(TextView(activity).apply {
-                text = opt.toString()
+                text = java.text.NumberFormat.getIntegerInstance(com.globe.app.AppLanguage.locale(activity)).format(opt)
                 setTextColor(Color.WHITE)
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
                 typeface = Typeface.MONOSPACE
@@ -98,7 +99,7 @@ object ParentalGate {
         }
 
         card.addView(TextView(activity).apply {
-            text = "Maybe later"
+            text = activity.getString(R.string.text_maybe_later)
             setTextColor(Color.argb(180, 200, 200, 210))
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
             typeface = Typeface.MONOSPACE

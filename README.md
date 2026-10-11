@@ -24,6 +24,8 @@ The project directory is named **Globe**. The app is built with Kotlin and raw O
 
 The app supports orientation changes and large screens, including tablets and foldables.
 
+The app supports 12 languages: English, German, Spanish, French, Arabic, Hindi, Japanese, Korean, Brazilian Portuguese, Romanian, Ukrainian, and Simplified Chinese. It follows your device language, with an override in Settings → Language. See [localization coverage and review status](docs/localization.md).
+
 ## Data and simulation
 
 The scene combines downloaded observations with calculated and illustrative elements:

@@ -30,7 +30,7 @@
             android:layout_height="wrap_content" android:layout_marginTop="8dp"
             android:background="@drawable/widget_event_background"
             android:orientation="vertical" android:paddingHorizontal="11dp" android:paddingVertical="8dp">
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            <TextView android:id="@+id/widget_event_label" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium" android:letterSpacing="0.1"
                 android:text="@string/widget_event_label" android:textAllCaps="true"
                 android:textColor="#FFACDAEA" android:textSize="10sp" />

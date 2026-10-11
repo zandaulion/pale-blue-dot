@@ -13,6 +13,8 @@ import android.os.Bundle
 import android.util.Log
 import android.util.SizeF
 import android.widget.RemoteViews
+import com.globe.app.AppLanguage
+import com.globe.app.events.label
 import com.globe.app.MainActivity
 import com.globe.app.R
 import com.globe.app.data.EarthRepository
@@ -22,7 +24,6 @@ import com.globe.app.places.PlaceStore
 import com.globe.app.places.SavedPlace
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 import java.util.TimeZone
 import java.util.concurrent.Executors
 
@@ -43,7 +44,8 @@ class EarthTodayWidget : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == ACTION_REFRESH || intent.action == Intent.ACTION_TIMEZONE_CHANGED ||
-            intent.action == Intent.ACTION_LOCALE_CHANGED || intent.action == Intent.ACTION_TIME_CHANGED) {
+            intent.action == Intent.ACTION_LOCALE_CHANGED || intent.action == Intent.ACTION_APPLICATION_LOCALE_CHANGED ||
+            intent.action == Intent.ACTION_TIME_CHANGED) {
             val manager = AppWidgetManager.getInstance(context)
             val ids = manager.getAppWidgetIds(ComponentName(context, EarthTodayWidget::class.java))
             enqueue(context, ids, goAsync())
@@ -84,7 +86,7 @@ class EarthTodayWidget : AppWidgetProvider() {
                         work = pendingIds.toList(); pendingIds.clear()
                         finishes = pendingResults.toList(); pendingResults.clear()
                     }
-                    try { renderAll(app, work) }
+                    try { renderAll(AppLanguage.context(app), work) }
                     catch (e: Exception) { Log.w("EarthTodayWidget", "Widget refresh failed", e) }
                     finally { finishes.forEach { it.finish() } }
                     synchronized(lock) {
@@ -136,22 +138,29 @@ class EarthTodayWidget : AppWidgetProvider() {
                 LayoutSize.EXPANDED -> R.layout.widget_earth_expanded
             }
             val views = RemoteViews(context.packageName, layout)
+            views.setTextViewText(R.id.widget_heading, context.getString(R.string.widget_title))
+            views.setContentDescription(R.id.widget_configure, context.getString(R.string.widget_change_place))
+            views.setContentDescription(R.id.widget_globe, context.getString(R.string.widget_globe_description))
+            views.setInt(R.id.widget_root, "setLayoutDirection", context.resources.configuration.layoutDirection)
+            if (layoutSize == LayoutSize.EXPANDED) {
+                views.setTextViewText(R.id.widget_event_label, context.getString(R.string.widget_event_label))
+            }
             views.setTextViewText(R.id.widget_moon,
-                "${brief.moon.emoji} ${brief.moon.name} · ${brief.moon.illuminationPercent}%")
-            views.setTextViewText(R.id.widget_place, place?.name ?: "Choose a place")
-            val daylightLine = if (place == null) "Set your local view" else {
+                context.getString(R.string.text_1_s_2_s_3_s, brief.moon.emoji, brief.moon.name(context), brief.moon.illuminationPercent))
+            views.setTextViewText(R.id.widget_place, place?.name ?: context.getString(R.string.text_choose_a_place))
+            val daylightLine = if (place == null) context.getString(R.string.text_set_your_local_view) else {
                 val day = brief.daylight!!
                 when (day.state) {
-                    Daylight.State.POLAR_DAY -> "Polar day"
-                    Daylight.State.POLAR_NIGHT -> "Polar night"
-                    Daylight.State.ZONE_UNSET -> "Time zone unset"
-                    Daylight.State.ORDINARY -> if (day.isDay) "Daylight now" else "Nighttime now"
+                    Daylight.State.POLAR_DAY -> context.getString(R.string.text_polar_day_2)
+                    Daylight.State.POLAR_NIGHT -> context.getString(R.string.text_polar_night_2)
+                    Daylight.State.ZONE_UNSET -> context.getString(R.string.text_time_zone_unset)
+                    Daylight.State.ORDINARY -> if (day.isDay) context.getString(R.string.widget_preview_daylight) else context.getString(R.string.text_nighttime_now)
                 }
             }
             views.setTextViewText(R.id.widget_daylight, daylightLine)
             if (layoutSize != LayoutSize.COMPACT) {
                 views.setTextViewText(R.id.widget_updated,
-                    "Updated ${SimpleDateFormat("HH:mm z", Locale.getDefault()).format(Date(now))}")
+                    context.getString(R.string.text_updated_1_s, SimpleDateFormat("HH:mm z", AppLanguage.locale(context)).format(Date(now))))
             }
             views.setOnClickPendingIntent(R.id.widget_root, destination(context, id, "open", null))
             views.setOnClickPendingIntent(R.id.widget_configure, destination(context, id, "configure", null))
@@ -163,12 +172,12 @@ class EarthTodayWidget : AppWidgetProvider() {
             if (layoutSize != LayoutSize.EXPANDED) return views
             val event = brief.event
             views.setTextViewText(R.id.widget_event,
-                if (rendered == null) "Illustration · ${brief.eventMessage}"
+                if (rendered == null) context.getString(R.string.text_illustration_1_s, brief.eventMessage(context))
                 else event?.let {
-                    val type = it.type.name.lowercase().replaceFirstChar { c -> c.uppercase() }
+                    val type = it.type.label(context)
                     if (it.title.startsWith(type, ignoreCase = true)) it.title else "$type · ${it.title}"
                 }
-                    ?: brief.prompt)
+                    ?: brief.prompt(context))
             views.setOnClickPendingIntent(R.id.widget_event_card,
                 destination(context, id, if (event == null) "journey" else "event", event?.id))
             return views

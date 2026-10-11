@@ -87,6 +87,6 @@ class CompanionStateTest {
         assertEquals("test-quake", withEvent.event?.id)
         val empty = TodayBriefing.build(now, null, EarthRepository.Snapshot(feeds.mapValues { it.value.copy(events = emptyList()) }))
         assertNull(empty.event)
-        assertTrue(empty.eventMessage.contains("No recent"))
+        assertEquals(com.globe.app.R.string.text_no_recent_observations_available_the_moon_and_daylight_are_still, empty.eventMessageRes)
     }
 }
