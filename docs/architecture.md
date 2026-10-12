@@ -136,3 +136,16 @@ are respected on all four edges. Other companion panels keep their modal layout
 and restore the full globe viewport. Inline journey feedback has explicit
 advance/completion state saved across Activity recreation; the persistent
 JourneyStore remains the source of step progress and the previous scene.
+
+### Latitude layer preference
+
+Layers → Latitude guides writes `layer_latitude_guides` in `LayerSettings`.
+`GlobeRenderer.applyLayers` applies it to the five optional latitude circles.
+Entering, leaving or restoring simulated time and advancing a seasons journey
+leave the preference in control. Journey scene JSON retains its legacy guide
+field for compatibility, but scene restoration does not apply that field.
+
+The first construction of LayerSettings migrates a missing preference from
+`explore_time_active`, preserving the previously visible guides for an existing
+held-time session. Once stored, the choice no longer depends on the clock.
+New installations default to hidden. Widget and wallpaper scenes are unchanged.

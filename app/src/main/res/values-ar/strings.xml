@@ -798,4 +798,6 @@
     <string name="narration_challenge_complete" formatted="false">"أحسنت! واصل الاستكشاف وجرب تحديًا آخر."</string>
     <string name="journey_options" formatted="false">"خيارات الرحلة"</string>
     <string name="journey_leave" formatted="false">"مغادرة الرحلة"</string>
+    <string name="layer_latitude_guides" formatted="false">"خطوط العرض"</string>
+    <string name="layer_latitude_guides_detail" formatted="false">"خط الاستواء والمداران والدائرتان القطبيتان."</string>
 </resources>

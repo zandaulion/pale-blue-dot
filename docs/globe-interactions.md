@@ -12,14 +12,19 @@ determines day/night, including during Explore time. A repeated ordinary tap
 leaves an open card and its narration alone; dismissing it keeps subsequent taps
 quiet. Deliberately holding can reopen and read the lesson again.
 
+An ordinary tap beyond Earth likewise introduces **The night sky** only when
+Star Gazer is new. Later sky taps leave the current card and narration alone.
+Touch and hold the sky to revisit that lesson and hear Talia again. The
+discovery remains unlocked across restarts and language changes.
+
 ## Other interactions
 
 - Short taps on event markers, saved places, the ISS, and Sun/Moon arrows retain
   their existing targeted actions.
 - Find-it challenges use short taps to answer. Holding during a challenge does
   not open a lesson or submit an answer.
-- A short tap beyond Earth retains the sky card. Holding beyond Earth does not
-  open a day/night card or turn into a short tap when released.
+- The first short tap beyond Earth opens the sky card. Later short taps are quiet;
+  a sky hold deliberately reopens it without triggering a second tap on release.
 - Drag to rotate and pinch to zoom. Movement beyond Android's touch slop or a
   second finger cancels the pending hold. Small movement within tap slop does
   not rotate the camera or impart momentum. Cancelled touches open no lesson.
@@ -34,12 +39,12 @@ clips/indexes remain unchanged.
 `GlobeSurfaceView` uses Android `GestureDetector` for the system long-press
 threshold, alongside the existing scale detector and short-tap callback. A hold
 consumes the short-tap candidate; callbacks require the app window to have focus.
-`MainActivity.onGlobeTapped` gates only the generic Earth lesson on discovery
-state. `onGlobeHeld` explicitly inspects an Earth point, and `showDayNightCard`
-uses the same existing localized lesson and save-place controls.
+`MainActivity.onGlobeTapped` gates the generic Earth and sky lessons on their
+discovery state. `onGlobeHeld` distinguishes sky from Earth: sky reopens the
+stargazing card, while Earth opens its day/night lesson and save-place controls.
 
 `GlobeInteractionTest` exercises real MotionEvents, persistent discovery state,
-reopening by hold, movement/pinch/cancel suppression, and marker/place/challenge
+reopening by hold, sky tap suppression, movement/pinch/cancel suppression, and marker/place/challenge
 actions with clearly synthetic fixtures stored in the instrumentation package.
 See [build and validation](build-release.md) for test commands. On October 12, 2026, the Motorola Edge 30 Neo passed all three interaction
 tests, two Talia tests, and four localization tests (nine total). Native
@@ -55,3 +60,9 @@ Original font, locale, and six app preference files were restored and verified.
 The reviewed sideload APK was installed in place and saved as the latest
 PaleBlueDot artifact. Captures and preference backups stay outside version
 control. Full TalkBack traversal remains a separate check.
+
+The later Star Gazer follow-up passed all four `GlobeInteractionTest` cases on
+the Motorola. The new case covers a first sky tap, repeated taps while open and
+after dismissal, deliberate sky holds, and persistence after Activity
+recreation. App/test assembly and lint passed; original device and app state
+was restored and verified.

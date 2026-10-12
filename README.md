@@ -9,6 +9,7 @@ The Gradle project is named **Globe**. The app is built with Kotlin and raw Open
 - **Interactive Earth** — drag to rotate, pinch to zoom, and watch momentum and gentle idle rotation. The camera position is saved between sessions.
 - **Day and night** — clock-based sunlight, city lights, an amber terminator line, and a blue atmosphere rim. Tap the surface for an explanation of why that spot is in daylight or darkness.
 - **Time slider and Explore time** — briefly scrub ±24 hours, or choose and hold a date within one year of today for a labelled simulation, seasons comparison, and one-tap return to Now.
+- **Latitude guides** — use Layers → Latitude guides to show or hide the equator, tropics and polar circles together. The choice is remembered independently of real or simulated time and seasons journeys.
 - **Cloud modes** — choose off, generated clouds, or NASA satellite-derived clouds in Layers.
 - **Earth events** — tap markers for earthquakes, volcanoes, wildfires, and severe storms to see their titles, ages, and explanations written for kids.
 - **Sky and space** — 16,000 procedural stars, a Milky Way band, 15 constellations using J2000 star positions, the Sun and Moon, and an illustrative ISS orbit. A thin outline and translated label make new Moons and small crescents visible without lighting their dark surface. Tap the Sun/Moon indicator arrows to bring those bodies into view, or tap the ISS marker for an explanation.
@@ -22,7 +23,7 @@ The Gradle project is named **Globe**. The app is built with Kotlin and raw Open
 - **Onboarding and legend** — first launch offers “Explore with Talia” or “Explore quietly” and remembers the choice. Settings has separate Talia voice and Android voice switches; choosing Talia enables only the natural voice. An illustrated guide explains the scene.
 - **Sharing** — capture a branded image of the globe and share it through Android's share sheet after a parental gate.
 
-Day/night lessons appear once as new discoveries. Touch and hold Earth to revisit a lesson or save that point; later ordinary taps stay quiet. See [globe interactions](docs/globe-interactions.md).
+Day/night and night-sky lessons appear once as new discoveries. Touch and hold Earth or the sky to revisit its lesson; holding Earth also lets you save that point. Later ordinary taps stay quiet. See [globe interactions](docs/globe-interactions.md).
 
 The app adapts to orientation and window-size changes, with side panels and bounded reading widths on larger screens. See [tablet layout and validation](docs/tablet-layout.md) for tested sizes and hardware limits.
 

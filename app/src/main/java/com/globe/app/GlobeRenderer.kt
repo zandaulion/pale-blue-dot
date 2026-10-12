@@ -214,6 +214,7 @@ class GlobeRenderer(
         showConstellations = settings.constellations
         showIss = settings.iss
         showPlateBoundaries = settings.plateBoundaries
+        showLatitudeGuides = settings.latitudeGuides
         setDecorativeMotionReduced(settings.reduceMotion)
         earthEventsRenderer.setEvents(allEvents.filter { settings.enabled(it.type) })
     }

@@ -206,3 +206,29 @@ English, German and Arabic also passed at 130% in actual phone landscape and
 both tablet landscape profiles, with `-e auditLandscape true` holding and
 asserting landscape orientation. See [tablet layout](tablet-layout.md) for
 profiles, capture scope and hardware limits.
+
+## Latitude Layers switch
+
+The latitude guide switch adds two translated resources, bringing current
+coverage to 800 resources per locale. Its label and explanation wrap in the
+standard scrollable Layers panel, including Arabic RTL.
+
+`LatitudeGuidesTest` covers the one-time migration, switch persistence through
+Activity recreation, real/held time transitions, and seasons journey completion
+and exit. The opt-in device layout audit checks all 12 translated controls for
+full visibility, a 48dp minimum target, text fit and no ellipsis:
+
+```bash
+adb shell am instrument -w \
+  -e latitudeGuidesAudit true \
+  -e class com.globe.app.explore.LatitudeGuidesTest#auditTranslatedSwitch \
+  com.zandaulion.palebluedot.test/androidx.test.runner.AndroidJUnitRunner
+```
+
+Run at normal and 130% font size. Keep captures outside Git and restore the
+original device font, app locale and preferences afterwards.
+
+The focused Layers audit passed on the Motorola Edge 30 Neo in all 12 locales
+at 100% and 130% text size. The new control remained fully visible after scrolling
+and its text fit without ellipsis. Original preferences, locale, font and display
+settings were restored and verified. This is not a native-speaker language review.

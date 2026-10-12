@@ -798,4 +798,6 @@
     <string name="narration_challenge_complete" formatted="false">"Молодець! Продовжуй досліджувати й спробуй інше завдання."</string>
     <string name="journey_options" formatted="false">"Параметри подорожі"</string>
     <string name="journey_leave" formatted="false">"Залишити подорож"</string>
+    <string name="layer_latitude_guides" formatted="false">"Лінії широти"</string>
+    <string name="layer_latitude_guides_detail" formatted="false">"Екватор, тропіки та полярні кола."</string>
 </resources>

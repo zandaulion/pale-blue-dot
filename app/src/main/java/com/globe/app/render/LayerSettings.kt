@@ -6,6 +6,12 @@ import com.globe.app.events.EarthEventsProvider
 
 /** Per-install app scene choices. Existing ordinal cloud value is read without changing enum order. */
 class LayerSettings(private val prefs: SharedPreferences) {
+    init {
+        // Preserve legacy guide visibility once, then keep it independent of the clock.
+        if (!prefs.contains("layer_latitude_guides")) {
+            prefs.edit().putBoolean("layer_latitude_guides", prefs.getBoolean("explore_time_active", false)).apply()
+        }
+    }
     var cloudMode: EarthRenderer.CloudMode
         get() = EarthRenderer.CloudMode.values()[
             prefs.getInt("cloud_mode", EarthRenderer.CloudMode.OFF.ordinal)
@@ -35,6 +41,9 @@ class LayerSettings(private val prefs: SharedPreferences) {
     var plateBoundaries: Boolean
         get() = prefs.getBoolean("layer_plate_boundaries", false)
         set(value) { prefs.edit().putBoolean("layer_plate_boundaries", value).apply() }
+    var latitudeGuides: Boolean
+        get() = prefs.getBoolean("layer_latitude_guides", false)
+        set(value) { prefs.edit().putBoolean("layer_latitude_guides", value).apply() }
     var reduceMotion: Boolean
         get() = prefs.getBoolean("reduce_motion", false)
         set(value) { prefs.edit().putBoolean("reduce_motion", value).apply() }

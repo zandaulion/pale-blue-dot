@@ -7,7 +7,7 @@ import java.nio.ByteOrder
 import kotlin.math.cos
 import kotlin.math.sin
 
-/** Equator, tropics, and polar circles for held-time seasons lessons. */
+/** Optional equator, tropics, and polar circles, independent of scene time. */
 class LatitudeGuidesRenderer {
     private var program = 0
     private var vao = 0

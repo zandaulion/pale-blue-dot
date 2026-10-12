@@ -14,8 +14,12 @@ date. Current behavior is documented in [features](features.md),
   their actions. Nine Motorola tests and all 12 updated hint layouts at 100%
   and 130% passed; original settings/preferences were restored. See
   [globe interactions](globe-interactions.md).
+- **Night sky:** Star Gazer opens on the first sky tap. Later sky taps stay
+  quiet; holding the sky reopens the card and Talia narration. The four-case
+  Motorola interaction suite, including persistence across Activity recreation,
+  passed; original settings and preferences were restored.
 - **Localization:** 12 bundled locales, persistent Settings picker, device-language
-  option, Arabic RTL, localized journeys/city search/widget/wallpaper. All 798
+  option, Arabic RTL, localized journeys/city search/widget/wallpaper. All 800
   translatable resources and placeholders pass the source validator; mappings
   cover 71 lesson text fields and 303 catalog cities. Normal and focused 130%
   Motorola layout audits passed. See [localization](localization.md).
@@ -26,6 +30,13 @@ date. Current behavior is documented in [features](features.md),
   combined Motorola regression passed 19 cases, including two journey-specific
   tests covering all 18 steps, gestures and Activity recreation. See
   [features](features.md#guided-journey-cards) and [tablet layout](tablet-layout.md).
+- **Latitude guides:** Layers has a remembered switch for equator, tropics and
+  polar circles. Real/held time changes, seasons steps and journey scene
+  restoration keep the user's choice. Three new functional cases passed on the
+  Motorola alongside ten existing localization/journey/state cases; the separate
+  opt-in layout audit passed all 12 languages at 100% and 130% text size. App,
+  test APK and lint builds passed, and original device preferences/settings were
+  restored and verified. Rendered on/off captures remain outside Git.
 - **Moon:** 1dp outline for new Moons/small crescents, full through 3% illumination
   and faded out by 12%; localized New Moon/Thin crescent label and corrected Moon
   arrow framing. Six phase scenes and both labels in all 12 languages were

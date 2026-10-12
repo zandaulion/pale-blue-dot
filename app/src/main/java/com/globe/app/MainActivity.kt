@@ -454,7 +454,6 @@ class MainActivity : AppCompatActivity() {
         if (prefs.getBoolean("explore_time_active", false)) {
             globeView.sceneClock.enter(prefs.getLong("explore_time_ms", System.currentTimeMillis()))
             applySimulationObservations()
-            globeView.renderer.showLatitudeGuides = true
             uiHandler.post(timeTick)
         }
         repository.observeClouds(cloudObserver)
@@ -994,6 +993,9 @@ class MainActivity : AppCompatActivity() {
         panelSwitch(getString(R.string.text_day_night_boundary), getString(R.string.text_calculated_terminator_line), layers.terminator) {
             layers.terminator = it; applyAppLayers()
         }
+        panelSwitch(getString(R.string.layer_latitude_guides), getString(R.string.layer_latitude_guides_detail), layers.latitudeGuides) {
+            layers.latitudeGuides = it; applyAppLayers()
+        }
         panelSwitch(getString(R.string.text_plate_boundaries), getString(R.string.text_offline_pb2002_model_gold_lines), layers.plateBoundaries) {
             layers.plateBoundaries = it; applyAppLayers()
         }
@@ -1336,7 +1338,6 @@ class MainActivity : AppCompatActivity() {
         persistExploreTime()
         observationsInSimulation = false
         applySimulationObservations()
-        globeView.renderer.showLatitudeGuides = true
         updateTimeLabel(); uiHandler.removeCallbacks(timeTick); uiHandler.post(timeTick)
         showCompanionPanel("Explore time")
     }
@@ -1344,7 +1345,6 @@ class MainActivity : AppCompatActivity() {
     private fun exitExploreTime() {
         globeView.sceneClock.exit()
         uiHandler.removeCallbacks(timeTick)
-        globeView.renderer.showLatitudeGuides = false
         globeView.renderer.showEvents = true
         applyAppLayers()
         prefs.edit().putBoolean("explore_time_active", false).apply()
@@ -1577,7 +1577,7 @@ class MainActivity : AppCompatActivity() {
         observationsInSimulation = scene.compareObservations
         applyAppLayers()
         globeView.renderer.showPlateBoundaries = scene.plateLayer
-        globeView.renderer.showLatitudeGuides = scene.latitudeGuides
+        // Latitude guides are a persistent user layer, not a journey scene override.
         updateTimeLabel()
     }
 
@@ -1596,7 +1596,6 @@ class MainActivity : AppCompatActivity() {
             globeView.renderer.showEvents = true
         }
         if (journey.id == "ring_of_fire") globeView.renderer.showPlateBoundaries = step.plates
-        if (journey.id == "understand_seasons") globeView.renderer.showLatitudeGuides = step.guides
         val recent = recentJourneyEvent(step)
         val lat = recent?.lat ?: step.lat
         val lon = recent?.lon ?: step.lon
@@ -1710,12 +1709,9 @@ class MainActivity : AppCompatActivity() {
 
         val picked = globeView.renderer.pick(x, y, globeView.width, globeView.height)
         if (picked == null) {
-            // Tapped the sky beyond Earth — a stargazing moment.
+            if (journal.isUnlocked(Discovery.STARGAZER)) return
             globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            showCard(
-                getString(R.string.text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who),
-                Discovery.STARGAZER
-            )
+            showSkyCard()
             return
         }
 
@@ -1750,9 +1746,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun onGlobeHeld(x: Float, y: Float) {
         if (challengeKind != null || openPanel == "Journey") return
-        val picked = globeView.renderer.pick(x, y, globeView.width, globeView.height) ?: return
+        val picked = globeView.renderer.pick(x, y, globeView.width, globeView.height)
         globeView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
-        showDayNightCard(picked[0], picked[1])
+        if (picked == null) showSkyCard() else showDayNightCard(picked[0], picked[1])
+    }
+
+    private fun showSkyCard() {
+        showCard(
+            getString(R.string.text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who),
+            Discovery.STARGAZER
+        )
     }
 
     private fun showEventCard(event: EarthEventsProvider.Event) {

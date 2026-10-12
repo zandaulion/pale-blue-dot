@@ -14,6 +14,7 @@
 | ISS | Tappable illustrative orbit and marker, using a simplified orbit rather than a live feed |
 | Auroras | Optional procedural polar glow, not a forecast |
 | Eclipse alerts | Approximate Sun/Moon alignment checks, not precise local eclipse predictions |
+| Latitude guides | Equator, tropics and polar circles share a persisted Layers switch; independent of simulated time and journey steps |
 | Plate boundaries | Offline PB2002-derived layer, optional in Layers |
 | Places | Occluded pins for manually saved points and city-catalog selections; no GPS access |
 
@@ -29,10 +30,11 @@ Leo, Gemini, Taurus, Scorpius, Crux, Canis Major, Centaurus, and Orion.
 | Entry point | Behavior |
 |---|---|
 | Today | Real-time Moon/daylight briefing, attributed recent event, and short prompt; opens on demand |
-| Layers | Persisted cloud mode, event categories, constellations, ISS, aurora, terminator, and plate boundaries |
+| Layers | Persisted cloud mode, event categories, constellations, ISS, aurora, terminator, latitude guides, and plate boundaries |
 | Explore | Places, journeys, Field notebook, challenges, time exploration, and scene guide |
 | Settings | Language, music, volume, Talia voice, Android voice, Reduce motion, wallpaper, guide, and sharing |
 | Day/night lessons | First discovery opens once; touch and hold Earth to revisit or save a point; repeated ordinary taps stay quiet |
+| Night-sky lesson | First sky tap opens once; touch and hold the sky to revisit; repeated ordinary taps stay quiet |
 | Event cards | Persistent until dismissed/replaced; titles, dates, sources, known scientific facts, expandable explanation, save and read-aloud actions |
 | Discoveries | Eight local discoveries retained and migrated into the Field notebook |
 | Challenges | Day/night and available event-category targets; feedback and a local session score |

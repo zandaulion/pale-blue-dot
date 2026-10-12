@@ -26,6 +26,8 @@
 - [x] Tablet-width welcome/wallpaper/widget improvements; multilingual portrait, landscape, narrower-window, and phone regression checks.
 
 - [x] Day/night lessons appear once per discovery, with deliberate touch-and-hold reopening.
+- [x] The night-sky discovery appears once; holding the sky deliberately reopens it.
+- [x] Persisted Layers switch for equator, tropics and polar circles, independent of simulated time and journey scene restoration.
 - [x] Compact guided journey lessons and feedback keep the globe interactive, with fixed controls and hide/resume.
 
 ## Validation and maintenance follow-ups

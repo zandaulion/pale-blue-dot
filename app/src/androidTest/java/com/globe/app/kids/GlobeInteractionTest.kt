@@ -171,6 +171,28 @@ class GlobeInteractionTest {
         pointer(down, MotionEvent.ACTION_UP, point[0], point[1])
         settle()
     }
+
+    private fun skyPoint(scenario: ActivityScenario<MainActivity>): FloatArray {
+        val point = FloatArray(2)
+        scenario.onActivity { activity ->
+            val globe = view(activity)
+            val x = globe.width * 0.08f
+            val y = globe.height * 0.08f
+            assertNull("Sky test point must be beyond Earth", globe.renderer.pick(x, y, globe.width, globe.height))
+            val location = IntArray(2).also { globe.getLocationOnScreen(it) }
+            point[0] = location[0] + x
+            point[1] = location[1] + y
+        }
+        return point
+    }
+    private fun skyGesture(scenario: ActivityScenario<MainActivity>, hold: Boolean) {
+        val point = skyPoint(scenario)
+        val down = SystemClock.uptimeMillis()
+        pointer(down, MotionEvent.ACTION_DOWN, point[0], point[1])
+        if (hold) Thread.sleep(ViewConfiguration.getLongPressTimeout().toLong() + 150)
+        pointer(down, MotionEvent.ACTION_UP, point[0], point[1])
+        settle()
+    }
     private fun capture(name: String) {
         if (InstrumentationRegistry.getArguments().getString("captureInteractions") != "true") return
         val output = java.io.File(base.getExternalFilesDir(null), "interaction-audit").apply { mkdirs() }
@@ -216,6 +238,41 @@ class GlobeInteractionTest {
         tap(scenario)
         scenario.onActivity { assertEquals(View.GONE, card(it).visibility) }
         hold(scenario)
+        scenario.onActivity { assertEquals(View.VISIBLE, card(it).visibility) }
+    }
+
+    @Test fun skyAppearsOnceAndHoldReopensAfterRecreation() = withGlobe { scenario ->
+        val journal = DiscoveryJournal(fixtureContext)
+        skyGesture(scenario, hold = false)
+        var firstCard = ""
+        scenario.onActivity { activity ->
+            assertTrue(journal.isUnlocked(Discovery.STARGAZER))
+            assertEquals(View.VISIBLE, card(activity).visibility)
+            firstCard = card(activity).text.toString()
+            assertTrue(card(activity).text.contains(activity.getString(
+                com.globe.app.R.string.text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who)))
+        }
+        skyGesture(scenario, hold = false)
+        scenario.onActivity { activity ->
+            assertEquals(View.VISIBLE, card(activity).visibility)
+            assertEquals("Repeated sky taps must leave the discovery card alone", firstCard, card(activity).text.toString())
+            closeCard(activity)
+        }
+        repeat(3) { skyGesture(scenario, hold = false) }
+        scenario.onActivity { assertEquals(View.GONE, card(it).visibility) }
+
+        skyGesture(scenario, hold = true)
+        scenario.onActivity { activity ->
+            assertEquals(View.VISIBLE, card(activity).visibility)
+            assertTrue(card(activity).text.contains(activity.getString(
+                com.globe.app.R.string.text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who)))
+            closeCard(activity)
+        }
+        scenario.recreate()
+        scenario.onActivity { configure(it) }; waitForGlobe(scenario)
+        skyGesture(scenario, hold = false)
+        scenario.onActivity { assertEquals(View.GONE, card(it).visibility) }
+        skyGesture(scenario, hold = true)
         scenario.onActivity { assertEquals(View.VISIBLE, card(it).visibility) }
     }
 

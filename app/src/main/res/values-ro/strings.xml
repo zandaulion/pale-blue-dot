@@ -798,4 +798,6 @@
     <string name="narration_challenge_complete" formatted="false">"Bravo! Continuă să explorezi și încearcă o altă provocare."</string>
     <string name="journey_options" formatted="false">"Opțiunile călătoriei"</string>
     <string name="journey_leave" formatted="false">"Părăsește călătoria"</string>
+    <string name="layer_latitude_guides" formatted="false">"Linii de latitudine"</string>
+    <string name="layer_latitude_guides_detail" formatted="false">"Ecuatorul, tropicele și cercurile polare."</string>
 </resources>
