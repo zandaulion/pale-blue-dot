@@ -1,0 +1,14 @@
+{
+  "„Lies mir vor“ ist aktiviert. Ich werde die Karten laut vorlesen.": "enabled.mp3",
+  "Der Nachthimmel! Jenseits der Erde gibt es Tausende von Sternen, Planeten und ganzen Galaxien.": "sky.mp3",
+  "Hier ist es Tag! Diese Seite der Erde ist gerade der Sonne zugewandt. Ziehen Sie den Zeitschieber, um den Einbruch der Nacht zu beobachten.": "day.mp3",
+  "Hier ist es Nacht. Diese Seite ist von der Sonne abgewandt – diese winzigen Lichter sind Städte. Ziehen Sie den Zeitschieber, um die Sonne zurückzubringen.": "night.mp3",
+  "Internationale Raumstation Astronauten leben und arbeiten hier, etwa 400 km über der Erde – und umrunden etwa alle 90 Minuten mit 28.000 km/h den gesamten Planeten! In dieser Abbildung befindet es sich über der Tagesseite der Erde.": "iss_day.mp3",
+  "Internationale Raumstation Astronauten leben und arbeiten hier, etwa 400 km über der Erde – und umrunden etwa alle 90 Minuten mit 28.000 km/h den gesamten Planeten! In dieser Abbildung befindet es sich über der Nachtseite der Erde.": "iss_night.mp3",
+  "Zum Field-Notizbuch hinzugefügt.": "added.mp3",
+  "Tippen Sie auf die Erde, um zu antworten!": "tap_earth.mp3",
+  "Ja! Das ist richtig.": "correct.mp3",
+  "Nicht ganz – werfen Sie noch einmal einen Blick darauf und versuchen Sie es erneut!": "try_again.mp3",
+  "Die Herausforderung wurde beendet – jederzeit wieder spielen!": "challenge_stopped.mp3",
+  "Zeitreisender Du hast die Zeit verschoben, um den Tag in die Nacht zu verwandeln.": "time_traveler.mp3"
+}

@@ -25,9 +25,32 @@ rewritten when changing language. City search accepts both the original catalog
 name and its localized spelling, with accent-insensitive matching.
 
 Arabic uses right-to-left layout. Navigation labels and wallpaper buttons can
-wrap; onboarding scrolls for larger text. Narration uses the app language when
-a corresponding TTS voice is installed and preserves combining marks in Hindi
-and Arabic. Selecting a language also refreshes existing widgets.
+wrap; onboarding scrolls for larger text. Talia's fixed-card recordings follow
+the app language and need no installed TTS voice. Changing facts and scores use
+the app locale with device TTS when a corresponding voice is available. Speech
+cleanup preserves combining marks in Hindi and Arabic. Selecting a language
+also refreshes existing widgets. See [voiceover](voiceover.md) for exact coverage.
+
+| Locale tag | Android resource directory |
+|---|---|
+| `en-US` | `values` (complete fallback) |
+| `de-DE` | `values-de-rDE` |
+| `es-ES` | `values-es-rES` |
+| `fr-FR` | `values-fr-rFR` |
+| `ar` | `values-ar` |
+| `hi-IN` | `values-hi-rIN` |
+| `ja-JP` | `values-ja-rJP` |
+| `ko-KR` | `values-ko-rKR` |
+| `pt-BR` | `values-pt-rBR` |
+| `ro` | `values-ro` |
+| `uk` | `values-uk` |
+| `zh-CN` | `values-zh-rCN` |
+
+`AppLanguage.kt` resolves regional variants to the supported language; unsupported
+device languages fall back to US English. Android 13+ uses the system app locale;
+older versions restore the saved preference through AppCompat. The manifest's
+locale configuration declares all 12 tags. AAB language splitting is disabled
+so switching languages also works offline after a Play installation.
 
 ## Maintaining translations
 
@@ -40,6 +63,10 @@ Lesson text is mapped by stable journey/step IDs in `JourneyStrings.kt`; city
 names are mapped by stable city IDs in `CityNames.kt`. These IDs, lesson choices,
 scene coordinates, correct-answer indices, time-zone identifiers, URLs, and
 saved progress must not be translated. Lesson caches are keyed by locale.
+
+When editing narrated text, update the corresponding Talia recordings and
+indexes with [the generator](voiceover.md#generating-recordings). Otherwise a
+changed card will no longer match its recording and will use device TTS.
 
 Run the source checks from the repository root:
 
@@ -85,6 +112,12 @@ This checks onboarding, the globe, Settings, Layers, simulated time, the picker,
 and wallpaper setup. `-e auditTags en-US,fr-FR` limits an audit to selected tags.
 The test remains inactive during ordinary instrumentation runs.
 
+For the Talia onboarding and Settings screens specifically, add
+`-e auditNarrationOnly true -e auditCompact true`. This captures the top and bottom
+of each scrollable screen. Run at both normal and larger text sizes.
+
+For tablet-shaped windows, `-e auditTablet true` adds configuration/card captures and action/preview bounds checks; `-e auditOutput tablet-portrait` isolates evidence per profile. See [tablet layout](tablet-layout.md) for the matrix and restoration procedure.
+
 ## Translation review status
 
 The additional languages began as automated drafts from Google's translation
@@ -97,7 +130,7 @@ that review remains appropriate before a public release.
 ## Validation of this change
 
 The app and Android instrumentation tests compile successfully, and Android lint
-passes. The source validator passes for all 12 locales and all 788 translatable
+passes. The source validator passes for all 12 locales and all 792 translatable
 resources. The lesson mappings cover all 71 text fields, and the city mappings
 cover all 303 catalog entries. JVM narration checks pass for Hindi, Arabic,
 Japanese, Korean, Romanian, and Ukrainian, including combining marks and
@@ -112,3 +145,11 @@ including measurements and screenshots taken after a committed UI frame. The
 device's original font setting was restored after testing. These checks cover
 the listed screens; they do not replace testing other screen sizes, installed
 TTS voices, or widgets placed in a launcher.
+
+The October 11 Talia update added four translated onboarding/Settings strings.
+All four `LocalizationTest` cases and both `TaliaNarrationTest` cases passed on
+the Motorola Edge 30 Neo. The focused narration layout audit passed in all 12
+languages at 100% and 130% text size. The larger-text pass required a retry of
+Romanian, Ukrainian, and Chinese after the app lost foreground focus; the retry
+reported no clipping or overlap. Pronunciation quality still requires listening
+and native-speaker review; layout and playback checks do not establish it.

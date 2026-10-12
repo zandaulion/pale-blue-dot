@@ -788,4 +788,8 @@
     <string name="text_elapsed_days">"Zile scurse: %1$d"</string>
     <string name="moon_guide_new_moon">"%1$s\nPartea neluminată · contur orientativ"</string>
     <string name="moon_guide_crescent">"Seceră subțire · %1$s luminată\nContur orientativ"</string>
+    <string name="narration_onboarding_prompt" formatted="false">"Vrei ca Talia să îți citească informațiile cu voce tare? Poți schimba asta în Setări."</string>
+    <string name="narration_explore_with_talia" formatted="false">"Explorează cu Talia"</string>
+    <string name="narration_explore_quietly" formatted="false">"Explorează în liniște"</string>
+    <string name="narration_settings_detail" formatted="false">"Talia citește informațiile fixe. Datele în timp real și scorurile folosesc vocea dispozitivului."</string>
 </resources>

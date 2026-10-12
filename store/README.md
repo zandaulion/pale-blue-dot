@@ -14,13 +14,25 @@ Notes for this release (max 500 characters)
 </en-US>
 ```
 
-Add a `<locale>` block per language if the listing gains translations.
+Historical numbered files describe their original releases. Keep them unchanged.
+[unreleased.md](release-notes/unreleased.md) is the next-release draft; choose a
+new versionName/versionCode and create its numbered notes during actual release
+preparation. Current version metadata is still 3.10/code 12.
+
+Add a `<locale>` block per language when preparing translated Play metadata.
+The app's 12 bundled languages do not automatically localize the store listing;
+`listing.md` and the next-release notes are currently English drafts.
 
 ## Store listing
 
 `listing.md` holds the title, short description, and full description
 (en-US) to paste into Play Console. Update it whenever the app's
-positioning changes.
+positioning changes. The current draft includes the language picker, faint-Moon
+guide, and Talia opt-in. These additions have been tested in a sideload build;
+the narration has not been published to Play. See [build/release](../docs/build-release.md)
+for signing and release checks, and [voiceover](../docs/voiceover.md) for exact
+coverage. Existing store screenshots predate these additions and should be
+reviewed before the next upload.
 
 | versionName | versionCode | Highlights |
 |---|---|---|

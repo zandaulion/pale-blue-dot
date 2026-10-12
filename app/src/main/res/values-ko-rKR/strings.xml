@@ -788,4 +788,8 @@
     <string name="text_elapsed_days">"경과 일수: %1$d"</string>
     <string name="moon_guide_new_moon">"%1$s\n빛이 닿지 않는 면 · 윤곽 안내"</string>
     <string name="moon_guide_crescent">"가는 달 · %1$s에 햇빛이 비침\n윤곽 안내"</string>
+    <string name="narration_onboarding_prompt" formatted="false">"탈리아가 카드를 읽어 줄까요? 설정에서 언제든 바꿀 수 있어요."</string>
+    <string name="narration_explore_with_talia" formatted="false">"탈리아와 탐험하기"</string>
+    <string name="narration_explore_quietly" formatted="false">"조용히 탐험하기"</string>
+    <string name="narration_settings_detail" formatted="false">"카드는 탈리아가 읽어 줍니다. 실시간 정보와 점수는 기기의 음성으로 읽습니다."</string>
 </resources>

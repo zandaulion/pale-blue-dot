@@ -788,4 +788,8 @@
     <string name="text_elapsed_days">"बीते हुए दिन: %1$d"</string>
     <string name="moon_guide_new_moon">"%1$s\nअप्रकाशित भाग · रूपरेखा संकेत"</string>
     <string name="moon_guide_crescent">"पतला चाँद · %1$s प्रकाशित\nरूपरेखा संकेत"</string>
+    <string name="narration_onboarding_prompt" formatted="false">"क्या तुम चाहोगे कि तालिया कार्ड पढ़कर सुनाए? इसे सेटिंग्स में बदल सकते हो।"</string>
+    <string name="narration_explore_with_talia" formatted="false">"तालिया के साथ खोजें"</string>
+    <string name="narration_explore_quietly" formatted="false">"बिना आवाज़ के खोजें"</string>
+    <string name="narration_settings_detail" formatted="false">"तालिया कार्ड पढ़कर सुनाती है। ताज़ा जानकारी और स्कोर के लिए आपके डिवाइस की आवाज़ इस्तेमाल होती है।"</string>
 </resources>

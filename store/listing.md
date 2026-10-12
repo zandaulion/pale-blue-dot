@@ -1,5 +1,10 @@
 # Play Store listing — Pale Blue Dot (en-US)
 
+This draft reflects the current checkout, including Talia narration. Those
+changes have not been published to Play; publish matching copy with the next
+reviewed release. The listing is currently English; app translations do not
+automatically translate Play metadata.
+
 Copy each section into the matching field in Play Console →
 Grow → Store presence → Main store listing. Character limits noted.
 
@@ -33,6 +38,7 @@ Spin the globe with your finger and watch day turn to night, with city lights gl
 🔭 A POCKET NIGHT SKY
 • Thousands of stars, the Milky Way and 15 constellations in their real positions
 • The Sun and Moon placed by astronomy, with arrows that bring them into view
+• A thin guide outlines an unlit new Moon or small crescent and explains what you see
 • An illustrated orbit of the International Space Station
 • Alerts when the Sun and Moon line up for a possible eclipse
 
@@ -41,8 +47,14 @@ Spin the globe with your finger and watch day turn to night, with city lights gl
 • Three guided journeys: follow the sunrise, explore the Ring of Fire, and understand the seasons
 • Collect discoveries in your own Field notebook. Can you find them all?
 • Find-it challenges that build real thinking
-• A new "Today" each day with the Moon's phase and a fresh space fact
-• Read-aloud narration, plus calm ambient music with its own volume slider
+• A real-time Today briefing with the Moon's phase, daylight at your place, and a recent observation
+• Choose Talia’s warm read-aloud voice at first launch, or explore quietly; change your choice in Settings
+• Fixed cards play offline in all 12 languages; live facts and scores use your device’s voice
+• Calm ambient music with its own volume slider
+
+🌐 YOUR LANGUAGE
+• English, German, Spanish, French, Arabic, Hindi, Japanese, Korean, Brazilian Portuguese, Romanian, Ukrainian and Simplified Chinese
+• Follow your device language or choose one in Settings; translations work offline
 
 📍 YOUR PLACES
 • Save your town or anywhere you like: pick from 300 world cities, or tap any spot on the globe

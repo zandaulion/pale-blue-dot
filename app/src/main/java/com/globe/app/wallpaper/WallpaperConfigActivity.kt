@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ListView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
@@ -38,6 +39,7 @@ import com.globe.app.places.CityCatalog
 import com.globe.app.places.PlaceStore
 import com.globe.app.places.SavedPlace
 import com.globe.app.time.RealTimeSceneClock
+import com.globe.app.ui.ReadingColumn
 
 /** Live in-app preview plus settings; Android owns the final preview/apply decision. */
 class WallpaperConfigActivity : AppCompatActivity() {
@@ -82,24 +84,31 @@ class WallpaperConfigActivity : AppCompatActivity() {
                 insets
             }
         }
-        root.addView(preview, LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            dp((resources.configuration.screenHeightDp * 0.3f).toInt().coerceIn(150, 250))
+        val previewColumn = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        previewColumn.addView(preview, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f
         ))
-        root.addView(TextView(this).apply {
+        previewColumn.addView(TextView(this).apply {
             text = getString(R.string.text_live_preview_current_sunlight_no_audio)
             setTextColor(Color.WHITE)
             textSize = 14f
             gravity = Gravity.CENTER
             setPadding(dp(12), dp(8), dp(12), dp(8))
         })
-        controls = LinearLayout(this).apply {
+        controls = ReadingColumn(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(18), dp(10), dp(18), dp(24))
         }
-        root.addView(ScrollView(this).apply { addView(controls) },
+        val settingsColumn = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        val controlFrame = FrameLayout(this).apply {
+            addView(controls, FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER_HORIZONTAL
+            ))
+        }
+        settingsColumn.addView(ScrollView(this).apply { addView(controlFrame) },
             LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f))
-        root.addView(LinearLayout(this).apply {
+        val footer = ReadingColumn(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(18), dp(8), dp(18), dp(12))
             addView(actionButton(getString(R.string.text_preview_set_wallpaper), primary = true) {
@@ -115,7 +124,36 @@ class WallpaperConfigActivity : AppCompatActivity() {
                 gravity = Gravity.CENTER
                 setPadding(0, dp(6), 0, 0)
             })
+        }
+        settingsColumn.addView(FrameLayout(this).apply {
+            addView(footer, FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER_HORIZONTAL
+            ))
         })
+        root.addView(previewColumn)
+        root.addView(settingsColumn)
+        // Respond to the actual window, including split-screen and rotation.
+        root.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            val width = root.width - root.paddingLeft - root.paddingRight
+            val height = root.height - root.paddingTop - root.paddingBottom
+            if (width <= 0 || height <= 0) return@addOnLayoutChangeListener
+            val sideBySide = width >= dp(840)
+            val orientation = if (sideBySide) LinearLayout.HORIZONTAL else LinearLayout.VERTICAL
+            val previewHeight = (height * 0.35f).toInt().coerceIn(dp(150), dp(if (width >= dp(600)) 420 else 250))
+            val currentPreview = previewColumn.layoutParams as LinearLayout.LayoutParams
+            if (root.orientation == orientation &&
+                (sideBySide || currentPreview.height == previewHeight) &&
+                settingsColumn.layoutParams.width == if (sideBySide) dp(420) else LinearLayout.LayoutParams.MATCH_PARENT
+            ) return@addOnLayoutChangeListener
+            root.orientation = orientation
+            previewColumn.layoutParams = if (sideBySide) LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.MATCH_PARENT, 1f
+            ) else LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, previewHeight)
+            settingsColumn.layoutParams = if (sideBySide) LinearLayout.LayoutParams(
+                dp(420), LinearLayout.LayoutParams.MATCH_PARENT
+            ) else LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f)
+        }
         setContentView(root)
         settings.preferences.registerOnSharedPreferenceChangeListener(listener)
         repository.observeClouds(cloudObserver)

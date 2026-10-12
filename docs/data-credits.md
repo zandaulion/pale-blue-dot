@@ -9,3 +9,20 @@
 The offline layer is a simplified derivative of Peter Bird's PB2002 plate-boundary model (Bird, 2003, doi:10.1029/2001GC000252), converted and distributed by Hugo Ahlenius/Nordpil and GeoJSON contributor csterling in [fraxen/tectonicplates](https://github.com/fraxen/tectonicplates). That collection is [Open Data Commons Attribution License 1.0](https://github.com/fraxen/tectonicplates/blob/master/LICENSE.md). Source GeoJSON URL: `https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json`, downloaded 2026-09-23, SHA-256 `42B3E0876A7E40F133E958BA7AB85F8851B5C693A046FBC3B138E7751863D92A`. `tools/preprocess_plate_boundaries.py` documents the deterministic simplification command. The asset keeps all 241 line features, simplified from 6,292 to 2,491 points at 0.08° planar tolerance; rendering interpolates the segments on the sphere. Boundary types are not displayed because most source features have an empty type. This is a generalized educational model, not a site-specific hazard assessment.
 
 Sunrise/sunset uses the [NOAA approximation](https://gml.noaa.gov/grad/solcalc/solareqns.PDF) with a 90.833° apparent zenith. The daylight readout is approximate and can differ with local horizon and atmospheric conditions.
+
+## Localized content and narration
+
+`places/CityNames.kt` maps stable catalog IDs to Android string resources for all
+12 app languages. Translated display names are maintained separately from the
+GeoNames coordinates, time zones, and source spelling; search accepts both
+spellings. Changing language never changes a saved place's ID or coordinates.
+Journey text similarly uses stable IDs through `explore/JourneyStrings.kt` while
+its scene states and sourced historical examples remain in bundled lesson assets.
+See [localization](localization.md) for draft provenance and review status.
+
+The bundled Talia recordings are generated from the app's localized public
+learning text, rather than users' saved records or remote live observations.
+Voice identity, settings, clip coverage, and regeneration are documented in
+[voiceover](voiceover.md); texture/music/narration attribution is in
+[credits](../CREDITS.md). Generation review files, credentials, device captures,
+and checkpoints remain outside the repository.

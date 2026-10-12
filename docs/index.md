@@ -1,70 +1,68 @@
-# Globe — Documentation Index
+# Pale Blue Dot — Documentation Index
 
-**Globe** (package `com.zandaulion.palebluedot`) is a real-time 3D Earth viewer for Android built entirely with raw OpenGL ES 3.0 and Kotlin — no game engine, no third-party rendering library.
-
----
+Pale Blue Dot is an Android Earth and astronomy app built with Kotlin, native
+Views, and OpenGL ES 3.0. Application ID: `com.zandaulion.palebluedot`; source
+namespace: `com.globe.app`.
 
 ## Contents
 
 | Document | Description |
-|----------|-------------|
-| [Earth Companion Implementation Guide](earth-companion-implementation-guide.md) | Product defaults, milestone specification, and acceptance criteria |
-| [Earth Companion Progress](earth-companion-progress.md) | Implemented behavior, USB device evidence, deviations, and unexecuted checks |
-| [Data Credits](data-credits.md) | Bundled city and plate-boundary data provenance |
-| [Architecture](architecture.md) | Project structure, design principles, class responsibilities |
-| [Features](features.md) | Full list of visual and interactive features |
-| [Rendering Pipeline](rendering-pipeline.md) | Per-frame OpenGL draw order, shader details, GL state management |
-| [Astronomy](astronomy.md) | Sun, Moon, ISS, and eclipse calculations |
-| [Live Data](live-data.md) | Cloud, earthquake, and volcano API integrations |
-| [API Reference](api-reference.md) | Every public class — constructor, key methods, thread safety |
-| [Build & Release](build-release.md) | Gradle setup, signing, build variants |
+|---|---|
+| [README](../README.md) | Product overview, setup, and code map |
+| [Features](features.md) | Current interface, learning, audio, and scene features |
+| [Localization](localization.md) | 12 locales, Settings language switcher, translation maintenance, layout audits |
+| [Tablet Layout](tablet-layout.md) | Window adaptation, tablet-sized device audits, and limits |
+| [Moon Visibility](moon-visibility.md) | Faint-phase outline, labels, placement, and validation |
+| [Voiceover](voiceover.md) | Talia opt-in, exact narration coverage, credentials, and generation |
+| [Architecture Decisions](../ARCHITECTURE.md) | Rendering, shared data, localization, and audio rationale |
+| [Architecture](architecture.md) | Packages, ownership, threads, and data flows |
+| [Rendering Pipeline](rendering-pipeline.md) | Frame order, GL state, surfaces, and Moon outline |
+| [Astronomy](astronomy.md) | Sun, Moon, ISS, daylight, and approximate alignment calculations |
+| [Live Data](live-data.md) | NASA/USGS feeds, cache ownership, freshness, and failures |
+| [API Reference](api-reference.md) | Key implementation entry points and lifecycle requirements |
+| [Build & Release](build-release.md) | Toolchain, signing, validation, and APK handling |
+| [Data Credits](data-credits.md) | Offline city, time-zone, and plate-boundary provenance |
+| [Credits](../CREDITS.md) | Textures, live data, music, and generated narration |
+| [Privacy](../PRIVACY.md) | On-device storage, public-data downloads, sharing, and speech engines |
+| [Earth Companion Guide](earth-companion-implementation-guide.md) | Original milestone specification with current follow-up requirements |
+| [Earth Companion Progress](earth-companion-progress.md) | Dated implementation/test history and outstanding acceptance checks |
+| [Backlog](../TODO.md) | Completed additions and follow-up ideas |
+| [Store Assets](../store/README.md) | Listing draft, release history, and next-release notes |
 
----
-
-## Quick Facts
+## Current configuration
 
 | Property | Value |
-|----------|-------|
-| App ID | `com.zandaulion.palebluedot` |
-| Version | 3.10 (versionCode 12) |
-| Min SDK | 24 (Android 7.0) |
-| Target SDK | 36 (Android 16) |
-| Rendering | OpenGL ES 3.0 (GLSL 300 es) |
-| Language | Kotlin 2.0.21 |
-| Build system | AGP 8.7.3 / Gradle 8.9 |
-| Permissions | `INTERNET`, `ACCESS_COARSE_LOCATION` |
+|---|---|
+| Version metadata | 3.10 / versionCode 12; current Talia changes are not a Play release |
+| minSdk | 24 (Android 7.0) |
+| compileSdk / targetSdk | 36 (Android 16) |
+| Rendering | OpenGL ES 3.0, explicitly required by the manifest |
+| Kotlin plugin | 2.2.10 |
+| Build system | AGP 9.4.1 / Gradle 9.6.0 |
+| Gradle daemon / bytecode | JetBrains JDK 21 / Java and Kotlin target 17 |
+| Requested permission | `INTERNET` |
+| Localization | 12 bundled locales, 792 translatable resources per locale |
+| Narration | 144 bundled Talia clips; device TTS for changing facts/scores |
 
----
+## Repository layout
 
-## Repository Layout
-
+```text
+app/src/main/
+├── AndroidManifest.xml
+├── java/com/globe/app/
+│   ├── MainActivity.kt, AppLanguage.kt
+│   ├── GlobeRenderer.kt, GlobeSurfaceView.kt
+│   ├── camera/, earth/, moon/, sun/, stars/, iss/, indicators/, eclipse/
+│   ├── data/, events/, render/, time/
+│   └── kids/, explore/, places/, share/, wallpaper/, widget/
+├── assets/                    # journeys, offline datasets, narration/<locale>/
+└── res/                       # values + 11 locale directories, textures, music, widgets
+app/src/androidTest/           # instrumented state, rendering, and layout checks
+tools/                         # localization validator, narration and asset generators
+docs/                          # technical and product documentation
+store/                         # listing, artwork, released notes, next-release draft
 ```
-Globe/
-├── app/src/main/
-│   ├── AndroidManifest.xml
-│   ├── java/com/globe/app/        ← all Kotlin source
-│   │   ├── MainActivity.kt
-│   │   ├── GlobeRenderer.kt
-│   │   ├── GlobeSurfaceView.kt
-│   │   ├── TimeProvider.kt
-│   │   ├── camera/
-│   │   ├── earth/
-│   │   ├── moon/
-│   │   ├── sun/
-│   │   ├── stars/
-│   │   ├── iss/
-│   │   ├── location/
-│   │   ├── eclipse/
-│   │   ├── events/
-│   │   └── indicators/
-│   └── res/
-│       ├── drawable-nodpi/        ← earth_day.jpg, earth_night.jpg, moon.jpg
-│       ├── raw/                   ← ambient_space.wav
-│       └── mipmap-*/              ← launcher icons
-├── docs/                          ← this documentation
-├── ARCHITECTURE.md
-├── README.md
-├── TODO.md
-├── CREDITS.md
-└── build.gradle.kts
-```
+
+The source and Gradle files are authoritative. Dated milestone records describe
+what was tested at that time, rather than promising that every acceptance item
+has been verified on every device.

@@ -788,4 +788,8 @@
     <string name="text_elapsed_days">"الأيام المنقضية: %1$d"</string>
     <string name="moon_guide_new_moon">"%1$s\nالجانب غير المضاء · حدود إرشادية"</string>
     <string name="moon_guide_crescent">"هلال رفيع · %1$s مضاء\nحدود إرشادية"</string>
+    <string name="narration_onboarding_prompt" formatted="false">"هل تريد أن تقرأ تاليا البطاقات بصوت مسموع؟ يمكنك تغيير ذلك في الإعدادات."</string>
+    <string name="narration_explore_with_talia" formatted="false">"استكشف مع تاليا"</string>
+    <string name="narration_explore_quietly" formatted="false">"استكشف بهدوء"</string>
+    <string name="narration_settings_detail" formatted="false">"تقرأ تاليا البطاقات. تُقرأ المعلومات المباشرة والنتائج بصوت جهازك."</string>
 </resources>

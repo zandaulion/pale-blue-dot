@@ -16,3 +16,9 @@ app/release/
 app/debug/
 capture/
 __pycache__/
+
+# Local service credentials
+.secrets/
+.env
+.env.*
+!.env.example

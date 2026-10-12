@@ -788,4 +788,8 @@
     <string name="text_elapsed_days">"Dias decorridos: %1$d"</string>
     <string name="moon_guide_new_moon">"%1$s\nLado não iluminado · contorno de referência"</string>
     <string name="moon_guide_crescent">"Arco lunar fino · %1$s iluminado\nContorno de referência"</string>
+    <string name="narration_onboarding_prompt" formatted="false">"Quer que a Talia leia os cartões em voz alta? Você pode mudar isso nas Configurações."</string>
+    <string name="narration_explore_with_talia" formatted="false">"Explorar com a Talia"</string>
+    <string name="narration_explore_quietly" formatted="false">"Explorar em silêncio"</string>
+    <string name="narration_settings_detail" formatted="false">"A Talia lê os cartões. Os dados ao vivo e as pontuações usam a voz do seu dispositivo."</string>
 </resources>

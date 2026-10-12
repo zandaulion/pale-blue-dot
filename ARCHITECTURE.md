@@ -1,222 +1,99 @@
-# Globe — Architecture Decision Record
+# Pale Blue Dot — Architecture Decisions
 
-## Overview
+This record describes the current design. Package details are in
+[architecture](docs/architecture.md); build settings are in
+[build and release](docs/build-release.md).
 
-A single-screen Android app that renders Earth from space with real-time day/night
-lighting based on the current UTC time, set against a starfield background.
+## Kotlin, native Views, and OpenGL ES 3.0
 
----
+Kotlin coordinates Android lifecycle, programmatic native Views, persistence,
+and CPU calculations. Raw OpenGL ES 3.0 gives direct control over the relatively
+small Earth/sky scene without a game engine. The manifest requires GLES 3.0;
+minSdk 24 does not itself guarantee a GPU feature. GLSL is embedded in Kotlin.
+AndroidX core and AppCompat are the only runtime library dependencies.
 
-## 1. Language: Kotlin
+Earth is a 64×128 UV sphere with an interleaved position/normal/UV buffer;
+Moon reuses the mesh generator at 24×48. Day, night, and cloud textures feed a
+shader with sunlight, atmosphere, terminator, and illustrative auroras.
+16,000 procedural stars and catalog-based constellation lines form the sky.
+OpenGL handles belong to a renderer/context, are created at surface creation,
+and are released with that surface. The shared CPU data can be uploaded again
+after context loss. Texture quality is bounded separately for app, wallpaper,
+and widget to reduce memory pressure.
 
-**Decision**: Kotlin, targeting JVM/Android.
+## Explicit scene clocks and shared projections
 
-**Rationale**: Kotlin is the default language for new Android projects. Extension
-functions, coroutines, null safety, and concise syntax all help. There is no
-meaningful performance penalty — the hot path is GPU shader code (GLSL), not
-host-side Kotlin.
+Each frame snapshots a supplied `SceneClock` and passes the instant to Sun,
+Moon, ISS, Earth, indicators, and alignment checks. `AppSceneClock` supports a
+temporary offset and held/playing Explore time; wallpaper and widget use real
+time. Astronomy calculates from explicit instants without global position
+caches. This keeps a time simulation from changing other surfaces.
 
----
+`SceneProjection` supplies the matrices used for rendering and picking,
+including wallpaper framing. `OrbitCamera` owns drag/pinch, elapsed-time
+momentum, idle rotation, fly-to, and remembered viewpoint. Reduce motion disables
+decorative animation while preserving direct input.
 
-## 2. 3D Rendering: Raw OpenGL ES 3.0
+## Shared observations with honest freshness
 
-**Decision**: OpenGL ES 3.0, no external engine or framework.
+`EarthRepository` owns application-context background workers, coalesced
+requests, immutable feed snapshots, and versioned atomic event caches. NASA
+cloud extraction and USGS/EONET parsing are separate providers. Scenes consume
+cached results; GL recreation does not start network requests. States distinguish
+loading, fresh empty feeds, stale retained data, and unavailable data.
 
-**Rationale**:
+Event identity, timestamps, source, optional scientific values, and marker size
+are separate fields. A reported observation is not a claim that an event is
+happening at this exact moment. Historical/future exploration hides current
+observations by default. See [live data](docs/live-data.md).
 
-- The scene is simple: one textured sphere, one light source, one starfield.
-  A full engine (Rajawali, libGDX, SceneForm) would add hundreds of kilobytes
-  of dependency for features we will never use.
-- OpenGL ES 3.0 is available on 97%+ of active Android devices. It gives us
-  GLSL 300 es (in/out varyings, VAOs, instanced draw if needed) while staying
-  far simpler than Vulkan.
-- Vulkan would increase code complexity by 5-10x for no visible benefit in a
-  scene with two draw calls.
-- Using raw GL keeps the APK small and gives full control over the render pipeline.
+## Local data and independent home-screen surfaces
 
----
+Saved places are manually chosen from the globe or an offline city catalog;
+there is no location permission. Discovery migration, journeys, saved
+observations, and preferences use local stable IDs. Widgets have independent
+place selections and offscreen snapshots. Each wallpaper engine owns its EGL
+context/thread and separate view preferences. Home-screen surfaces stay silent
+and do not depend on a running Activity.
 
-## 3. Earth Model
+## Bundled localization
 
-**Approach**: UV-sphere geometry + multi-texture fragment shader.
+Android resources cover 12 languages, including Arabic RTL. `AppLanguage`
+unifies Settings and system app-locale choices, while widgets use an explicitly
+localized context. Journey and city text is mapped by stable IDs; locale changes
+invalidate lesson caches without changing progress. All language resources ship
+in APK/AAB installs, allowing offline switching. Source titles and user-authored
+saved text are preserved. See [localization](docs/localization.md).
 
-### Geometry (`EarthModel`)
-A UV-sphere generated on the CPU at startup (64 latitude x 128 longitude segments).
-Positions, normals, and UV coordinates are stored in a single interleaved VBO
-(8 floats/vertex: pos3 + normal3 + uv2) with an IBO for indexed triangles.
-Uploaded once to a VAO via `EarthModel.uploadToGpu()`, never modified.
+## Faint Moon visibility without artificial lighting
 
-### Textures
-| Slot | Uniform         | Purpose                              |
-|------|-----------------|--------------------------------------|
-| 0    | uDayTexture     | Diffuse colour (day side)            |
-| 1    | uNightTexture   | City-lights emissive (night side)    |
+A neutral 1dp silhouette guide is separate from the lunar surface lighting.
+It is strongest below 3% illumination and fades away by 12%, with a New Moon
+label at up to 1%. Depth testing preserves Earth occlusion; a native localized
+label avoids controls and disappears when hidden or another panel is open.
+The existing Moon arrow remains usable at every phase. See
+[Moon visibility](docs/moon-visibility.md).
 
-Textures can be loaded from drawable resources or generated as procedural
-placeholders (the app runs without any texture assets). When real textures are
-added, they should be 4096x2048 equirectangular maps with mipmaps.
+## Offline Talia narration with first-launch choice
 
-### Fragment Shader Logic (`EarthShader`)
-```glsl
-NdotL     = dot(normal, sunDir)
-dayFactor = smoothstep(-0.15, 0.15, NdotL)     // gradual terminator
-litDay    = dayColor * (0.1 + 0.9 * max(NdotL, 0))
-surface   = mix(nightColor, litDay, dayFactor)
-```
-The `smoothstep` creates a soft terminator rather than a hard day/night edge.
-A fresnel-based atmosphere rim glow tints the limb blue, stronger on the dayside.
+Fixed narration is generated with ElevenLabs during development and bundled in
+12 locale catalogs, 144 MP3s total. The APK contains no key and makes no runtime
+ElevenLabs request. `TaliaNarrator` matches cleaned app text and owns MediaPlayer
+and transient audio focus. Composite discoveries play whole acknowledgment/card
+clips. Dynamic event facts and scores use Android TTS when a voice is available.
 
----
+First launch explicitly offers narration or quiet exploration. Existing users'
+choices are preserved; Settings always exposes Read aloud. Closing, disabling,
+backgrounding, or focus loss stops playback without automatic resume. This
+supports listening without surprising users or introducing a runtime backend.
+See [voiceover](docs/voiceover.md) for coverage, generation, and validation.
 
-## 4. Starfield Background
+## Current constraints
 
-**Decision**: Point sprites rendered as `GL_POINTS` on a large surrounding sphere.
-
-**Implementation** (in `stars/` package):
-
-- **`StarsModel`**: Generates 2500 stars at startup with:
-  - Positions on a sphere of radius 500 (well beyond the far plane of the Earth).
-  - 30% clustered near a galactic band for a subtle Milky Way effect;
-    70% uniformly distributed.
-  - Power-law size distribution (most dim, few bright).
-  - Spectral-class colours (blue-white, white, yellow, orange, red-orange).
-
-- **`StarsShader`**: GLSL 300 es shaders that:
-  - Set `gl_PointSize` from the per-vertex size attribute.
-  - Animate a per-star twinkle using a hash-based phase + sine wave driven
-    by a `uTime` uniform.
-  - Render each point sprite as a soft circular glow (core + halo falloff)
-    in the fragment shader.
-
-- **`StarsRenderer`**: Draws stars as `GL_POINTS` with:
-  - Translation stripped from the view matrix (stars at "infinity").
-  - Depth test and depth writes disabled (drawn before Earth).
-  - Additive blending (`GL_SRC_ALPHA, GL_ONE`) for natural star bloom.
-
----
-
-## 5. Sun Position / Lighting
-
-**Decision**: Simplified astronomical algorithm computed on the CPU.
-
-**Implementation** (`earth/SunPosition`):
-
-The sun's ecliptic longitude is computed from the Julian Date using the
-Astronomical Almanac approximation (~1 degree accuracy):
-
-```
-n = JulianDate(now_utc) - 2451545.0        // days since J2000.0
-L = 280.460 + 0.9856474 * n                // mean longitude
-g = 357.528 + 0.9856003 * n                // mean anomaly
-lambda = L + 1.915*sin(g) + 0.020*sin(2g)  // ecliptic longitude
-```
-
-The ecliptic longitude is converted to equatorial RA/Dec, then rotated into the
-Earth-fixed frame using Greenwich Mean Sidereal Time (GMST). This yields a unit
-vector (`uSunDirection`) that correctly accounts for:
-- Earth's orbital position (season/time of year)
-- Earth's axial tilt (23.44 degrees)
-- Earth's rotation (hour of day via GMST)
-
-No external library needed — approximately 50 lines of Kotlin math.
-
----
-
-## 6. Camera & Interaction
-
-**Implementation** (`camera/OrbitCamera`):
-
-- Default: camera at 3.0 Earth-radii, 20 degrees elevation, azimuth 0.
-- Single-finger drag: orbit (rotate azimuth/elevation around Earth).
-- Pinch-to-zoom: adjust distance (clamped 1.5R to 6.0R).
-- Camera parameters are `@Volatile` for thread safety between UI and GL threads.
-- `getViewMatrix()` computes a `setLookAtM` each frame from spherical coords.
-- `getPosition()` returns the eye position for atmosphere fresnel calculations.
-
----
-
-## 7. Project Structure
-
-```
-Globe/
-├── ARCHITECTURE.md
-├── build.gradle.kts              # project-level (AGP + Kotlin plugin versions)
-├── settings.gradle.kts           # module includes
-├── gradle.properties             # JVM args, AndroidX flags
-├── app/
-│   ├── build.gradle.kts          # android app config
-│   └── src/main/
-│       ├── AndroidManifest.xml
-│       ├── assets/               # (future: texture files)
-│       ├── res/values/
-│       │   ├── strings.xml
-│       │   └── themes.xml
-│       └── java/com/globe/app/
-│           ├── MainActivity.kt          # entry point, sets GlobeSurfaceView as content
-│           ├── GlobeRenderer.kt         # GLSurfaceView.Renderer — orchestrates draw order
-│           ├── GlobeSurfaceView.kt      # custom GLSurfaceView — touch handling
-│           ├── camera/
-│           │   └── OrbitCamera.kt       # azimuth/elevation/distance → view matrix
-│           ├── earth/
-│           │   ├── EarthModel.kt        # UV-sphere geometry generation + GPU upload
-│           │   ├── EarthShader.kt       # GLSL compile/link, uniform management
-│           │   ├── EarthRenderer.kt     # ties mesh + shader + textures together
-│           │   └── SunPosition.kt       # astronomical sun-direction calculation
-│           └── stars/
-│               ├── StarsModel.kt        # procedural star vertex data generation
-│               ├── StarsShader.kt       # GLSL point-sprite shader with twinkle
-│               └── StarsRenderer.kt     # draw call + GL state management
-```
-
-### Render pipeline (per frame)
-
-```
-GlobeRenderer.onDrawFrame()
-  ├── glClear(COLOR | DEPTH)
-  ├── camera.getViewMatrix() + camera.getPosition()
-  ├── starsRenderer.draw(view, projection)    // depth off, additive blend
-  └── earthRenderer.setMatrices(view, proj, camPos)
-      └── earthRenderer.onDrawFrame()         // depth on, backface cull
-```
-
-### Key design rules
-
-1. **No singletons / god objects.** Each class owns one concern.
-   `StarsShader` is an `object` only because it holds no mutable state beyond
-   GL handles initialized once.
-2. **GlobeRenderer is the orchestrator.** It calls into earth and stars renderers;
-   it does not contain GL draw code beyond `glClear` and draw ordering.
-3. **Shaders are embedded as Kotlin string constants** (`const val` in companion
-   objects). This avoids file-loading boilerplate for a small number of shaders.
-   If the shader count grows, move them to `assets/shaders/`.
-4. **All GL state is created in `onSurfaceCreated`**, never in `onCreate`.
-   This correctly handles EGL context loss on Android.
-5. **Placeholder textures** are generated procedurally so the app can run
-   immediately without any external texture assets.
-
----
-
-## 8. Dependencies
-
-Only standard Android SDK:
-
-- `androidx.appcompat` — AppCompatActivity (theme compatibility)
-- `androidx.core:core-ktx` — Kotlin extensions
-- Android SDK OpenGL ES 3.0 (`android.opengl.*`)
-
-No third-party libraries for rendering, math, or image loading.
-`android.opengl.Matrix` covers all matrix operations. `BitmapFactory` covers
-texture loading.
-
----
-
-## 9. Build & Target
-
-| Setting     | Value       | Rationale                                   |
-|-------------|-------------|---------------------------------------------|
-| minSdk      | 24          | Android 7.0 — guarantees GLES 3.0, 97%+ coverage |
-| targetSdk   | 35          | Current Android 15                          |
-| compileSdk  | 35          | Latest stable SDK                           |
-| Kotlin      | 2.0.21      | Latest stable                               |
-| AGP         | 8.7.3       | Latest stable                               |
-| JVM target  | 17          | Required by AGP 8.x                         |
+`MainActivity` still constructs substantial panel content alongside lifecycle
+coordination; extracting focused UI components remains maintenance work.
+Astronomy, cloud extraction, auroras, and ISS motion are educational
+approximations. Native-speaker translation/pronunciation review, full TalkBack
+traversal, and remaining multi-surface/device checks are recorded as incomplete
+in [progress](docs/earth-companion-progress.md), rather than implied by passing
+build or layout checks.

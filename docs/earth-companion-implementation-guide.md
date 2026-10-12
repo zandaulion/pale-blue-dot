@@ -1,6 +1,33 @@
 # Pale Blue Dot: Earth Companion Implementation Guide
 
-Prepared for GPT-6 SOL on September 23, 2026.
+Prepared for GPT-6 SOL on September 23, 2026. Follow-up requirements updated
+October 11, 2026.
+
+## Current status and follow-up requirements
+
+M0–M4 were implemented; their dated checks and remaining acceptance gaps are in
+[progress](earth-companion-progress.md). Use this guide as the original product
+specification, not an instruction to restart completed milestones. Current code,
+[architecture](architecture.md), and [build configuration](build-release.md)
+supersede the baseline inventory below.
+
+Subsequent work adds 12 bundled locales with a Settings language switcher,
+Arabic RTL, a faint-phase Moon outline/label, and offline Talia recordings.
+First launch now offers “Explore with Talia” or “Explore quietly”; no speech
+starts before the choice, and existing onboarded users retain their preference.
+This explicit opt-in refines the original audio-off default. Read aloud remains
+in Settings; music is independent, and wallpaper/widget stay silent.
+
+Keep all edited interface strings in the 12 locale resources. When changing a
+recorded card, regenerate and validate the matching Talia clips/indexes. Dynamic
+facts and scores still use device TTS; adding narration to further panels is a
+separate coverage decision. ElevenLabs is development-time asset generation,
+not a runtime AI service or a new backend. See [localization](localization.md),
+[Moon visibility](moon-visibility.md), and [voiceover](voiceover.md).
+
+The configured app version remains 3.10/code 12. These changes are tested in a
+sideload APK, not published to Play. Complete the outstanding acceptance items
+before claiming full device/accessibility coverage.
 
 ## 1. Assignment and product direction
 
@@ -38,7 +65,9 @@ Finish and validate each milestone before moving on. If assigned only one milest
 
 ## 2. Current code and constraints
 
-The source of truth is the Kotlin code and Gradle configuration, followed by the recently updated [README](../README.md). Several older pages under `docs/` describe features or settings that no longer exist.
+The source of truth is the Kotlin code and Gradle configuration, followed by the
+[README](../README.md). The following inventory records the September 23 baseline;
+the current package map is in [architecture](architecture.md).
 
 | Current entry point | What to inspect or change |
 |---------------------|--------------------------|
@@ -88,7 +117,7 @@ The launch screen shows the globe immediately, with a compact top status/time ar
 - Keep the time control readily available but compact when inactive. Preserve the current temporary +/-24-hour scrub and return-to-now behavior until M4 adds explicit exploration time.
 - Move music, volume, narration, wallpaper configuration, legend/help, and sharing to appropriate panels. Share remains easy to find and keeps the existing gate.
 - Make event cards persist until dismissed or replaced, rather than expiring while being read. Offer an obvious close control and optional narration.
-- Default audio off for new installs; preserve stored choices for existing users. Wallpaper and widgets must never play audio or invoke narration.
+- Start new installs silently and offer the first-launch Talia/quiet choice described above; preserve stored choices for existing users. Wallpaper and widgets must never play audio or invoke narration.
 
 Use dark neutral panels, restrained blue/amber accents, readable type, consistent spacing, and meaningful icons. Render the globe behind system bars if appropriate while applying insets to controls. Use scrollable panels on small screens and a side panel on wide layouts. Adapt to actual available width, including split-screen; do not rely on device labels or hard-coded orientation alone.
 
@@ -317,10 +346,16 @@ Typical Windows commands, adapting task names to the actual project:
 ```powershell
 .\gradlew.bat assembleDebug
 .\gradlew.bat testDebugUnitTest lintDebug
-.\gradlew.bat connectedDebugAndroidTest
+.\gradlew.bat assembleDebugAndroidTest
 ```
 
-Run the last command only when instrumentation tests and a device are available. Report executed tasks and their results exactly; “no tests found” is not a passing test suite. A debug build is not evidence of release signing or device correctness.
+Run device tests by installing the app and instrumentation APKs in place and
+invoking `adb -s <selected-test-device> shell am instrument`, as detailed in
+[build and release](build-release.md). Avoid Gradle connected-test cleanup on a
+device with existing data: an earlier run removed the app and its data. Select
+the device explicitly and keep its identifier local. Report executed tasks and
+results exactly; “no tests found” is not a passing suite. A debug build is not
+evidence of production signing or device correctness.
 
 ### Manual/device matrix
 
@@ -343,7 +378,7 @@ Capture before/after screenshots for the main globe, panels, event details, wall
 
 - Avoid doing all structural changes before delivering any visible behavior. Extract UI/data components during M1 and renderer hosting during M2.
 - Keep only lifecycle/navigation coordination in `MainActivity` as features move out. Suggested packages: `ui/`, `data/`, `render/`, `time/`, `wallpaper/`, `places/`, `widget/`, and `explore/`; create only what is used.
-- Move new and edited user-facing strings into resources. Support plurals and locale-sensitive formatting; complete translation is outside this scope.
+- Move new and edited user-facing strings into all 12 locale resources. Support plurals and locale-sensitive formatting, and keep narration catalogs synchronized. Translation was a later addition to the original milestone scope.
 - Use stable persisted IDs and schema versions. Audit migration from current ordinal-based cloud preferences before changing enum order.
 - Keep a single authoritative coordinate/projection path for rendering and selection, and a single data repository for all consumers.
 - Close/release network streams, textures, buffers, bitmaps, media/TTS, jobs, and rendering threads according to their owning lifecycle.

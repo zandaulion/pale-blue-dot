@@ -75,6 +75,7 @@ import com.globe.app.kids.MoonPhase
 import com.globe.app.moon.MoonGuideOverlay
 import com.globe.app.kids.ParentalGate
 import com.globe.app.kids.NarrationText
+import com.globe.app.kids.TaliaNarrator
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
@@ -164,6 +165,7 @@ class MainActivity : AppCompatActivity() {
     private var tts: TextToSpeech? = null
     private var ttsReady = false
     private var narrateEnabled = false
+    private lateinit var taliaNarrator: TaliaNarrator
     private var scrubberAnimator: ValueAnimator? = null
     private var cloudTimestamp: String? = null
     private var lastEclipseState: EclipseDetector.EclipseState = EclipseDetector.EclipseState.NONE
@@ -303,6 +305,7 @@ class MainActivity : AppCompatActivity() {
         musicEnabled = prefs.getBoolean(PREF_MUSIC_ENABLED, false)
         musicVolume = prefs.getFloat(PREF_MUSIC_VOLUME, 0.4f)
         narrateEnabled = prefs.getBoolean(PREF_NARRATE, false)
+        taliaNarrator = TaliaNarrator(this, ::speakWithDevice)
 
         tts = TextToSpeech(this) { status ->
             if (status == TextToSpeech.SUCCESS) {
@@ -880,7 +883,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onStopTrackingTouch(bar: SeekBar) {}
             })
         })
-        panelSwitch(getString(R.string.text_read_aloud), getString(R.string.text_speak_cards_when_narration_is_enabled), narrateEnabled) { enabled ->
+        panelSwitch(getString(R.string.text_read_aloud), getString(R.string.narration_settings_detail), narrateEnabled) { enabled ->
             if (narrateEnabled != enabled) toggleNarration()
         }
         panelSwitch(getString(R.string.companion_reduce_motion),
@@ -1577,6 +1580,7 @@ class MainActivity : AppCompatActivity() {
                     .setMessage(explain).setPositiveButton(getString(R.string.companion_close), null).show()
             }
             .setNegativeButton(getString(R.string.companion_close), null)
+            .setOnDismissListener { stopNarration() }
             .show()
         if (narrateEnabled) speak(facts)
     }
@@ -2038,6 +2042,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideEventCard() {
+        stopNarration()
         eventCard.visibility = View.GONE
         pendingSavePoint = null
         savePlaceButton.visibility = View.GONE
@@ -2541,14 +2546,16 @@ class MainActivity : AppCompatActivity() {
     // ------------------------------------------------------------------
 
     private fun toggleNarration() {
-        narrateEnabled = !narrateEnabled
+        setNarrationEnabled(!narrateEnabled)
+    }
+
+    private fun setNarrationEnabled(enabled: Boolean) {
+        narrateEnabled = enabled
         prefs.edit().putBoolean(PREF_NARRATE, narrateEnabled).apply()
         updateNarrateButton()
         if (narrateEnabled) {
-            if (ttsReady) speak(getString(R.string.text_read_to_me_is_on_i_ll_read_the_cards_out_loud))
-            else AlertDialog.Builder(this).setMessage(getString(R.string.text_a_voice_for_this_language_is_not_installed_on_this_device))
-                .setPositiveButton(android.R.string.ok, null).show()
-        } else tts?.stop()
+            speak(getString(R.string.text_read_to_me_is_on_i_ll_read_the_cards_out_loud))
+        } else stopNarration()
     }
 
     private fun updateNarrateButton() {
@@ -2557,9 +2564,20 @@ class MainActivity : AppCompatActivity() {
 
     /** Speaks [text] aloud when narration is on, stripping emoji for clean speech. */
     private fun speak(text: String) {
+        if (!narrateEnabled) return
+        tts?.stop()
+        if (!taliaNarrator.speak(text)) speakWithDevice(text)
+    }
+
+    private fun speakWithDevice(text: String) {
         if (!narrateEnabled || !ttsReady) return
         val clean = NarrationText.clean(text)
         if (clean.isNotEmpty()) tts?.speak(clean, TextToSpeech.QUEUE_FLUSH, null, "card")
+    }
+
+    private fun stopNarration() {
+        taliaNarrator.stop()
+        tts?.stop()
     }
 
     // ------------------------------------------------------------------
@@ -2572,7 +2590,7 @@ class MainActivity : AppCompatActivity() {
             visibility = View.GONE
             isClickable = true   // block taps to the globe behind it
         }
-        val card = LinearLayout(this).apply {
+        val card = com.globe.app.ui.ReadingColumn(this, 560).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dpi(26f), dpi(28f), dpi(26f), dpi(22f))
             background = GradientDrawable().apply {
@@ -2608,23 +2626,49 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        card.addView(makePillButton(getString(R.string.text_explore_earth), ::dpi).apply {
+        card.addView(panelText(getString(R.string.narration_onboarding_prompt), 15f).apply {
+            gravity = Gravity.CENTER
+            setPadding(0, dpi(18f), 0, 0)
+        })
+
+        card.addView(makePillButton(getString(R.string.narration_explore_with_talia), ::dpi).apply {
+            minHeight = dpi(48f)
+            isFocusable = true
             setOnClickListener {
                 it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                 dismissOnboarding()
+                setNarrationEnabled(true)
             }
         }, LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
             gravity = Gravity.CENTER_HORIZONTAL
             topMargin = dpi(20f)
         })
 
-        val scroll = ScrollView(this).apply { addView(card) }
+        card.addView(makePillButton(getString(R.string.narration_explore_quietly), ::dpi).apply {
+            minHeight = dpi(48f)
+            isFocusable = true
+            setOnClickListener {
+                it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                dismissOnboarding()
+                setNarrationEnabled(false)
+            }
+        }, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply { topMargin = dpi(12f) })
+
+        val scroll = ScrollView(this).apply {
+            addView(card, FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.CENTER_HORIZONTAL
+            ))
+        }
         overlay.addView(scroll, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT,
             Gravity.CENTER
         ).apply { setMargins(dpi(28f), dpi(28f), dpi(28f), dpi(28f)) })
         return overlay
@@ -2669,7 +2713,7 @@ class MainActivity : AppCompatActivity() {
         globeView.onPause()
         uiHandler.removeCallbacks(timeTick)
         stopMusic()
-        tts?.stop()
+        stopNarration()
     }
 
     /** Persist the camera pose and cloud visibility so the app reopens as left. */
@@ -2690,6 +2734,7 @@ class MainActivity : AppCompatActivity() {
         repository.removeCloudObserver(cloudObserver)
         uiHandler.removeCallbacks(timeTick)
         releaseMusic()
+        taliaNarrator.stop()
         tts?.shutdown()
         tts = null
     }

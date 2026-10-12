@@ -789,4 +789,8 @@
     <string name="text_elapsed_days">"Elapsed days: %1$d"</string>
     <string name="moon_guide_new_moon">"%1$s\nUnlit side · outline guide"</string>
     <string name="moon_guide_crescent">"Thin crescent · %1$s sunlit\nOutline guide"</string>
+    <string name="narration_onboarding_prompt" formatted="false">"Would you like Talia to read cards aloud? You can change this in Settings."</string>
+    <string name="narration_explore_with_talia" formatted="false">"Explore with Talia"</string>
+    <string name="narration_explore_quietly" formatted="false">"Explore quietly"</string>
+    <string name="narration_settings_detail" formatted="false">"Cards use Talia. Live facts and scores use your device’s voice."</string>
 </resources>

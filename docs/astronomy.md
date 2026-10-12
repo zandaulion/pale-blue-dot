@@ -15,7 +15,7 @@ Step 4: Equatorial → ECEF via GMST        [Greenwich Mean Sidereal Time]
 
 ## Sun Position (`SunPosition.kt`)
 
-Precision: ~1°. Results are cached for 10 minutes.
+Simplified educational calculation via `calculate(timeMs)`, using an explicit UTC instant. Results are calculated without a global position cache.
 
 | Step | Formula |
 |------|---------|
@@ -24,7 +24,7 @@ Precision: ~1°. Results are cached for 10 minutes.
 | Mean longitude | `L = 280.460° + 0.9856474° × n` |
 | Mean anomaly | `g = 357.528° + 0.9856003° × n` |
 | Ecliptic longitude | `λ = L + 1.915° sin g + 0.020° sin 2g` |
-| Obliquity | `ε = 23.439° − 0.0000004° × n` |
+| Obliquity | `ε = 23.44°` (fixed axial tilt in the implementation) |
 | Right Ascension | `RA = atan2(cos ε × sin λ, cos λ)` |
 | Declination | `Dec = asin(sin ε × sin λ)` |
 | GMST | `θ = 280.46061837° + 360.98564736629° × n` |
@@ -35,7 +35,7 @@ Precision: ~1°. Results are cached for 10 minutes.
 
 ## Moon Position (`MoonPosition.kt`)
 
-Precision: ~1°. Results are cached for 10 minutes.
+Simplified educational calculation via `calculate(timeMs)`, using an explicit UTC instant. Results are calculated without a global position cache.
 
 Uses simplified lunar elements:
 
@@ -71,7 +71,7 @@ orbitalPos  = rotate(meanAnomaly around inclination axis)
 ecefPos     = rotate(orbitalPos around polar axis by RAAN)
 ```
 
-The ribbon visualizes one complete orbit (360 sample points) with the RAAN rotation applied to the entire orbital plane.
+The ribbon visualizes a complete canonical orbit with a model rotation applied to the orbital plane. Its fixed parameters and reference epoch make it illustrative; no live ISS feed or updated TLE is used.
 
 ---
 
@@ -84,12 +84,12 @@ sunDir  = normalize(sunEcef)
 moonDir = normalize(moonEcef)
 dot     = dot(sunDir, moonDir)
 
-Solar eclipse  (Moon between Sun & Earth): dot > 0.9998  — bodies nearly aligned, Moon on Sun side
-Lunar eclipse  (Earth between Sun & Moon): dot < −0.9994 — bodies nearly anti-aligned
-Near-eclipse warning: slightly relaxed thresholds
+Solar alignment (Moon on Sun side): dot > 0.9995  — bodies nearly aligned, Moon on Sun side
+Lunar alignment (Moon opposite Sun): dot < −0.9995 — bodies nearly anti-aligned
+Near-alignment warning: dot > 0.998 (solar) or dot < −0.998 (lunar)
 ```
 
-When an eclipse is detected, `EclipseDetector` calls a listener on the main thread to display an alert overlay.
+`EclipseDetector.detect(timeMs)` returns a state during the GL frame; the Activity updates the native alignment label. These checks are approximate geometry, not precise eclipse prediction or local visibility calculations.
 
 ---
 
@@ -108,11 +108,26 @@ where `n` = Julian days since J2000, `T` = Julian centuries since J2000. The sim
 
 ---
 
-## Caching Strategy
+## Scene time and phase readouts
 
-| Calculator | Cache duration | Reason |
-|------------|---------------|--------|
-| SunPosition | 10 minutes | Changes ~0.17°/min; imperceptible within window |
-| MoonPosition | 10 minutes | Moves ~0.009°/min; imperceptible within window |
-| ISS position | Per-frame | High angular velocity — must update continuously |
-| EclipseDetector | Per-frame | Triggered by live sun/moon positions |
+`GlobeRenderer` snapshots its supplied `SceneClock` once per frame. Sun, Moon,
+lighting, ISS, arrows, and eclipse calculations receive that same instant.
+`AppSceneClock` supports the temporary time offset and held/playing Explore
+time; independent wallpaper/widget clocks use real time. There is no global
+10-minute Sun/Moon cache to mix simulated and current scenes.
+
+The faint-phase guide uses `MoonGuide.illumination = (1 − dot(moon, sun)) / 2`
+(clamped input). It identifies New Moon at up to 1%, keeps a full outline through
+3%, and fades the guide away by 12%. It preserves the existing surface sunlight.
+See [Moon visibility](moon-visibility.md).
+
+Today and widget phase names/percentages use `kids/MoonPhase`: a synodic-age
+approximation referenced to Julian date 2451550.1 and a 29.530588853-day month.
+This real-time briefing estimate is separate from the direction-based scene
+guide; near a threshold their rounded labels/percentages can differ. Both are
+educational approximations, not an ephemeris.
+
+Saved-place sunrise/sunset uses the NOAA approximation with a 90.833° apparent
+zenith and the place's time zone/local date, including DST. Polar day/night and
+an unset zone are named states. Horizon and atmospheric conditions can change
+observed times. See [data credits](data-credits.md) for the source.

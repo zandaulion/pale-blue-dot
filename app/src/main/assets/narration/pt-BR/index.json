@@ -1,0 +1,14 @@
+{
+  "Leia para mim está ativado. Vou ler as cartas em voz alta.": "enabled.mp3",
+  "O céu noturno! Além da Terra existem milhares de estrelas, planetas e galáxias inteiras.": "sky.mp3",
+  "Aqui é dia! Este lado da Terra está voltado para o Sol neste momento. Arraste o controle deslizante de tempo para ver a noite chegar.": "day.mp3",
+  "Aqui é noite. Este lado está afastado do Sol – essas pequenas luzes são cidades. Arraste o controle deslizante de tempo para trazer o Sol de volta.": "night.mp3",
+  "Estação Espacial Internacional Os astronautas vivem e trabalham aqui, cerca de 400 km acima da Terra — circulando todo o planeta a cada 90 minutos a 28.000 km/h! Nesta ilustração, está no lado diurno da Terra.": "iss_day.mp3",
+  "Estação Espacial Internacional Os astronautas vivem e trabalham aqui, cerca de 400 km acima da Terra — circulando todo o planeta a cada 90 minutos a 28.000 km/h! Nesta ilustração, está no lado noturno da Terra.": "iss_night.mp3",
+  "Adicionado ao caderno de campo.": "added.mp3",
+  "Toque na Terra para responder!": "tap_earth.mp3",
+  "Sim! Isso mesmo.": "correct.mp3",
+  "Não exatamente – dê outra olhada e tente novamente!": "try_again.mp3",
+  "O desafio foi interrompido. Jogue novamente a qualquer momento!": "challenge_stopped.mp3",
+  "Viajante do tempo Você mudou o tempo para transformar o dia em noite.": "time_traveler.mp3"
+}

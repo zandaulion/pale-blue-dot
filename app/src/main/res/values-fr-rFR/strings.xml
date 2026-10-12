@@ -208,7 +208,7 @@
     <string name="text_saved" formatted="false">"Enregistré"</string>
     <string name="text_place_name" formatted="false">"Nom du lieu"</string>
     <string name="text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now" formatted="false">"☀️ Il fait jour ici !\nCette partie de la Terre fait actuellement face au Soleil. Faites glisser le curseur temporel pour regarder la nuit arriver."</string>
-    <string name="text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those" formatted="false">"🌙 Il fait nuit ici.\nCe côté est tourné vers le Soleil – ces petites lumières sont des villes. Faites glisser le curseur temporel pour ramener le Soleil."</string>
+    <string name="text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those" formatted="false">"🌙 Il fait nuit ici.\nCe côté est tourné à l’opposé du Soleil – ces petites lumières sont des villes. Faites glisser le curseur temporel pour ramener le Soleil."</string>
     <string name="text_added_to_field_notebook_1_s">"Ajouté au carnet de terrain.\n\n%1$s"</string>
     <string name="text_close_1_s">"× Fermer\n\n%1$s"</string>
     <string name="text_1_s_2_s_tap_to_stop">"🎯 %1$s\n⭐ %2$d · appuyez pour arrêter"</string>
@@ -788,4 +788,8 @@
     <string name="text_elapsed_days">"Jours écoulés : %1$d"</string>
     <string name="moon_guide_new_moon">"%1$s\nFace non éclairée · contour de repérage"</string>
     <string name="moon_guide_crescent">"Fin croissant · %1$s éclairé\nContour de repérage"</string>
+    <string name="narration_onboarding_prompt" formatted="false">"Veux-tu que Talia lise les cartes à voix haute ? Tu peux changer cela dans les paramètres."</string>
+    <string name="narration_explore_with_talia" formatted="false">"Explorer avec Talia"</string>
+    <string name="narration_explore_quietly" formatted="false">"Explorer en silence"</string>
+    <string name="narration_settings_detail" formatted="false">"Talia lit les cartes. Les données en direct et les scores utilisent la voix de ton appareil."</string>
 </resources>

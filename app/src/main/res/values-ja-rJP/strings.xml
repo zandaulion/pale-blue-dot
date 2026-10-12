@@ -788,4 +788,8 @@
     <string name="text_elapsed_days">"経過日数: %1$d"</string>
     <string name="moon_guide_new_moon">"%1$s\n光の当たらない側 · 輪郭ガイド"</string>
     <string name="moon_guide_crescent">"細い月 · %1$sに日光が当たっています\n輪郭ガイド"</string>
+    <string name="narration_onboarding_prompt" formatted="false">"タリアにカードを読み上げてもらいますか？設定でいつでも変更できます。"</string>
+    <string name="narration_explore_with_talia" formatted="false">"タリアと探検する"</string>
+    <string name="narration_explore_quietly" formatted="false">"静かに探検する"</string>
+    <string name="narration_settings_detail" formatted="false">"カードはタリアが読み上げます。最新の情報とスコアには端末の音声を使います。"</string>
 </resources>

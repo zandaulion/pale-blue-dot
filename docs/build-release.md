@@ -1,129 +1,137 @@
-# Build & Release
+# Build, validation, and release
 
-## Requirements
+## Toolchain and variants
 
-| Tool | Version |
-|------|---------|
-| Android Studio | Hedgehog or later |
-| JDK | 17 |
-| Android Gradle Plugin | 8.7.3 |
-| Gradle wrapper | 8.9 |
-| Kotlin | 2.0.21 |
+The checked-in configuration is authoritative:
 
----
+| Setting | Value |
+|---|---|
+| Android Gradle Plugin | 9.4.1 |
+| Gradle wrapper | 9.6.0 |
+| Kotlin plugin | 2.2.10 |
+| Gradle daemon JVM | JetBrains JDK 21 via `gradle/gradle-daemon-jvm.properties` |
+| Java/Kotlin bytecode | 17 |
+| compileSdk / targetSdk | 36 |
+| minSdk | 24 |
+| Application ID / namespace | `com.zandaulion.palebluedot` / `com.globe.app` |
+| Version metadata | 3.10 / 12 |
 
-## Build Variants
+Use Android Studio compatible with the configured AGP and install SDK Platform
+36. Set the local SDK path through Android Studio or an uncommitted
+`local.properties`. Initial setup may download the configured JDK, wrapper,
+and dependencies. Android API level alone does not guarantee graphics support;
+the manifest explicitly requires OpenGL ES 3.0.
 
-| Variant | Description |
-|---------|-------------|
-| `debug` | Debuggable APK, no minification, uses debug signing |
-| `release` | Minified + resource-shrunk, signed with release keystore |
+Debug builds are debuggable, use debug signing, and do not shrink code. Release
+builds enable R8 minification and resource shrinking with the checked-in
+`proguard-rules.pro`. **There is no release signing configuration in the current
+Gradle file.** A release task by itself does not produce a production-signed app.
 
----
+Runtime dependencies are AndroidX core-ktx 1.15.0 and appcompat 1.7.0; instrumented
+tests use AndroidX runner 1.6.2 and ext:junit 1.2.1. Rendering, network access,
+MediaPlayer, and device TTS use platform/JDK APIs. There is no ElevenLabs SDK or
+runtime API credential. All translations and Talia recordings are included;
+AAB language splits are disabled for offline language switching.
 
-## Dependencies
+## Build commands
 
-The dependency footprint is deliberately minimal:
+From the repository root on macOS/Linux (use `gradlew.bat` on Windows):
 
-```kotlin
-// app/build.gradle.kts
-dependencies {
-    implementation("androidx.core:core-ktx:1.15.0")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-}
-```
-
-No third-party rendering or math libraries are used. All OpenGL math uses `android.opengl.Matrix`.
-
----
-
-## SDK Targets
-
-```kotlin
-minSdk     = 24   // Android 7.0 — guarantees OpenGL ES 3.0 support
-targetSdk  = 35   // Android 15
-compileSdk = 35
-```
-
-`minSdk 24` is the lowest version that guarantees OpenGL ES 3.0 and GLSL 300 es across all device families.
-
----
-
-## Release Signing
-
-The release keystore is `globe-release.jks` at the project root. Signing credentials are read from `keystore.properties` (not committed to version control).
-
-`keystore.properties` format:
-```
-storeFile=../globe-release.jks
-storePassword=<password>
-keyAlias=<alias>
-keyPassword=<password>
-```
-
-The `app/build.gradle.kts` signingConfig block reads these at build time:
-```kotlin
-val keystoreProperties = Properties()
-keystoreProperties.load(FileInputStream(rootProject.file("keystore.properties")))
-
-signingConfigs {
-    create("release") {
-        storeFile     = file(keystoreProperties["storeFile"] as String)
-        storePassword = keystoreProperties["storePassword"] as String
-        keyAlias      = keystoreProperties["keyAlias"] as String
-        keyPassword   = keystoreProperties["keyPassword"] as String
-    }
-}
-```
-
----
-
-## Building
-
-### Debug APK
 ```bash
 ./gradlew assembleDebug
-# Output: app/build/outputs/apk/debug/app-debug.apk
+./gradlew assembleDebugAndroidTest lintDebug
 ```
 
-### Release APK
+Outputs:
+
+- App: `app/build/outputs/apk/debug/app-debug.apk`
+- Instrumentation: `app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk`
+
 ```bash
 ./gradlew assembleRelease
-# Output: app/build/outputs/apk/release/app-release.apk
+./gradlew bundleRelease
 ```
 
-### Install on connected device
+Release outputs are under `app/build/outputs/apk/release/` and
+`app/build/outputs/bundle/release/`; configure authorized signing separately.
+Existing bundled narration needs no key or regeneration to build. To change
+spoken text, use [the narration generator](voiceover.md#generating-recordings).
+
+On an aarch64 development host where Android build tooling cannot execute, use
+an x86_64 Android build host with an isolated checkout containing the exact
+reviewed sources and assets. Keep SDK paths, host addresses, credentials, and
+private signing material out of version control.
+
+## Device tests without clearing existing data
+
+Select the intended device explicitly. Updating an installed app requires the
+same signing certificate; sign the app and test APK consistently before testing.
+Do not uninstall an existing app to work around a certificate mismatch.
+
 ```bash
-./gradlew installDebug
+adb -s "$ANDROID_SERIAL" install -r app/build/outputs/apk/debug/app-debug.apk
+adb -s "$ANDROID_SERIAL" install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+adb -s "$ANDROID_SERIAL" shell am instrument -w \
+  -e class com.globe.app.kids.TaliaNarrationTest,com.globe.app.localization.LocalizationTest \
+  com.zandaulion.palebluedot.test/androidx.test.runner.AndroidJUnitRunner
 ```
 
----
+`ANDROID_SERIAL` is a locally chosen device selector, not a value to commit.
+Use direct instrumentation on a device with data to preserve: an earlier Gradle
+connected-test run removed the target app and its local data. Opt-in
+[language layout](localization.md) and [Moon scene](moon-visibility.md) audits
+require their documented arguments and restore changed preferences. Keep
+screenshots, logs, and device details outside the repository.
 
-## App Icon Generation
+Other instrumented checks cover event parsing, companion state/migration,
+daylight/widget rendering, wallpaper setup, and Moon geometry. There is no
+`app/src/test` JVM test suite; a Gradle `NO-SOURCE` result is not a test pass.
 
-The launcher icons in `mipmap-*dpi/` are generated from `play_store_icon.png` using the Python script at the project root:
+## Current validation and artifact status
 
-```bash
-python generate_icons.py
-```
+The October 11 Talia build passed app/instrumentation assembly and lint. On the
+Motorola Edge 30 Neo, two Talia and four localization tests passed. All 12
+languages passed focused onboarding/Settings audits at 100% and 130% text size;
+all 144 audio files decoded and Android metadata checks found playable audio.
+See [voiceover](voiceover.md) for coverage and limitations.
 
-This produces all density variants (mdpi through xxxhdpi) and the adaptive icon layers.
+The tablet-layout follow-up passed assembly/lint and 12 functional tests on the
+Motorola. All 12 languages passed tablet-shaped portrait/landscape audits at
+100% and focused audits at 130%, plus a 130% phone regression. A narrower
+640×800dp profile passed English, French, and Arabic. These are virtual Android
+window sizes on the physical phone; actual tablet performance remains untested.
+See [tablet layout](tablet-layout.md) for the exact scope and restoration.
 
----
+The reviewed APK was installed as an update and saved in `~/Projects/APKs` on
+the build host. Only the latest **PaleBlueDot** APK is retained there; other apps'
+artifacts remain untouched. This is a signed sideload test build, not evidence
+of Play production signing or publication. Version metadata remains 3.10/code 12.
 
-## ProGuard / R8
+For future authorized artifact replacement, verify build success, checksum,
+signing identity, package/version, bundled audio, and absence of credentials.
+Copy the final **app APK**, verify it in the destination, then remove older APKs
+belonging to this app only. Never publish the instrumentation APK as the app.
 
-Release builds enable both code shrinking and resource shrinking. The default Android ProGuard rules are applied. No additional keep rules are required because the app uses no reflection-based deserialization or dynamic class loading.
+## Release preparation
 
-```kotlin
-buildTypes {
-    release {
-        isMinifyEnabled         = true
-        isShrinkResources       = true
-        proguardFiles(
-            getDefaultProguardFile("proguard-android-optimize.txt"),
-            "proguard-rules.pro"
-        )
-    }
-}
-```
+1. Review source/asset changes, translation and pronunciation quality, privacy,
+   and the outstanding device checks in [progress](earth-companion-progress.md).
+2. Run `python3 tools/check_localizations.py`, relevant Android checks, and lint;
+   verify recording indexes still match localized resources.
+3. Increment versionCode/versionName when preparing an actual new release. Use
+   [the next-release draft](../store/release-notes/unreleased.md); historical
+   release notes remain unchanged.
+4. Sign with the intended distribution identity using private local signing
+   material; inspect the exact outgoing artifacts and metadata before publishing.
+5. Update Play listing/audience declarations and distribute only when authorized.
+
+Building, generating audio, installing a test build, saving an APK, committing
+source, and publishing to Play are separate actions. The current Talia changes
+have not been published to Play.
+
+## Store artwork
+
+`generate_icons.py` creates launcher density variants from `play_store_icon.png`.
+`tools/make_store_screenshots.py` and `tools/make_feature_graphic.py` prepare store
+artwork. Use synthetic, non-identifying content for any publicly shared fixture
+or capture. Store copy and existing release history live in [store](../store/README.md).

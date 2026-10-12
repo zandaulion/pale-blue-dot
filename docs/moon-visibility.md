@@ -1,7 +1,7 @@
 # Moon visibility guide
 
 The Moon keeps its existing sunlight and texture shading. A neutral, 1dp outline
-marks its silhouette when the Earth-facing side is nearly dark. The outline has
+marks its silhouette only when the Earth-facing side is nearly dark. The outline has
 no glow and does not brighten the interior.
 
 - At 0–3% illumination the guide is fully visible.
@@ -35,5 +35,6 @@ labels in all 12 languages at both 100% and 130% system text size. Native text
 bounds, wrapping, ellipsis, scene-clock agreement, and Earth occlusion checks
 passed. Captures were visually reviewed; Arabic physical positioning and the
 Moon-arrow camera framing were corrected during the audit. Build, Android lint,
-and the 788-string localization validator passed. Test navigation pinning, text
+and the localization validator passed (788 resources at the Moon audit; the current
+catalog has 792 after the narration update). Test navigation pinning, text
 size, app language, and the previous scene time were restored afterward.

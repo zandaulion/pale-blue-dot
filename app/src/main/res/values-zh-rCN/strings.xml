@@ -788,4 +788,8 @@
     <string name="text_elapsed_days">"已过去天数：%1$d"</string>
     <string name="moon_guide_new_moon">"%1$s\n未受光的一面 · 轮廓辅助线"</string>
     <string name="moon_guide_crescent">"细月牙 · %1$s受阳光照射\n轮廓辅助线"</string>
+    <string name="narration_onboarding_prompt" formatted="false">"想让塔莉娅读出卡片内容吗？你可以随时在设置中更改。"</string>
+    <string name="narration_explore_with_talia" formatted="false">"和塔莉娅一起探索"</string>
+    <string name="narration_explore_quietly" formatted="false">"安静地探索"</string>
+    <string name="narration_settings_detail" formatted="false">"卡片由塔莉娅读出。实时信息和分数使用设备的语音。"</string>
 </resources>

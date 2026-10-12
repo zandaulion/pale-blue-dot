@@ -1,81 +1,81 @@
 # Features
 
-## Visual Features
+## Earth and sky
 
-### Earth
+| Feature | Behavior |
+|---|---|
+| Earth | Drag, pinch, momentum, gentle idle rotation, and a remembered viewpoint |
+| Lighting | Clock-based sunlight, city lights, atmosphere, and optional amber terminator |
+| Clouds | Off, Generated, or Satellite; satellite imagery is dated, cached, and approximate |
+| Sky | 16,000 procedural stars, a Milky Way band, and 15 catalog-based constellations |
+| Sun and Moon | Simplified astronomical positions driven by the scene clock |
+| Faint Moon guide | Neutral 1dp outline: full below 3% illumination, fades to zero at 12%; localized New Moon label at up to 1%, otherwise Thin crescent |
+| Sun/Moon arrows | Bring either body into view; the Moon camera framing lifts its disk above Earth |
+| ISS | Tappable illustrative orbit and marker, using a simplified orbit rather than a live feed |
+| Auroras | Optional procedural polar glow, not a forecast |
+| Eclipse alerts | Approximate Sun/Moon alignment checks, not precise local eclipse predictions |
+| Plate boundaries | Offline PB2002-derived layer, optional in Layers |
+| Places | Occluded pins for manually saved points and city-catalog selections; no GPS access |
 
-| Feature | Detail |
-|---------|--------|
-| Day/night lighting | Smooth Lambertian + Fresnel terminator synced to real clock |
-| City lights | NASA Black Marble texture visible on night side |
-| Cloud overlay | NASA VIIRS satellite image downloaded at startup, refreshed every 6 hours; procedural fallback when offline |
-| Atmosphere | Fresnel rim glow (blue halo at Earth's edge) |
-| Terminator line | Amber boundary drawn at the day/night transition |
-| Aurora zones | Animated green/purple glow near geomagnetic poles, visible only on night side |
+The outline identifies an unlit silhouette without brightening the Moon's
+surface. The native label avoids other controls and hides while another panel
+is open or the Moon is occluded/off-screen. See [Moon visibility](moon-visibility.md).
 
-### Sky
+Constellations: Ursa Major, Ursa Minor, Cassiopeia, Cygnus, Lyra, Aquila, Pegasus,
+Leo, Gemini, Taurus, Scorpius, Crux, Canis Major, Centaurus, and Orion.
 
-| Feature | Detail |
-|---------|--------|
-| Stars | 16,000 procedurally generated point sprites with spectral-class colors (O/B/A/F/G/K/M), power-law size distribution, per-star twinkle animation |
-| Milky Way | 30% of stars clustered along galactic plane band |
-| Sun | Billboard quad with layered glow, positioned by astronomical calculation |
-| Moon | Textured sphere (NASA lunar photo) positioned by astronomical calculation |
-| Constellations | 15 major constellations rendered as line-segment stick figures using real J2000 RA/Dec star positions |
+## Navigation and learning
 
-**Constellations included:** Ursa Major, Ursa Minor, Cassiopeia, Cygnus, Lyra, Aquila, Pegasus, Leo, Gemini, Taurus, Scorpius, Crux, Canis Major, Centaurus, Orion.
+| Entry point | Behavior |
+|---|---|
+| Today | Real-time Moon/daylight briefing, attributed recent event, and short prompt; opens on demand |
+| Layers | Persisted cloud mode, event categories, constellations, ISS, aurora, terminator, and plate boundaries |
+| Explore | Places, journeys, Field notebook, challenges, time exploration, and scene guide |
+| Settings | Language, music, volume, Read aloud, Reduce motion, wallpaper, guide, and sharing |
+| Event cards | Persistent until dismissed/replaced; titles, dates, sources, known scientific facts, expandable explanation, save and read-aloud actions |
+| Discoveries | Eight local discoveries retained and migrated into the Field notebook |
+| Challenges | Day/night and available event-category targets; feedback and a local session score |
+| Journeys | Follow sunrise, Explore the Ring of Fire, Understand the seasons; native predictions, feedback, resume/restart, and scene restoration |
+| Time | Temporary ±24-hour scrub, or held date within ±1 year with play/pause, steps, SIMULATED label, seasons comparison, and Now |
+| Sharing | Branded on-device capture, parental gate, then Android's share sheet |
 
-### Overlaid Data
+Current clouds/events are hidden by default during historical/future time
+exploration; an explicitly labelled comparison can show latest observations.
+The simulated clock does not retrieve historical or forecast feed data.
 
-| Feature | Detail |
-|---------|--------|
-| ISS orbit | Triangle-strip ribbon at 51.6° inclination with real-time position marker; orbital period 92.68 min, RAAN precession −5°/day |
-| Location pin | Cyan dot with concentric rings at user's GPS coordinates |
-| Earthquakes | Pulsing point sprites for USGS M4.5+ events in the past 7 days; size scales with magnitude |
-| Volcanoes | Pulsing point sprites for NASA EONET active eruptions in the past 30 days |
-| Sun indicator | 2D screen-space arrow pointing toward the Sun when it is off-screen |
-| Moon indicator | 2D screen-space arrow pointing toward the Moon when it is off-screen |
+## Language, accessibility, and audio
 
----
+The 12 bundled locales are `en-US`, `de-DE`, `es-ES`, `fr-FR`, `ar`, `hi-IN`,
+`ja-JP`, `ko-KR`, `pt-BR`, `ro`, `uk`, and `zh-CN`. Settings → Language overrides
+the device preference, remembers the choice, and offers a return to device
+language. Arabic uses RTL. Interface, lessons, city names, widget, and wallpaper
+settings are translated; public feed titles and saved user text keep their
+original content. See [localization and review status](localization.md).
 
-## Interactive Features
+Scrollable panels and wrapping labels support larger text. Onboarding and configuration forms use bounded reading widths; wide wallpaper windows place the preview beside controls. See [tablet layout](tablet-layout.md). Native event lists
+provide an alternative to selecting globe pixels. Reduce motion suppresses
+decorative motion. Full TalkBack traversal remains an outstanding acceptance
+check; narration is not a substitute for it.
 
-### Camera Controls
+First launch asks whether to **Explore with Talia** or **Explore quietly**. Read
+aloud stays available in Settings. Talia reads fixed sky/day/night/ISS cards,
+Time Traveler, notebook acknowledgment, and fixed challenge feedback offline in
+all 12 languages. Live event facts and changing scores use device TTS when a
+suitable voice is available. Today, journeys, and other panels are not all read
+automatically. Speech stops on close, disabling, or background; Talia also stops
+on audio-focus loss.
+Music is separately optional, with its own volume slider. See [voiceover](voiceover.md).
 
-| Gesture | Action |
-|---------|--------|
-| Single-finger drag | Rotate globe (changes camera azimuth and elevation) |
-| Pinch | Zoom in/out (camera distance 1.15 R → 20 R) |
-| Scroll wheel | Zoom in/out |
-| Release | Momentum / inertia continues rotation with friction factor 0.985 |
+## Home screen and data
 
-### UI Controls
+Earth Today widgets have per-instance place selection and responsive layouts.
+Live wallpaper offers Whole Earth, Night Lights, and Earth's Horizon with saved
+viewpoints and framing. These surfaces use real time and remain silent.
 
-| Control | Action |
-|---------|--------|
-| Time scrubber (SeekBar) | Offset current time ±24 hours; automatically snaps back to "now" after 1 second of release |
-| Status label tap | Toggle cloud overlay on/off |
-| Music button | Toggle looping ambient space audio |
-| Legend button | Open scrollable overlay showing icon legend for all visual elements |
-| Eclipse alert | Popup notification when solar or lunar eclipse alignment is detected |
+Public NASA/USGS feeds cover clouds, M4.5+ earthquakes from the past week, open
+volcanoes, wildfires filtered to ten days, and severe storms filtered to seven
+days. Shared caches preserve dated observations when refresh fails; fresh empty
+feeds and unavailable/stale states remain distinct. See [live data](live-data.md).
 
----
-
-## Live Data Sources
-
-| Data | Source | Refresh | Fallback |
-|------|--------|---------|----------|
-| Cloud cover | NASA Worldview Snapshot API (VIIRS true-color) | 6 hours | Procedural noise texture |
-| Earthquakes | USGS GeoJSON feed (M4.5+, past 7 days) | App start | Empty list |
-| Volcanoes | NASA EONET API (active eruptions, past 30 days) | App start | Empty list |
-
-All APIs are public and require no authentication key.
-
----
-
-## Permissions
-
-| Permission | Purpose |
-|------------|---------|
-| `INTERNET` | Cloud texture download, earthquake/volcano feeds |
-| `ACCESS_COARSE_LOCATION` | GPS location pin (runtime-requested, optional — app works without it) |
+The app requests only `INTERNET`. There are no accounts, ads, tracking SDKs, or
+location/microphone permissions. See [privacy](../PRIVACY.md).

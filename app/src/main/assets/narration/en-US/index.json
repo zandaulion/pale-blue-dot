@@ -1,0 +1,14 @@
+{
+  "Read to me is on. I'll read the cards out loud.": "enabled.mp3",
+  "The night sky! Beyond Earth are thousands of stars, planets, and whole galaxies.": "sky.mp3",
+  "It's daytime here! This side of Earth is facing the Sun right now. Drag the time slider to watch night arrive.": "day.mp3",
+  "It's night-time here. This side is turned away from the Sun — those tiny lights are cities. Drag the time slider to bring the Sun back.": "night.mp3",
+  "International Space Station Astronauts live and work here, about 400 km above Earth — circling the whole planet about every 90 minutes at 28,000 km/h! In this illustration, it is over Earth’s daytime side.": "iss_day.mp3",
+  "International Space Station Astronauts live and work here, about 400 km above Earth — circling the whole planet about every 90 minutes at 28,000 km/h! In this illustration, it is over Earth’s night side.": "iss_night.mp3",
+  "Added to Field notebook.": "added.mp3",
+  "Tap on the Earth to answer!": "tap_earth.mp3",
+  "Yes! That's right.": "correct.mp3",
+  "Not quite — take another look and try again!": "try_again.mp3",
+  "Challenge stopped — play again anytime!": "challenge_stopped.mp3",
+  "Time Traveler You moved time to turn day into night.": "time_traveler.mp3"
+}

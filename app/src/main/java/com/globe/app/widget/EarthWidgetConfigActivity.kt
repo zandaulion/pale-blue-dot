@@ -8,6 +8,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
+import android.view.Gravity
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -15,6 +17,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.globe.app.places.PlaceStore
+import com.globe.app.ui.ReadingColumn
 
 /** Widget instance owns an explicit place choice; cancellation leaves it unconfigured. */
 class EarthWidgetConfigActivity : AppCompatActivity() {
@@ -29,7 +32,7 @@ class EarthWidgetConfigActivity : AppCompatActivity() {
         val prefs = getSharedPreferences("widget_places", Context.MODE_PRIVATE)
         // A saved "" means the child chose "No place yet"; only a missing entry falls back to the primary place.
         val selected = prefs.getString(id.toString(), null) ?: store.primaryId()
-        val root = LinearLayout(this).apply {
+        val root = ReadingColumn(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(24), dp(24), dp(24), dp(24))
             setBackgroundColor(Color.rgb(16, 28, 45))
@@ -75,7 +78,13 @@ class EarthWidgetConfigActivity : AppCompatActivity() {
                 finish()
             }
         }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT))
-        setContentView(root)
+        setContentView(FrameLayout(this).apply {
+            setBackgroundColor(Color.rgb(16, 28, 45))
+            addView(root, FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER_HORIZONTAL
+            ))
+        })
     }
 
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()

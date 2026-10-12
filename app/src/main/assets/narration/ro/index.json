@@ -1,0 +1,14 @@
+{
+  "Citiți pentru mine este pornit. Voi citi cărțile cu voce tare.": "enabled.mp3",
+  "Cerul nopții! Dincolo de Pământ sunt mii de stele, planete și galaxii întregi.": "sky.mp3",
+  "Aici e zi! Această parte a Pământului este îndreptată spre Soare chiar acum. Trageți glisorul de timp pentru a urmări noaptea sosirea.": "day.mp3",
+  "Aici e noapte. Această parte este îndepărtată de Soare - acele luminițe sunt orașe. Trageți cursorul de timp pentru a aduce Soarele înapoi.": "night.mp3",
+  "Stația Spațială Internațională Astronauții trăiesc și lucrează aici, la aproximativ 400 km deasupra Pământului — înconjurând întreaga planetă aproximativ la fiecare 90 de minute cu 28.000 km/h! În această ilustrație, este peste partea de zi a Pământului.": "iss_day.mp3",
+  "Stația Spațială Internațională Astronauții trăiesc și lucrează aici, la aproximativ 400 km deasupra Pământului — înconjurând întreaga planetă aproximativ la fiecare 90 de minute cu 28.000 km/h! În această ilustrație, este peste partea de noapte a Pământului.": "iss_night.mp3",
+  "Adăugat în caietul de câmp.": "added.mp3",
+  "Atingeți Pământul pentru a răspunde!": "tap_earth.mp3",
+  "Da! Asta e corect.": "correct.mp3",
+  "Nu chiar – aruncați o altă privire și încercați din nou!": "try_again.mp3",
+  "Provocarea s-a oprit – joacă din nou oricând!": "challenge_stopped.mp3",
+  "Călător în timp Ai mutat timpul pentru a transforma ziua în noapte.": "time_traveler.mp3"
+}

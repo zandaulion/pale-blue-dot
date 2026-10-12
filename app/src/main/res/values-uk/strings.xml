@@ -788,4 +788,8 @@
     <string name="text_elapsed_days">"Дні, що минули: %1$d"</string>
     <string name="moon_guide_new_moon">"%1$s\nНеосвітлений бік · допоміжний контур"</string>
     <string name="moon_guide_crescent">"Тонкий серп · %1$s освітлено\nДопоміжний контур"</string>
+    <string name="narration_onboarding_prompt" formatted="false">"Хочеш, щоб Талія читала картки вголос? Це можна змінити в налаштуваннях."</string>
+    <string name="narration_explore_with_talia" formatted="false">"Досліджувати з Талією"</string>
+    <string name="narration_explore_quietly" formatted="false">"Досліджувати тихо"</string>
+    <string name="narration_settings_detail" formatted="false">"Картки читає Талія. Поточні дані та результати читаються голосом твого пристрою."</string>
 </resources>

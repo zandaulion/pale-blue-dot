@@ -788,4 +788,8 @@
     <string name="text_elapsed_days">"Verstrichene Tage: %1$d"</string>
     <string name="moon_guide_new_moon">"%1$s\nUnbeleuchtete Seite · Umrisshilfe"</string>
     <string name="moon_guide_crescent">"Schmale Mondsichel · %1$s beleuchtet\nUmrisshilfe"</string>
+    <string name="narration_onboarding_prompt" formatted="false">"Soll Talia dir die Karten vorlesen? Du kannst das in den Einstellungen ändern."</string>
+    <string name="narration_explore_with_talia" formatted="false">"Mit Talia entdecken"</string>
+    <string name="narration_explore_quietly" formatted="false">"Ohne Stimme entdecken"</string>
+    <string name="narration_settings_detail" formatted="false">"Talia liest die Karten vor. Aktuelle Fakten und Punktzahlen liest die Stimme deines Geräts vor."</string>
 </resources>

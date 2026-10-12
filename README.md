@@ -2,7 +2,7 @@
 
 Pale Blue Dot is an interactive 3D Earth and astronomy app for Android, designed for curious kids ages 9–12 and grown-ups. Spin the globe, explore recent events, and learn about Earth and space through discoveries and challenges.
 
-The project directory is named **Globe**. The app is built with Kotlin and raw OpenGL ES 3.0, with native Android views for the interface and no game engine or third-party rendering library.
+The Gradle project is named **Globe**. The app is built with Kotlin and raw OpenGL ES 3.0, with native Android views for the interface and no game engine or third-party rendering library.
 
 ## Explore and learn
 
@@ -11,20 +11,22 @@ The project directory is named **Globe**. The app is built with Kotlin and raw O
 - **Time slider and Explore time** — briefly scrub ±24 hours, or choose and hold a date within one year of today for a labelled simulation, seasons comparison, and one-tap return to Now.
 - **Cloud modes** — choose off, generated clouds, or NASA satellite-derived clouds in Layers.
 - **Earth events** — tap markers for earthquakes, volcanoes, wildfires, and severe storms to see their titles, ages, and explanations written for kids.
-- **Sky and space** — 16,000 procedural stars, a Milky Way band, 15 constellations using J2000 star positions, the Sun and Moon, and an illustrative ISS orbit. Tap the Sun/Moon indicator arrows to bring those bodies into view, or tap the ISS marker for an explanation.
+- **Sky and space** — 16,000 procedural stars, a Milky Way band, 15 constellations using J2000 star positions, the Sun and Moon, and an illustrative ISS orbit. A thin outline and translated label make new Moons and small crescents visible without lighting their dark surface. Tap the Sun/Moon indicator arrows to bring those bodies into view, or tap the ISS marker for an explanation.
 - **Visual effects** — animated aurora zones and approximate solar/lunar eclipse alignment alerts.
 - **Places and Field notebook** — save a named point from the globe or an offline city catalog, set its time zone and primary place, and keep existing discoveries, completed journeys, and saved event observations on-device.
 - **Today and Earth Today widget** — see the Moon, local daylight at a chosen place, a recent attributed event when available, and a short prompt. Each home-screen widget can choose its own place.
 - **Live wallpaper** — configure Whole Earth, Night Lights, or Earth's Horizon, preview it, and launch Android's apply flow.
 - **Deeper exploration** — show the bundled plate-boundary layer and take three guided journeys through sunrise, the Ring of Fire, and seasons.
 - **Find-it challenges** — find daytime, night-time, or a particular event type. Event challenges are offered only when that type is present in the downloaded data.
-- **Audio** — optional read-aloud narration using Android text-to-speech, plus looping ambient music with a volume slider.
-- **Onboarding and legend** — a first-launch introduction and an illustrated guide to the scene.
+- **Audio** — optional offline Talia narration for fixed cards in all 12 languages; changing event facts and scores use Android text-to-speech. Ambient music has a separate switch and volume slider.
+- **Onboarding and legend** — first launch offers “Explore with Talia” or “Explore quietly” and remembers the choice. Read aloud remains available in Settings. An illustrated guide explains the scene.
 - **Sharing** — capture a branded image of the globe and share it through Android's share sheet after a parental gate.
 
-The app supports orientation changes and large screens, including tablets and foldables.
+The app adapts to orientation and window-size changes, with side panels and bounded reading widths on larger screens. See [tablet layout and validation](docs/tablet-layout.md) for tested sizes and hardware limits.
 
 The app supports 12 languages: English, German, Spanish, French, Arabic, Hindi, Japanese, Korean, Brazilian Portuguese, Romanian, Ukrainian, and Simplified Chinese. It follows your device language, with an override in Settings → Language. See [localization coverage and review status](docs/localization.md).
+
+The current checkout includes the Talia integration tested on a Motorola Edge 30 Neo. Version metadata remains 3.10/code 12; the integration has not been published to Play. Existing onboarded users keep their audio preference and are not prompted again.
 
 ## Data and simulation
 
@@ -44,7 +46,7 @@ The scene combines downloaded observations with calculated and illustrative elem
 
 Cloud and event fetches run through a shared background repository. The processed cloud image and versioned event feeds are cached locally, and stale cached feeds remain labelled when refreshes fail. Rendering surfaces re-upload cached data without starting their own downloads.
 
-The requests require no API keys. The time slider changes the astronomical simulation; it does not retrieve historical or forecast clouds or Earth events.
+The app's public-data requests require no API keys. ElevenLabs credentials are used only by the development-time narration generator. The time slider changes the astronomical simulation; it does not retrieve historical or forecast clouds or Earth events.
 
 ## Privacy and permissions
 
@@ -52,6 +54,7 @@ The requests require no API keys. The time slider changes the astronomical simul
 - The only requested permission is `INTERNET`, for public NASA and USGS data.
 - No location permission or GPS access.
 - Preferences, saved places, widget selections, notebook entries, and discovery/journey progress are stored locally in app-private storage.
+- Talia recordings ship in the APK; playback sends nothing to ElevenLabs and requires no microphone access. Device text-to-speech behavior depends on the selected engine and installed voices.
 - Shared images are generated in the app cache on-device. A parental gate precedes the Android share sheet, where the user chooses a destination.
 
 See [PRIVACY.md](PRIVACY.md) for details.
@@ -107,7 +110,8 @@ Sources live in `app/src/main/java/com/globe/app/`:
 | `events/` | NASA/USGS providers, event markers, and screen-to-globe picking |
 | `eclipse/` | Approximate Sun–Earth–Moon alignment detection |
 | `indicators/` | Screen-space Sun and Moon indicator arrows |
-| `kids/` | Discoveries and journal persistence, challenge definitions, daily facts, Moon phase, and parental gate |
+| `kids/` | Discoveries, challenges, daily facts, Moon phase, parental gate, narration text cleanup, and offline Talia playback |
+| `AppLanguage.kt` | Persisted app locale, system locale integration, and localized contexts |
 | `share/` | Frame capture, branding, cache output, and Android sharing |
 | `data/` | Shared event repository and deterministic Today briefing |
 | `places/` | Local saved places, city catalog, sunrise/sunset, and pins |
@@ -123,9 +127,9 @@ Each frame snapshots the simulated time, updates the camera, and draws:
 1. Stars
 2. Constellation lines and markers
 3. Sun billboard and glow
-4. Moon
+4. Moon, including the faint-phase outline
 5. Earth, including clouds, atmosphere, terminator, and aurora effects
-6. Earth event markers
+6. Earth event markers, plate boundaries, seasonal guides, and saved-place pins
 7. ISS orbit and marker
 8. Sun and Moon indicator arrows
 
@@ -133,7 +137,7 @@ The renderer then checks eclipse alignment and reports changes to the UI. Native
 
 ### Assets and dependencies
 
-Bundled textures in `app/src/main/res/drawable-nodpi/` are `earth_day.jpg`, `earth_night.jpg`, and `moon.jpg`. Ambient music is bundled as `app/src/main/res/raw/ambient_space.mp3`.
+Bundled textures in `app/src/main/res/drawable-nodpi/` are `earth_day.jpg`, `earth_night.jpg`, and `moon.jpg`. Ambient music is bundled as `app/src/main/res/raw/ambient_space.mp3`. Talia's 144 MP3s and 12 text-to-clip indexes live in `app/src/main/assets/narration/` (about 15 MB of audio). Building and playing the existing clips requires no ElevenLabs key.
 
 The app's declared library dependencies are AndroidX `core-ktx` and `appcompat`. Rendering, matrix math, networking, image handling, media playback, and narration use Android/JDK APIs.
 
@@ -142,8 +146,12 @@ The app's declared library dependencies are AndroidX `core-ktx` and `appcompat`.
 - [Earth companion implementation guide](docs/earth-companion-implementation-guide.md) — the phased product and engineering specification for GPT-6 SOL, with acceptance criteria and a starting instruction.
 - [Earth companion progress](docs/earth-companion-progress.md) — implemented milestones, USB device checks, screenshots, and unexecuted acceptance checks.
 - [Data credits](docs/data-credits.md) — bundled city and plate-boundary provenance and licenses.
-- [Documentation index](docs/index.md) — technical background; some pages describe earlier versions of the app.
-- [Architecture decisions](ARCHITECTURE.md) — the original rendering design and rationale.
+- [Localization](docs/localization.md) — exact locale tags, translation maintenance, and layout audit coverage.
+- [Moon visibility](docs/moon-visibility.md) — outline thresholds, label placement, and phase checks.
+- [Voiceover](docs/voiceover.md) — narration coverage, local credentials, clip generation, and device validation.
+- [Build and release](docs/build-release.md) — current toolchain, signing, testing, and APK handling.
+- [Documentation index](docs/index.md) — technical background and current implementation references.
+- [Architecture decisions](ARCHITECTURE.md) — rendering, localization, and audio design rationale.
 - [Feature ideas](TODO.md) — an existing backlog of possible additions.
 - [Store listing](store/listing.md) and [release notes](store/release-notes/) — product description and version history.
 

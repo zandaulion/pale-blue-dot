@@ -1,0 +1,14 @@
+{
+  "La lecture est lancée pour moi. Je vais lire les cartes à haute voix.": "enabled.mp3",
+  "Le ciel nocturne ! Au-delà de la Terre se trouvent des milliers d'étoiles, de planètes et de galaxies entières.": "sky.mp3",
+  "Il fait jour ici ! Cette partie de la Terre fait actuellement face au Soleil. Faites glisser le curseur temporel pour regarder la nuit arriver.": "day.mp3",
+  "Il fait nuit ici. Ce côté est tourné à l’opposé du Soleil – ces petites lumières sont des villes. Faites glisser le curseur temporel pour ramener le Soleil.": "night.mp3",
+  "Station spatiale internationale Les astronautes vivent et travaillent ici, à environ 400 km au-dessus de la Terre – faisant le tour de la planète entière toutes les 90 minutes environ à 28 000 km/h ! Dans cette illustration, c’est du côté diurne de la Terre.": "iss_day.mp3",
+  "Station spatiale internationale Les astronautes vivent et travaillent ici, à environ 400 km au-dessus de la Terre – faisant le tour de la planète entière toutes les 90 minutes environ à 28 000 km/h ! Dans cette illustration, c’est du côté nuit de la Terre.": "iss_night.mp3",
+  "Ajouté au carnet de terrain.": "added.mp3",
+  "Appuyez sur la Terre pour répondre !": "tap_earth.mp3",
+  "Oui ! C'est exact.": "correct.mp3",
+  "Pas tout à fait – jetez un autre coup d’œil et réessayez !": "try_again.mp3",
+  "Défi arrêté : rejouez à tout moment !": "challenge_stopped.mp3",
+  "Voyageur temporel Vous avez déplacé le temps pour transformer le jour en nuit.": "time_traveler.mp3"
+}
