@@ -22,13 +22,13 @@ Play. [unreleased.md](release-notes/unreleased.md) holds changes after 3.11.
 The 3.11 notes have a `<locale>` block for each of the app's 12 languages.
 Translation and pronunciation still need independent native-speaker review.
 The app's bundled languages do not automatically localize the store listing;
-`listing.md` remains an English draft.
+the translated listing text must be added separately in Play Console.
 
 ## Store listing
 
-`listing.md` holds the title, short description, and full description
-(en-US) to paste into Play Console. Update it whenever the app's
-positioning changes. The current draft includes the language picker, faint-Moon
+`listing.md` holds the name, short description, and full description for all
+12 app languages to review and paste into Play Console. Update it whenever the
+app's positioning changes. The current draft includes the language picker, faint-Moon
 guide, and Talia opt-in. These additions have been tested in a sideload build;
 the narration has not been published to Play. See [build/release](../docs/build-release.md)
 for signing and release checks, and [voiceover](../docs/voiceover.md) for exact
