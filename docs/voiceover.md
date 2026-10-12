@@ -9,34 +9,44 @@ development and bundled; the app never calls ElevenLabs.
 
 First launch offers **Explore with Talia** or **Explore quietly**. No speech starts
 before a choice. Talia plays an enabling confirmation after the first option;
-quiet exploration starts silently. The choice persists, and **Settings → Read
-aloud** can change it later. Dismissing onboarding does not enable narration.
-Existing onboarded users keep their stored preference and are not prompted again.
+quiet exploration starts silently. **Explore with Talia** enables only Talia;
+Android speech stays off. **Explore quietly** disables both voices. Settings has
+independent **Talia voice** and **Android voice** switches. Talia covers recorded
+lessons; Android speech covers changing event facts and scores only. Dismissing
+onboarding does not enable either voice. Existing users retain their Talia
+preference; Android speech defaults off and must be explicitly enabled. Users
+are not prompted again.
 Music has its own switch and volume slider. Wallpaper and widgets stay silent.
 
 | Surface | Voice and behavior |
 |---|---|
 | Read-aloud enabling confirmation | Talia |
-| Sky, daytime, night, ISS daytime/night cards | Talia when Read aloud is enabled |
+| Sky, daytime, night, ISS daytime/night cards | Talia when Talia voice is enabled |
 | First Time Traveler discovery | Talia |
 | Newly discovered fixed card | Separate Talia notebook acknowledgment followed by the complete card |
 | Fixed challenge feedback | Talia: tap Earth, correct, try again, stopped with no score |
-| Event dialog facts, including Replay | Device TTS when enabled and a suitable voice is available |
-| Challenge completion with a positive score | Device TTS |
-| Recording playback failure | Device TTS when ready and available |
+| Event dialog facts, including Replay | Device TTS only when Android voice is enabled and a suitable voice is available |
+| Challenge completion with a positive score | Device TTS only when Android voice is enabled |
+| Recording playback failure | Silent; never substitutes another voice |
 | Today, daily facts, journeys, places, Guide, notebook panels, Moon label | No automatic read-aloud narration added |
 
 This feature is optional narration, separate from Android TalkBack. It does not
 provide a screen reader for every control or panel. Remote NASA/USGS titles keep
 the source language even when the surrounding interface is translated.
 
-Closing a card or event dialog, turning Read aloud off, or leaving the app stops
-speech. Talia also stops on audio-focus loss. It does not resume automatically. Talia uses
+Closing a card or event dialog, or leaving the app, stops both voices. Turning a
+voice switch off stops that voice independently. The event dialog's Read aloud
+replay action appears only when Android voice is enabled. Talia also stops on
+audio-focus loss. It does not resume automatically. Talia uses
 transient audio focus with speech attributes; if focus is refused, playback stays
 silent instead of bypassing the refusal through device TTS. Device TTS depends
 on the selected engine and available locale; a missing voice can leave changing
 facts silent. Offline playback is guaranteed by the bundled Talia clips, not by
 all possible device TTS engines.
+
+Day/night cards introduce each discovery once. Later ordinary Earth taps do not
+reopen or restart speech; touch and hold deliberately revisits the lesson. See
+[globe interactions](globe-interactions.md).
 
 ## Recordings and runtime
 
@@ -128,6 +138,22 @@ The October 11, 2026 Motorola Edge 30 Neo checks passed:
   retried after a foreground-focus interruption, then passed.
 - App and instrumentation builds and Android lint passed. All MP3s decoded to
   nonempty audio locally. The reviewed APK contained all clips and no API key.
+
+The October 12, 2026 independent-switch update was also checked on the Motorola:
+
+- Four `TaliaNarrationTest` cases passed, covering the same 144 recordings,
+  Talia-only first-launch opt-in, quiet mode, legacy preference handling,
+  independent Settings switches and persistence, all four routing combinations,
+  and a deliberately missing recording staying silent even with Android enabled.
+- All 11 combined voice, globe-interaction and localization cases passed with
+  native gesture tests protected from system navigation interruptions.
+- The updated switches were captured in all 12 languages at 100% and 130% text
+  size. Korean normal-size and Spanish large-text captures were repeated with
+  foreground checks and navigation protection after Recents interrupted them.
+  The reviewed app captures show no voice-control text clipping or overlap.
+- Android app/test builds and lint passed; resource validation now covers 795
+  translated strings per locale. Existing spoken scripts and recordings did not
+  change, so no ElevenLabs regeneration or API request was needed.
 
 Use [build/test instructions](build-release.md) and the
 [focused layout audit](localization.md) to repeat these checks. Captures and local

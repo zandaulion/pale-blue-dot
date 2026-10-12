@@ -31,7 +31,8 @@ Leo, Gemini, Taurus, Scorpius, Crux, Canis Major, Centaurus, and Orion.
 | Today | Real-time Moon/daylight briefing, attributed recent event, and short prompt; opens on demand |
 | Layers | Persisted cloud mode, event categories, constellations, ISS, aurora, terminator, and plate boundaries |
 | Explore | Places, journeys, Field notebook, challenges, time exploration, and scene guide |
-| Settings | Language, music, volume, Read aloud, Reduce motion, wallpaper, guide, and sharing |
+| Settings | Language, music, volume, Talia voice, Android voice, Reduce motion, wallpaper, guide, and sharing |
+| Day/night lessons | First discovery opens once; touch and hold Earth to revisit or save a point; repeated ordinary taps stay quiet |
 | Event cards | Persistent until dismissed/replaced; titles, dates, sources, known scientific facts, expandable explanation, save and read-aloud actions |
 | Discoveries | Eight local discoveries retained and migrated into the Field notebook |
 | Challenges | Day/night and available event-category targets; feedback and a local session score |
@@ -42,6 +43,8 @@ Leo, Gemini, Taurus, Scorpius, Crux, Canis Major, Centaurus, and Orion.
 Current clouds/events are hidden by default during historical/future time
 exploration; an explicitly labelled comparison can show latest observations.
 The simulated clock does not retrieve historical or forecast feed data.
+
+See [globe interactions](globe-interactions.md) for tap/hold behavior and gesture checks.
 
 ## Language, accessibility, and audio
 
@@ -57,11 +60,12 @@ provide an alternative to selecting globe pixels. Reduce motion suppresses
 decorative motion. Full TalkBack traversal remains an outstanding acceptance
 check; narration is not a substitute for it.
 
-First launch asks whether to **Explore with Talia** or **Explore quietly**. Read
-aloud stays available in Settings. Talia reads fixed sky/day/night/ISS cards,
+First launch asks whether to **Explore with Talia** (Talia only) or **Explore
+quietly** (both voices off). Settings provides independent Talia voice and Android
+voice switches. Talia reads fixed sky/day/night/ISS cards,
 Time Traveler, notebook acknowledgment, and fixed challenge feedback offline in
-all 12 languages. Live event facts and changing scores use device TTS when a
-suitable voice is available. Today, journeys, and other panels are not all read
+all 12 languages. Live event facts and changing scores use device TTS only after enabling Android
+voice and when a suitable voice is available. Failed recordings stay silent. Today, journeys, and other panels are not all read
 automatically. Speech stops on close, disabling, or background; Talia also stops
 on audio-focus loss.
 Music is separately optional, with its own volume slider. See [voiceover](voiceover.md).

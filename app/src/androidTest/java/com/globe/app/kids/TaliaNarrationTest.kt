@@ -5,6 +5,9 @@ import android.content.res.Configuration
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.os.LocaleList
+import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.widget.Switch
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -48,7 +51,7 @@ class TaliaNarrationTest {
         )
         for (tag in AppLanguage.tags) {
             val ctx = context(tag)
-            val narrator = TaliaNarrator(ctx) { fail("Unexpected fallback") }
+            val narrator = TaliaNarrator(ctx)
             val all = resources.flatMap { resource ->
                 val text = ctx.getString(resource)
                 val clip = requireNotNull(narrator.clipsFor(text)) { "$tag/$resource missing" }
@@ -77,29 +80,32 @@ class TaliaNarrationTest {
 
     @Test fun firstLaunchChoicePersistsAndPlaybackStopsWhenLeavingOrSwitchingOff() {
         val prefs = base.getSharedPreferences("globe_prefs", Context.MODE_PRIVATE)
-        val keys = listOf("onboarded", "narrate_enabled")
+        val keys = listOf("onboarded", "narrate_enabled", "device_narrate_enabled")
         val before = keys.associateWith { if (prefs.contains(it)) prefs.getBoolean(it, false) else null }
         try {
-            prefs.edit().putBoolean("onboarded", false).putBoolean("narrate_enabled", false).commit()
+            prefs.edit().putBoolean("onboarded", false).putBoolean("narrate_enabled", false).putBoolean("device_narrate_enabled", true).commit()
             ActivityScenario.launch(MainActivity::class.java).use { scenario ->
                 scenario.onActivity { activity ->
                     assertEquals(View.VISIBLE, (field(activity, "onboardingOverlay") as View).visibility)
                     click(activity, R.string.narration_explore_quietly)
                     assertFalse(prefs.getBoolean("narrate_enabled", true))
                     assertTrue(prefs.getBoolean("onboarded", false))
+                    assertFalse(prefs.getBoolean("device_narrate_enabled", true))
                 }
                 scenario.recreate()
                 scenario.onActivity { activity ->
                     assertEquals(View.GONE, (field(activity, "onboardingOverlay") as View).visibility)
                     assertEquals(false, field(activity, "narrateEnabled"))
+                    assertEquals(false, field(activity, "deviceNarrateEnabled"))
                 }
             }
-            prefs.edit().putBoolean("onboarded", false).putBoolean("narrate_enabled", false).commit()
+            prefs.edit().putBoolean("onboarded", false).putBoolean("narrate_enabled", false).putBoolean("device_narrate_enabled", true).commit()
             ActivityScenario.launch(MainActivity::class.java).use { scenario ->
                 scenario.onActivity { activity -> click(activity, R.string.narration_explore_with_talia) }
                 Thread.sleep(500)
                 scenario.onActivity { activity ->
                     assertTrue(prefs.getBoolean("narrate_enabled", false))
+                    assertFalse(prefs.getBoolean("device_narrate_enabled", true))
                     val narrator = field(activity, "taliaNarrator") as TaliaNarrator
                     val player = TaliaNarrator::class.java.getDeclaredField("player").apply { isAccessible = true }.get(narrator) as MediaPlayer?
                     assertNotNull("Talia did not start after choosing narration", player)
@@ -115,6 +121,7 @@ class TaliaNarrationTest {
                 scenario.onActivity { activity ->
                     assertEquals(View.GONE, (field(activity, "onboardingOverlay") as View).visibility)
                     assertEquals(true, field(activity, "narrateEnabled"))
+                    assertEquals(false, field(activity, "deviceNarrateEnabled"))
                     MainActivity::class.java.getDeclaredMethod("toggleNarration").apply { isAccessible = true }.invoke(activity)
                     assertFalse(prefs.getBoolean("narrate_enabled", true))
                     val narrator = field(activity, "taliaNarrator") as TaliaNarrator
@@ -127,4 +134,97 @@ class TaliaNarrationTest {
             edit.commit()
         }
     }
+
+    private class RecordingTts(context: Context) : TextToSpeech(context, null) {
+        val spoken = mutableListOf<String>()
+        override fun speak(text: CharSequence?, queueMode: Int, params: Bundle?, utteranceId: String?): Int {
+            spoken += text.toString()
+            return SUCCESS
+        }
+    }
+
+    private fun withSavedVoicePreferences(block: (android.content.SharedPreferences) -> Unit) {
+        val prefs = base.getSharedPreferences("globe_prefs", Context.MODE_PRIVATE)
+        val keys = listOf("onboarded", "narrate_enabled", "device_narrate_enabled")
+        val before = keys.associateWith { if (prefs.contains(it)) prefs.getBoolean(it, false) else null }
+        try { block(prefs) } finally {
+            val edit = prefs.edit()
+            before.forEach { (key, value) -> if (value == null) edit.remove(key) else edit.putBoolean(key, value) }
+            edit.commit()
+        }
+    }
+
+    @Test fun legacyNarrationEnablesOnlyTaliaAndSettingsPersistIndependently() = withSavedVoicePreferences { prefs ->
+        prefs.edit().putBoolean("onboarded", true).putBoolean("narrate_enabled", true)
+            .remove("device_narrate_enabled").commit()
+        ActivityScenario.launch(MainActivity::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                assertEquals(true, field(activity, "narrateEnabled"))
+                assertEquals(false, field(activity, "deviceNarrateEnabled"))
+                MainActivity::class.java.getDeclaredMethod("showCompanionPanel", String::class.java)
+                    .apply { isAccessible = true }.invoke(activity, "Settings")
+                fun switch(resource: Int) = descendants(activity.window.decorView).filterIsInstance<Switch>()
+                    .single { it.text.toString().startsWith(activity.getString(resource) + "\n") }
+                assertTrue(switch(R.string.narration_talia_label).isChecked)
+                assertFalse(switch(R.string.narration_android_label).isChecked)
+                switch(R.string.narration_android_label).performClick()
+                assertTrue(prefs.getBoolean("narrate_enabled", false))
+                assertTrue(prefs.getBoolean("device_narrate_enabled", false))
+                switch(R.string.narration_talia_label).performClick()
+                assertFalse(prefs.getBoolean("narrate_enabled", true))
+                assertTrue(prefs.getBoolean("device_narrate_enabled", false))
+            }
+            scenario.recreate()
+            scenario.onActivity { activity ->
+                assertEquals(false, field(activity, "narrateEnabled"))
+                assertEquals(true, field(activity, "deviceNarrateEnabled"))
+            }
+        }
+    }
+
+    @Test fun voicesRouteIndependentlyAndMissingRecordingsNeverUseAndroid() = withSavedVoicePreferences { prefs ->
+        prefs.edit().putBoolean("onboarded", true).putBoolean("narrate_enabled", false)
+            .putBoolean("device_narrate_enabled", false).commit()
+        ActivityScenario.launch(MainActivity::class.java).use { scenario ->
+            lateinit var recorder: RecordingTts
+            scenario.onActivity { activity ->
+                recorder = RecordingTts(activity)
+                val ttsField = MainActivity::class.java.getDeclaredField("tts").apply { isAccessible = true }
+                (ttsField.get(activity) as TextToSpeech).shutdown()
+                ttsField.set(activity, recorder)
+                MainActivity::class.java.getDeclaredField("ttsReady").apply { isAccessible = true }.setBoolean(activity, true)
+                val say = MainActivity::class.java.getDeclaredMethod("speak", String::class.java).apply { isAccessible = true }
+                val natural = MainActivity::class.java.getDeclaredField("narrateEnabled").apply { isAccessible = true }
+                val device = MainActivity::class.java.getDeclaredField("deviceNarrateEnabled").apply { isAccessible = true }
+                val narrator = field(activity, "taliaNarrator") as TaliaNarrator
+                val player = TaliaNarrator::class.java.getDeclaredField("player").apply { isAccessible = true }
+                val lesson = activity.getString(R.string.text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now)
+                val facts = "Example observation: magnitude 5.2."
+                for (taliaOn in listOf(false, true)) for (androidOn in listOf(false, true)) {
+                    natural.setBoolean(activity, taliaOn); device.setBoolean(activity, androidOn)
+                    narrator.stop(); recorder.spoken.clear()
+                    say.invoke(activity, lesson)
+                    assertEquals(taliaOn, player.get(narrator) != null)
+                    assertTrue("A recorded lesson must never use Android", recorder.spoken.isEmpty())
+                    say.invoke(activity, facts)
+                    assertNull(player.get(narrator))
+                    assertEquals(if (androidOn) listOf(facts) else emptyList<String>(), recorder.spoken)
+                }
+                natural.setBoolean(activity, true); device.setBoolean(activity, true)
+                @Suppress("UNCHECKED_CAST")
+                val index = (TaliaNarrator::class.java.getDeclaredField("index\$delegate")
+                    .apply { isAccessible = true }.get(narrator) as Lazy<Map<String, String>>).value as MutableMap<String, String>
+                val key = NarrationText.clean(lesson)
+                val original = index.getValue(key)
+                try {
+                    index[key] = "missing-test-recording.mp3"
+                    recorder.spoken.clear()
+                    say.invoke(activity, lesson)
+                    assertNull(player.get(narrator))
+                    assertTrue("Playback failure must stay silent", recorder.spoken.isEmpty())
+                } finally { index[key] = original }
+            }
+        }
+    }
+
 }

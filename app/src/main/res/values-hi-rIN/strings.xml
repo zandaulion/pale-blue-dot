@@ -119,7 +119,7 @@
     <string name="text_bundled_cities" formatted="false">"बंडल शहर"</string>
     <string name="text_cancel" formatted="false">"रद्द करें"</string>
     <string name="text_add_a_place_from_the_globe" formatted="false">"ग्लोब से एक स्थान जोड़ें"</string>
-    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"ग्लोब पर एक बिंदु पर टैप करें, फिर इसके कार्ड के नीचे + इस स्थान को सहेजें पर टैप करें।"</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"पृथ्वी पर किसी बिंदु को छूकर दबाए रखो, फिर उसके कार्ड के नीचे + इस स्थान को सहेजें पर टैप करो।"</string>
     <string name="text_time_zone_unset" formatted="false">"समय क्षेत्र अनिर्धारित"</string>
     <string name="text_set_as_primary" formatted="false">"प्राथमिक के रूप में सेट करें"</string>
     <string name="text_rename" formatted="false">"नाम बदलें"</string>
@@ -275,7 +275,7 @@
     <string name="text_a_living_window_onto_earth" formatted="false">"पृथ्वी पर एक जीवित खिड़की"</string>
     <string name="text_drag_to_rotate" formatted="false">"घुमाने के लिए खींचें"</string>
     <string name="text_pinch_to_zoom" formatted="false">"ज़ूम करने के लिए पिंच करें"</string>
-    <string name="text_tap_the_globe_to_discover_more" formatted="false">"अधिक जानने के लिए ग्लोब पर टैप करें"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"दिन और रात जानने के लिए पृथ्वी पर टैप करो। दोबारा देखने के लिए छूकर दबाए रखो।"</string>
     <string name="text_explore_earth" formatted="false">"पृथ्वी का अन्वेषण करें"</string>
     <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"लाइव पूर्वावलोकन · वर्तमान धूप · कोई ऑडियो नहीं"</string>
     <string name="text_preview_set_wallpaper" formatted="false">"वॉलपेपर का पूर्वावलोकन करें और सेट करें"</string>
@@ -791,5 +791,8 @@
     <string name="narration_onboarding_prompt" formatted="false">"क्या तुम चाहोगे कि तालिया कार्ड पढ़कर सुनाए? इसे सेटिंग्स में बदल सकते हो।"</string>
     <string name="narration_explore_with_talia" formatted="false">"तालिया के साथ खोजें"</string>
     <string name="narration_explore_quietly" formatted="false">"बिना आवाज़ के खोजें"</string>
-    <string name="narration_settings_detail" formatted="false">"तालिया कार्ड पढ़कर सुनाती है। ताज़ा जानकारी और स्कोर के लिए आपके डिवाइस की आवाज़ इस्तेमाल होती है।"</string>
+    <string name="narration_settings_detail" formatted="false">"रिकॉर्ड किए गए पाठों के लिए स्वाभाविक आवाज़।"</string>
+    <string name="narration_talia_label" formatted="false">"तालिया की आवाज़"</string>
+    <string name="narration_android_label" formatted="false">"Android की आवाज़"</string>
+    <string name="narration_android_detail" formatted="false">"घटनाओं की ताज़ा जानकारी और स्कोर के लिए डिवाइस की आवाज़।"</string>
 </resources>

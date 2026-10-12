@@ -18,9 +18,11 @@ The Gradle project is named **Globe**. The app is built with Kotlin and raw Open
 - **Live wallpaper** — configure Whole Earth, Night Lights, or Earth's Horizon, preview it, and launch Android's apply flow.
 - **Deeper exploration** — show the bundled plate-boundary layer and take three guided journeys through sunrise, the Ring of Fire, and seasons.
 - **Find-it challenges** — find daytime, night-time, or a particular event type. Event challenges are offered only when that type is present in the downloaded data.
-- **Audio** — optional offline Talia narration for fixed cards in all 12 languages; changing event facts and scores use Android text-to-speech. Ambient music has a separate switch and volume slider.
-- **Onboarding and legend** — first launch offers “Explore with Talia” or “Explore quietly” and remembers the choice. Read aloud remains available in Settings. An illustrated guide explains the scene.
+- **Audio** — optional offline Talia narration for fixed cards in all 12 languages; a separate Android voice switch opts into changing event facts and scores. Ambient music has a separate switch and volume slider.
+- **Onboarding and legend** — first launch offers “Explore with Talia” or “Explore quietly” and remembers the choice. Settings has separate Talia voice and Android voice switches; choosing Talia enables only the natural voice. An illustrated guide explains the scene.
 - **Sharing** — capture a branded image of the globe and share it through Android's share sheet after a parental gate.
+
+Day/night lessons appear once as new discoveries. Touch and hold Earth to revisit a lesson or save that point; later ordinary taps stay quiet. See [globe interactions](docs/globe-interactions.md).
 
 The app adapts to orientation and window-size changes, with side panels and bounded reading widths on larger screens. See [tablet layout and validation](docs/tablet-layout.md) for tested sizes and hardware limits.
 

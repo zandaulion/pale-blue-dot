@@ -119,7 +119,7 @@
     <string name="text_bundled_cities" formatted="false">"Gebündelte Städte"</string>
     <string name="text_cancel" formatted="false">"Abbrechen"</string>
     <string name="text_add_a_place_from_the_globe" formatted="false">"Fügen Sie einen Ort aus der Welt hinzu"</string>
-    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Tippen Sie auf einen Punkt auf dem Globus und dann unter seiner Karte auf + Diesen Ort speichern."</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Halte einen Punkt auf der Erde gedrückt und tippe dann unter der Karte auf + Diesen Ort speichern."</string>
     <string name="text_time_zone_unset" formatted="false">"Zeitzone nicht eingestellt"</string>
     <string name="text_set_as_primary" formatted="false">"Als primär festlegen"</string>
     <string name="text_rename" formatted="false">"Umbenennen"</string>
@@ -275,7 +275,7 @@
     <string name="text_a_living_window_onto_earth" formatted="false">"Ein lebendiges Fenster zur Erde"</string>
     <string name="text_drag_to_rotate" formatted="false">"Zum Drehen ziehen"</string>
     <string name="text_pinch_to_zoom" formatted="false">"Zum Zoomen kneifen"</string>
-    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Tippen Sie auf den Globus, um mehr zu entdecken"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Tippe auf die Erde, um Tag und Nacht zu entdecken. Halte sie gedrückt, um mehr zu erfahren."</string>
     <string name="text_explore_earth" formatted="false">"Erkunden Sie die Erde"</string>
     <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"Live-Vorschau · aktuelles Sonnenlicht · kein Ton"</string>
     <string name="text_preview_set_wallpaper" formatted="false">"Vorschau anzeigen und Hintergrundbild festlegen"</string>
@@ -791,5 +791,8 @@
     <string name="narration_onboarding_prompt" formatted="false">"Soll Talia dir die Karten vorlesen? Du kannst das in den Einstellungen ändern."</string>
     <string name="narration_explore_with_talia" formatted="false">"Mit Talia entdecken"</string>
     <string name="narration_explore_quietly" formatted="false">"Ohne Stimme entdecken"</string>
-    <string name="narration_settings_detail" formatted="false">"Talia liest die Karten vor. Aktuelle Fakten und Punktzahlen liest die Stimme deines Geräts vor."</string>
+    <string name="narration_settings_detail" formatted="false">"Natürliche Stimme für aufgezeichnete Lernkarten."</string>
+    <string name="narration_talia_label" formatted="false">"Talias Stimme"</string>
+    <string name="narration_android_label" formatted="false">"Android-Stimme"</string>
+    <string name="narration_android_detail" formatted="false">"Gerätestimme für aktuelle Ereignisdaten und Punktzahlen."</string>
 </resources>

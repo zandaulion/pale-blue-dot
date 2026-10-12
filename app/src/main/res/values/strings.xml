@@ -120,7 +120,7 @@
     <string name="text_bundled_cities" formatted="false">"Bundled cities"</string>
     <string name="text_cancel" formatted="false">"Cancel"</string>
     <string name="text_add_a_place_from_the_globe" formatted="false">"Add a place from the globe"</string>
-    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Tap a point on the globe, then tap + Save this place under its card."</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Touch and hold a point on Earth, then tap + Save this place under its card."</string>
     <string name="text_time_zone_unset" formatted="false">"Time zone unset"</string>
     <string name="text_set_as_primary" formatted="false">"Set as primary"</string>
     <string name="text_rename" formatted="false">"Rename"</string>
@@ -276,7 +276,7 @@
     <string name="text_a_living_window_onto_earth" formatted="false">"A living window onto Earth"</string>
     <string name="text_drag_to_rotate" formatted="false">"Drag to rotate"</string>
     <string name="text_pinch_to_zoom" formatted="false">"Pinch to zoom"</string>
-    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Tap the globe to discover more"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Tap Earth to discover day/night. Touch and hold to revisit."</string>
     <string name="text_explore_earth" formatted="false">"Explore Earth"</string>
     <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"Live preview · current sunlight · no audio"</string>
     <string name="text_preview_set_wallpaper" formatted="false">"Preview &amp; set wallpaper"</string>
@@ -792,5 +792,8 @@
     <string name="narration_onboarding_prompt" formatted="false">"Would you like Talia to read cards aloud? You can change this in Settings."</string>
     <string name="narration_explore_with_talia" formatted="false">"Explore with Talia"</string>
     <string name="narration_explore_quietly" formatted="false">"Explore quietly"</string>
-    <string name="narration_settings_detail" formatted="false">"Cards use Talia. Live facts and scores use your device’s voice."</string>
+    <string name="narration_settings_detail" formatted="false">"Natural voice for recorded lessons."</string>
+    <string name="narration_talia_label" formatted="false">"Talia voice"</string>
+    <string name="narration_android_label" formatted="false">"Android voice"</string>
+    <string name="narration_android_detail" formatted="false">"Device voice for live event facts and scores."</string>
 </resources>

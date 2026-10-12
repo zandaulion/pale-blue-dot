@@ -119,7 +119,7 @@
     <string name="text_bundled_cities" formatted="false">"Villes regroupées"</string>
     <string name="text_cancel" formatted="false">"Annuler"</string>
     <string name="text_add_a_place_from_the_globe" formatted="false">"Ajouter un lieu du globe"</string>
-    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Appuyez sur un point du globe, puis appuyez sur + Enregistrer ce lieu sous sa carte."</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Maintiens le doigt sur un point de la Terre, puis touche + Enregistrer ce lieu sous sa carte."</string>
     <string name="text_time_zone_unset" formatted="false">"Fuseau horaire non défini"</string>
     <string name="text_set_as_primary" formatted="false">"Définir comme principal"</string>
     <string name="text_rename" formatted="false">"Renommer"</string>
@@ -275,7 +275,7 @@
     <string name="text_a_living_window_onto_earth" formatted="false">"Une fenêtre vivante sur la Terre"</string>
     <string name="text_drag_to_rotate" formatted="false">"Faites glisser pour faire pivoter"</string>
     <string name="text_pinch_to_zoom" formatted="false">"Pincer pour zoomer"</string>
-    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Appuyez sur le globe pour en savoir plus"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Touche la Terre pour découvrir le jour et la nuit. Maintiens le doigt pour revoir la carte."</string>
     <string name="text_explore_earth" formatted="false">"Explorez la Terre"</string>
     <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"Aperçu en direct · lumière du soleil actuelle · pas de son"</string>
     <string name="text_preview_set_wallpaper" formatted="false">"Aperçu et définition du fond d\'écran"</string>
@@ -791,5 +791,8 @@
     <string name="narration_onboarding_prompt" formatted="false">"Veux-tu que Talia lise les cartes à voix haute ? Tu peux changer cela dans les paramètres."</string>
     <string name="narration_explore_with_talia" formatted="false">"Explorer avec Talia"</string>
     <string name="narration_explore_quietly" formatted="false">"Explorer en silence"</string>
-    <string name="narration_settings_detail" formatted="false">"Talia lit les cartes. Les données en direct et les scores utilisent la voix de ton appareil."</string>
+    <string name="narration_settings_detail" formatted="false">"Voix naturelle pour les leçons enregistrées."</string>
+    <string name="narration_talia_label" formatted="false">"Voix de Talia"</string>
+    <string name="narration_android_label" formatted="false">"Voix Android"</string>
+    <string name="narration_android_detail" formatted="false">"Voix de ton appareil pour les données des événements et les scores."</string>
 </resources>

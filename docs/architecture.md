@@ -89,10 +89,12 @@ and user-entered text do not change with locale. See [localization](localization
 ### Narration
 
 ```text
-First-launch choice / Settings → persisted Read aloud preference
+First launch → Talia only, or both voices off
+Settings → independent persisted Talia voice / Android voice preferences
 Card text → NarrationText.clean → TaliaNarrator catalog lookup
-  → matching clip(s): local MediaPlayer + transient speech audio focus
-  → unmatched changing text / playback failure: available device TTS
+  → matching clip(s): Talia opt-in → local MediaPlayer + speech audio focus
+  → unmatched changing text: Android opt-in → available device TTS
+Recording failure → silence; no voice substitution
 Close / off / background / focus loss → stop, no automatic restart
 ```
 

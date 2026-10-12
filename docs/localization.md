@@ -130,7 +130,7 @@ that review remains appropriate before a public release.
 ## Validation of this change
 
 The app and Android instrumentation tests compile successfully, and Android lint
-passes. The source validator passes for all 12 locales and all 792 translatable
+passes. The source validator passes for all 12 locales and all 795 translatable
 resources. The lesson mappings cover all 71 text fields, and the city mappings
 cover all 303 catalog entries. JVM narration checks pass for Hindi, Arabic,
 Japanese, Korean, Romanian, and Ukrainian, including combining marks and
@@ -153,3 +153,10 @@ languages at 100% and 130% text size. The larger-text pass required a retry of
 Romanian, Ukrainian, and Chinese after the app lost foreground focus; the retry
 reported no clipping or overlap. Pronunciation quality still requires listening
 and native-speaker review; layout and playback checks do not establish it.
+
+The separate Talia/Android voice controls add three translated resources (795
+total). Their October 12 Motorola audit covered all 12 languages at 100% and
+130% text size. Korean at 100% and Spanish at 130% were repeated after system
+Recents interrupted captures. The opt-in `-e auditPinTask true` protects the Main
+activity's task; captures now require foreground window focus. Task pinning is
+released before cleanup, allowing the system unlock transition to finish.

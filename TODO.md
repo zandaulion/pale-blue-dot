@@ -21,9 +21,11 @@
 
 - [x] Twelve bundled languages, Arabic RTL, and Settings language switcher.
 - [x] New Moon/thin-crescent outline and localized label without artificial lighting.
-- [x] Talia fixed-card narration in all 12 languages, first-launch opt-in, and Settings control.
+- [x] Talia fixed-card narration in all 12 languages, first-launch opt-in, and independent Talia/Android Settings controls.
 - [x] Motorola layout audits at normal and 130% text size; Talia playback/lifecycle checks.
 - [x] Tablet-width welcome/wallpaper/widget improvements; multilingual portrait, landscape, narrower-window, and phone regression checks.
+
+- [x] Day/night lessons appear once per discovery, with deliberate touch-and-hold reopening.
 
 ## Validation and maintenance follow-ups
 
@@ -33,6 +35,6 @@
 - [ ] Extract focused UI components from MainActivity as concrete maintenance work requires.
 - [ ] Prepare the next Play release: new version metadata, signing, reviewed store copy, and release checks.
 
-Dynamic facts/scores currently use device TTS; extending Talia to other panels
+Dynamic facts/scores use separately opted-in device TTS; extending Talia to other panels
 requires a separate coverage decision. Speculative feature ideas above are not
 commitments to add services or permissions.

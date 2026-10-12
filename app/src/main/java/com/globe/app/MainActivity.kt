@@ -91,7 +91,8 @@ class MainActivity : AppCompatActivity() {
         private const val PREF_CAM_EL = "cam_el"
         private const val PREF_CAM_DIST = "cam_dist"
         private const val PREF_TODAY_SHOWN_DAY = "today_shown_day"
-        private const val PREF_NARRATE = "narrate_enabled"
+        private const val PREF_NARRATE = "narrate_enabled" // Existing preference now controls Talia only.
+        private const val PREF_DEVICE_NARRATE = "device_narrate_enabled"
         private const val PREF_ONBOARDED = "onboarded"
         private const val STATE_SETTINGS_OPEN = "settings_open"
     }
@@ -165,6 +166,7 @@ class MainActivity : AppCompatActivity() {
     private var tts: TextToSpeech? = null
     private var ttsReady = false
     private var narrateEnabled = false
+    private var deviceNarrateEnabled = false
     private lateinit var taliaNarrator: TaliaNarrator
     private var scrubberAnimator: ValueAnimator? = null
     private var cloudTimestamp: String? = null
@@ -305,7 +307,8 @@ class MainActivity : AppCompatActivity() {
         musicEnabled = prefs.getBoolean(PREF_MUSIC_ENABLED, false)
         musicVolume = prefs.getFloat(PREF_MUSIC_VOLUME, 0.4f)
         narrateEnabled = prefs.getBoolean(PREF_NARRATE, false)
-        taliaNarrator = TaliaNarrator(this, ::speakWithDevice)
+        deviceNarrateEnabled = prefs.getBoolean(PREF_DEVICE_NARRATE, false)
+        taliaNarrator = TaliaNarrator(this)
 
         tts = TextToSpeech(this) { status ->
             if (status == TextToSpeech.SUCCESS) {
@@ -424,7 +427,8 @@ class MainActivity : AppCompatActivity() {
                     runOnUiThread { updateEclipseLabel(state) }
                 }
             },
-            onGlobeTap = { x, y -> onGlobeTapped(x, y) }
+            onGlobeTap = { x, y -> onGlobeTapped(x, y) },
+            onGlobeLongPress = { x, y -> onGlobeHeld(x, y) }
         )
 
         // Restore saved view state (camera pose + cloud visibility)
@@ -883,8 +887,11 @@ class MainActivity : AppCompatActivity() {
                 override fun onStopTrackingTouch(bar: SeekBar) {}
             })
         })
-        panelSwitch(getString(R.string.text_read_aloud), getString(R.string.narration_settings_detail), narrateEnabled) { enabled ->
-            if (narrateEnabled != enabled) toggleNarration()
+        panelSwitch(getString(R.string.narration_talia_label), getString(R.string.narration_settings_detail), narrateEnabled) {
+            setNarrationEnabled(it)
+        }
+        panelSwitch(getString(R.string.narration_android_label), getString(R.string.narration_android_detail), deviceNarrateEnabled) {
+            setDeviceNarrationEnabled(it)
         }
         panelSwitch(getString(R.string.companion_reduce_motion),
             getString(R.string.text_stops_idle_spin_and_decorative_marker_movement), layers.reduceMotion) {
@@ -957,6 +964,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun populateCompanionGuide() {
         panelAction(getString(R.string.text_explore)) { showCompanionPanel("Explore") }
+        companionColumn.addView(panelText(getString(R.string.text_tap_the_globe_to_discover_more), 15f))
         listOf(
             getString(R.string.text_sunlight_and_city_lights) to getString(R.string.text_calculated_sunlight_shows_the_current_day_and_night_sides),
             getString(R.string.companion_clouds) to getString(R.string.text_generated_clouds_are_illustrative_satellite_mode_derives_opacity),
@@ -1470,7 +1478,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // ------------------------------------------------------------------
-    // Tap-to-learn: identify event markers, or explain day/night anywhere
+    // Tap markers or discover day/night once; hold Earth to revisit a lesson.
     // ------------------------------------------------------------------
 
     private fun onGlobeTapped(x: Float, y: Float) {
@@ -1514,13 +1522,19 @@ class MainActivity : AppCompatActivity() {
         // Pick radius grows as the camera pulls back (markers shrink on screen)
         val thresholdDeg = (2.0 + globeView.camera.distance * 0.7).coerceIn(3.0, 9.0)
 
-        globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
         if (best != null && bestDeg <= thresholdDeg) {
+            globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             showEventCard(best)
         } else {
-            // ...otherwise turn the tapped spot into a day/night lesson.
-            showDayNightCard(picked[0], picked[1])
+            showDayNightCard(picked[0], picked[1], onlyNew = true)
         }
+    }
+
+    private fun onGlobeHeld(x: Float, y: Float) {
+        if (challengeKind != null) return
+        val picked = globeView.renderer.pick(x, y, globeView.width, globeView.height) ?: return
+        globeView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+        showDayNightCard(picked[0], picked[1])
     }
 
     private fun showEventCard(event: EarthEventsProvider.Event) {
@@ -1562,7 +1576,7 @@ class MainActivity : AppCompatActivity() {
             orientation = LinearLayout.VERTICAL
             setPadding(dpi(24f), dpi(12f), dpi(24f), dpi(8f))
             addView(panelText(facts, 15f))
-            addView(panelText(getString(R.string.text_read_aloud), 14f, Color.rgb(173, 215, 255)).apply {
+            if (deviceNarrateEnabled) addView(panelText(getString(R.string.text_read_aloud), 14f, Color.rgb(173, 215, 255)).apply {
                 minHeight = dpi(48f)
                 setOnClickListener { speak(facts) }
             })
@@ -1582,7 +1596,7 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton(getString(R.string.companion_close), null)
             .setOnDismissListener { stopNarration() }
             .show()
-        if (narrateEnabled) speak(facts)
+        if (deviceNarrateEnabled) speak(facts)
     }
 
     /**
@@ -1681,7 +1695,6 @@ class MainActivity : AppCompatActivity() {
         return nx * sun[0] + ny * sun[1] + nz * sun[2]
     }
 
-    /** Tap any land or ocean to learn whether it's day or night there right now. */
     /** Names a tapped point; the time zone starts from the nearest offline town and can be changed. */
     private fun savePlaceAt(lat: Double, lon: Double) {
         val input = EditText(this).apply {
@@ -1701,18 +1714,16 @@ class MainActivity : AppCompatActivity() {
             }.setNegativeButton(getString(R.string.text_cancel), null).show()
     }
 
-    private fun showDayNightCard(lat: Double, lon: Double) {
-        if (facingSun(lat, lon) > 0) {
-            showCard(
-                getString(R.string.text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now),
-                Discovery.DAYTIME
-            )
-        } else {
-            showCard(
-                getString(R.string.text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those),
-                Discovery.NIGHT
-            )
-        }
+    /** Ordinary taps introduce each lesson once; deliberate holds can always revisit it. */
+    private fun showDayNightCard(lat: Double, lon: Double) = showDayNightCard(lat, lon, onlyNew = false)
+
+    private fun showDayNightCard(lat: Double, lon: Double, onlyNew: Boolean) {
+        val discovery = if (facingSun(lat, lon) > 0) Discovery.DAYTIME else Discovery.NIGHT
+        if (onlyNew && journal.isUnlocked(discovery)) return
+        val text = if (discovery == Discovery.DAYTIME)
+            R.string.text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now
+        else R.string.text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those
+        showCard(getString(text), discovery)
         pendingSavePoint = doubleArrayOf(lat, lon)
         savePlaceButton.visibility = View.VISIBLE
     }
@@ -2555,22 +2566,30 @@ class MainActivity : AppCompatActivity() {
         updateNarrateButton()
         if (narrateEnabled) {
             speak(getString(R.string.text_read_to_me_is_on_i_ll_read_the_cards_out_loud))
-        } else stopNarration()
+        } else taliaNarrator.stop()
+    }
+
+    private fun setDeviceNarrationEnabled(enabled: Boolean) {
+        deviceNarrateEnabled = enabled
+        prefs.edit().putBoolean(PREF_DEVICE_NARRATE, enabled).apply()
+        if (!enabled) tts?.stop()
     }
 
     private fun updateNarrateButton() {
         narrateButton.text = if (narrateEnabled) getString(R.string.text_read_on) else getString(R.string.text_read_off)
     }
 
-    /** Speaks [text] aloud when narration is on, stripping emoji for clean speech. */
+    /** Each voice has a separate opt-in; fixed cards never substitute Android speech. */
     private fun speak(text: String) {
-        if (!narrateEnabled) return
-        tts?.stop()
-        if (!taliaNarrator.speak(text)) speakWithDevice(text)
+        if (!narrateEnabled && !deviceNarrateEnabled) return
+        stopNarration()
+        if (taliaNarrator.clipsFor(text) != null) {
+            if (narrateEnabled) taliaNarrator.speak(text)
+        } else speakWithDevice(text)
     }
 
     private fun speakWithDevice(text: String) {
-        if (!narrateEnabled || !ttsReady) return
+        if (!deviceNarrateEnabled || !ttsReady) return
         val clean = NarrationText.clean(text)
         if (clean.isNotEmpty()) tts?.speak(clean, TextToSpeech.QUEUE_FLUSH, null, "card")
     }
@@ -2637,6 +2656,7 @@ class MainActivity : AppCompatActivity() {
             setOnClickListener {
                 it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                 dismissOnboarding()
+                setDeviceNarrationEnabled(false)
                 setNarrationEnabled(true)
             }
         }, LinearLayout.LayoutParams(
@@ -2653,6 +2673,7 @@ class MainActivity : AppCompatActivity() {
             setOnClickListener {
                 it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                 dismissOnboarding()
+                setDeviceNarrationEnabled(false)
                 setNarrationEnabled(false)
             }
         }, LinearLayout.LayoutParams(

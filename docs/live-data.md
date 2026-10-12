@@ -72,7 +72,7 @@ showing them does not turn them into historical/future data.
 
 Remote titles and attribution retain their original source text. Surrounding
 labels, category explanations, dates, and freshness messages use the app locale.
-Dynamic event facts use device TTS when Read aloud is enabled and a suitable
+Dynamic event facts use device TTS only when Android voice is enabled and a suitable
 voice is available. They are not sent to ElevenLabs at runtime. Talia's static
 recordings and their development API key are separate from these public-data
 integrations. See [localization](localization.md), [voiceover](voiceover.md), and

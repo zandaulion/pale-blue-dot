@@ -1,7 +1,7 @@
 # Pale Blue Dot: Earth Companion Implementation Guide
 
 Prepared for GPT-6 SOL on September 23, 2026. Follow-up requirements updated
-October 11, 2026.
+October 12, 2026.
 
 ## Current status and follow-up requirements
 
@@ -15,12 +15,13 @@ Subsequent work adds 12 bundled locales with a Settings language switcher,
 Arabic RTL, a faint-phase Moon outline/label, and offline Talia recordings.
 First launch now offers “Explore with Talia” or “Explore quietly”; no speech
 starts before the choice, and existing onboarded users retain their preference.
-This explicit opt-in refines the original audio-off default. Read aloud remains
-in Settings; music is independent, and wallpaper/widget stay silent.
+This explicit opt-in refines the original audio-off default. Settings has separate
+Talia and Android voice switches. The Talia first-run choice enables only the
+natural voice; music is independent, and wallpaper/widget stay silent.
 
 Keep all edited interface strings in the 12 locale resources. When changing a
 recorded card, regenerate and validate the matching Talia clips/indexes. Dynamic
-facts and scores still use device TTS; adding narration to further panels is a
+facts and scores use device TTS only after separate Android voice opt-in; adding narration to further panels is a
 separate coverage decision. ElevenLabs is development-time asset generation,
 not a runtime AI service or a new backend. See [localization](localization.md),
 [Moon visibility](moon-visibility.md), and [voiceover](voiceover.md).

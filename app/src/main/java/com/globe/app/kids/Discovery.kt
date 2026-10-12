@@ -6,7 +6,7 @@ import android.content.Context
 /**
  * One collectible "discovery" a child can unlock by exploring the globe. Each is
  * triggered by an interaction the app already supports (tapping a marker, tapping
- * the day/night side, tapping the sky, or moving the time scrubber), so the
+ * the day/night side for the first time, tapping the sky, or moving the time scrubber), so the
  * collection fills in naturally as kids play.
  */
 enum class Discovery(

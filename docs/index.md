@@ -11,6 +11,7 @@ namespace: `com.globe.app`.
 | [README](../README.md) | Product overview, setup, and code map |
 | [Features](features.md) | Current interface, learning, audio, and scene features |
 | [Localization](localization.md) | 12 locales, Settings language switcher, translation maintenance, layout audits |
+| [Globe Interactions](globe-interactions.md) | One-time day/night discoveries, deliberate holds, and gesture behavior |
 | [Tablet Layout](tablet-layout.md) | Window adaptation, tablet-sized device audits, and limits |
 | [Moon Visibility](moon-visibility.md) | Faint-phase outline, labels, placement, and validation |
 | [Voiceover](voiceover.md) | Talia opt-in, exact narration coverage, credentials, and generation |
@@ -41,8 +42,8 @@ namespace: `com.globe.app`.
 | Build system | AGP 9.4.1 / Gradle 9.6.0 |
 | Gradle daemon / bytecode | JetBrains JDK 21 / Java and Kotlin target 17 |
 | Requested permission | `INTERNET` |
-| Localization | 12 bundled locales, 792 translatable resources per locale |
-| Narration | 144 bundled Talia clips; device TTS for changing facts/scores |
+| Localization | 12 bundled locales, 795 translatable resources per locale |
+| Narration | 144 bundled Talia clips; separate Android opt-in for changing facts/scores |
 
 ## Repository layout
 

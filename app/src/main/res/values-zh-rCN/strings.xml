@@ -119,7 +119,7 @@
     <string name="text_bundled_cities" formatted="false">"捆绑城市"</string>
     <string name="text_cancel" formatted="false">"取消"</string>
     <string name="text_add_a_place_from_the_globe" formatted="false">"添加地球上的一个地点"</string>
-    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"点击地球上的一个点，然后点击 + 将此地点保存在其卡片下。"</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"长按地球上的一个点，然后点击卡片下方的“+ 保存此地点”。"</string>
     <string name="text_time_zone_unset" formatted="false">"时区未设置"</string>
     <string name="text_set_as_primary" formatted="false">"设置为主"</string>
     <string name="text_rename" formatted="false">"重命名"</string>
@@ -275,7 +275,7 @@
     <string name="text_a_living_window_onto_earth" formatted="false">"通向地球的活窗口"</string>
     <string name="text_drag_to_rotate" formatted="false">"拖动旋转"</string>
     <string name="text_pinch_to_zoom" formatted="false">"捏合缩放"</string>
-    <string name="text_tap_the_globe_to_discover_more" formatted="false">"点击地球以发现更多"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"点击地球，发现昼夜。长按即可再次查看。"</string>
     <string name="text_explore_earth" formatted="false">"探索地球"</string>
     <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"实时预览·当前阳光·无音频"</string>
     <string name="text_preview_set_wallpaper" formatted="false">"预览并设置壁纸"</string>
@@ -791,5 +791,8 @@
     <string name="narration_onboarding_prompt" formatted="false">"想让塔莉娅读出卡片内容吗？你可以随时在设置中更改。"</string>
     <string name="narration_explore_with_talia" formatted="false">"和塔莉娅一起探索"</string>
     <string name="narration_explore_quietly" formatted="false">"安静地探索"</string>
-    <string name="narration_settings_detail" formatted="false">"卡片由塔莉娅读出。实时信息和分数使用设备的语音。"</string>
+    <string name="narration_settings_detail" formatted="false">"用自然的声音朗读录制好的课程。"</string>
+    <string name="narration_talia_label" formatted="false">"塔莉娅语音"</string>
+    <string name="narration_android_label" formatted="false">"Android语音"</string>
+    <string name="narration_android_detail" formatted="false">"用设备语音朗读最新事件信息和分数。"</string>
 </resources>

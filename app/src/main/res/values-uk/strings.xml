@@ -119,7 +119,7 @@
     <string name="text_bundled_cities" formatted="false">"Збірні міста"</string>
     <string name="text_cancel" formatted="false">"Скасувати"</string>
     <string name="text_add_a_place_from_the_globe" formatted="false">"Додайте місце з глобуса"</string>
-    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Торкніться точки на глобусі, а потім торкніть + Зберегти це місце під карткою."</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Натисни й утримуй точку на Землі, потім торкнися + Зберегти це місце під карткою."</string>
     <string name="text_time_zone_unset" formatted="false">"Часовий пояс не встановлено"</string>
     <string name="text_set_as_primary" formatted="false">"Встановити як основний"</string>
     <string name="text_rename" formatted="false">"Перейменувати"</string>
@@ -275,7 +275,7 @@
     <string name="text_a_living_window_onto_earth" formatted="false">"Живе вікно на Землю"</string>
     <string name="text_drag_to_rotate" formatted="false">"Перетягніть, щоб повернути"</string>
     <string name="text_pinch_to_zoom" formatted="false">"Стисніть, щоб збільшити"</string>
-    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Торкніться глобуса, щоб дізнатися більше"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Торкнися Землі, щоб відкрити день і ніч. Натисни й утримуй, щоб переглянути картку знову."</string>
     <string name="text_explore_earth" formatted="false">"Досліджуйте Землю"</string>
     <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"Попередній перегляд · поточне сонячне світло · немає аудіо"</string>
     <string name="text_preview_set_wallpaper" formatted="false">"Попередній перегляд і встановлення шпалер"</string>
@@ -791,5 +791,8 @@
     <string name="narration_onboarding_prompt" formatted="false">"Хочеш, щоб Талія читала картки вголос? Це можна змінити в налаштуваннях."</string>
     <string name="narration_explore_with_talia" formatted="false">"Досліджувати з Талією"</string>
     <string name="narration_explore_quietly" formatted="false">"Досліджувати тихо"</string>
-    <string name="narration_settings_detail" formatted="false">"Картки читає Талія. Поточні дані та результати читаються голосом твого пристрою."</string>
+    <string name="narration_settings_detail" formatted="false">"Природний голос для записаних уроків."</string>
+    <string name="narration_talia_label" formatted="false">"Голос Талії"</string>
+    <string name="narration_android_label" formatted="false">"Голос Android"</string>
+    <string name="narration_android_detail" formatted="false">"Голос пристрою для поточних даних про події та результатів."</string>
 </resources>

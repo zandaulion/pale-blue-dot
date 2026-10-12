@@ -1,6 +1,6 @@
 # Earth companion implementation record
 
-## Current status — October 11, 2026
+## Current status — October 12, 2026
 
 M0–M4 and the subsequent language, Moon visibility, and narration additions are
 implemented. The milestone entries below are historical test records; baseline
@@ -8,8 +8,14 @@ catalog sizes, literal-string debt, and build settings describe their recorded
 date. Current behavior is documented in [features](features.md),
 [architecture](architecture.md), and [build/release](build-release.md).
 
+- **Globe interactions:** each day/night lesson opens once per persisted
+  discovery; later taps stay quiet, and touch and hold deliberately reopens the
+  lesson and save-point action. Marker/place taps and challenge answers retain
+  their actions. Nine Motorola tests and all 12 updated hint layouts at 100%
+  and 130% passed; original settings/preferences were restored. See
+  [globe interactions](globe-interactions.md).
 - **Localization:** 12 bundled locales, persistent Settings picker, device-language
-  option, Arabic RTL, localized journeys/city search/widget/wallpaper. All 792
+  option, Arabic RTL, localized journeys/city search/widget/wallpaper. All 795
   translatable resources and placeholders pass the source validator; mappings
   cover 71 lesson text fields and 303 catalog cities. Normal and focused 130%
   Motorola layout audits passed. See [localization](localization.md).
@@ -19,8 +25,9 @@ date. Current behavior is documented in [features](features.md),
   verified at 100% and 130% text size. See [Moon visibility](moon-visibility.md).
 - **Narration:** Talia selected from three multilingual voice auditions. The APK
   bundles 144 fixed-card clips; first launch offers Talia or quiet exploration,
-  Settings remembers the choice, and existing users are not re-prompted. Changing
-  facts and scores retain device TTS. No runtime ElevenLabs requests or API key.
+  Settings provides separate Talia and Android switches; first launch enables only
+  Talia, and existing users are not re-prompted. Changing facts/scores require
+  explicit Android voice opt-in. No runtime ElevenLabs requests or API key.
   See [voiceover](voiceover.md).
 - **Tablet layouts:** welcome text is capped at 560dp; wallpaper/widget controls
   at 600dp. Wallpaper uses a larger preview beside a 420dp settings column in
@@ -109,3 +116,10 @@ handoff. The historical entries record milestone evidence, including remaining
 checks; they do not establish full guide acceptance. Dataset provenance is in
 [data credits](data-credits.md). Do not repeat completed migrations or reset
 existing app data to restart the guide.
+
+The October 12 independent voice controls passed four voice-specific tests and
+the 11-case combined voice/globe/localization suite on the Motorola. Talia-only
+first launch, separate persistence/routing, and silent recording failure are
+covered. Both switches were visually checked in all 12 locales at normal and
+130% text size; two interrupted locale/scale captures were repeated with task
+protection and foreground checks. See [voiceover](voiceover.md).

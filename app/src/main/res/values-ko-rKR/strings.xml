@@ -119,7 +119,7 @@
     <string name="text_bundled_cities" formatted="false">"묶음 도시"</string>
     <string name="text_cancel" formatted="false">"취소"</string>
     <string name="text_add_a_place_from_the_globe" formatted="false">"지구본에서 장소 추가"</string>
-    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"지구본의 한 지점을 탭한 다음 + 카드 아래에 이 장소 저장을 탭합니다."</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"지구의 한 지점을 길게 누른 다음 카드 아래의 + 이 장소 저장을 탭하세요."</string>
     <string name="text_time_zone_unset" formatted="false">"시간대가 설정되지 않았습니다."</string>
     <string name="text_set_as_primary" formatted="false">"기본으로 설정"</string>
     <string name="text_rename" formatted="false">"이름 바꾸기"</string>
@@ -275,7 +275,7 @@
     <string name="text_a_living_window_onto_earth" formatted="false">"지구를 바라보는 살아있는 창문"</string>
     <string name="text_drag_to_rotate" formatted="false">"드래그하여 회전"</string>
     <string name="text_pinch_to_zoom" formatted="false">"핀치하여 확대/축소"</string>
-    <string name="text_tap_the_globe_to_discover_more" formatted="false">"더 알아보려면 지구본을 탭하세요."</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"지구를 탭해서 낮과 밤을 발견해 보세요. 다시 보려면 길게 누르세요."</string>
     <string name="text_explore_earth" formatted="false">"지구 탐험"</string>
     <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"실시간 미리보기 · 현재 햇빛 · 오디오 없음"</string>
     <string name="text_preview_set_wallpaper" formatted="false">"미리보기 및 배경화면 설정"</string>
@@ -791,5 +791,8 @@
     <string name="narration_onboarding_prompt" formatted="false">"탈리아가 카드를 읽어 줄까요? 설정에서 언제든 바꿀 수 있어요."</string>
     <string name="narration_explore_with_talia" formatted="false">"탈리아와 탐험하기"</string>
     <string name="narration_explore_quietly" formatted="false">"조용히 탐험하기"</string>
-    <string name="narration_settings_detail" formatted="false">"카드는 탈리아가 읽어 줍니다. 실시간 정보와 점수는 기기의 음성으로 읽습니다."</string>
+    <string name="narration_settings_detail" formatted="false">"녹음된 학습 카드를 자연스러운 목소리로 읽어요."</string>
+    <string name="narration_talia_label" formatted="false">"탈리아 음성"</string>
+    <string name="narration_android_label" formatted="false">"Android 음성"</string>
+    <string name="narration_android_detail" formatted="false">"실시간 사건 정보와 점수를 기기의 음성으로 읽어요."</string>
 </resources>

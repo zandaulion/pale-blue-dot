@@ -119,7 +119,7 @@
     <string name="text_bundled_cities" formatted="false">"バンドルされた都市"</string>
     <string name="text_cancel" formatted="false">"キャンセル"</string>
     <string name="text_add_a_place_from_the_globe" formatted="false">"地球儀から場所を追加する"</string>
-    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"地球上のポイントをタップし、[+ この場所をカードの下に保存] をタップします。"</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"地球上の地点を長押しして、カードの下の「+ この場所を保存」をタップしてください。"</string>
     <string name="text_time_zone_unset" formatted="false">"タイムゾーンの未設定"</string>
     <string name="text_set_as_primary" formatted="false">"プライマリとして設定"</string>
     <string name="text_rename" formatted="false">"名前の変更"</string>
@@ -275,7 +275,7 @@
     <string name="text_a_living_window_onto_earth" formatted="false">"地球への生きた窓"</string>
     <string name="text_drag_to_rotate" formatted="false">"ドラッグして回転します"</string>
     <string name="text_pinch_to_zoom" formatted="false">"ピンチしてズーム"</string>
-    <string name="text_tap_the_globe_to_discover_more" formatted="false">"地球儀をタップしてさらに詳しく見る"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"地球をタップして昼と夜を発見しよう。もう一度見るには長押ししてね。"</string>
     <string name="text_explore_earth" formatted="false">"地球を探検する"</string>
     <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"ライブ プレビュー · 現在の太陽光 · 音声なし"</string>
     <string name="text_preview_set_wallpaper" formatted="false">"壁紙のプレビューと設定"</string>
@@ -791,5 +791,8 @@
     <string name="narration_onboarding_prompt" formatted="false">"タリアにカードを読み上げてもらいますか？設定でいつでも変更できます。"</string>
     <string name="narration_explore_with_talia" formatted="false">"タリアと探検する"</string>
     <string name="narration_explore_quietly" formatted="false">"静かに探検する"</string>
-    <string name="narration_settings_detail" formatted="false">"カードはタリアが読み上げます。最新の情報とスコアには端末の音声を使います。"</string>
+    <string name="narration_settings_detail" formatted="false">"録音されたレッスンを自然な音声で読み上げます。"</string>
+    <string name="narration_talia_label" formatted="false">"タリアの音声"</string>
+    <string name="narration_android_label" formatted="false">"Androidの音声"</string>
+    <string name="narration_android_detail" formatted="false">"最新のイベント情報とスコアを端末の音声で読み上げます。"</string>
 </resources>

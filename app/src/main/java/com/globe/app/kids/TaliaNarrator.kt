@@ -10,11 +10,8 @@ import com.globe.app.AppLanguage
 import com.globe.app.R
 import org.json.JSONObject
 
-/** Offline recordings of fixed cards; changing facts remain device TTS. */
-class TaliaNarrator(
-    private val context: Context,
-    private val onPlaybackFailure: (String) -> Unit
-) {
+/** Offline fixed-card recordings. Errors stay silent; there is no voice substitution. */
+class TaliaNarrator(private val context: Context) {
     private val locale = AppLanguage.locale(context).toLanguageTag()
     private val directory = "narration/$locale/"
     private val index: Map<String, String> by lazy {
@@ -49,11 +46,11 @@ class TaliaNarrator(
         stop()
         val clips = clipsFor(text) ?: return false
         if (!requestFocus()) return true
-        play(clips, 0, generation, text)
+        play(clips, 0, generation)
         return true
     }
 
-    private fun play(clips: List<String>, position: Int, token: Int, original: String) {
+    private fun play(clips: List<String>, position: Int, token: Int) {
         if (token != generation) return
         val next = MediaPlayer()
         player = next
@@ -67,21 +64,19 @@ class TaliaNarrator(
                 if (token == generation) {
                     it.release()
                     player = null
-                    if (position + 1 < clips.size) play(clips, position + 1, token, original)
+                    if (position + 1 < clips.size) play(clips, position + 1, token)
                     else abandonFocus()
                 }
             }
             next.setOnErrorListener { _, _, _ ->
                 if (token == generation) {
                     stop()
-                    onPlaybackFailure(original)
                 }
                 true
             }
             next.prepareAsync()
         } catch (_: Exception) {
             stop()
-            onPlaybackFailure(original)
         }
     }
 

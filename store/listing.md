@@ -49,7 +49,7 @@ Spin the globe with your finger and watch day turn to night, with city lights gl
 • Find-it challenges that build real thinking
 • A real-time Today briefing with the Moon's phase, daylight at your place, and a recent observation
 • Choose Talia’s warm read-aloud voice at first launch, or explore quietly; change your choice in Settings
-• Fixed cards play offline in all 12 languages; live facts and scores use your device’s voice
+• Fixed cards play offline in all 12 languages; a separate Android voice switch enables spoken live facts and scores
 • Calm ambient music with its own volume slider
 
 🌐 YOUR LANGUAGE

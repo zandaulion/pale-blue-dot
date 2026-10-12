@@ -9,7 +9,7 @@ See [architecture](architecture.md) for ownership and threads.
 | Class / file | Entry points and requirements |
 |---|---|
 | `MainActivity.kt` | `onCreate` restores preferences, locale, panels, MediaPlayer/TTS, and first-launch choice; `onResume/onPause` manage scene and stop narration; `onDestroy` releases audio and observers. No location permission callback is used. |
-| `GlobeSurfaceView.kt` | Owns `camera`, `sceneClock`, and `renderer`; `onTouchEvent` handles tap/drag/pinch and passes taps to the Activity. |
+| `GlobeSurfaceView.kt` | Owns `camera`, `sceneClock`, and `renderer`; `onTouchEvent` handles tap/hold/drag/pinch; short taps and intentional holds use separate Activity callbacks. |
 | `GlobeRenderer.kt` | `onSurfaceCreated` rebuilds GL resources and reuploads cached scene data without fetching; `onSurfaceChanged` updates projection; `onDrawFrame` snapshots time and draws; `release()` requires the owning GL context/thread. |
 | `GlobeRenderer.kt` | `setAllEvents`, `setPlaces`, `applyLayers`, `setCloudResult`, `setFraming`, `pick`, and `projectWorldToScreen` provide scene/picking integration. `lastFrameTimeMs` and `moonGuideFrame` expose current frame information. |
 | `AppLanguage.kt` | `tags`/`nativeNames` define supported locales; `selected`, `restore`, and `select` manage the choice; `context` localizes independent consumers; `locale` resolves a supported language or English fallback. |
@@ -70,15 +70,16 @@ Repository feed states are `NOT_LOADED`, `LOADING`, `READY`, `STALE`, and
 | File | Key API / role |
 |---|---|
 | `kids/NarrationText.kt` | `clean(text)` normalizes Android escapes/whitespace and removes emoji/symbols without dropping combining marks. |
-| `kids/TaliaNarrator.kt` | Constructor takes locale-aware `Context` and `onPlaybackFailure(String)` callback. `clipsFor(text)` resolves one or composed recordings; `speak(text)` handles lookup, focus, async playback; `stop()` invalidates pending callbacks and releases playback/focus. |
-| `MainActivity.kt` | Private `setNarrationEnabled`, `speak`, `speakWithDevice`, and `stopNarration` coordinate the stored choice, recording lookup and device TTS. |
+| `kids/TaliaNarrator.kt` | Constructor takes locale-aware `Context`; recording errors stay silent. `clipsFor(text)` resolves one or composed recordings; `speak(text)` handles lookup, focus, async playback; `stop()` invalidates pending callbacks and releases playback/focus. |
+| `MainActivity.kt` | Private `setNarrationEnabled`, `setDeviceNarrationEnabled`, `speak`, `speakWithDevice`, and `stopNarration` coordinate independent Talia/device preferences and exclusive content routing. |
 | `assets/narration/<locale>/index.json` | Cleaned spoken text → MP3 basename, 12 entries per supported locale. |
 | `tools/generate_narration.py` | Development-only generator; `--prepare-only` makes no API requests; `--key-file` overrides the outside-repository credential path. |
 
-`TaliaNarrator.speak` returns false for unmatched text, allowing device TTS.
-It returns true for a matched recording even when audio focus is denied, so the
-caller cannot bypass denial by speaking through TTS. Playback errors invoke the
-fallback callback; ordinary stop/focus loss does not. See [voiceover](voiceover.md)
+`MainActivity.speak` checks the recording catalog before choosing a voice:
+matched fixed text uses Talia only when enabled; unmatched changing text uses
+Android only when separately enabled. Neither disabling Talia nor a recording
+error substitutes Android speech. `TaliaNarrator.speak` returns false for unmatched
+text and true for matched recordings, including when audio focus is denied. See [voiceover](voiceover.md)
 for exact narrated surfaces and lifecycle behavior.
 
 ## Home screen and sharing

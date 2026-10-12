@@ -54,6 +54,12 @@ class LanguageLayoutTest {
     private fun descendants(view: View): List<View> = listOf(view) +
         if (view is ViewGroup) (0 until view.childCount).flatMap { descendants(view.getChildAt(it)) } else emptyList()
 
+    private fun taskLock(command: String) {
+        instrumentation.uiAutomation.executeShellCommand("am task lock $command").use { descriptor ->
+            android.os.ParcelFileDescriptor.AutoCloseInputStream(descriptor).use { it.readBytes() }
+        }
+    }
+
     private fun settle() {
         instrumentation.waitForIdleSync()
         Thread.sleep(300)
@@ -118,6 +124,7 @@ class LanguageLayoutTest {
         lateinit var activity: Activity
         instrumentation.runOnMainSync {
             activity = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED).single()
+            check(activity.hasWindowFocus()) { "App is not foregrounded: $name" }
             activity.window.decorView.apply {
                 viewTreeObserver.registerFrameCommitCallback { committed.countDown() }
                 requestLayout()
@@ -150,84 +157,96 @@ class LanguageLayoutTest {
             for (tag in tags) {
                 instrumentation.runOnMainSync { manager.applicationLocales = LocaleList.forLanguageTags(tag) }
                 ActivityScenario.launch(MainActivity::class.java).use { scenario ->
-                    Thread.sleep(2500)
-                    settle()
-                    scenario.onActivity { activity ->
-                        assertEquals(tag, AppLanguage.selected(activity))
-                        MainActivity::class.java.getDeclaredField("onboardingOverlay").apply { isAccessible = true }
-                            .get(activity).let { (it as View).visibility = View.VISIBLE }
-                    }
-                    settle()
-                    capture("$tag-onboarding")
-                    if (tabletAudit || InstrumentationRegistry.getArguments().getString("auditNarrationOnly") == "true") {
+                    val pinTask = InstrumentationRegistry.getArguments().getString("auditPinTask") == "true"
+                    var taskId = 0
+                    scenario.onActivity { taskId = it.taskId }
+                    if (pinTask) taskLock(taskId.toString())
+                    try {
+                        Thread.sleep(2500)
+                        settle()
                         scenario.onActivity { activity ->
-                            descendants(activity.window.decorView).filterIsInstance<ScrollView>().filter { it.isShown }
-                                .forEach { it.fullScroll(View.FOCUS_DOWN) }
+                            assertEquals(tag, AppLanguage.selected(activity))
+                            MainActivity::class.java.getDeclaredField("onboardingOverlay").apply { isAccessible = true }
+                                .get(activity).let { (it as View).visibility = View.VISIBLE }
                         }
                         settle()
-                        capture("$tag-onboarding-bottom")
-                    }
-                    scenario.onActivity { activity ->
-                        MainActivity::class.java.getDeclaredField("onboardingOverlay").apply { isAccessible = true }
-                            .get(activity).let { (it as View).visibility = View.GONE }
-                    }
-                    val compact = InstrumentationRegistry.getArguments().getString("auditCompact") == "true"
-                    val panels = if (InstrumentationRegistry.getArguments().getString("auditNarrationOnly") == "true") listOf("Settings")
-                        else if (compact) listOf("Globe", "Settings", "Layers")
-                        else listOf("Globe", "Settings", "Layers", "Explore", "Today", "Places", "Journeys", "Notebook", "Guide", "Explore time")
-                    for (name in panels) {
-                        scenario.onActivity { panel(it, name) }
-                        settle()
-                        val captureName = "$tag-${name.replace(' ', '-')}-top"
-                        capture(captureName)
-                        if (name != "Globe") {
+                        capture("$tag-onboarding")
+                        if (tabletAudit || InstrumentationRegistry.getArguments().getString("auditNarrationOnly") == "true") {
                             scenario.onActivity { activity ->
                                 descendants(activity.window.decorView).filterIsInstance<ScrollView>().filter { it.isShown }
                                     .forEach { it.fullScroll(View.FOCUS_DOWN) }
                             }
                             settle()
-                            capture("$tag-${name.replace(' ', '-')}-bottom")
+                            capture("$tag-onboarding-bottom")
                         }
-                    }
-                    if (tabletAudit) {
                         scenario.onActivity { activity ->
+                            MainActivity::class.java.getDeclaredField("onboardingOverlay").apply { isAccessible = true }
+                                .get(activity).let { (it as View).visibility = View.GONE }
+                        }
+                        val compact = InstrumentationRegistry.getArguments().getString("auditCompact") == "true"
+                        val panels = if (InstrumentationRegistry.getArguments().getString("auditNarrationOnly") == "true") listOf("Settings")
+                            else if (compact) listOf("Globe", "Settings", "Layers")
+                            else listOf("Globe", "Settings", "Layers", "Explore", "Today", "Places", "Journeys", "Notebook", "Guide", "Explore time")
+                        for (name in panels) {
+                            scenario.onActivity { panel(it, name) }
+                            settle()
+                            val captureName = "$tag-${name.replace(' ', '-')}-top"
+                            capture(captureName)
+                            if (name != "Globe") {
+                                scenario.onActivity { activity ->
+                                    descendants(activity.window.decorView).filterIsInstance<ScrollView>().filter { it.isShown }
+                                        .forEach { it.fullScroll(View.FOCUS_DOWN) }
+                                }
+                                settle()
+                                capture("$tag-${name.replace(' ', '-')}-bottom")
+                            }
+                        }
+                        if (tabletAudit) {
+                            scenario.onActivity { activity ->
+                                panel(activity, "Globe")
+                                MainActivity::class.java.getDeclaredMethod("showDayNightCard", Double::class.javaPrimitiveType, Double::class.javaPrimitiveType)
+                                    .apply { isAccessible = true }.invoke(activity, 0.0, 0.0)
+                            }
+                            settle()
+                            capture("$tag-learning-card")
+                            scenario.onActivity { activity ->
+                                MainActivity::class.java.getDeclaredMethod("hideEventCard").apply { isAccessible = true }.invoke(activity)
+                            }
+                        }
+                        if (InstrumentationRegistry.getArguments().getString("auditNarrationOnly") == "true") return@use
+                        if (!compact) {
+                            scenario.onActivity { activity ->
+                                MainActivity::class.java.getDeclaredMethod("startJourney", Journey::class.java, Boolean::class.javaPrimitiveType)
+                                    .apply { isAccessible = true }.invoke(activity, JourneyContent.all(activity).first(), false)
+                            }
+                            settle()
+                            capture("$tag-journey-step")
+                            scenario.onActivity { activity ->
+                                MainActivity::class.java.getDeclaredMethod("leaveJourney").apply { isAccessible = true }.invoke(activity)
+                            }
+                        }
+                        scenario.onActivity { activity ->
+                            MainActivity::class.java.getDeclaredMethod("enterExploreTime", Long::class.javaPrimitiveType)
+                                .apply { isAccessible = true }.invoke(activity, System.currentTimeMillis() + 86_400_000L)
                             panel(activity, "Globe")
-                            MainActivity::class.java.getDeclaredMethod("showDayNightCard", Double::class.javaPrimitiveType, Double::class.javaPrimitiveType)
-                                .apply { isAccessible = true }.invoke(activity, 0.0, 0.0)
                         }
                         settle()
-                        capture("$tag-learning-card")
+                        capture("$tag-simulated-time")
                         scenario.onActivity { activity ->
-                            MainActivity::class.java.getDeclaredMethod("hideEventCard").apply { isAccessible = true }.invoke(activity)
-                        }
-                    }
-                    if (InstrumentationRegistry.getArguments().getString("auditNarrationOnly") == "true") return@use
-                    if (!compact) {
-                        scenario.onActivity { activity ->
-                            MainActivity::class.java.getDeclaredMethod("startJourney", Journey::class.java, Boolean::class.javaPrimitiveType)
-                                .apply { isAccessible = true }.invoke(activity, JourneyContent.all(activity).first(), false)
+                            MainActivity::class.java.getDeclaredMethod("exitExploreTime").apply { isAccessible = true }.invoke(activity)
+                            panel(activity, "Settings")
+                            MainActivity::class.java.getDeclaredMethod("chooseLanguage").apply { isAccessible = true }.invoke(activity)
                         }
                         settle()
-                        capture("$tag-journey-step")
-                        scenario.onActivity { activity ->
-                            MainActivity::class.java.getDeclaredMethod("leaveJourney").apply { isAccessible = true }.invoke(activity)
+                        capture("$tag-language-picker")
+                        instrumentation.sendKeyDownUpSync(android.view.KeyEvent.KEYCODE_BACK)
+                    } finally {
+                        if (pinTask) {
+                            taskLock("stop")
+                            // Wait for the system's unlock transition before ActivityScenario closes.
+                            Thread.sleep(1000)
                         }
                     }
-                    scenario.onActivity { activity ->
-                        MainActivity::class.java.getDeclaredMethod("enterExploreTime", Long::class.javaPrimitiveType)
-                            .apply { isAccessible = true }.invoke(activity, System.currentTimeMillis() + 86_400_000L)
-                        panel(activity, "Globe")
-                    }
-                    settle()
-                    capture("$tag-simulated-time")
-                    scenario.onActivity { activity ->
-                        MainActivity::class.java.getDeclaredMethod("exitExploreTime").apply { isAccessible = true }.invoke(activity)
-                        panel(activity, "Settings")
-                        MainActivity::class.java.getDeclaredMethod("chooseLanguage").apply { isAccessible = true }.invoke(activity)
-                    }
-                    settle()
-                    capture("$tag-language-picker")
-                    instrumentation.sendKeyDownUpSync(android.view.KeyEvent.KEYCODE_BACK)
                 }
                 if (InstrumentationRegistry.getArguments().getString("auditNarrationOnly") != "true") ActivityScenario.launch(WallpaperConfigActivity::class.java).use { wallpaper ->
                     Thread.sleep(2500)

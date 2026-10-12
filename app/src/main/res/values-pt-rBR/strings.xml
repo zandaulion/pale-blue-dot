@@ -119,7 +119,7 @@
     <string name="text_bundled_cities" formatted="false">"Cidades agrupadas"</string>
     <string name="text_cancel" formatted="false">"Cancelar"</string>
     <string name="text_add_a_place_from_the_globe" formatted="false">"Adicione um lugar do globo"</string>
-    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Toque em um ponto do globo e toque em + Salvar este lugar no cartão."</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"Toque e segure um ponto da Terra e depois toque em + Salvar este lugar abaixo do cartão."</string>
     <string name="text_time_zone_unset" formatted="false">"Fuso horário não definido"</string>
     <string name="text_set_as_primary" formatted="false">"Definir como principal"</string>
     <string name="text_rename" formatted="false">"Renomear"</string>
@@ -275,7 +275,7 @@
     <string name="text_a_living_window_onto_earth" formatted="false">"Uma janela viva para a Terra"</string>
     <string name="text_drag_to_rotate" formatted="false">"Arraste para girar"</string>
     <string name="text_pinch_to_zoom" formatted="false">"Aperte para ampliar"</string>
-    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Toque no globo para descobrir mais"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"Toque na Terra para descobrir o dia e a noite. Toque e segure para ver de novo."</string>
     <string name="text_explore_earth" formatted="false">"Explorar a Terra"</string>
     <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"Visualização ao vivo · luz solar atual · sem áudio"</string>
     <string name="text_preview_set_wallpaper" formatted="false">"Visualizar e definir papel de parede"</string>
@@ -791,5 +791,8 @@
     <string name="narration_onboarding_prompt" formatted="false">"Quer que a Talia leia os cartões em voz alta? Você pode mudar isso nas Configurações."</string>
     <string name="narration_explore_with_talia" formatted="false">"Explorar com a Talia"</string>
     <string name="narration_explore_quietly" formatted="false">"Explorar em silêncio"</string>
-    <string name="narration_settings_detail" formatted="false">"A Talia lê os cartões. Os dados ao vivo e as pontuações usam a voz do seu dispositivo."</string>
+    <string name="narration_settings_detail" formatted="false">"Voz natural para as lições gravadas."</string>
+    <string name="narration_talia_label" formatted="false">"Voz da Talia"</string>
+    <string name="narration_android_label" formatted="false">"Voz do Android"</string>
+    <string name="narration_android_detail" formatted="false">"Voz do dispositivo para dados atuais de eventos e pontuações."</string>
 </resources>

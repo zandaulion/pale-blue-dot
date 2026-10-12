@@ -119,7 +119,7 @@
     <string name="text_bundled_cities" formatted="false">"المدن المجمعة"</string>
     <string name="text_cancel" formatted="false">"إلغاء"</string>
     <string name="text_add_a_place_from_the_globe" formatted="false">"أضف مكانًا من الكرة الأرضية"</string>
-    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"اضغط على نقطة على الكرة الأرضية، ثم اضغط على + حفظ هذا المكان أسفل بطاقتها."</string>
+    <string name="text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card" formatted="false">"اضغط مطولًا على نقطة على الأرض، ثم اضغط على + حفظ هذا المكان أسفل بطاقتها."</string>
     <string name="text_time_zone_unset" formatted="false">"لم يتم ضبط المنطقة الزمنية"</string>
     <string name="text_set_as_primary" formatted="false">"تعيين كإعداد أساسي"</string>
     <string name="text_rename" formatted="false">"إعادة تسمية"</string>
@@ -275,7 +275,7 @@
     <string name="text_a_living_window_onto_earth" formatted="false">"نافذة حية على الأرض"</string>
     <string name="text_drag_to_rotate" formatted="false">"اسحب للتدوير"</string>
     <string name="text_pinch_to_zoom" formatted="false">"قرصة للتكبير"</string>
-    <string name="text_tap_the_globe_to_discover_more" formatted="false">"اضغط على الكرة الأرضية لاكتشاف المزيد"</string>
+    <string name="text_tap_the_globe_to_discover_more" formatted="false">"اضغط على الأرض لاكتشاف النهار والليل. اضغط مطولًا لعرض البطاقة مجددًا."</string>
     <string name="text_explore_earth" formatted="false">"استكشف الأرض"</string>
     <string name="text_live_preview_current_sunlight_no_audio" formatted="false">"المعاينة المباشرة · ضوء الشمس الحالي · لا يوجد صوت"</string>
     <string name="text_preview_set_wallpaper" formatted="false">"معاينة وتعيين خلفية الشاشة"</string>
@@ -791,5 +791,8 @@
     <string name="narration_onboarding_prompt" formatted="false">"هل تريد أن تقرأ تاليا البطاقات بصوت مسموع؟ يمكنك تغيير ذلك في الإعدادات."</string>
     <string name="narration_explore_with_talia" formatted="false">"استكشف مع تاليا"</string>
     <string name="narration_explore_quietly" formatted="false">"استكشف بهدوء"</string>
-    <string name="narration_settings_detail" formatted="false">"تقرأ تاليا البطاقات. تُقرأ المعلومات المباشرة والنتائج بصوت جهازك."</string>
+    <string name="narration_settings_detail" formatted="false">"صوت طبيعي للدروس المسجّلة."</string>
+    <string name="narration_talia_label" formatted="false">"صوت تاليا"</string>
+    <string name="narration_android_label" formatted="false">"صوت Android"</string>
+    <string name="narration_android_detail" formatted="false">"صوت الجهاز لبيانات الأحداث الحالية والنتائج."</string>
 </resources>

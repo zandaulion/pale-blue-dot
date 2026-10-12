@@ -102,6 +102,11 @@ Motorola. All 12 languages passed tablet-shaped portrait/landscape audits at
 window sizes on the physical phone; actual tablet performance remains untested.
 See [tablet layout](tablet-layout.md) for the exact scope and restoration.
 
+The October 12 globe-interaction update passed assembly/lint, nine functional
+Motorola tests, and onboarding/Settings layouts for all 12 languages at 100%
+and 130% text size. See [globe interactions](globe-interactions.md) for once-only
+discoveries, deliberate holds, fixture isolation, and restoration checks.
+
 The reviewed APK was installed as an update and saved in `~/Projects/APKs` on
 the build host. Only the latest **PaleBlueDot** APK is retained there; other apps'
 artifacts remain untouched. This is a signed sideload test build, not evidence
@@ -134,4 +139,7 @@ have not been published to Play.
 `generate_icons.py` creates launcher density variants from `play_store_icon.png`.
 `tools/make_store_screenshots.py` and `tools/make_feature_graphic.py` prepare store
 artwork. Use synthetic, non-identifying content for any publicly shared fixture
-or capture. Store copy and existing release history live in [store](../store/README.md).
+or capture. The [store screenshot workflow](../store/README.md#screenshots) covers
+the eight current English images for each phone, 7-inch and 10-inch tablet slot,
+the opt-in native capture harness, and restoring test-device settings. Store copy
+and existing release history also live in [store](../store/README.md).

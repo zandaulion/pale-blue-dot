@@ -36,5 +36,5 @@ bounds, wrapping, ellipsis, scene-clock agreement, and Earth occlusion checks
 passed. Captures were visually reviewed; Arabic physical positioning and the
 Moon-arrow camera framing were corrected during the audit. Build, Android lint,
 and the localization validator passed (788 resources at the Moon audit; the current
-catalog has 792 after the narration update). Test navigation pinning, text
+catalog has 795 after the independent voice controls). Test navigation pinning, text
 size, app language, and the previous scene time were restored afterward.
