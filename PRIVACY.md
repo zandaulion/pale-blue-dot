@@ -110,8 +110,10 @@ are not deleted by clearing Pale Blue Dot's storage.
 
 ## Children's privacy
 
-The app is suitable for a general audience and does not knowingly collect
-personal information from anyone, including children.
+Pale Blue Dot is designed for curious children aged 9–12 and adults. It does
+not collect personal information from anyone, including children. Sharing is
+behind a parental gate, and the Android voice, which may use a network speech
+service, is off unless turned on.
 
 ## Permissions summary
 
@@ -126,5 +128,6 @@ If the app's data practices change, we will update this policy and revise the
 
 ## Contact
 
-If you have questions about this policy, use the support contact listed under
-**App support** on [Pale Blue Dot's Google Play page](https://play.google.com/store/apps/details?id=com.zandaulion.palebluedot).
+If you have questions about this policy, email
+[zandaulion@gmail.com](mailto:zandaulion@gmail.com), or use the support contact
+listed under **App support** on [Pale Blue Dot's Google Play page](https://play.google.com/store/apps/details?id=com.zandaulion.palebluedot).
