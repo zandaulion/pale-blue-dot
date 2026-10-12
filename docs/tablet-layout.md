@@ -8,6 +8,11 @@ readable columns while OpenGL renders at the surface's aspect ratio.
 - Today, Layers, Explore, Settings, and their detail panels use a 420dp side
   panel at window widths of at least 600dp, and a centered panel on narrower
   windows. Placement follows layout direction, including Arabic RTL.
+- Active journey lessons and feedback use a separate compact card: below the
+  globe in portrait, or a 400dp column at the logical end in landscape windows
+  at least 600dp wide. The globe viewport fills the remaining space below the
+  top controls and remains draggable and zoomable. Lesson text scrolls while
+  progress and primary controls stay visible; hiding the card exposes Resume.
 - First-launch onboarding uses a centered card capped at 560dp. It fits its
   content vertically and scrolls when the available height or larger text
   requires it. Talia/quiet choices retain 48dp minimum targets.
@@ -69,6 +74,31 @@ scale, rotation, locale, and app preferences were restored after completion. Cap
 control. The reviewed sideload APK replaces the previous PaleBlueDot artifact in
 the authorized APK folder. Physical tablet performance and touch ergonomics,
 foldable hardware, and full TalkBack traversal remain separate checks.
+
+## Compact journey follow-up — October 12, 2026
+
+Journey lessons and inline feedback passed the following focused checks on the
+Motorola, including globe/card separation, the full card staying on screen,
+wrapped text and fixed controls. A tall landscape header found during visual
+review led to top-aligned side cards. The final capture harness waits for locale
+delivery, uses the current Activity, and explicitly holds/asserts landscape
+orientation during wide-profile captures.
+
+| Profile | Text size | Languages | Result |
+|---|---|---|---|
+| Original phone portrait | 100%, 130% | All 12 | Passed |
+| Original phone landscape | 130% | English, German, Arabic | Passed |
+| 7-inch profile, 1920×1080px / 288dpi | 130% | English, German, Arabic | Passed |
+| 10-inch profile, 2560×1440px / 320dpi | 130% | English, German, Arabic | Passed |
+
+The same production changes passed 19 functional cases, including all 18
+journey steps, drag/pinch delivery through the card overlay, hide/resume, and
+lesson/feedback restoration. The two focused journey tests also passed with
+local visibility checks that account for offset landscape windows. All 132
+focused explanation/journey/feedback captures are retained outside Git;
+original preferences, locale, rotation, display overrides and font were restored
+and verified. Tablet profiles validate layout on the phone, with the hardware
+limits described above.
 
 ## Repeat the audit
 

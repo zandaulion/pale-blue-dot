@@ -95,6 +95,8 @@ class MainActivity : AppCompatActivity() {
         private const val PREF_DEVICE_NARRATE = "device_narrate_enabled"
         private const val PREF_ONBOARDED = "onboarded"
         private const val STATE_SETTINGS_OPEN = "settings_open"
+        private const val STATE_JOURNEY_OPEN = "journey_open"
+        private const val STATE_JOURNEY_FEEDBACK = "journey_feedback"
     }
 
     private lateinit var globeView: GlobeSurfaceView
@@ -131,6 +133,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var companionScroll: ScrollView
     private lateinit var companionColumn: LinearLayout
     private var openPanel: String? = null
+    private lateinit var journeyCard: com.globe.app.ui.JourneyCardLayout
+    private lateinit var journeyFooter: LinearLayout
+    private lateinit var journeyResumeButton: TextView
+    private lateinit var globeTopControls: LinearLayout
+    private lateinit var bottomNavigation: LinearLayout
+    private data class JourneyFeedback(val title: String?, val text: String, val spokenText: String, val finished: Boolean = false)
+    private var journeyFeedback: JourneyFeedback? = null
     private var pendingWidgetEventId: String? = null
     private var observationsInSimulation = false
     private val uiHandler = Handler(Looper.getMainLooper())
@@ -477,6 +486,8 @@ class MainActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply { gravity = Gravity.CENTER_HORIZONTAL; topMargin = dp(8f) })
         }
+        globeTopControls = topControls
+        topControls.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> updateJourneyViewport() }
         root.addView(MoonGuideOverlay(this,
             frame = { globeView.renderer.moonGuideFrame },
             blockedAreas = {
@@ -574,9 +585,21 @@ class MainActivity : AppCompatActivity() {
                 }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
             }
         }
+        bottomNavigation = nav
         root.addView(nav, FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM
         ))
+
+        journeyResumeButton = makePillButton(getString(R.string.text_resume), ::dpi).apply {
+            minHeight = dp(48f)
+            visibility = View.GONE
+            setOnClickListener { showCompanionPanel("Journey") }
+        }
+        root.addView(journeyResumeButton, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT,
+            Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+        ).apply { setMargins(margin, 0, margin, dp(68f)) })
+        updateJourneyResumeButton()
 
         // Welcome content must cover globe controls, including Settings and navigation.
         root.addView(onboardingOverlay, FrameLayout.LayoutParams(
@@ -586,14 +609,20 @@ class MainActivity : AppCompatActivity() {
             FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
         ))
         root.setOnApplyWindowInsetsListener { view, insets ->
-            view.setPadding(0, insets.systemWindowInsetTop, 0, insets.systemWindowInsetBottom)
+            view.setPadding(insets.systemWindowInsetLeft, insets.systemWindowInsetTop,
+                insets.systemWindowInsetRight, insets.systemWindowInsetBottom)
             insets
         }
 
         setContentView(root)
         updateTimeLabel()
         root.post {
-            if (savedInstanceState?.getBoolean(STATE_SETTINGS_OPEN) == true) {
+            val feedback = savedInstanceState?.getBundle(STATE_JOURNEY_FEEDBACK)
+            if (feedback != null) journeyFeedback = JourneyFeedback(feedback.getString("title"),
+                feedback.getString("text").orEmpty(), feedback.getString("spoken").orEmpty(), feedback.getBoolean("finished"))
+            if (savedInstanceState?.getBoolean(STATE_JOURNEY_OPEN) == true && (journeyStore.active() != null || journeyFeedback != null)) {
+                showCompanionPanel("Journey")
+            } else if (savedInstanceState?.getBoolean(STATE_SETTINGS_OPEN) == true) {
                 showCompanionPanel("Settings")
             } else {
                 handleWidgetIntent(intent)
@@ -616,6 +645,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putBoolean(STATE_SETTINGS_OPEN, openPanel == "Settings")
+        outState.putBoolean(STATE_JOURNEY_OPEN, openPanel == "Journey")
+        if (openPanel == "Journey") journeyFeedback?.let { feedback ->
+            outState.putBundle(STATE_JOURNEY_FEEDBACK, Bundle().apply {
+                putString("title", feedback.title); putString("text", feedback.text)
+                putString("spoken", feedback.spokenText); putBoolean("finished", feedback.finished)
+            })
+        }
         super.onSaveInstanceState(outState)
     }
 
@@ -655,25 +691,97 @@ class MainActivity : AppCompatActivity() {
         }
         scroll.addView(companionColumn)
         overlay.addView(scroll)
-        overlay.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
-            val available = overlay.width
-            if (available > 0) {
-                val wide = available >= dpi(600f)
-                val desiredWidth = if (wide) dpi(420f) else (available - dpi(24f)).coerceAtLeast(dpi(280f))
-                val desiredHeight = if (wide) overlay.height - dpi(24f) else overlay.height - dpi(32f)
-                if (scroll.layoutParams.width == desiredWidth && scroll.layoutParams.height == desiredHeight) return@addOnLayoutChangeListener
-                scroll.layoutParams = FrameLayout.LayoutParams(
-                    desiredWidth, desiredHeight,
-                    if (wide) Gravity.END or Gravity.CENTER_VERTICAL else Gravity.CENTER
-                ).apply { setMargins(dpi(12f), dpi(12f), dpi(12f), dpi(12f)) }
-            }
+        journeyFooter = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
+        journeyCard = com.globe.app.ui.JourneyCardLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            background = companionBackground()
+            setPadding(dpi(12f), dpi(4f), dpi(12f), dpi(8f))
+            visibility = View.GONE
+            isClickable = true
         }
+        overlay.addView(journeyCard)
+        overlay.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> updateCompanionLayout() }
+        journeyCard.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> updateJourneyViewport() }
         return overlay
     }
 
+    private fun companionBackground() = GradientDrawable().apply {
+        cornerRadius = dpi(18f).toFloat()
+        setColor(Color.rgb(17, 27, 41))
+        setStroke(dpi(1f), Color.rgb(64, 86, 107))
+    }
+
+    private fun journeyIsWide(): Boolean = companionPanel.width >= dpi(600f) && companionPanel.width > companionPanel.height
+
+    private fun setFrame(view: View, width: Int, height: Int, gravity: Int,
+        left: Int = 0, top: Int = 0, right: Int = 0, bottom: Int = 0
+    ) {
+        val current = view.layoutParams as? FrameLayout.LayoutParams
+        if (current != null && current.width == width && current.height == height && current.gravity == gravity &&
+            current.leftMargin == left && current.topMargin == top && current.rightMargin == right && current.bottomMargin == bottom) return
+        view.layoutParams = FrameLayout.LayoutParams(width, height, gravity).apply { setMargins(left, top, right, bottom) }
+    }
+
+    private fun updateCompanionLayout() {
+        if (!::companionPanel.isInitialized || companionPanel.width == 0 || companionPanel.height == 0) return
+        val width = companionPanel.width; val height = companionPanel.height; val gap = dpi(12f)
+        if (openPanel == "Journey") {
+            val navHeight = maxOf(bottomNavigation.height, dpi(56f))
+            val wide = journeyIsWide()
+            journeyCard.maximumHeight = if (wide) height - navHeight - gap * 2 else ((height - navHeight - gap * 2) * .48f).toInt()
+            setFrame(journeyCard, minOf(width - gap * 2, dpi(if (wide) 400f else 600f)),
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                if (wide) Gravity.END or Gravity.TOP else Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL,
+                gap, gap, gap, navHeight + gap)
+            updateJourneyViewport()
+        } else {
+            val wide = width >= dpi(600f)
+            setFrame(companionScroll, if (wide) dpi(420f) else (width - gap * 2).coerceAtLeast(dpi(280f)),
+                height - if (wide) gap * 2 else dpi(32f),
+                if (wide) Gravity.END or Gravity.CENTER_VERTICAL else Gravity.CENTER, gap, gap, gap, gap)
+            updateJourneyViewport()
+        }
+    }
+
+    private fun updateJourneyViewport() {
+        if (!::companionPanel.isInitialized || !::bottomNavigation.isInitialized) return
+        if (openPanel == "Journey" && companionPanel.width > 0 && companionPanel.height > 0) {
+            val gap = dpi(12f); val navHeight = maxOf(bottomNavigation.height, dpi(56f))
+            val wide = journeyIsWide()
+            val width = if (wide) companionPanel.width - minOf(companionPanel.width - gap * 2, dpi(400f)) - gap * 2
+                else FrameLayout.LayoutParams.MATCH_PARENT
+            val reserved = if (wide) 0 else (journeyCard.height.takeIf { it > 0 } ?: journeyCard.maximumHeight) + gap * 2
+            val topHeight = maxOf(globeTopControls.height, dpi(56f))
+            val height = companionPanel.height - navHeight - reserved - topHeight
+            setFrame(globeView, width, height.coerceAtLeast(1), Gravity.TOP or Gravity.START, top = topHeight)
+            setFrame(globeTopControls, if (wide) (width - dpi(32f)).coerceAtLeast(1) else FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.TOP or Gravity.START, dpi(16f), dpi(8f), dpi(16f), 0)
+            globeView.renderer.indicatorRenderer.bottomOffsetPx = dpi(24f).toFloat()
+        } else {
+            setFrame(globeView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT, Gravity.TOP or Gravity.START)
+            setFrame(globeTopControls, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.TOP or Gravity.START, dpi(16f), dpi(8f), dpi(16f), 0)
+            globeView.renderer.indicatorRenderer.bottomOffsetPx = dpi(88f).toFloat()
+        }
+    }
+
+    private fun updateJourneyResumeButton() {
+        if (!::journeyResumeButton.isInitialized) return
+        val active = journeyStore.active()
+        journeyResumeButton.visibility = if (active != null && openPanel == null) View.VISIBLE else View.GONE
+        if (active != null) {
+            val title = JourneyContent.all(this).firstOrNull { it.id == active.journeyId }?.title.orEmpty()
+            journeyResumeButton.text = "${getString(R.string.text_resume)} · $title"
+        }
+    }
+
     private fun closeCompanionPanel() {
+        stopNarration()
+        if (openPanel == "Journey" && journeyStore.active() == null) journeyFeedback = null
         companionPanel.visibility = View.GONE
         openPanel = null
+        updateJourneyViewport()
+        updateJourneyResumeButton()
     }
 
     private fun panelText(text: String, size: Float = 15f, color: Int = Color.WHITE): TextView =
@@ -693,6 +801,31 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun panelReadAloud(vararg texts: String) {
+        if (narrateEnabled) panelAction(getString(R.string.text_read_aloud)) { speakFixed(*texts) }
+    }
+
+    /** Dismiss the old dialog before continuing, so it cannot stop the next lesson's audio. */
+    private fun showNarratedDialog(title: String?, text: String,
+        positiveLabel: String = getString(R.string.companion_close), spokenText: String = text,
+        onPositive: () -> Unit = {}
+    ): AlertDialog {
+        stopNarration()
+        val builder = AlertDialog.Builder(this).setTitle(title).setMessage(text)
+            .setPositiveButton(positiveLabel, null).setOnDismissListener { stopNarration() }
+        if (narrateEnabled) builder.setNeutralButton(getString(R.string.text_read_aloud), null)
+        val dialog = builder.show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            dialog.setOnDismissListener(null)
+            stopNarration()
+            dialog.dismiss()
+            onPositive()
+        }
+        if (narrateEnabled) dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener { speakFixed(spokenText) }
+        speakFixed(spokenText)
+        return dialog
+    }
+
     private fun panelSwitch(label: String, description: String, checked: Boolean, action: (Boolean) -> Unit) {
         companionColumn.addView(Switch(this).apply {
             text = "$label\n$description"
@@ -706,7 +839,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showCompanionPanel(name: String) {
+        if (openPanel != name) stopNarration()
         openPanel = name
+        if (name == "Journey") {
+            hideEventCard()
+            challengeKind = null
+            challengeBanner.visibility = View.GONE
+        }
         companionColumn.removeAllViews()
         val heading = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
         val title = when (name) {
@@ -724,14 +863,34 @@ class MainActivity : AppCompatActivity() {
         }
         heading.addView(panelText(title, 23f).apply { typeface = Typeface.DEFAULT_BOLD },
             LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-        heading.addView(panelText("×", 30f).apply {
-            contentDescription = getString(R.string.companion_close)
+        heading.addView(panelText(if (name == "Journey") "⌄" else "×", 30f).apply {
+            contentDescription = getString(if (name == "Journey") R.string.text_view_globe else R.string.companion_close)
             gravity = Gravity.CENTER
             minWidth = dpi(48f)
             minHeight = dpi(48f)
             setOnClickListener { closeCompanionPanel() }
         })
-        companionColumn.addView(heading)
+        (companionScroll.parent as? android.view.ViewGroup)?.removeView(companionScroll)
+        val journey = name == "Journey"
+        journeyCard.removeAllViews()
+        journeyFooter.removeAllViews()
+        companionPanel.setBackgroundColor(if (journey) Color.TRANSPARENT else Color.argb(150, 0, 5, 12))
+        companionPanel.setOnClickListener(if (journey) null else View.OnClickListener { closeCompanionPanel() })
+        companionPanel.isClickable = !journey
+        companionScroll.background = if (journey) null else companionBackground()
+        companionColumn.setPadding(dpi(if (journey) 4f else 20f), dpi(if (journey) 0f else 16f),
+            dpi(if (journey) 4f else 20f), dpi(if (journey) 4f else 24f))
+        journeyCard.visibility = if (journey) View.VISIBLE else View.GONE
+        if (journey) {
+            heading.getChildAt(0).let { (it as TextView).setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f) }
+            journeyCard.addView(heading)
+            journeyCard.addView(companionScroll, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f))
+            journeyCard.addView(journeyFooter)
+        } else {
+            companionPanel.addView(companionScroll)
+            companionColumn.addView(heading)
+        }
         when (name) {
             "Today" -> populateCompanionToday()
             "Layers" -> populateCompanionLayers()
@@ -745,6 +904,8 @@ class MainActivity : AppCompatActivity() {
             "Journey" -> populateJourney()
         }
         companionPanel.visibility = View.VISIBLE
+        updateJourneyResumeButton()
+        companionPanel.post { updateCompanionLayout() }
         companionScroll.post { companionScroll.scrollTo(0, 0) }
     }
 
@@ -766,6 +927,10 @@ class MainActivity : AppCompatActivity() {
             13f, Color.rgb(190, 205, 219)
         ))
         companionColumn.addView(panelText(briefing.prompt(this), 15f))
+        companionColumn.addView(panelText(getString(R.string.text_did_you_know), 17f))
+        val dailyFact = DailyFacts.today(this)
+        companionColumn.addView(panelText(dailyFact, 15f))
+        panelReadAloud(briefing.prompt(this), dailyFact)
         companionColumn.addView(panelText(getString(R.string.text_one_observation_1_s, briefing.eventMessage(this)), 17f))
         briefing.event?.let { event ->
             panelAction("${event.type.label(this)} · ${event.title}\n${event.observedAtMs?.let(::formatDate) ?: getString(R.string.text_time_unavailable)} · ${event.source}") {
@@ -833,6 +998,7 @@ class MainActivity : AppCompatActivity() {
             layers.plateBoundaries = it; applyAppLayers()
         }
         companionColumn.addView(panelText(getString(R.string.text_plate_boundaries_gold_lines_mark_modelled_plate_edges_earthquakes), 13f))
+        panelReadAloud(getString(R.string.text_plate_boundaries_gold_lines_mark_modelled_plate_edges_earthquakes))
     }
 
     private fun populateCompanionExplore() {
@@ -933,18 +1099,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         companionColumn.addView(panelText(getString(R.string.text_earlier_discoveries_1_s_2_s, fieldNotebook.legacyDiscoveries().size, journal.total), 19f))
-        val descriptions = mapOf(
-            Discovery.EARTHQUAKE to getString(R.string.text_you_explored_a_reported_earthquake),
-            Discovery.VOLCANO to getString(R.string.text_you_explored_a_reported_volcanic_event),
-            Discovery.WILDFIRE to getString(R.string.text_you_explored_a_reported_wildfire),
-            Discovery.STORM to getString(R.string.text_you_explored_a_reported_storm),
-            Discovery.DAYTIME to getString(R.string.text_you_found_a_place_facing_the_sun),
-            Discovery.NIGHT to getString(R.string.text_you_found_earth_s_night_side),
-            Discovery.STARGAZER to getString(R.string.text_you_looked_beyond_earth),
-            Discovery.TIME_TRAVELER to getString(R.string.text_you_changed_the_scene_time)
-        )
         fieldNotebook.legacyDiscoveries().forEach {
-            companionColumn.addView(panelText("${it.emoji} ${it.title(this)}\n${descriptions[it]}", 15f))
+            companionColumn.addView(panelText("${it.emoji} ${it.title(this)}\n${it.fact(this)}", 15f))
+            panelReadAloud("${it.title(this)}\n${it.fact(this)}")
         }
     }
 
@@ -965,6 +1122,7 @@ class MainActivity : AppCompatActivity() {
     private fun populateCompanionGuide() {
         panelAction(getString(R.string.text_explore)) { showCompanionPanel("Explore") }
         companionColumn.addView(panelText(getString(R.string.text_tap_the_globe_to_discover_more), 15f))
+        panelReadAloud(getString(R.string.text_tap_the_globe_to_discover_more))
         listOf(
             getString(R.string.text_sunlight_and_city_lights) to getString(R.string.text_calculated_sunlight_shows_the_current_day_and_night_sides),
             getString(R.string.companion_clouds) to getString(R.string.text_generated_clouds_are_illustrative_satellite_mode_derives_opacity),
@@ -975,7 +1133,10 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.text_day_night_boundary) to getString(R.string.text_calculated_terminator_line_2),
             getString(R.string.text_constellations) to getString(R.string.text_catalog_stars_joined_into_familiar_patterns),
             getString(R.string.text_plate_boundaries) to getString(R.string.text_a_simplified_offline_pb2002_model_many_earthquakes_occur_near_bou)
-        ).forEach { (title, body) -> companionColumn.addView(panelText("$title\n$body", 15f)) }
+        ).forEach { (title, body) ->
+            companionColumn.addView(panelText("$title\n$body", 15f))
+            panelReadAloud("$title\n$body")
+        }
     }
 
     private fun populatePlaces() {
@@ -998,8 +1159,8 @@ class MainActivity : AppCompatActivity() {
         }
         panelAction(getString(R.string.text_add_a_place_from_the_globe)) {
             closeCompanionPanel()
-            AlertDialog.Builder(this).setMessage(getString(R.string.text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card))
-                .setPositiveButton(getString(R.string.text_ok), null).show()
+            showNarratedDialog(null, getString(R.string.text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card),
+                getString(R.string.text_ok))
         }
         val primary = placeStore.primaryId()
         placeStore.all().forEach { place ->
@@ -1165,6 +1326,8 @@ class MainActivity : AppCompatActivity() {
             panelAction("${p.name} · $duration") { closeCompanionPanel(); globeView.camera.flyTo(p.lat, p.lon) }
         }
         companionColumn.addView(panelText(getString(R.string.text_guides_equator_tropics_23_4_and_polar_circles_66_6_compare_the_tw), 13f))
+        panelReadAloud(getString(R.string.text_seasons_earth_s_axis_stays_tilted_about_23_4_as_earth_orbits_the) + "\n" +
+            getString(R.string.text_guides_equator_tropics_23_4_and_polar_circles_66_6_compare_the_tw))
     }
 
     private fun enterExploreTime(ms: Long) {
@@ -1247,6 +1410,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startJourney(journey: Journey, restart: Boolean = false) {
+        journeyFeedback = null
+        hideEventCard()
         val existing = journeyStore.active()
         val previous = when {
             existing == null -> captureJourneyScene()
@@ -1269,16 +1434,71 @@ class MainActivity : AppCompatActivity() {
         showCompanionPanel("Journey")
     }
 
+    private fun journeyButton(parent: LinearLayout, label: String, action: () -> Unit, weight: Float = 1f) {
+        parent.addView(makePillButton(label, ::dpi).apply {
+            minHeight = dpi(48f)
+            gravity = Gravity.CENTER
+            isFocusable = true
+            setOnClickListener { action() }
+        }, LinearLayout.LayoutParams(if (weight > 0f) 0 else LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT, weight).apply { setMargins(dpi(4f), dpi(4f), dpi(4f), 0) })
+    }
+
+    private fun journeyUtilities(lesson: String, canSkip: Boolean) {
+        if (journeyFooter.childCount == 0) journeyButton(journeyFooter, getString(R.string.text_view_globe), { closeCompanionPanel() })
+        if (narrateEnabled) journeyFooter.addView(makePillButton("▶", ::dpi).apply {
+            minWidth = dpi(48f); minHeight = dpi(48f)
+            gravity = Gravity.CENTER
+            contentDescription = getString(R.string.text_read_aloud)
+            isFocusable = true
+            setOnClickListener { speakFixed(lesson) }
+        })
+        if (journeyStore.active() != null) journeyFooter.addView(makePillButton("⋮", ::dpi).apply {
+            minWidth = dpi(48f); minHeight = dpi(48f)
+            gravity = Gravity.CENTER
+            contentDescription = getString(R.string.journey_options)
+            isFocusable = true
+            setOnClickListener {
+                android.widget.PopupMenu(this@MainActivity, this).apply {
+                    if (canSkip) menu.add(getString(R.string.text_skip_this_step)).setOnMenuItemClickListener { advanceJourney(); true }
+                    menu.add(getString(R.string.journey_leave)).setOnMenuItemClickListener { leaveJourney(); true }
+                    show()
+                }
+            }
+        })
+    }
+
+    private fun showJourneyFeedback(title: String?, text: String, spokenText: String = text, finished: Boolean = false) {
+        journeyFeedback = JourneyFeedback(title, text, spokenText, finished)
+        showCompanionPanel("Journey")
+    }
+
     private fun populateJourney() {
+        journeyFeedback?.let { feedback ->
+            feedback.title?.let { companionColumn.addView(panelText(it, 20f)) }
+            companionColumn.addView(panelText(feedback.text, 15f))
+            journeyButton(journeyFooter, getString(if (journeyStore.active() == null) R.string.text_done else R.string.text_continue), {
+                journeyFeedback = null
+                stopNarration()
+                if (feedback.finished) showCompanionPanel("Journeys") else advanceJourney()
+            })
+            journeyUtilities(feedback.spokenText, canSkip = false)
+            speakFixed(feedback.spokenText)
+            return
+        }
         val active = journeyStore.active() ?: run {
             panelAction(getString(R.string.text_choose_a_journey)) { showCompanionPanel("Journeys") }; return
         }
         val journey = JourneyContent.all(this).firstOrNull { it.id == active.journeyId } ?: return
         val step = journey.step(active.stepId) ?: journey.steps.first()
         val index = journey.steps.indexOf(step) + 1
-        companionColumn.addView(panelText(getString(R.string.text_1_s_step_2_s_of_3_s, journey.title, index, journey.steps.size), 15f, Color.rgb(173, 215, 255)))
+        (journeyCard.getChildAt(0) as LinearLayout).getChildAt(0).let {
+            (it as TextView).text = getString(R.string.text_1_s_step_2_s_of_3_s, journey.title, index, journey.steps.size)
+        }
         companionColumn.addView(panelText(step.title, 20f))
         companionColumn.addView(panelText(step.instruction, 15f))
+        val lesson = (listOf(step.title, step.instruction) + step.options).joinToString("\n")
+        speakFixed(lesson)
         if (step.source != null) companionColumn.addView(panelText(getString(R.string.text_historical_source_1_s, step.source), 13f))
         recentJourneyEvent(step)?.let { event ->
             companionColumn.addView(panelText(getString(R.string.text_recent_reported_example_1_s_2_s_3_s, event.title, event.observedAtMs?.let(::formatDate), event.source), 14f))
@@ -1298,38 +1518,34 @@ class MainActivity : AppCompatActivity() {
         when (step.kind) {
             "choice" -> step.options.forEachIndexed { answer, option ->
                 panelAction(option) {
-                    AlertDialog.Builder(this).setTitle(if (answer == step.correct) getString(R.string.text_that_s_the_pattern) else getString(R.string.text_look_again))
-                        .setMessage(if (answer == step.correct) step.right else step.wrong)
-                        .setPositiveButton(getString(R.string.text_continue)) { _, _ -> advanceJourney() }.show()
+                    val title = if (answer == step.correct) getString(R.string.text_that_s_the_pattern) else getString(R.string.text_look_again)
+                    val feedback = if (answer == step.correct) step.right else step.wrong
+                    showJourneyFeedback(title, feedback, "$title\n$feedback")
                 }
             }
-            "advance" -> panelAction(step.action ?: getString(R.string.text_advance)) {
+            "advance" -> journeyButton(journeyFooter, step.action ?: getString(R.string.text_advance), {
                 globeView.sceneClock.seek(globeView.sceneClock.nowMs() + step.hours * 3_600_000L)
                 updateTimeLabel()
-                AlertDialog.Builder(this).setMessage(getString(R.string.text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th, step.hours))
-                    .setPositiveButton(getString(R.string.text_continue)) { _, _ -> advanceJourney() }.show()
-            }
-            "reveal" -> panelAction(step.action ?: getString(R.string.text_reveal)) {
+                showJourneyFeedback(null, getString(R.string.text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th, step.hours))
+            })
+            "reveal" -> journeyButton(journeyFooter, step.action ?: getString(R.string.text_reveal), {
                 globeView.renderer.showPlateBoundaries = true
-                AlertDialog.Builder(this).setMessage(getString(R.string.text_the_gold_pb2002_lines_show_a_broad_plate_edge_pattern_some_report))
-                    .setPositiveButton(getString(R.string.text_continue)) { _, _ -> advanceJourney() }.show()
-            }
-            else -> panelAction(step.action ?: getString(R.string.text_continue)) { advanceJourney() }
+                showJourneyFeedback(null, getString(R.string.text_the_gold_pb2002_lines_show_a_broad_plate_edge_pattern_some_report))
+            })
+            else -> journeyButton(journeyFooter, step.action ?: getString(R.string.text_continue), { advanceJourney() })
         }
-        panelAction(getString(R.string.text_view_globe)) { closeCompanionPanel() }
-        if (index < journey.steps.size) panelAction(getString(R.string.text_skip_this_step)) { advanceJourney() }
-        panelAction(getString(R.string.text_leave_journey_restore_my_view)) { leaveJourney() }
+        journeyUtilities(lesson, canSkip = index < journey.steps.size)
     }
 
     private fun advanceJourney() {
+        journeyFeedback = null
         val active = journeyStore.active() ?: return
         val journey = JourneyContent.all(this).firstOrNull { it.id == active.journeyId } ?: return
         val next = journey.next(active.stepId)
         if (next == null) {
             journeyStore.finish(journey.id)
             restoreJourneyScene(active.previous)
-            AlertDialog.Builder(this).setMessage(getString(R.string.text_1_s_is_in_your_field_notebook, journey.title))
-                .setPositiveButton(getString(R.string.text_done)) { _, _ -> showCompanionPanel("Journeys") }.show()
+            showJourneyFeedback(journey.title, getString(R.string.text_1_s_is_in_your_field_notebook, journey.title), finished = true)
         } else {
             journeyStore.advance(next.id)
             applyJourneyStepScene(journey, next)
@@ -1338,6 +1554,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun leaveJourney() {
+        journeyFeedback = null
         val previous = journeyStore.active()?.previous
         journeyStore.exit()
         if (previous != null) restoreJourneyScene(previous)
@@ -1483,6 +1700,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun onGlobeTapped(x: Float, y: Float) {
         if (handleIndicatorTap(x, y)) return
+        if (openPanel == "Journey") return
         if (handleISSTap(x, y)) return
 
         if (challengeKind != null) {
@@ -1531,7 +1749,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onGlobeHeld(x: Float, y: Float) {
-        if (challengeKind != null) return
+        if (challengeKind != null || openPanel == "Journey") return
         val picked = globeView.renderer.pick(x, y, globeView.width, globeView.height) ?: return
         globeView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
         showDayNightCard(picked[0], picked[1])
@@ -1582,20 +1800,24 @@ class MainActivity : AppCompatActivity() {
             })
         }
         val cardScroll = ScrollView(this).apply { addView(cardBody) }
-        AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
             .setTitle(event.type.label(this))
             .setView(cardScroll)
             .setPositiveButton(if (fieldNotebook.hasEvent(event.id)) getString(R.string.text_saved) else getString(R.string.text_save)) { _, _ ->
                 fieldNotebook.saveEvent(event)
                 if (openPanel == "Notebook") showCompanionPanel("Notebook")
             }
-            .setNeutralButton(getString(R.string.companion_why)) { _, _ ->
-                AlertDialog.Builder(this).setTitle(getString(R.string.companion_why))
-                    .setMessage(explain).setPositiveButton(getString(R.string.companion_close), null).show()
-            }
+            .setNeutralButton(getString(R.string.companion_why), null)
             .setNegativeButton(getString(R.string.companion_close), null)
             .setOnDismissListener { stopNarration() }
             .show()
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
+            // Dialog dismiss listeners are posted asynchronously. Retire the old one first.
+            dialog.setOnDismissListener(null)
+            stopNarration()
+            dialog.dismiss()
+            showNarratedDialog(getString(R.string.companion_why), explain)
+        }
         if (deviceNarrateEnabled) speak(facts)
     }
 
@@ -1732,10 +1954,14 @@ class MainActivity : AppCompatActivity() {
      * Shows the info card. If [discovery] is provided and unlocked for the first
      * time, the card is prefixed with a celebration and the journal updates.
      */
-    private fun showCard(text: String, discovery: Discovery? = null) {
+    private fun showCard(text: String, discovery: Discovery? = null) = showCard(text, discovery, text)
+
+    private fun showCard(text: String, discovery: Discovery?, narration: String) {
         var body = text
+        var spokenBody = narration
         if (discovery != null && journal.unlock(discovery)) {
             body = getString(R.string.text_added_to_field_notebook_1_s, text)
+            spokenBody = getString(R.string.text_added_to_field_notebook_1_s, narration)
             globeView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
             refreshJournalButton()
         }
@@ -1743,7 +1969,7 @@ class MainActivity : AppCompatActivity() {
         eventCard.visibility = View.VISIBLE
         pendingSavePoint = null
         savePlaceButton.visibility = View.GONE
-        speak(body)
+        speakFixed(spokenBody)
     }
 
     /** Unlocks the Time Traveler discovery the first time the scrubber is used. */
@@ -1771,7 +1997,7 @@ class MainActivity : AppCompatActivity() {
         nextChallenge()
     }
 
-    private fun nextChallenge() {
+    private fun nextChallenge(feedback: String? = null) {
         val events = globeView.renderer.earthEventsRenderer.events
         val options = mutableListOf(ChallengeKind.DAYTIME, ChallengeKind.NIGHT)
         if (events.any { it.type == EarthEventsProvider.Event.Type.EARTHQUAKE }) options.add(ChallengeKind.FIND_EARTHQUAKE)
@@ -1783,16 +2009,17 @@ class MainActivity : AppCompatActivity() {
         challengeKind = options.filter { it != challengeKind }.ifEmpty { options }.random()
         challengeBanner.text = getString(R.string.text_1_s_2_s_tap_to_stop, challengeKind!!.prompt(this), challengeScore)
         challengeBanner.visibility = View.VISIBLE
+        speakFixed(*(listOfNotNull(feedback, challengeKind!!.prompt(this)).toTypedArray()))
     }
 
     private fun stopChallenge() {
         val score = challengeScore
         challengeKind = null
         challengeBanner.visibility = View.GONE
-        showCard(
-            if (score > 0) getString(R.string.text_great_job_challenges_solved_1_s, score)
+        val message = if (score > 0) getString(R.string.text_great_job_challenges_solved_1_s, score)
             else getString(R.string.text_challenge_stopped_play_again_anytime)
-        )
+        showCard(message, null, if (score > 0) getString(R.string.narration_challenge_complete) else message)
+        if (score > 0 && !narrateEnabled) speakWithDevice(message)
     }
 
     private fun evaluateChallenge(x: Float, y: Float) {
@@ -1822,7 +2049,7 @@ class MainActivity : AppCompatActivity() {
             globeView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
             challengeScore++
             showCard(getString(R.string.text_yes_that_s_right))
-            nextChallenge()
+            nextChallenge(getString(R.string.text_yes_that_s_right))
         } else {
             globeView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             showCard(getString(R.string.text_not_quite_take_another_look_and_try_again))
@@ -1839,6 +2066,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideJournal() {
+        stopNarration()
         journalOverlay.visibility = View.GONE
     }
 
@@ -1914,6 +2142,9 @@ class MainActivity : AppCompatActivity() {
                 0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f
             ).apply { marginStart = dpi(12f) })
             journalColumn.addView(row)
+            if (unlocked && narrateEnabled) journalColumn.addView(makePillButton(getString(R.string.text_read_aloud), ::dpi).apply {
+                setOnClickListener { speakFixed("${d.title(this@MainActivity)}\n${d.fact(this@MainActivity)}") }
+            })
         }
 
         journalColumn.addView(TextView(this).apply {
@@ -1949,6 +2180,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideToday() {
+        stopNarration()
         todayOverlay.visibility = View.GONE
     }
 
@@ -2021,6 +2253,9 @@ class MainActivity : AppCompatActivity() {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
             setLineSpacing(dpi(3f).toFloat(), 1f)
             setPadding(0, dpi(4f), 0, dpi(16f))
+        })
+        if (narrateEnabled) todayColumn.addView(makePillButton(getString(R.string.text_read_aloud), ::dpi).apply {
+            setOnClickListener { speakFixed(DailyFacts.today(this@MainActivity)) }
         })
 
         todayColumn.addView(TextView(this).apply {
@@ -2586,6 +2821,12 @@ class MainActivity : AppCompatActivity() {
         if (taliaNarrator.clipsFor(text) != null) {
             if (narrateEnabled) taliaNarrator.speak(text)
         } else speakWithDevice(text)
+    }
+
+    /** Fixed educational content always stays with Talia, including missing recordings. */
+    private fun speakFixed(vararg texts: String) {
+        stopNarration()
+        if (narrateEnabled) taliaNarrator.speak(texts.toList())
     }
 
     private fun speakWithDevice(text: String) {

@@ -5,6 +5,7 @@ Use --prepare-only to inspect scripts without making API calls. Existing clips
 are reused only when their text, voice, model, and settings still match.
 """
 from concurrent.futures import ThreadPoolExecutor
+from threading import Event
 from pathlib import Path
 import argparse
 import hashlib
@@ -25,18 +26,7 @@ LOCALES = {'en-US': 'values', 'de-DE': 'values-de-rDE', 'es-ES': 'values-es-rES'
            'fr-FR': 'values-fr-rFR', 'ar': 'values-ar', 'hi-IN': 'values-hi-rIN',
            'ja-JP': 'values-ja-rJP', 'ko-KR': 'values-ko-rKR', 'pt-BR': 'values-pt-rBR',
            'ro': 'values-ro', 'uk': 'values-uk', 'zh-CN': 'values-zh-rCN'}
-CLIPS = {
-    'enabled': 'text_read_to_me_is_on_i_ll_read_the_cards_out_loud',
-    'sky': 'text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who',
-    'day': 'text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now',
-    'night': 'text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those',
-    'iss_day': 'text_iss_day', 'iss_night': 'text_iss_night',
-    'added': 'text_added_to_field_notebook_1_s',
-    'tap_earth': 'text_tap_on_the_earth_to_answer',
-    'correct': 'text_yes_that_s_right',
-    'try_again': 'text_not_quite_take_another_look_and_try_again',
-    'challenge_stopped': 'text_challenge_stopped_play_again_anytime',
-}
+CATALOG = ASSETS / 'catalog.json'
 
 def android_text(value):
     if value.startswith('"') and value.endswith('"'):
@@ -50,14 +40,33 @@ def clean(value):
     value = ''.join(c if unicodedata.category(c)[0] in 'LMNP' or c.isspace() else ' ' for c in value)
     return ' '.join(value.split())
 
+def resolve(parts, strings, locale):
+    def resource(part):
+        if isinstance(part, str):
+            return strings[part]
+        value = strings[part['resource']]
+        for position, argument in enumerate(part.get('arguments', []), 1):
+            if isinstance(argument, dict):
+                argument = strings[argument['resource']]
+            def formatted(match):
+                text = str(int(argument)) if match[1] == 'd' else str(argument)
+                # Java Formatter localizes decimal integers for the app's Arabic locale.
+                if match[1] == 'd' and locale == 'ar':
+                    text = text.translate(str.maketrans('0123456789', '٠١٢٣٤٥٦٧٨٩'))
+                return text
+            value = re.sub(r'%' + str(position) + r'\$([sd])', formatted, value)
+        assert not re.search(r'%\d+\$', value), f'Unresolved format argument in {locale}'
+        return value
+    return clean('\n'.join(resource(part) for part in parts))
+
 def scripts():
     jobs = []
+    catalog = json.loads(CATALOG.read_text())
     for tag, directory in LOCALES.items():
         elements = ET.parse(ROOT / 'app/src/main/res' / directory / 'strings.xml').getroot()
         strings = {element.attrib['name']: android_text(element.text or '') for element in elements}
-        texts = {clip: clean(strings[key].replace('%1$s', '')) for clip, key in CLIPS.items()}
-        texts['time_traveler'] = clean(strings['text_time_traveler'] + '\n' + strings['text_you_moved_time_to_turn_day_into_night'])
-        for clip, text in texts.items():
+        for clip, parts in catalog.items():
+            text = resolve(parts, strings, tag)
             assert text and not re.search(r'%\d+\$', text), (tag, clip)
             payload = {'text': text, 'model_id': MODEL, 'voice_settings': SETTINGS, 'seed': 42}
             digest = hashlib.sha256(json.dumps({'voice': VOICE, **payload}, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
@@ -81,8 +90,13 @@ def generate(job, key, previous):
             if response.headers.get_content_type() != 'audio/mpeg' or len(audio) < 1000:
                 raise RuntimeError('Expected nonempty MP3 response')
     except urllib.error.HTTPError as error:
-        detail = json.loads(error.read().decode().replace(key, '<redacted>')).get('detail', {})
-        raise RuntimeError(f"{job['locale']}/{job['clip']}: HTTP {error.code}, {detail.get('status')}: {detail.get('message')}") from None
+        # Log an error category only; API responses can include private account/key names.
+        try:
+            detail = json.loads(error.read()).get('detail', {})
+            status = detail.get('status', 'request_failed') if isinstance(detail, dict) else 'request_failed'
+        except (ValueError, UnicodeDecodeError):
+            status = 'request_failed'
+        raise RuntimeError(f"{job['locale']}/{job['clip']}: HTTP {error.code}, {status}") from None
     temporary = target.with_suffix('.partial')
     temporary.write_bytes(audio)
     temporary.replace(target)
@@ -111,8 +125,17 @@ def main():
         receipt = CHECKPOINTS / job['locale'] / (job['clip']+'.json')
         if receipt.exists():
             previous[(job['locale'], job['clip'])] = json.loads(receipt.read_text())['generation_sha256']
+    stopped = Event()
+    def run(job):
+        if stopped.is_set():
+            return 'Skipped after generation failure'
+        try:
+            return generate(job, key, previous)
+        except Exception:
+            stopped.set()
+            raise
     with ThreadPoolExecutor(max_workers=2) as pool:
-        for result in pool.map(lambda job: generate(job, key, previous), jobs):
+        for result in pool.map(run, jobs):
             print(result, flush=True)
     for tag in LOCALES:
         index = {job['text']: job['clip']+'.mp3' for job in jobs if job['locale'] == tag}

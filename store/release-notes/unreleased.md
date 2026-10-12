@@ -6,13 +6,15 @@ notes. The following English block is under Play's 500-character limit:
 
 ```text
 <en-US>
-Explore in 12 languages, with a Settings language picker and Arabic right-to-left support.
+Explore in 12 languages with a Settings language picker and Arabic support.
 
-A thin outline and label reveal an unlit new Moon or small crescent.
+A thin outline and label reveal unlit new Moons and small crescents.
 
-Choose Talia's natural voice at first launch, or explore quietly. Talia and Android speech have separate switches; Android is off by default. Recorded lessons play offline in every app language.
+Choose Talia at first launch. Offline narration covers cards, explanations and journeys. Talia and Android speech have separate switches.
 
-Improved tablet layouts. Day/night cards appear once; touch and hold to revisit.
+Compact journey cards keep Earth visible and interactive. Improved tablet layouts.
+
+Day/night cards appear once; touch and hold to revisit.
 </en-US>
 ```
 

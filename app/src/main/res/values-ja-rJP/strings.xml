@@ -795,4 +795,7 @@
     <string name="narration_talia_label" formatted="false">"タリアの音声"</string>
     <string name="narration_android_label" formatted="false">"Androidの音声"</string>
     <string name="narration_android_detail" formatted="false">"最新のイベント情報とスコアを端末の音声で読み上げます。"</string>
+    <string name="narration_challenge_complete" formatted="false">"よくできたね！探検を続けて、別のチャレンジにも挑戦しよう。"</string>
+    <string name="journey_options" formatted="false">"旅のオプション"</string>
+    <string name="journey_leave" formatted="false">"旅を終了"</string>
 </resources>

@@ -1,0 +1,390 @@
+{
+  "enabled": [
+    "text_read_to_me_is_on_i_ll_read_the_cards_out_loud"
+  ],
+  "sky": [
+    "text_the_night_sky_beyond_earth_are_thousands_of_stars_planets_and_who"
+  ],
+  "day": [
+    "text_it_s_daytime_here_this_side_of_earth_is_facing_the_sun_right_now"
+  ],
+  "night": [
+    "text_it_s_night_time_here_this_side_is_turned_away_from_the_sun_those"
+  ],
+  "iss_day": [
+    "text_iss_day"
+  ],
+  "iss_night": [
+    "text_iss_night"
+  ],
+  "added": [
+    {
+      "resource": "text_added_to_field_notebook_1_s",
+      "arguments": [
+        ""
+      ]
+    }
+  ],
+  "tap_earth": [
+    "text_tap_on_the_earth_to_answer"
+  ],
+  "correct": [
+    "text_yes_that_s_right"
+  ],
+  "try_again": [
+    "text_not_quite_take_another_look_and_try_again"
+  ],
+  "challenge_stopped": [
+    "text_challenge_stopped_play_again_anytime"
+  ],
+  "time_traveler": [
+    "text_time_traveler",
+    "text_you_moved_time_to_turn_day_into_night"
+  ],
+  "why_earthquake": [
+    "text_earthquakes_happen_when_stress_makes_rock_slip_along_a_fault_some"
+  ],
+  "why_volcano": [
+    "text_magma_can_rise_through_earth_s_crust_this_report_does_not_confirm"
+  ],
+  "why_wildfire": [
+    "text_wildfire_can_begin_naturally_or_through_human_activity_and_may_sp"
+  ],
+  "why_storm": [
+    "text_severe_storms_draw_energy_from_warm_moist_air_this_marker_shows_t"
+  ],
+  "journey_follow_sunrise_intro": [
+    "lesson_a_turning_world",
+    "lesson_sunrise_is_a_moving_boundary_between_darkness_and_daylight_we_ll"
+  ],
+  "journey_follow_sunrise_london": [
+    "lesson_find_london",
+    "lesson_look_at_london_on_the_globe_notice_which_side_faces_the_sun_the_m"
+  ],
+  "journey_follow_sunrise_predict": [
+    "lesson_predict_the_direction",
+    "lesson_as_earth_spins_eastward_which_way_does_the_dawn_boundary_move_acr",
+    "lesson_westward",
+    "lesson_eastward"
+  ],
+  "journey_follow_sunrise_predict_right": [
+    "text_that_s_the_pattern",
+    "lesson_yes_at_a_fixed_utc_time_the_dawn_line_moves_westward_over_longitu"
+  ],
+  "journey_follow_sunrise_predict_wrong": [
+    "text_look_again",
+    "lesson_it_moves_westward_across_longitudes_earth_itself_turns_eastward_c"
+  ],
+  "journey_follow_sunrise_advance": [
+    "lesson_advance_the_scene",
+    "lesson_move_the_globe_s_lesson_clock_forward_two_hours_and_watch_the_lig"
+  ],
+  "journey_follow_sunrise_finish": [
+    "lesson_what_changed",
+    "lesson_the_sunlight_direction_changed_with_time_did_the_saved_place_move",
+    "lesson_no_earth_rotated_relative_to_the_sun",
+    "lesson_yes_its_latitude_changed"
+  ],
+  "journey_follow_sunrise_finish_right": [
+    "text_that_s_the_pattern",
+    "lesson_exactly_the_place_keeps_its_coordinates_while_earth_s_rotation_ch"
+  ],
+  "journey_follow_sunrise_finish_wrong": [
+    "text_look_again",
+    "lesson_a_place_keeps_its_latitude_and_longitude_the_changing_angle_to_th"
+  ],
+  "journey_follow_sunrise_complete": [
+    {
+      "resource": "text_1_s_is_in_your_field_notebook",
+      "arguments": [
+        {
+          "resource": "lesson_follow_sunrise"
+        }
+      ]
+    }
+  ],
+  "journey_ring_of_fire_intro": [
+    "lesson_a_pattern_around_the_pacific",
+    "lesson_visit_three_locations_predict_a_pattern_then_reveal_plate_boundar"
+  ],
+  "journey_ring_of_fire_japan": [
+    "lesson_off_japan",
+    "lesson_historical_fallback_2011_03_11_tohoku_earthquake_usgs_a_recent_pa"
+  ],
+  "journey_ring_of_fire_cascades": [
+    "lesson_the_cascades",
+    "lesson_historical_fallback_1980_05_18_mount_st_helens_eruption_usgs_this"
+  ],
+  "journey_ring_of_fire_chile": [
+    "lesson_along_chile",
+    "lesson_historical_fallback_1960_05_22_great_chilean_earthquake_usgs_this"
+  ],
+  "journey_ring_of_fire_predict": [
+    "lesson_what_pattern_do_you_see",
+    "lesson_which_broad_pattern_links_many_earthquake_and_volcano_locations_a",
+    "lesson_a_belt_near_several_plate_edges",
+    "lesson_one_straight_line_through_the_pacific_center",
+    "lesson_every_event_lies_exactly_on_one_boundary"
+  ],
+  "journey_ring_of_fire_predict_right": [
+    "text_that_s_the_pattern",
+    "lesson_yes_many_cluster_near_plate_edges_but_some_events_also_happen_awa"
+  ],
+  "journey_ring_of_fire_predict_wrong": [
+    "text_look_again",
+    "lesson_the_broad_pattern_is_a_belt_near_several_plate_edges_individual_e"
+  ],
+  "journey_ring_of_fire_reveal": [
+    "lesson_reveal_the_boundaries",
+    "lesson_gold_lines_show_a_generalized_pb2002_plate_boundary_model_compare"
+  ],
+  "journey_ring_of_fire_finish": [
+    "lesson_what_the_pattern_means",
+    "lesson_plate_motions_concentrate_many_earthquakes_and_volcanoes_around_t"
+  ],
+  "journey_ring_of_fire_complete": [
+    {
+      "resource": "text_1_s_is_in_your_field_notebook",
+      "arguments": [
+        {
+          "resource": "lesson_explore_the_ring_of_fire"
+        }
+      ]
+    }
+  ],
+  "journey_understand_seasons_intro": [
+    "lesson_two_hemispheres",
+    "lesson_compare_daylight_at_london_and_sydney_on_two_dates_earth_s_tilted"
+  ],
+  "journey_understand_seasons_june_north": [
+    "lesson_london_in_june",
+    "lesson_observe_london_near_the_june_solstice_the_northern_hemisphere_has"
+  ],
+  "journey_understand_seasons_june_south": [
+    "lesson_sydney_in_june",
+    "lesson_observe_sydney_on_the_same_date_its_winter_daylight_is_shorter_th"
+  ],
+  "journey_understand_seasons_predict": [
+    "lesson_predict_december",
+    "lesson_near_the_december_solstice_which_marked_place_has_longer_daylight",
+    "lesson_sydney",
+    "lesson_london",
+    "lesson_they_must_be_equal"
+  ],
+  "journey_understand_seasons_predict_right": [
+    "text_that_s_the_pattern",
+    "lesson_yes_the_southern_hemisphere_tilts_toward_the_sun_in_december_so_s"
+  ],
+  "journey_understand_seasons_predict_wrong": [
+    "text_look_again",
+    "lesson_sydney_has_longer_daylight_near_the_december_solstice_the_souther"
+  ],
+  "journey_understand_seasons_december": [
+    "lesson_switch_to_december",
+    "lesson_compare_the_daylight_readouts_after_changing_the_lesson_date_this"
+  ],
+  "journey_understand_seasons_finish": [
+    "lesson_why_seasons_change",
+    "lesson_earth_s_axis_stays_tilted_about_23_4_as_it_orbits_the_sun_the_nor"
+  ],
+  "journey_understand_seasons_complete": [
+    {
+      "resource": "text_1_s_is_in_your_field_notebook",
+      "arguments": [
+        {
+          "resource": "lesson_understand_the_seasons"
+        }
+      ]
+    }
+  ],
+  "journey_advance": [
+    {
+      "resource": "text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th",
+      "arguments": [
+        2
+      ]
+    }
+  ],
+  "journey_reveal": [
+    "text_the_gold_pb2002_lines_show_a_broad_plate_edge_pattern_some_report"
+  ],
+  "daily_fact_01": [
+    "text_the_sun_is_so_huge_that_about_1_3_million_earths_could_fit_inside"
+  ],
+  "daily_fact_02": [
+    "text_a_day_on_venus_is_longer_than_a_whole_year_on_venus"
+  ],
+  "daily_fact_03": [
+    "text_footprints_on_the_moon_can_last_millions_of_years_because_there_s"
+  ],
+  "daily_fact_04": [
+    "text_jupiter_is_so_big_that_all_the_other_planets_could_fit_inside_it"
+  ],
+  "daily_fact_05": [
+    "text_sunlight_takes_about_8_minutes_to_travel_all_the_way_to_earth"
+  ],
+  "daily_fact_06": [
+    "text_space_is_completely_silent_because_there_s_no_air_to_carry_sound"
+  ],
+  "daily_fact_07": [
+    "text_earth_takes_365_and_a_quarter_days_to_orbit_the_sun_that_s_why_we"
+  ],
+  "daily_fact_08": [
+    "text_the_tallest_volcano_we_know_of_olympus_mons_on_mars_is_about_thre"
+  ],
+  "daily_fact_09": [
+    "text_earth_is_the_only_planet_not_named_after_a_greek_or_roman_god"
+  ],
+  "daily_fact_10": [
+    "text_there_are_more_stars_in_the_universe_than_grains_of_sand_on_all_o"
+  ],
+  "daily_fact_11": [
+    "text_the_moon_drifts_about_3_8_cm_farther_from_earth_every_year"
+  ],
+  "daily_fact_12": [
+    "text_saturn_is_so_light_for_its_size_that_it_would_float_in_a_giant_ba"
+  ],
+  "daily_fact_13": [
+    "text_lightning_strikes_somewhere_on_earth_about_100_times_every_second"
+  ],
+  "daily_fact_14": [
+    "text_the_space_station_zooms_around_the_whole_earth_about_once_every_9"
+  ],
+  "daily_fact_15": [
+    "text_auroras_glow_near_the_poles_when_tiny_particles_from_the_sun_cras"
+  ],
+  "daily_fact_16": [
+    "text_about_70_of_earth_s_surface_is_covered_by_ocean"
+  ],
+  "daily_fact_17": [
+    "text_venus_is_the_hottest_planet_even_though_mercury_is_closer_to_the"
+  ],
+  "daily_fact_18": [
+    "text_the_great_red_spot_on_jupiter_is_a_storm_bigger_than_the_whole_ea"
+  ],
+  "daily_fact_19": [
+    "text_earthquakes_happen_when_giant_pieces_of_earth_s_crust_slip_past_e"
+  ],
+  "daily_fact_20": [
+    "text_the_sun_is_actually_white_our_air_is_what_makes_it_look_yellow"
+  ],
+  "daily_fact_21": [
+    "text_comets_are_giant_balls_of_ice_and_dust_that_grow_glowing_tails_ne"
+  ],
+  "daily_fact_22": [
+    "text_if_you_could_drive_a_car_straight_up_you_d_reach_space_in_about_a"
+  ],
+  "daily_fact_23": [
+    "text_the_moon_has_no_air_so_its_sky_is_always_black_even_in_the_daytim"
+  ],
+  "daily_fact_24": [
+    "text_earth_spins_at_about_1_600_km_h_at_the_equator_but_we_don_t_feel"
+  ],
+  "discovery_earthquake": [
+    "text_earthquake",
+    "text_you_explored_a_reported_earthquake"
+  ],
+  "discovery_volcano": [
+    "text_volcano",
+    "text_you_explored_a_reported_volcanic_event"
+  ],
+  "discovery_wildfire": [
+    "text_wildfire",
+    "text_you_explored_a_reported_wildfire"
+  ],
+  "discovery_storm": [
+    "text_storm",
+    "text_you_explored_a_reported_storm"
+  ],
+  "discovery_daytime": [
+    "text_daytime_2",
+    "text_you_found_a_place_facing_the_sun"
+  ],
+  "discovery_night": [
+    "text_city_lights_2",
+    "text_you_found_earth_s_night_side"
+  ],
+  "discovery_stargazer": [
+    "text_star_gazer",
+    "text_you_looked_beyond_earth"
+  ],
+  "challenge_daytime": [
+    "text_tap_a_place_where_it_s_daytime"
+  ],
+  "challenge_night": [
+    "text_tap_a_place_where_it_s_night_time"
+  ],
+  "challenge_find_earthquake": [
+    "text_find_an_earthquake"
+  ],
+  "challenge_find_volcano": [
+    "text_find_a_volcano"
+  ],
+  "challenge_find_wildfire": [
+    "text_find_a_wildfire"
+  ],
+  "challenge_find_storm": [
+    "text_find_a_storm"
+  ],
+  "guide_intro": [
+    "text_tap_the_globe_to_discover_more"
+  ],
+  "guide_01": [
+    "text_sunlight_and_city_lights",
+    "text_calculated_sunlight_shows_the_current_day_and_night_sides"
+  ],
+  "guide_02": [
+    "companion_clouds",
+    "text_generated_clouds_are_illustrative_satellite_mode_derives_opacity"
+  ],
+  "guide_03": [
+    "text_earthquakes",
+    "text_usgs_reports_magnitude_4_5_earthquakes_from_the_last_seven_days"
+  ],
+  "guide_04": [
+    "text_volcanoes_wildfires_and_storms",
+    "text_nasa_eonet_open_reports_may_have_older_observation_dates"
+  ],
+  "guide_05": [
+    "text_iss",
+    "text_illustrated_orbit_not_live_tracking"
+  ],
+  "guide_06": [
+    "text_aurora",
+    "text_decorative_illustration_not_a_forecast"
+  ],
+  "guide_07": [
+    "text_day_night_boundary",
+    "text_calculated_terminator_line_2"
+  ],
+  "guide_08": [
+    "text_constellations",
+    "text_catalog_stars_joined_into_familiar_patterns"
+  ],
+  "guide_09": [
+    "text_plate_boundaries",
+    "text_a_simplified_offline_pb2002_model_many_earthquakes_occur_near_bou"
+  ],
+  "seasons": [
+    "text_seasons_earth_s_axis_stays_tilted_about_23_4_as_earth_orbits_the",
+    "text_guides_equator_tropics_23_4_and_polar_circles_66_6_compare_the_tw"
+  ],
+  "plate_boundaries": [
+    "text_plate_boundaries_gold_lines_mark_modelled_plate_edges_earthquakes"
+  ],
+  "challenge_complete": [
+    "narration_challenge_complete"
+  ],
+  "today_prompt_1": [
+    "text_watch_where_sunrise_reaches_next"
+  ],
+  "today_prompt_2": [
+    "text_compare_daylight_in_the_north_and_south"
+  ],
+  "today_prompt_3": [
+    "text_trace_a_curve_of_earth_s_plate_boundaries"
+  ],
+  "place_help": [
+    "text_tap_a_point_on_the_globe_then_tap_save_this_place_under_its_card"
+  ]
+}

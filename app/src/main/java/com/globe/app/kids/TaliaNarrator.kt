@@ -43,8 +43,14 @@ class TaliaNarrator(private val context: Context) {
 
     /** True also when audio focus is refused, so fallback cannot bypass that refusal. */
     fun speak(text: String): Boolean {
+        return speak(listOf(text))
+    }
+
+    /** Queue complete fixed passages, e.g. challenge feedback followed by the next prompt. */
+    fun speak(texts: List<String>): Boolean {
         stop()
-        val clips = clipsFor(text) ?: return false
+        val clips = texts.flatMap { clipsFor(it) ?: return false }
+        if (clips.isEmpty()) return false
         if (!requestFocus()) return true
         play(clips, 0, generation)
         return true

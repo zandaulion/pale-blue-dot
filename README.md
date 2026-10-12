@@ -16,9 +16,9 @@ The Gradle project is named **Globe**. The app is built with Kotlin and raw Open
 - **Places and Field notebook** — save a named point from the globe or an offline city catalog, set its time zone and primary place, and keep existing discoveries, completed journeys, and saved event observations on-device.
 - **Today and Earth Today widget** — see the Moon, local daylight at a chosen place, a recent attributed event when available, and a short prompt. Each home-screen widget can choose its own place.
 - **Live wallpaper** — configure Whole Earth, Night Lights, or Earth's Horizon, preview it, and launch Android's apply flow.
-- **Deeper exploration** — show the bundled plate-boundary layer and take three guided journeys through sunrise, the Ring of Fire, and seasons.
+- **Deeper exploration** — show the bundled plate-boundary layer and take three guided journeys through sunrise, the Ring of Fire, and seasons. Compact lesson and feedback cards keep Earth visible and interactive; hide a card and resume from the same step.
 - **Find-it challenges** — find daytime, night-time, or a particular event type. Event challenges are offered only when that type is present in the downloaded data.
-- **Audio** — optional offline Talia narration for fixed cards in all 12 languages; a separate Android voice switch opts into changing event facts and scores. Ambient music has a separate switch and volume slider.
+- **Audio** — optional offline Talia narration for fixed cards, event explanations and journeys in all 12 languages, plus reading actions for reference sections; a separate Android voice switch opts into changing event facts and scores. Ambient music has a separate switch and volume slider.
 - **Onboarding and legend** — first launch offers “Explore with Talia” or “Explore quietly” and remembers the choice. Settings has separate Talia voice and Android voice switches; choosing Talia enables only the natural voice. An illustrated guide explains the scene.
 - **Sharing** — capture a branded image of the globe and share it through Android's share sheet after a parental gate.
 
@@ -139,7 +139,7 @@ The renderer then checks eclipse alignment and reports changes to the UI. Native
 
 ### Assets and dependencies
 
-Bundled textures in `app/src/main/res/drawable-nodpi/` are `earth_day.jpg`, `earth_night.jpg`, and `moon.jpg`. Ambient music is bundled as `app/src/main/res/raw/ambient_space.mp3`. Talia's 144 MP3s and 12 text-to-clip indexes live in `app/src/main/assets/narration/` (about 15 MB of audio). Building and playing the existing clips requires no ElevenLabs key.
+Bundled textures in `app/src/main/res/drawable-nodpi/` are `earth_day.jpg`, `earth_night.jpg`, and `moon.jpg`. Ambient music is bundled as `app/src/main/res/raw/ambient_space.mp3`. Talia's 1,212 MP3s, shared resource-script catalog and 12 text-to-clip indexes live in `app/src/main/assets/narration/` (about 124 MiB of audio). Building and playing the existing clips requires no ElevenLabs key.
 
 The app's declared library dependencies are AndroidX `core-ktx` and `appcompat`. Rendering, matrix math, networking, image handling, media playback, and narration use Android/JDK APIs.
 

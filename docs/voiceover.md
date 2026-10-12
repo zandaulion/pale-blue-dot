@@ -24,17 +24,22 @@ Music has its own switch and volume slider. Wallpaper and widgets stay silent.
 | Sky, daytime, night, ISS daytime/night cards | Talia when Talia voice is enabled |
 | First Time Traveler discovery | Talia |
 | Newly discovered fixed card | Separate Talia notebook acknowledgment followed by the complete card |
-| Fixed challenge feedback | Talia: tap Earth, correct, try again, stopped with no score |
+| Why does this happen? | Talia automatically reads earthquake, volcano, wildfire and storm explanations; Read aloud replays them |
+| Guided journeys | Compact journey cards automatically read all 18 step titles/instructions/options with Talia, eight correct/incorrect feedback passages, time-advance and boundary-reveal explanations, and three completions |
+| Fixed challenge feedback | Talia reads all six prompts, tap Earth, correct, try again, stopped, and a fixed congratulation after a positive score |
+| Guide, seasons, plate explanation | Read aloud actions play Talia on request |
+| Today and notebook | Read aloud actions play the daily prompt/fact and unlocked discovery facts with Talia; no automatic panel-wide reading |
+| Place-saving help | Talia reads the fixed touch-and-hold instructions |
 | Event dialog facts, including Replay | Device TTS only when Android voice is enabled and a suitable voice is available |
-| Challenge completion with a positive score | Device TTS only when Android voice is enabled |
+| Exact positive challenge score | Remains on screen; Android reads it only when Android voice is enabled and Talia is off |
 | Recording playback failure | Silent; never substitutes another voice |
-| Today, daily facts, journeys, places, Guide, notebook panels, Moon label | No automatic read-aloud narration added |
+| Settings/forms, changing place/time/Moon values, source links, status/error notices | Use Android accessibility; these are not recorded educational passages |
 
 This feature is optional narration, separate from Android TalkBack. It does not
 provide a screen reader for every control or panel. Remote NASA/USGS titles keep
 the source language even when the surrounding interface is translated.
 
-Closing a card or event dialog, or leaving the app, stops both voices. Turning a
+Closing a card, event dialog or narrated panel, or leaving the app, stops both voices. Event dialogs clear the previous asynchronous dismiss listener before starting an explanation. Journey feedback and continuation use the compact inline card, keeping the globe visible. Refreshing an already open Today panel preserves its daily-fact playback. Turning a
 voice switch off stops that voice independently. The event dialog's Read aloud
 replay action appears only when Android voice is enabled. Talia also stops on
 audio-focus loss. It does not resume automatically. Talia uses
@@ -50,14 +55,17 @@ reopen or restart speech; touch and hold deliberately revisits the lesson. See
 
 ## Recordings and runtime
 
-`app/src/main/assets/narration/<locale>/` holds 12 MP3s and `index.json` for each
-of `en-US`, `de-DE`, `es-ES`, `fr-FR`, `ar`, `hi-IN`, `ja-JP`, `ko-KR`, `pt-BR`,
-`ro`, `uk`, and `zh-CN`: 144 clips, about 15 MB of audio in total.
+`app/src/main/assets/narration/<locale>/` contains an MP3 for each of 101
+fixed passages and `index.json` for each of `en-US`, `de-DE`, `es-ES`, `fr-FR`,
+`ar`, `hi-IN`, `ja-JP`, `ko-KR`, `pt-BR`, `ro`, `uk`, and `zh-CN`: 1,212 clips, approximately 124 MiB of audio.
+The original 144 recordings are reused unchanged.
 
-The clip names are `enabled`, `sky`, `day`, `night`, `iss_day`, `iss_night`,
-`time_traveler`, `added`, `tap_earth`, `correct`, `try_again`, and
-`challenge_stopped`, each with an `.mp3` extension. The index maps cleaned spoken
-text to the filename. `kids/TaliaNarrator.kt` resolves the current app locale and
+`assets/narration/catalog.json` declares the Android resources and fixed format
+arguments for every passage. The generator and `kids/NarrationCatalog.kt` use
+this shared manifest, including complete journey titles/questions/options,
+feedback, discoveries, 24 daily facts and nine Guide entries. Notebook descriptions use the existing reported-observation wording rather than implying a witnessed eruption or fire. Long sections have
+individual reading actions rather than one uninterrupted panel recording.
+The index maps cleaned spoken text to the filename. `kids/TaliaNarrator.kt` resolves the current app locale and
 plays recordings with Android `MediaPlayer`; `kids/NarrationText.kt` removes
 emoji and markup-like symbols while preserving letters, combining marks,
 numbers, punctuation, and normalized whitespace. Notebook acknowledgment and
@@ -97,8 +105,7 @@ python3 tools/generate_narration.py --prepare-only
 python3 tools/generate_narration.py
 ```
 
-The tool derives scripts from the actual Android translations, including escape
-handling and the combined Time Traveler title/fact. It writes review material to
+The tool derives scripts from the shared catalog and actual Android translations, including escape handling, composed passages and fixed format arguments. It writes review material to
 `../voice-samples/app-narration-scripts.json` and generated app clips/indexes to
 `app/src/main/assets/narration/`. Editing spoken text requires regenerating and
 checking indexes against the updated resources before shipping.
@@ -114,8 +121,7 @@ Per-clip generation hashes/checkpoints live in
 its checkpoint matches the text, voice, model, and settings and the file is
 present with usable size. Interrupted runs can resume locally. A fresh checkout
 without these checkpoints will generate again and spend credits; inspect the
-prepared scripts before running generation. Indexes are written after the job
-completes. Checkpoints and audition material do not belong in Git.
+prepared scripts before running generation. A generation error stops further requests; completed checkpoints remain reusable. Indexes are written only after the whole job completes. Checkpoints and audition material do not belong in Git.
 
 ## Auditions and validation
 
@@ -154,6 +160,16 @@ The October 12, 2026 independent-switch update was also checked on the Motorola:
 - Android app/test builds and lint passed; resource validation now covers 795
   translated strings per locale. Existing spoken scripts and recordings did not
   change, so no ElevenLabs regeneration or API request was needed.
+
+The later fixed-educational coverage update adds 89 passages per locale. All
+1,212 MP3s decode to nonempty audio and match the shared resource-script catalog;
+the original 144 clips remain byte-for-byte unchanged. Integer format arguments
+are resolved before script cleanup, including Arabic digits, and unresolved
+placeholders reject generation. Six Talia tests plus three globe-interaction
+and four localization tests passed on the Motorola (13 total), including real
+event explanation playback/replay/close, reference reading actions, scored
+challenge feedback, and a dialog continuation that keeps the next lesson playing.
+App/test assembly and lint passed. Native event-explanation, journey-choice and feedback layout audits passed in all 12 languages at 100% and 130% font size (96 captures). Visual review found no clipping or overlap; long labels wrap or native dialog buttons stack. Original app preferences, locale, font and display settings were restored and verified. Captures and failure/retry logs stay outside Git.
 
 Use [build/test instructions](build-release.md) and the
 [focused layout audit](localization.md) to repeat these checks. Captures and local

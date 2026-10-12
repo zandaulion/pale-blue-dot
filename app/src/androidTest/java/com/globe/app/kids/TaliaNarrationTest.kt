@@ -17,6 +17,12 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.globe.app.AppLanguage
 import com.globe.app.MainActivity
 import com.globe.app.R
+import com.globe.app.events.EarthEventsProvider
+import com.globe.app.explore.JourneyContent
+import com.globe.app.explore.JourneyStore
+import android.view.inspector.WindowInspector
+import android.view.Window
+import android.view.MotionEvent
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -64,7 +70,27 @@ class TaliaNarrationTest {
                 "${Discovery.TIME_TRAVELER.emoji} ${Discovery.TIME_TRAVELER.title(ctx)}\n${Discovery.TIME_TRAVELER.fact(ctx)}"))
             assertNull(narrator.clipsFor(ctx.getString(R.string.text_great_job_challenges_solved_1_s, 123)))
             all += listOf("added.mp3", "time_traveler.mp3")
-            assertEquals(12, all.size)
+            for ((id, text) in NarrationCatalog.scripts(ctx)) {
+                assertEquals("$tag/$id", listOf("$id.mp3"), narrator.clipsFor(text))
+                all += "$id.mp3"
+            }
+            assertEquals(101, all.size)
+            for (journey in JourneyContent.all(ctx)) {
+                for (step in journey.steps) {
+                    assertNotNull(narrator.clipsFor((listOf(step.title, step.instruction) + step.options).joinToString("\n")))
+                    for ((title, message) in listOf(ctx.getString(R.string.text_that_s_the_pattern) to step.right,
+                        ctx.getString(R.string.text_look_again) to step.wrong).filter { it.second.isNotBlank() }) {
+                        assertNotNull(narrator.clipsFor("$title\n$message"))
+                    }
+                    if (step.kind == "advance") assertNotNull("$tag advance mismatch: " + ctx.getString(
+                        R.string.text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th, step.hours), narrator.clipsFor(ctx.getString(
+                        R.string.text_the_scene_moved_1_s_hours_ahead_watch_the_changing_sunlight_on_th, step.hours)))
+                }
+                assertNotNull(narrator.clipsFor(ctx.getString(R.string.text_1_s_is_in_your_field_notebook, journey.title)))
+            }
+            for (day in 0L..23L) assertNotNull(narrator.clipsFor(DailyFacts.today(ctx, day * 86_400_000L)))
+            for (discovery in Discovery.values()) assertNotNull(narrator.clipsFor("${discovery.title(ctx)}\n${discovery.fact(ctx)}"))
+            for (kind in ChallengeKind.values()) assertNotNull(narrator.clipsFor(kind.prompt(ctx)))
             for (clip in all) {
                 MediaMetadataRetriever().use { reader ->
                     ctx.assets.openFd("narration/$tag/$clip").use { fd ->
@@ -151,6 +177,138 @@ class TaliaNarrationTest {
             val edit = prefs.edit()
             before.forEach { (key, value) -> if (value == null) edit.remove(key) else edit.putBoolean(key, value) }
             edit.commit()
+        }
+    }
+
+    private fun invoke(activity: MainActivity, name: String, vararg args: Any) {
+        val types = args.map { when (it) {
+            is Boolean -> Boolean::class.javaPrimitiveType!!
+            else -> it.javaClass
+        } }.toTypedArray()
+        MainActivity::class.java.getDeclaredMethod(name, *types).apply { isAccessible = true }.invoke(activity, *args)
+    }
+
+    private fun player(activity: MainActivity): MediaPlayer? = TaliaNarrator::class.java.getDeclaredField("player")
+        .apply { isAccessible = true }.get(field(activity, "taliaNarrator")) as MediaPlayer?
+
+    private fun clickDialog(activity: MainActivity, resource: Int) {
+        // A just-shown dialog is attached before its window-focus callback arrives.
+        val button = WindowInspector.getGlobalWindowViews().asReversed().firstNotNullOf { window ->
+            descendants(window).filterIsInstance<TextView>().singleOrNull {
+                it.visibility == View.VISIBLE && it.text.toString() == activity.getString(resource)
+            }
+        }
+        button.performClick()
+    }
+
+    private fun protect(activity: MainActivity) {
+        val callback = activity.window.callback
+        activity.window.callback = object : Window.Callback by callback {
+            override fun dispatchTouchEvent(event: MotionEvent): Boolean = true
+        }
+    }
+
+    @Test fun everyEventExplanationReadsWithTaliaAndStopsOnDismissal() = withSavedVoicePreferences { prefs ->
+        prefs.edit().putBoolean("onboarded", true).putBoolean("narrate_enabled", true)
+            .putBoolean("device_narrate_enabled", false).commit()
+        ActivityScenario.launch(MainActivity::class.java).use { scenario ->
+            scenario.onActivity(::protect)
+            for (category in EarthEventsProvider.Event.Type.values()) {
+                val event = EarthEventsProvider.Event("synthetic-${category.name}", 20.0, -15.0,
+                    "Example observation", category, System.currentTimeMillis(), null,
+                    "Sample data", null, null, null, emptyList(), 0.014f)
+                scenario.onActivity { invoke(it, "showEventCard", event) }
+                instrumentation.waitForIdleSync(); Thread.sleep(300)
+                scenario.onActivity { clickDialog(it, R.string.companion_why) }
+                instrumentation.waitForIdleSync(); Thread.sleep(600)
+                scenario.onActivity { activity ->
+                    assertTrue("Explanation lost playback after parent dismissed: $category", player(activity)?.isPlaying == true)
+                    clickDialog(activity, R.string.text_read_aloud)
+                    assertNotNull(player(activity))
+                }
+                instrumentation.waitForIdleSync(); Thread.sleep(300)
+                scenario.onActivity { clickDialog(it, R.string.companion_close) }
+                instrumentation.waitForIdleSync()
+                scenario.onActivity { assertNull(player(it)) }
+            }
+            scenario.onActivity { activity ->
+                val recorder = RecordingTts(activity)
+                (field(activity, "tts") as TextToSpeech).shutdown()
+                MainActivity::class.java.getDeclaredField("tts").apply { isAccessible = true }.set(activity, recorder)
+                MainActivity::class.java.getDeclaredField("ttsReady").apply { isAccessible = true }.setBoolean(activity, true)
+                invoke(activity, "setNarrationEnabled", false)
+                invoke(activity, "setDeviceNarrationEnabled", true)
+                val event = EarthEventsProvider.Event("synthetic-quiet", 20.0, -15.0, "Example observation",
+                    EarthEventsProvider.Event.Type.EARTHQUAKE, System.currentTimeMillis(), null,
+                    "Sample data", null, null, null, emptyList(), 0.014f)
+                invoke(activity, "showEventCard", event)
+                assertFalse(recorder.spoken.isEmpty())
+                recorder.spoken.clear()
+                clickDialog(activity, R.string.companion_why)
+                assertNull(player(activity))
+                assertTrue("A fixed explanation must not use Android", recorder.spoken.isEmpty())
+                clickDialog(activity, R.string.companion_close)
+            }
+        }
+    }
+
+    @Test fun journeyFeedbackAndReferenceReadActionsHaveRecordings() = withSavedVoicePreferences { prefs ->
+        prefs.edit().putBoolean("onboarded", true).putBoolean("narrate_enabled", true)
+            .putBoolean("device_narrate_enabled", false).commit()
+        ActivityScenario.launch(MainActivity::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                protect(activity)
+                Discovery.values().forEach { (field(activity, "journal") as DiscoveryJournal).unlock(it) }
+                // Reference panels are quiet until the reader deliberately asks to hear a passage.
+                for (panel in listOf("Guide", "Explore time", "Layers", "Today", "Notebook")) {
+                    invoke(activity, "showCompanionPanel", panel)
+                    assertNull(player(activity))
+                    val readers = descendants(field(activity, "companionColumn") as View).filterIsInstance<TextView>()
+                        .filter { it.text.toString() == activity.getString(R.string.text_read_aloud) }
+                    assertTrue("No reading action in $panel", readers.isNotEmpty())
+                    for (reader in readers) {
+                        reader.performClick()
+                        assertNotNull("Reading action has no matching recording: $panel", player(activity))
+                    }
+                    if (panel == "Today") {
+                        val reading = player(activity)
+                        invoke(activity, "showCompanionPanel", panel)
+                        assertSame("Feed refresh interrupted a fixed daily fact", reading, player(activity))
+                    }
+                    invoke(activity, "closeCompanionPanel")
+                    assertNull(player(activity))
+                }
+                invoke(activity, "showCompanionPanel", "Places")
+                descendants(field(activity, "companionColumn") as View).filterIsInstance<TextView>().single {
+                    it.text.toString() == activity.getString(R.string.text_add_a_place_from_the_globe)
+                }.performClick()
+                assertNotNull("Place-saving instructions are fixed educational text", player(activity))
+                clickDialog(activity, R.string.text_ok)
+                val journey = JourneyContent.all(activity).first()
+                invoke(activity, "startJourney", journey, true)
+                assertNotNull(player(activity))
+                val store = field(activity, "journeyStore") as JourneyStore
+                store.advance("predict")
+                invoke(activity, "showCompanionPanel", "Journey")
+                val step = journey.step("predict")!!
+                descendants(field(activity, "companionColumn") as View).filterIsInstance<TextView>()
+                    .single { it.text.toString() == step.options[step.correct] }.performClick()
+                assertNotNull(player(activity))
+                clickDialog(activity, R.string.text_continue)
+            }
+            instrumentation.waitForIdleSync(); Thread.sleep(600)
+            scenario.onActivity { activity ->
+                assertTrue("Continuing journey feedback stopped the next lesson", player(activity)?.isPlaying == true)
+                invoke(activity, "leaveJourney")
+                assertNull(player(activity))
+                invoke(activity, "startChallenge")
+                assertNotNull(player(activity))
+                MainActivity::class.java.getDeclaredField("challengeScore").apply { isAccessible = true }.setInt(activity, 3)
+                invoke(activity, "stopChallenge")
+                assertNotNull("A scored challenge still needs Talia feedback", player(activity))
+                invoke(activity, "hideEventCard")
+                assertNull(player(activity))
+            }
         }
     }
 

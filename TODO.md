@@ -26,6 +26,7 @@
 - [x] Tablet-width welcome/wallpaper/widget improvements; multilingual portrait, landscape, narrower-window, and phone regression checks.
 
 - [x] Day/night lessons appear once per discovery, with deliberate touch-and-hold reopening.
+- [x] Compact guided journey lessons and feedback keep the globe interactive, with fixed controls and hide/resume.
 
 ## Validation and maintenance follow-ups
 
@@ -34,7 +35,7 @@
 - [ ] Complete remaining wallpaper coexistence, widget-host, and long-duration checks in [progress](docs/earth-companion-progress.md).
 - [ ] Extract focused UI components from MainActivity as concrete maintenance work requires.
 - [ ] Prepare the next Play release: new version metadata, signing, reviewed store copy, and release checks.
+- [ ] Update the separately hosted privacy policy from the repository notice, add an in-app privacy entry, and review Play Data safety disclosures before release.
 
-Dynamic facts/scores use separately opted-in device TTS; extending Talia to other panels
-requires a separate coverage decision. Speculative feature ideas above are not
+Fixed educational cards, explanations, journeys and reference reading actions use Talia. Dynamic facts/exact scores use separately opted-in device TTS; new educational text must be added to the shared narration catalog. Speculative feature ideas above are not
 commitments to add services or permissions.

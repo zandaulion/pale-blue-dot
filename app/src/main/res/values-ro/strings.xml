@@ -795,4 +795,7 @@
     <string name="narration_talia_label" formatted="false">"Vocea Taliei"</string>
     <string name="narration_android_label" formatted="false">"Vocea Android"</string>
     <string name="narration_android_detail" formatted="false">"Vocea dispozitivului pentru date actuale despre evenimente și scoruri."</string>
+    <string name="narration_challenge_complete" formatted="false">"Bravo! Continuă să explorezi și încearcă o altă provocare."</string>
+    <string name="journey_options" formatted="false">"Opțiunile călătoriei"</string>
+    <string name="journey_leave" formatted="false">"Părăsește călătoria"</string>
 </resources>

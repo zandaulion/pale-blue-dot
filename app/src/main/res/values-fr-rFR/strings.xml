@@ -795,4 +795,7 @@
     <string name="narration_talia_label" formatted="false">"Voix de Talia"</string>
     <string name="narration_android_label" formatted="false">"Voix Android"</string>
     <string name="narration_android_detail" formatted="false">"Voix de ton appareil pour les données des événements et les scores."</string>
+    <string name="narration_challenge_complete" formatted="false">"Bravo ! Continue à explorer et essaie un autre défi."</string>
+    <string name="journey_options" formatted="false">"Options du voyage"</string>
+    <string name="journey_leave" formatted="false">"Quitter le voyage"</string>
 </resources>

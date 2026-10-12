@@ -16,6 +16,7 @@ See [architecture](architecture.md) for ownership and threads.
 | `time/SceneClock.kt` | `SceneClock.nowMs()`, `RealTimeSceneClock`, and `AppSceneClock` replace the earlier global TimeProvider. App clock exposes `offsetMs`, `enter`, `seek`, `setPlaying`, `exit`, `isExploring`, and `isPlaying`. |
 | `camera/OrbitCamera.kt` | `rotate`, `startDrag`, `endDrag`, `update`, `zoom`, `flyTo`, `faceSky`, `restore`, `getViewMatrix`, and `getPosition`. Distance clamps to 1.15–20 Earth radii. |
 | `ui/ReadingColumn.kt` | LinearLayout with an optional maximum width in dp; preserves native font scaling and parent height/scroll behavior. |
+| `ui/JourneyCardLayout.kt` | `maximumHeight` caps lesson/feedback height, measuring the fixed header and footer before the scrolling body. MainActivity reserves a separate globe viewport and saves inline feedback during Activity recreation. |
 | `render/SceneProjection.kt` | `perspective(width, height, frameX, frameY)` is shared by drawing and picking, with framing offsets. |
 
 Selecting a locale can recreate the Activity. Recreate locale-specific narration
@@ -69,10 +70,11 @@ Repository feed states are `NOT_LOADED`, `LOADING`, `READY`, `STALE`, and
 
 | File | Key API / role |
 |---|---|
+| `kids/NarrationCatalog.kt` | Resolves the shared `assets/narration/catalog.json` resource scripts for the current locale; the generator uses the same manifest. |
 | `kids/NarrationText.kt` | `clean(text)` normalizes Android escapes/whitespace and removes emoji/symbols without dropping combining marks. |
-| `kids/TaliaNarrator.kt` | Constructor takes locale-aware `Context`; recording errors stay silent. `clipsFor(text)` resolves one or composed recordings; `speak(text)` handles lookup, focus, async playback; `stop()` invalidates pending callbacks and releases playback/focus. |
-| `MainActivity.kt` | Private `setNarrationEnabled`, `setDeviceNarrationEnabled`, `speak`, `speakWithDevice`, and `stopNarration` coordinate independent Talia/device preferences and exclusive content routing. |
-| `assets/narration/<locale>/index.json` | Cleaned spoken text → MP3 basename, 12 entries per supported locale. |
+| `kids/TaliaNarrator.kt` | Constructor takes locale-aware `Context`; recording errors stay silent. `clipsFor(text)` resolves one or composed recordings; `speak(text)` / `speak(texts)` handle lookup, complete-passage queues, focus and async playback; `stop()` invalidates pending callbacks and releases playback/focus. |
+| `MainActivity.kt` | Private `setNarrationEnabled`, `setDeviceNarrationEnabled`, `speak`, `speakFixed`, `showNarratedDialog`, `speakWithDevice`, and `stopNarration` coordinate independent Talia/device preferences and exclusive content routing. |
+| `assets/narration/<locale>/index.json` | Cleaned spoken text → MP3 basename, 101 entries per supported locale. |
 | `tools/generate_narration.py` | Development-only generator; `--prepare-only` makes no API requests; `--key-file` overrides the outside-repository credential path. |
 
 `MainActivity.speak` checks the recording catalog before choosing a voice:
@@ -80,7 +82,7 @@ matched fixed text uses Talia only when enabled; unmatched changing text uses
 Android only when separately enabled. Neither disabling Talia nor a recording
 error substitutes Android speech. `TaliaNarrator.speak` returns false for unmatched
 text and true for matched recordings, including when audio focus is denied. See [voiceover](voiceover.md)
-for exact narrated surfaces and lifecycle behavior.
+for exact narrated surfaces and lifecycle behavior. Fixed educational UI calls `speakFixed` explicitly, so a catalog miss stays silent even when Android is enabled. Dialog handoffs retire the previous dismiss callback before starting the next passage.
 
 ## Home screen and sharing
 

@@ -21,8 +21,7 @@ natural voice; music is independent, and wallpaper/widget stay silent.
 
 Keep all edited interface strings in the 12 locale resources. When changing a
 recorded card, regenerate and validate the matching Talia clips/indexes. Dynamic
-facts and scores use device TTS only after separate Android voice opt-in; adding narration to further panels is a
-separate coverage decision. ElevenLabs is development-time asset generation,
+facts and scores use device TTS only after separate Android voice opt-in. Fixed educational explanations, journeys and reference reading actions now use Talia; add new educational passages to the shared catalog. ElevenLabs is development-time asset generation,
 not a runtime AI service or a new backend. See [localization](localization.md),
 [Moon visibility](moon-visibility.md), and [voiceover](voiceover.md).
 

@@ -107,6 +107,13 @@ Motorola tests, and onboarding/Settings layouts for all 12 languages at 100%
 and 130% text size. See [globe interactions](globe-interactions.md) for once-only
 discoveries, deliberate holds, fixture isolation, and restoration checks.
 
+The October 12 compact-journey follow-up passed assembly/lint and 19 functional
+cases. Journey-specific visibility/gesture checks passed again after capture
+harness corrections. All 12 languages passed normal/130% phone layout checks;
+English, German and Arabic passed 130% phone landscape and 7-/10-inch landscape
+profiles. Capture orientation, complete card visibility and original device
+restoration are verified. See [tablet layout](tablet-layout.md#compact-journey-follow-up--october-12-2026).
+
 The reviewed APK was installed as an update and saved in `~/Projects/APKs` on
 the build host. Only the latest **PaleBlueDot** APK is retained there; other apps'
 artifacts remain untouched. This is a signed sideload test build, not evidence
@@ -121,6 +128,10 @@ belonging to this app only. Never publish the instrumentation APK as the app.
 
 1. Review source/asset changes, translation and pronunciation quality, privacy,
    and the outstanding device checks in [progress](earth-companion-progress.md).
+   Keep the separately hosted Play privacy policy consistent with [PRIVACY.md](../PRIVACY.md),
+   provide a privacy link or notice within the app, and review Data safety
+   disclosures against the version being distributed. Updating the repository
+   document does not update the hosted policy or Play Console.
 2. Run `python3 tools/check_localizations.py`, relevant Android checks, and lint;
    verify recording indexes still match localized resources.
 3. Increment versionCode/versionName when preparing an actual new release. Use
@@ -143,3 +154,16 @@ or capture. The [store screenshot workflow](../store/README.md#screenshots) cove
 the eight current English images for each phone, 7-inch and 10-inch tablet slot,
 the opt-in native capture harness, and restoring test-device settings. Store copy
 and existing release history also live in [store](../store/README.md).
+
+### Fixed educational narration coverage
+
+Before packaging edited educational text, generate any changed passages and
+run `python3 tools/check_narration.py`. The validator compares all 12 indexes
+and MP3 sets with the shared resource-script catalog, without API calls or a
+key. `TaliaNarrationTest` also verifies Android resource resolution, decodable
+audio for every catalog entry, real event explanation playback, replay/close,
+journey continuation, reference reading actions and voice independence.
+The focused [learning layout audit](localization.md) checks new dialog/lesson
+controls at normal and large text sizes. Keep the exact score and live values
+dynamic; use a complete fixed Talia passage rather than splicing words/numbers
+or substituting device speech.

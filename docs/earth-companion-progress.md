@@ -15,10 +15,17 @@ date. Current behavior is documented in [features](features.md),
   and 130% passed; original settings/preferences were restored. See
   [globe interactions](globe-interactions.md).
 - **Localization:** 12 bundled locales, persistent Settings picker, device-language
-  option, Arabic RTL, localized journeys/city search/widget/wallpaper. All 795
+  option, Arabic RTL, localized journeys/city search/widget/wallpaper. All 798
   translatable resources and placeholders pass the source validator; mappings
   cover 71 lesson text fields and 303 catalog cities. Normal and focused 130%
   Motorola layout audits passed. See [localization](localization.md).
+- **Guided journey cards:** compact lesson and feedback cards occupy separate
+  space from the interactive globe. Fixed progress/actions surround a scrolling
+  body; hide/resume preserves the active step and view. Wide side cards are
+  anchored to the top to keep tall progress headers inside the screen. The
+  combined Motorola regression passed 19 cases, including two journey-specific
+  tests covering all 18 steps, gestures and Activity recreation. See
+  [features](features.md#guided-journey-cards) and [tablet layout](tablet-layout.md).
 - **Moon:** 1dp outline for new Moons/small crescents, full through 3% illumination
   and faded out by 12%; localized New Moon/Thin crescent label and corrected Moon
   arrow framing. Six phase scenes and both labels in all 12 languages were
@@ -123,3 +130,34 @@ first launch, separate persistence/routing, and silent recording failure are
 covered. Both switches were visually checked in all 12 locales at normal and
 130% text size; two interrupted locale/scale captures were repeated with task
 protection and foreground checks. See [voiceover](voiceover.md).
+
+## Fixed educational narration audit
+
+The event explanation dialog previously displayed fixed text without a recording
+or a narration call. The coverage update adds all four explanations, every
+journey step/choice/outcome/completion, fixed challenge prompts and completion
+feedback, and place-saving help. Reference reading actions cover the Guide,
+seasons/plate explanations, daily facts and unlocked discovery facts. A shared
+resource-script manifest defines 101 passages per language. The original 144
+recordings are reused. Dialog transitions clear stale asynchronous dismissal
+callbacks before starting the next lesson, and live Today feed refreshes preserve
+fixed-passage playback. Exact scores remain visible, with device narration only
+when separately enabled and Talia is off. See [voiceover](voiceover.md).
+
+Validation: the shared-catalog validator passes for all 1,212 files/index entries;
+all MP3s decode locally, and the original 144 recordings are unchanged. Motorola
+checks passed all 13 functional/localization cases plus both opt-in learning
+layout audits (all 12 languages at 100% and 130% text). App/test assembly and
+Android lint passed. Voice playback is still optional and separate from TalkBack.
+
+## Compact guided journey cards
+
+Active lessons and quiz/reveal/completion feedback now use a capped bottom card
+in portrait or a top-aligned side card in wide landscape. The globe viewport is
+separate and interactive, with fixed progress/actions, a scrolling lesson body,
+reading replay, an options menu and hide/resume. Assembly/lint and 19 combined
+functional checks passed; both focused journey tests passed again after local
+visibility assertions were added. All 12 languages passed normal/130% phone
+captures, and English/German/Arabic passed 130% phone landscape and both tablet
+profiles. Original state was restored and verified. See [tablet layout](tablet-layout.md)
+for exact scope and [features](features.md#guided-journey-cards) for behavior.

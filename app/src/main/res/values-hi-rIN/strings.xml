@@ -795,4 +795,7 @@
     <string name="narration_talia_label" formatted="false">"तालिया की आवाज़"</string>
     <string name="narration_android_label" formatted="false">"Android की आवाज़"</string>
     <string name="narration_android_detail" formatted="false">"घटनाओं की ताज़ा जानकारी और स्कोर के लिए डिवाइस की आवाज़।"</string>
+    <string name="narration_challenge_complete" formatted="false">"बहुत अच्छे! खोज जारी रखो और एक और चुनौती आज़माओ।"</string>
+    <string name="journey_options" formatted="false">"यात्रा के विकल्प"</string>
+    <string name="journey_leave" formatted="false">"यात्रा छोड़ें"</string>
 </resources>

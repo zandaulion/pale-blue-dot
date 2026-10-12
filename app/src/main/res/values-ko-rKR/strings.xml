@@ -795,4 +795,7 @@
     <string name="narration_talia_label" formatted="false">"탈리아 음성"</string>
     <string name="narration_android_label" formatted="false">"Android 음성"</string>
     <string name="narration_android_detail" formatted="false">"실시간 사건 정보와 점수를 기기의 음성으로 읽어요."</string>
+    <string name="narration_challenge_complete" formatted="false">"잘했어요! 계속 탐험하며 다른 도전도 해 보세요."</string>
+    <string name="journey_options" formatted="false">"여행 옵션"</string>
+    <string name="journey_leave" formatted="false">"여행 종료"</string>
 </resources>

@@ -795,4 +795,7 @@
     <string name="narration_talia_label" formatted="false">"塔莉娅语音"</string>
     <string name="narration_android_label" formatted="false">"Android语音"</string>
     <string name="narration_android_detail" formatted="false">"用设备语音朗读最新事件信息和分数。"</string>
+    <string name="narration_challenge_complete" formatted="false">"做得好！继续探索，再试一个挑战吧。"</string>
+    <string name="journey_options" formatted="false">"旅程选项"</string>
+    <string name="journey_leave" formatted="false">"离开旅程"</string>
 </resources>

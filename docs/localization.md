@@ -160,3 +160,49 @@ total). Their October 12 Motorola audit covered all 12 languages at 100% and
 Recents interrupted captures. The opt-in `-e auditPinTask true` protects the Main
 activity's task; captures now require foreground window focus. Task pinning is
 released before cleanup, allowing the system unlock transition to finish.
+
+The fixed-learning narration catalog uses the same translated resources as the
+cards and lessons. The challenge-completion voice message adds one translated
+resource (796 per locale). `TaliaNarrationTest` compares all 101 scripts in each
+language with Android's actual resource values, including every journey step,
+choice, outcome, daily fact and discovery. The opt-in
+`LearningNarrationLayoutTest` captures event explanations, journey choices and
+feedback with the Talia reading actions visible:
+
+```bash
+adb -s <serial> shell am instrument -w \
+  -e learningNarrationAudit true \
+  -e class com.globe.app.kids.LearningNarrationLayoutTest \
+  com.zandaulion.palebluedot.test/androidx.test.runner.AndroidJUnitRunner
+```
+
+Run at normal and 130% font size, retaining captures outside Git and restoring
+font, app locale and preference state afterwards.
+
+The fixed-learning audit passed on the Motorola Edge 30 Neo at 100% and 130%
+text size in all 12 languages. All 96 explanation/journey/feedback captures
+passed clipping checks; the reviewed dialog and lesson layouts showed readable
+wrapped text and no overlap. Original app preferences, locale, font and display
+settings were restored and verified. This is a layout check, not a native-speaker
+translation/pronunciation review.
+
+Compact journey cards add two translated menu labels, bringing current coverage
+to 798 resources per language. The same opt-in learning audit checks that the
+globe and journey card occupy separate rectangles, with at least a quarter of
+the available height reserved for the globe. `-e auditTags en-US,de-DE,ar` selects
+representative long text and RTL layouts for landscape/tablet profiles; omitting
+it checks all 12 languages. `JourneyLayoutTest` separately covers all 18 lesson
+steps, fixed footer visibility, actual globe drag/pinch delivery, hide/resume,
+and lesson/feedback restoration across Activity recreation.
+
+The capture harness waits for the requested locale and rebuilds the Activity's
+views before testing. Each capture resolves the current Activity through
+`ActivityScenario`, avoiding stale view/text references after language changes.
+Journey checks include the full card rectangle within the screen, as well as
+globe/card separation and text measurements.
+
+The compact-card follow-up passed all 12 locales at 100% and 130% on the phone.
+English, German and Arabic also passed at 130% in actual phone landscape and
+both tablet landscape profiles, with `-e auditLandscape true` holding and
+asserting landscape orientation. See [tablet layout](tablet-layout.md) for
+profiles, capture scope and hardware limits.

@@ -14,7 +14,7 @@ namespace: `com.globe.app`.
 | [Globe Interactions](globe-interactions.md) | One-time day/night discoveries, deliberate holds, and gesture behavior |
 | [Tablet Layout](tablet-layout.md) | Window adaptation, tablet-sized device audits, and limits |
 | [Moon Visibility](moon-visibility.md) | Faint-phase outline, labels, placement, and validation |
-| [Voiceover](voiceover.md) | Talia opt-in, exact narration coverage, credentials, and generation |
+| [Voiceover](voiceover.md) | Talia opt-in, educational narration coverage, shared scripts, credentials, and generation |
 | [Architecture Decisions](../ARCHITECTURE.md) | Rendering, shared data, localization, and audio rationale |
 | [Architecture](architecture.md) | Packages, ownership, threads, and data flows |
 | [Rendering Pipeline](rendering-pipeline.md) | Frame order, GL state, surfaces, and Moon outline |

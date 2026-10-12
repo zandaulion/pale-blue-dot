@@ -62,12 +62,15 @@ check; narration is not a substitute for it.
 
 First launch asks whether to **Explore with Talia** (Talia only) or **Explore
 quietly** (both voices off). Settings provides independent Talia voice and Android
-voice switches. Talia reads fixed sky/day/night/ISS cards,
-Time Traveler, notebook acknowledgment, and fixed challenge feedback offline in
-all 12 languages. Live event facts and changing scores use device TTS only after enabling Android
-voice and when a suitable voice is available. Failed recordings stay silent. Today, journeys, and other panels are not all read
-automatically. Speech stops on close, disabling, or background; Talia also stops
-on audio-focus loss.
+voice switches. Talia reads fixed sky/day/night/ISS cards, event explanations,
+all guided journey steps and feedback, place-saving instructions, and challenge
+prompts/feedback offline in all 12 languages. Guide entries, seasons, plate
+explanations, daily facts and unlocked notebook discoveries have Read aloud
+actions. Live event facts use device TTS only after Android voice opt-in. Positive
+challenge scores stay on screen; Talia gives a fixed congratulation, or Android
+reads the exact score when Talia is off. Failed recordings stay silent. Speech
+stops on close, disabling, background or audio-focus loss. New dialog/lesson
+playback survives the previous dialog's dismissal.
 Music is separately optional, with its own volume slider. See [voiceover](voiceover.md).
 
 ## Home screen and data
@@ -83,3 +86,20 @@ feeds and unavailable/stale states remain distinct. See [live data](live-data.md
 
 The app requests only `INTERNET`. There are no accounts, ads, tracking SDKs, or
 location/microphone permissions. See [privacy](../PRIVACY.md).
+
+## Guided journey cards
+
+Journey lessons use a compact bottom card on portrait screens and a side card
+on wide landscape screens. The OpenGL viewport occupies separate space, so
+Earth remains visible and supports dragging and pinch zoom. Time/Settings and
+system/navigation bars have their own space. Journey overlays have no full-screen
+scrim and do not intercept touches outside the card. Ordinary globe taps/holds
+do not replace the current lesson; Sun/Moon direction controls remain available.
+
+The card keeps its progress header and primary action visible while longer
+lesson text, answer choices and dated sources scroll. The play control replays
+Talia. The options menu contains Skip and Leave journey. Hiding the card exposes
+a Resume button without changing the current step or globe pose. Quiz feedback,
+time-advance explanations, plate reveals and completion messages use the same
+card. Lesson and feedback state survive Activity recreation; leaving or finishing
+a journey restores the captured previous globe scene.

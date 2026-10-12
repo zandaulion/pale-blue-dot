@@ -796,4 +796,7 @@
     <string name="narration_talia_label" formatted="false">"Talia voice"</string>
     <string name="narration_android_label" formatted="false">"Android voice"</string>
     <string name="narration_android_detail" formatted="false">"Device voice for live event facts and scores."</string>
+    <string name="narration_challenge_complete" formatted="false">"Great job! Keep exploring and try another challenge."</string>
+    <string name="journey_options" formatted="false">"Journey options"</string>
+    <string name="journey_leave" formatted="false">"Leave journey"</string>
 </resources>

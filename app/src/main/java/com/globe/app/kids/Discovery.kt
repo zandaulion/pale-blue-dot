@@ -16,19 +16,19 @@ enum class Discovery(
     val factRes: Int
 ) {
     EARTHQUAKE("earthquake", "🔶", R.string.text_earthquake,
-        R.string.text_you_found_where_the_ground_was_shaking),
+        R.string.text_you_explored_a_reported_earthquake),
     VOLCANO("volcano", "🌋", R.string.text_volcano,
-        R.string.text_you_spotted_hot_lava_erupting_from_deep_inside_the_earth),
+        R.string.text_you_explored_a_reported_volcanic_event),
     WILDFIRE("wildfire", "🔥", R.string.text_wildfire,
-        R.string.text_you_caught_a_fire_so_big_that_satellites_can_see_it_from_space),
+        R.string.text_you_explored_a_reported_wildfire),
     STORM("storm", "🌀", R.string.text_storm,
-        R.string.text_you_tracked_a_giant_swirling_storm),
+        R.string.text_you_explored_a_reported_storm),
     DAYTIME("daytime", "☀️", R.string.text_daytime_2,
-        R.string.text_you_found_the_side_of_earth_facing_the_sun),
+        R.string.text_you_found_a_place_facing_the_sun),
     NIGHT("night", "🌙", R.string.text_city_lights_2,
-        R.string.text_you_found_the_night_side_sparkling_with_city_lights),
+        R.string.text_you_found_earth_s_night_side),
     STARGAZER("stargazer", "🌟", R.string.text_star_gazer,
-        R.string.text_you_looked_past_earth_into_the_stars_and_galaxies_beyond),
+        R.string.text_you_looked_beyond_earth),
     TIME_TRAVELER("time_traveler", "⏰", R.string.text_time_traveler,
         R.string.text_you_moved_time_to_turn_day_into_night);
     fun title(context: Context): String = context.getString(titleRes)

@@ -91,14 +91,15 @@ and user-entered text do not change with locale. See [localization](localization
 ```text
 First launch → Talia only, or both voices off
 Settings → independent persisted Talia voice / Android voice preferences
-Card text → NarrationText.clean → TaliaNarrator catalog lookup
+Educational passage(s) → NarrationText.clean → TaliaNarrator catalog lookup
   → matching clip(s): Talia opt-in → local MediaPlayer + speech audio focus
-  → unmatched changing text: Android opt-in → available device TTS
+  → missing fixed recording: silence
+Changing event facts / exact score → Android opt-in → available device TTS
 Recording failure → silence; no voice substitution
 Close / off / background / focus loss → stop, no automatic restart
 ```
 
-144 generated clips live in `assets/narration/<locale>/`. Development-time
+1,212 generated clips live in `assets/narration/<locale>/`. Development-time
 ElevenLabs generation is outside runtime architecture; no SDK, key, or backend
 is used by the APK. Audio tokens discard stale asynchronous callbacks. Wallpaper
 and widget cannot invoke app narration. See [voiceover](voiceover.md).
@@ -124,3 +125,14 @@ remains large and still builds many panels; the package split is not a claim tha
 all UI has already been extracted.
 
 Tablet/window adaptation and its device audit are described in [tablet layout](tablet-layout.md).
+
+### Journey viewport layout
+
+`ui/JourneyCardLayout` measures fixed header/footer controls before allocating
+remaining capped height to the scrolling body. `MainActivity` positions the
+nonmodal card at the bottom in portrait or at the logical end in wide landscape,
+and resizes `GlobeSurfaceView` into the remaining area below Time/Settings. Insets
+are respected on all four edges. Other companion panels keep their modal layout
+and restore the full globe viewport. Inline journey feedback has explicit
+advance/completion state saved across Activity recreation; the persistent
+JourneyStore remains the source of step progress and the previous scene.
