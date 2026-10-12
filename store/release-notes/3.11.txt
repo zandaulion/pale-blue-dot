@@ -1,0 +1,95 @@
+<en-US>
+Explore in 12 languages, with a Settings language picker.
+Choose Talia at first launch for offline narration; Android speech has its own switch.
+An outline and label reveal unlit new Moons and thin crescents.
+Compact journey cards keep Earth visible; toggle latitude guides in Layers at any time.
+Day, night and sky cards appear once. Touch and hold to revisit.
+</en-US>
+
+<de-DE>
+Entdecke die App in 12 Sprachen mit Sprachwahl in den Einstellungen.
+Wähle Talia beim ersten Start für Offline-Erzählungen; Androids Stimme hat einen eigenen Schalter.
+Umriss und Hinweis zeigen Neumond und schmale Sicheln.
+Kompakte Reisekarten lassen die Erde sichtbar; Breitengradlinien sind jederzeit zuschaltbar.
+Tag-, Nacht- und Himmelskarten erscheinen einmal. Zum Wiederholen gedrückt halten.
+</de-DE>
+
+<es-ES>
+Explora en 12 idiomas y elige el tuyo en Ajustes.
+Elige a Talia al iniciar por primera vez para escuchar narración sin conexión; la voz de Android tiene su propio interruptor.
+Un contorno y una etiqueta muestran la Luna nueva y los crecientes finos sin iluminarlos.
+Las tarjetas de viaje dejan ver la Tierra; activa las guías de latitud cuando quieras.
+Las tarjetas del día, la noche y el cielo aparecen una vez. Mantén pulsado para volver a verlas.
+</es-ES>
+
+<fr-FR>
+Explore l'app en 12 langues et choisis la tienne dans les paramètres.
+Choisis Talia au premier lancement pour une narration hors ligne ; la voix Android a son propre interrupteur.
+Un contour et une étiquette révèlent la nouvelle Lune et les fins croissants sans les éclairer.
+Les cartes de voyage laissent voir la Terre ; affiche les repères de latitude à tout moment.
+Les cartes du jour, de la nuit et du ciel s'ouvrent une fois. Maintiens ton doigt pour les revoir.
+</fr-FR>
+
+<ar>
+استكشف التطبيق بـ12 لغة، واختر لغتك من الإعدادات.
+اختر صوت تاليا عند أول تشغيل لسرد يعمل دون اتصال؛ ولصوت أندرويد مفتاح مستقل.
+يُظهر إطار وعنوان القمر الجديد والأهلة الرفيعة دون إضاءتها.
+تُبقي بطاقات الرحلات الأرض ظاهرة؛ ويمكن إظهار خطوط العرض في أي وقت.
+تظهر بطاقات النهار والليل والسماء مرة واحدة. اضغط مطولًا لفتحها مجددًا.
+</ar>
+
+<hi-IN>
+12 भाषाओं में खोजें और सेटिंग में अपनी भाषा चुनें।
+पहली बार शुरू करते समय ऑफ़लाइन वाचन के लिए तालिया चुनें; Android की आवाज़ का अलग स्विच है।
+रेखांकन और नाम से बिना रोशनी वाला नया चाँद और पतला अर्धचंद्र दिखता है।
+यात्रा कार्ड पृथ्वी को सामने रखते हैं; अक्षांश रेखाएँ कभी भी दिखाएँ या छिपाएँ।
+दिन, रात और आकाश के कार्ड एक बार खुलते हैं। फिर देखने के लिए देर तक दबाएँ।
+</hi-IN>
+
+<ja-JP>
+12言語に対応。設定から言語を選べます。
+初回起動時にタリアを選ぶと、オフラインで解説を聞けます。Android音声は別のスイッチで切り替えられます。
+新月や細い月を、明るくせず輪郭とラベルで示します。
+コンパクトな学習カードで地球を見ながら旅を進められます。緯度ガイドはいつでも切り替えられます。
+昼・夜・空のカードは最初の1回だけ表示。長押しで再表示できます。
+</ja-JP>
+
+<ko-KR>
+12개 언어로 탐험하고 설정에서 언어를 선택하세요.
+첫 실행에서 탈리아를 선택하면 오프라인 해설을 들을 수 있어요. Android 음성은 별도 스위치로 켤 수 있어요.
+윤곽선과 이름으로 빛나지 않는 신월과 가는 초승달을 보여 줍니다.
+작은 학습 카드로 지구를 계속 볼 수 있고, 위도 안내선은 언제든 켜고 끌 수 있어요.
+낮, 밤, 하늘 카드는 처음 한 번만 열립니다. 다시 보려면 길게 누르세요.
+</ko-KR>
+
+<pt-BR>
+Explore em 12 idiomas e escolha o seu nas Configurações.
+Escolha Talia na primeira abertura para ouvir narração offline; a voz do Android tem um botão separado.
+Um contorno e uma legenda mostram a Lua nova e os crescentes finos sem iluminá-los.
+Os cartões de jornada mantêm a Terra visível; ative as guias de latitude quando quiser.
+Os cartões de dia, noite e céu aparecem uma vez. Toque e segure para revê-los.
+</pt-BR>
+
+<ro>
+Explorează în 12 limbi și alege limba din Setări.
+Alege Talia la prima pornire pentru narare offline; vocea Android are un comutator separat.
+Un contur și o etichetă arată Luna nouă și secerile subțiri fără a le lumina.
+Cardurile compacte de călătorie lasă Pământul la vedere; poți activa oricând liniile de latitudine.
+Cardurile despre zi, noapte și cer apar o singură dată. Ține apăsat pentru a le revedea.
+</ro>
+
+<uk>
+Досліджуйте 12 мовами й обирайте мову в налаштуваннях.
+Під час першого запуску оберіть Талію для офлайн-озвучення; голос Android має окремий перемикач.
+Контур і підпис показують неосвітлений молодик і тонкий серп.
+Компактні картки мандрівок залишають Землю видимою; лінії широти можна вмикати будь-коли.
+Картки про день, ніч і небо з'являються один раз. Утримуйте дотик, щоб відкрити їх знову.
+</uk>
+
+<zh-CN>
+支持 12 种语言，可在设置中选择。
+首次启动时选择塔莉娅，即可离线收听讲解；Android 语音有独立开关。
+轮廓和标签让未被照亮的新月与细弯月清晰可见。
+精简的旅程卡片让地球保持可见；纬度参考线可随时开关。
+昼、夜和星空卡片只在首次发现时弹出。长按即可再次查看。
+</zh-CN>

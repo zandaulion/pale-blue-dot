@@ -15,13 +15,14 @@ Notes for this release (max 500 characters)
 ```
 
 Historical numbered files describe their original releases. Keep them unchanged.
-[unreleased.md](release-notes/unreleased.md) is the next-release draft; choose a
-new versionName/versionCode and create its numbered notes during actual release
-preparation. Current version metadata is still 3.10/code 12.
+[3.11.txt](release-notes/3.11.txt) contains draft Play notes in all 12 app
+languages for version 3.11/code 13. The app and notes have not been uploaded to
+Play. [unreleased.md](release-notes/unreleased.md) holds changes after 3.11.
 
-Add a `<locale>` block per language when preparing translated Play metadata.
-The app's 12 bundled languages do not automatically localize the store listing;
-`listing.md` and the next-release notes are currently English drafts.
+The 3.11 notes have a `<locale>` block for each of the app's 12 languages.
+Translation and pronunciation still need independent native-speaker review.
+The app's bundled languages do not automatically localize the store listing;
+`listing.md` remains an English draft.
 
 ## Store listing
 
@@ -46,6 +47,7 @@ build, including its language and independent voice settings and touch-and-hold 
 | 3.8 | 10 | Target Android 16 (API 36) to satisfy Play's target-API policy |
 | 3.9 | 11 | Earth Today widget, live wallpaper (parallax, Material You colors), saved places with a 303-city offline catalog and time-zone suggestions, guided journeys, Field notebook, plate boundaries, explore time/seasons; lower texture memory for widget and wallpaper |
 | 3.10 | 12 | Full widget Earth background with readable overlays and responsive layouts; wallpaper location selection from saved places or city search, remembered viewpoints, expandable framing controls, and an always-visible preview button |
+| 3.11 (prepared; not uploaded) | 13 | 12-language interface and optional offline Talia narration; new Moon guide, compact journey cards, independent latitude guides, and quieter discovery cards |
 
 ## Screenshots
 

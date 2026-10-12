@@ -36,7 +36,7 @@
 - [ ] Full TalkBack traversal, physical tablet/foldable performance and ergonomics, and minSdk checks.
 - [ ] Complete remaining wallpaper coexistence, widget-host, and long-duration checks in [progress](docs/earth-companion-progress.md).
 - [ ] Extract focused UI components from MainActivity as concrete maintenance work requires.
-- [ ] Prepare the next Play release: new version metadata, signing, reviewed store copy, and release checks.
+- [ ] Prepare the next Play release: signing, reviewed store copy and translations, and release checks. Version 3.11/code 13 and draft notes are prepared.
 - [ ] Update the separately hosted privacy policy from the repository notice, add an in-app privacy entry, and review Play Data safety disclosures before release.
 
 Fixed educational cards, explanations, journeys and reference reading actions use Talia. Dynamic facts/exact scores use separately opted-in device TTS; new educational text must be added to the shared narration catalog. Speculative feature ideas above are not

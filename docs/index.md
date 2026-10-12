@@ -34,7 +34,7 @@ namespace: `com.globe.app`.
 
 | Property | Value |
 |---|---|
-| Version metadata | 3.10 / versionCode 12; current Talia changes are not a Play release |
+| Version metadata | 3.11 / versionCode 13; not published to Play |
 | minSdk | 24 (Android 7.0) |
 | compileSdk / targetSdk | 36 (Android 16) |
 | Rendering | OpenGL ES 3.0, explicitly required by the manifest |
@@ -42,8 +42,8 @@ namespace: `com.globe.app`.
 | Build system | AGP 9.4.1 / Gradle 9.6.0 |
 | Gradle daemon / bytecode | JetBrains JDK 21 / Java and Kotlin target 17 |
 | Requested permission | `INTERNET` |
-| Localization | 12 bundled locales, 795 translatable resources per locale |
-| Narration | 144 bundled Talia clips; separate Android opt-in for changing facts/scores |
+| Localization | 12 bundled locales, 800 translatable resources per locale |
+| Narration | 1,212 bundled Talia clips; separate Android opt-in for changing facts/scores |
 
 ## Repository layout
 

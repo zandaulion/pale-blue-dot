@@ -43,7 +43,7 @@ Spin the globe with your finger and watch day turn to night, with city lights gl
 • Alerts when the Sun and Moon line up for a possible eclipse
 
 📖 LEARN BY EXPLORING (made for ages 9–12)
-• Every tap explains the science in kid-friendly words
+• Tap to discover kid-friendly science explanations; touch and hold to revisit day, night and sky lessons
 • Three guided journeys: follow the sunrise, explore the Ring of Fire, and understand the seasons
 • Collect discoveries in your own Field notebook. Can you find them all?
 • Find-it challenges that build real thinking

@@ -29,7 +29,7 @@ The app adapts to orientation and window-size changes, with side panels and boun
 
 The app supports 12 languages: English, German, Spanish, French, Arabic, Hindi, Japanese, Korean, Brazilian Portuguese, Romanian, Ukrainian, and Simplified Chinese. It follows your device language, with an override in Settings → Language. See [localization coverage and review status](docs/localization.md).
 
-The current checkout includes the Talia integration tested on a Motorola Edge 30 Neo. Version metadata remains 3.10/code 12; the integration has not been published to Play. Existing onboarded users keep their audio preference and are not prompted again.
+The current checkout includes the Talia integration tested on a Motorola Edge 30 Neo. Version 3.11/code 13 is prepared but has not been published to Play. Existing onboarded users keep their audio preference and are not prompted again.
 
 ## Data and simulation
 
@@ -79,7 +79,7 @@ The current workspace configuration uses:
 | minSdk | 24 (Android 7.0) |
 | Required graphics support | OpenGL ES 3.0, explicitly required by the manifest |
 | Application ID | `com.zandaulion.palebluedot` |
-| App version | 3.10 (version code 12) |
+| App version | 3.11 (version code 13) |
 
 Build a debug APK on Windows:
 

@@ -14,7 +14,7 @@ The checked-in configuration is authoritative:
 | compileSdk / targetSdk | 36 |
 | minSdk | 24 |
 | Application ID / namespace | `com.zandaulion.palebluedot` / `com.globe.app` |
-| Version metadata | 3.10 / 12 |
+| Version metadata | 3.11 / 13 |
 
 Use Android Studio compatible with the configured AGP and install SDK Platform
 36. Set the local SDK path through Android Studio or an uncommitted
@@ -114,10 +114,12 @@ English, German and Arabic passed 130% phone landscape and 7-/10-inch landscape
 profiles. Capture orientation, complete card visibility and original device
 restoration are verified. See [tablet layout](tablet-layout.md#compact-journey-follow-up--october-12-2026).
 
-The reviewed APK was installed as an update and saved in `~/Projects/APKs` on
-the build host. Only the latest **PaleBlueDot** APK is retained there; other apps'
-artifacts remain untouched. This is a signed sideload test build, not evidence
-of Play production signing or publication. Version metadata remains 3.10/code 12.
+The 3.11/code 13 candidate passed app assembly and lint. Its APK metadata,
+sideload signature and bundled narration were verified, then the APK was saved
+in the authorized APK folder. Only the latest **PaleBlueDot** APK is
+retained there; other apps' artifacts remain untouched. The earlier 3.10
+candidate was tested on the Motorola. This is a signed sideload build, not
+evidence of Play production signing or publication.
 
 For future authorized artifact replacement, verify build success, checksum,
 signing identity, package/version, bundled audio, and absence of credentials.
@@ -134,9 +136,10 @@ belonging to this app only. Never publish the instrumentation APK as the app.
    document does not update the hosted policy or Play Console.
 2. Run `python3 tools/check_localizations.py`, relevant Android checks, and lint;
    verify recording indexes still match localized resources.
-3. Increment versionCode/versionName when preparing an actual new release. Use
-   [the next-release draft](../store/release-notes/unreleased.md); historical
-   release notes remain unchanged.
+3. Confirm versionCode/versionName and review the matching
+   [3.11 release notes](../store/release-notes/3.11.txt). Historical release
+   notes remain unchanged; later changes belong in the
+   [next-release draft](../store/release-notes/unreleased.md).
 4. Sign with the intended distribution identity using private local signing
    material; inspect the exact outgoing artifacts and metadata before publishing.
 5. Update Play listing/audience declarations and distribute only when authorized.

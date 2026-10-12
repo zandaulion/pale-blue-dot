@@ -65,8 +65,10 @@ date. Current behavior is documented in [features](features.md),
   settings were restored, and new captures/results remain outside the repository.
 - **Artifact:** the signed app APK was installed as an update and saved to the
   authorized build-host `~/Projects/APKs` folder, retaining only the latest
-  PaleBlueDot APK and preserving other apps' artifacts. Version metadata remains
-  3.10/code 12. Talia has not been published to Play.
+  PaleBlueDot APK and preserving other apps' artifacts. The newer 3.11/code 13
+  candidate passed assembly/lint and APK metadata, signature and bundled-audio
+  checks; it replaced that folder's PaleBlueDot APK. It has not been published
+  to Play.
 
 Open checks remain: independent native-speaker translation/pronunciation review,
 full TalkBack traversal, physical tablet/foldable and minSdk coverage, active

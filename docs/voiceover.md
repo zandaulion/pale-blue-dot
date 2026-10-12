@@ -176,8 +176,8 @@ Use [build/test instructions](build-release.md) and the
 results stay outside the repository. These checks establish playback and layout,
 not a native-speaker pronunciation review or coverage of other device sizes.
 
-The integration is present in the current checkout and installed test APK,
-still version 3.10/code 12. It has not been released through Play. Live ElevenLabs
+The integration is present in the current checkout, now version 3.11/code 13.
+An earlier candidate was tested on a phone. It has not been released through Play. Live ElevenLabs
 synthesis would require a separate service holding the key; no such backend is
 part of this integration.
 

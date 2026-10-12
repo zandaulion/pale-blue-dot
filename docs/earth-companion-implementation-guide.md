@@ -25,7 +25,7 @@ facts and scores use device TTS only after separate Android voice opt-in. Fixed 
 not a runtime AI service or a new backend. See [localization](localization.md),
 [Moon visibility](moon-visibility.md), and [voiceover](voiceover.md).
 
-The configured app version remains 3.10/code 12. These changes are tested in a
+The configured app version is 3.11/code 13. These changes are tested in a
 sideload APK, not published to Play. Complete the outstanding acceptance items
 before claiming full device/accessibility coverage.
 
