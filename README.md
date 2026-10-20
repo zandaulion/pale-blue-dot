@@ -4,6 +4,19 @@ Pale Blue Dot is an interactive 3D Earth and astronomy app for Android, designed
 
 The Gradle project is named **Globe**. The app is built with Kotlin and raw OpenGL ES 3.0, with native Android views for the interface and no game engine or third-party rendering library.
 
+
+## Start here
+
+[Build a debug APK](#build) · [Build and release guide](docs/build-release.md)
+· [Privacy](PRIVACY.md) · [Documentation index](docs/index.md)
+· [Screenshots and store material](store/README.md)
+· [Project overview](https://zandaulion.com/palebluedot.html)
+
+This repository provides Android source and store materials. Build instructions
+below produce a local debug APK; a source checkout is not itself an installable
+release. The Gradle project’s internal name, Globe, differs from the public app
+name, Pale Blue Dot.
+
 ## Explore and learn
 
 - **Interactive Earth** — drag to rotate, pinch to zoom, and watch momentum and gentle idle rotation. The camera position is saved between sessions.
@@ -161,3 +174,12 @@ The app's declared library dependencies are AndroidX `core-ktx` and `appcompat`.
 ## License and credits
 
 The source code is licensed under the [MIT License](LICENSE). See [CREDITS.md](CREDITS.md) for NASA texture attribution and the bundled music's source and license.
+
+
+## Support and contributions
+
+Use this repository’s Issues for reproducible bugs and focused feature requests. Include the version, relevant runtime/browser, expected behavior and a minimal synthetic example. Remove credentials, personal records, device identifiers and deployment-specific values before sharing logs or screenshots.
+
+Use [docs/build-release.md](docs/build-release.md) for toolchain and validation. Include a reproducible scene/time/layer configuration for rendering reports, without real saved locations or device identifiers.
+
+Keep changes focused and update the affected documentation. Security-sensitive reports should follow [SECURITY.md](SECURITY.md).
