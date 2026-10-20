@@ -7,15 +7,34 @@ The Gradle project is named **Globe**. The app is built with Kotlin and raw Open
 
 ## Start here
 
-[Build a debug APK](#build) · [Build and release guide](docs/build-release.md)
+[Download APK](https://github.com/zandaulion/pale-blue-dot/releases/latest) · [Install](#install)
+· [Build and release guide](docs/build-release.md)
 · [Privacy](PRIVACY.md) · [Documentation index](docs/index.md)
 · [Screenshots and store material](store/README.md)
 · [Project overview](https://zandaulion.com/palebluedot.html)
 
-This repository provides Android source and store materials. Build instructions
-below produce a local debug APK; a source checkout is not itself an installable
-release. The Gradle project’s internal name, Globe, differs from the public app
-name, Pale Blue Dot.
+Signed APKs, checksums, and installation notes are available in
+[GitHub Releases](https://github.com/zandaulion/pale-blue-dot/releases).
+The Gradle project’s internal name, Globe, differs from the public app name,
+Pale Blue Dot.
+
+## Install
+
+Download the `.apk` asset from the [latest release](https://github.com/zandaulion/pale-blue-dot/releases/latest)
+and open it on your phone. Android may ask you to allow installation from your
+browser or file manager. The source-code ZIP and TAR archives are for building,
+not installation.
+
+The app requires **Android 7.0 or later and OpenGL ES 3.0**. Narration is bundled;
+the large download includes all 12 languages. No account or API key is needed.
+Public clouds and Earth events need internet access; cached observations can
+be viewed offline.
+
+Each release includes `SHA256SUMS` and the signing certificate fingerprint.
+Future updates must use the same application ID and signing key. Google Play,
+debug, and self-built packages may use different certificates and may not update
+one another. Do not uninstall an existing app to resolve a signing mismatch:
+uninstalling deletes its locally saved places, notebook, and progress.
 
 ## Explore and learn
 
@@ -42,7 +61,10 @@ The app adapts to orientation and window-size changes, with side panels and boun
 
 The app supports 12 languages: English, German, Spanish, French, Arabic, Hindi, Japanese, Korean, Brazilian Portuguese, Romanian, Ukrainian, and Simplified Chinese. It follows your device language, with an override in Settings → Language. See [localization coverage and review status](docs/localization.md).
 
-The current checkout includes the Talia integration tested on a Motorola Edge 30 Neo. Version 3.11/code 13 is prepared but has not been published to Play. Existing onboarded users keep their audio preference and are not prompted again.
+Version 3.11/code 13 is available as a signed GitHub APK; this does not indicate
+publication of that version to Google Play. Existing onboarded users keep their
+audio preference and are not prompted again. See the release notes for checks
+performed on the distributed APK and the remaining hardware-coverage limits.
 
 ## Data and simulation
 

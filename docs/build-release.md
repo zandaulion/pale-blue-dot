@@ -87,7 +87,29 @@ Other instrumented checks cover event parsing, companion state/migration,
 daylight/widget rendering, wallpaper setup, and Moon geometry. There is no
 `app/src/test` JVM test suite; a Gradle `NO-SOURCE` result is not a test pass.
 
-## Current validation and artifact status
+## Direct GitHub distribution
+
+The signed [3.11 APK](https://github.com/zandaulion/pale-blue-dot/releases/tag/v3.11)
+is built from public source commit `e81b29ae877e768db52c735b7995f324089785a3`.
+The `v3.11` tag preserves that source. Release optimization and resource shrinking
+remain enabled; the unsigned Gradle output is aligned and signed separately
+with the direct-distribution key. Signing keys and passwords are not part of
+the repository or download.
+
+GitHub Releases include the app APK, `SHA256SUMS`, the signing certificate
+fingerprint, installation/update guidance, and the checks performed. Match the
+checksum before installation. Updating an existing app requires its signing
+key; never uninstall an existing installation to bypass a mismatch, because
+that removes locally saved places, notebook entries, and progress.
+
+Regression instrumentation uses a separate debug application ID,
+`com.zandaulion.palebluedot.releasecheck`, configured by a local Gradle init
+script outside the source checkout. Its fresh app data is separate from an
+existing installation. Those tests exercise the debug variant; the signed,
+optimized release APK is checked separately. The release notes distinguish
+the two validation scopes.
+
+## Earlier validation and artifact status
 
 The October 11 Talia build passed app/instrumentation assembly and lint. On the
 Motorola Edge 30 Neo, two Talia and four localization tests passed. All 12
@@ -142,7 +164,12 @@ belonging to this app only. Never publish the instrumentation APK as the app.
    [next-release draft](../store/release-notes/unreleased.md).
 4. Sign with the intended distribution identity using private local signing
    material; inspect the exact outgoing artifacts and metadata before publishing.
-5. Update Play listing/audience declarations and distribute only when authorized.
+5. For GitHub, push an annotated version tag with reviewed public metadata, then
+   create the release for that existing tag with `--verify-tag`. Upload only
+   the verified, signed app APK and `SHA256SUMS`; keep debug/test APKs, local
+   settings, and signing material out of the public assets. Update download links.
+   For Google Play, review the separate listing/audience declarations and use
+   the appropriate signing and upload process.
 
 Building, generating audio, installing a test build, saving an APK, committing
 source, and publishing to Play are separate actions. The current Talia changes
