@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.globe.app"
-    compileSdk = 36
+    compileSdk = 37
 
     // The in-app language picker works offline, including installations from an AAB.
     bundle {
@@ -39,8 +39,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 }
 
